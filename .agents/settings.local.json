@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm add *)",
+      "Bash(npx tsc *)",
+      "Bash(pnpm dev *)",
+      "Bash(curl -s http://localhost:5173)",
+      "Bash(kill %1)",
+      "Bash(pnpm build *)",
+      "Bash(python3 *)"
+    ]
+  },
+  "enabledPlugins": {
+    "github@claude-plugins-official": true
+  }
+}

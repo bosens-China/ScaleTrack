@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "vite-advanced",
+  "owner": "yonatangross",
+  "repo": "orchestkit",
+  "path": "plugins/ork/skills/vite-advanced",
+  "branch": "main",
+  "sha": "762940db61e570ab75a3a32661d79549f2192c19",
+  "source": "manual"
+}
