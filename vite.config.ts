@@ -4,5 +4,6 @@ import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  base: '/ScaleTrack/',
   plugins: [UnoCSS(), react(), babel({ presets: [reactCompilerPreset()] })],
 })
