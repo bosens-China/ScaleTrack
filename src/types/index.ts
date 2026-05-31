@@ -25,7 +25,7 @@ export interface Goal {
   isCompleted: boolean
 }
 
-export type TimeRange = '3d' | '7d' | '1m' | '3m'
+export type TimeRange = '3d' | '7d' | '15d' | '1m'
 
 export type BMICategory = 'underweight' | 'normal' | 'overweight' | 'obese'
 
@@ -39,3 +39,12 @@ export interface BMIRange {
 }
 
 export type AppTab = 'dashboard' | 'trends' | 'add' | 'profile'
+
+/** 数据导入/导出的标准结构 */
+export interface ExportData {
+  version: 1
+  exportedAt: string
+  profile: UserProfile | null
+  records: WeightRecord[]
+  goals: Goal[]
+}

@@ -16,6 +16,7 @@ interface Props {
   records: WeightRecord[]
   goal: Goal | null
   onNavigate: (tab: AppTab) => void
+  onDeleteRecord: (id: string) => void
 }
 
 function buildSparklinePoints(records: WeightRecord[]) {
@@ -37,7 +38,13 @@ function buildSparklinePoints(records: WeightRecord[]) {
     .join(' ')
 }
 
-export default function DashboardPage({ profile, records, goal, onNavigate }: Props) {
+export default function DashboardPage({
+  profile,
+  records,
+  goal,
+  onNavigate,
+  onDeleteRecord,
+}: Props) {
   const currentWeight = getCurrentWeight(profile, records)
   const currentBMI = getCurrentBMI(profile, records)
   const latestRecord = records.at(-1)
@@ -45,6 +52,11 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
   const weeklyRecords = filterRecordsByDays(records, 7)
   const weeklyChange = getWeeklyChange(records)
   const progress = getGoalProgress(goal, currentWeight)
+  const sparkline = buildSparklinePoints(weeklyRecords)
+  const latestBmiTone = getBMIColor(currentBMI)
+  const latestCategory = getBMICategory(currentBMI)
+  const recentRecords = [...records].reverse().slice(0, 5)
+  const hasRecords = records.length > 0
   const weeklyDirection =
     weeklyChange === null
       ? '暂无变化'
@@ -59,10 +71,6 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
       : weeklyChange > 0
         ? 'text-[#da1e28]'
         : 'text-[#198038]'
-  const sparkline = buildSparklinePoints(weeklyRecords)
-  const latestBmiTone = getBMIColor(currentBMI)
-  const latestCategory = getBMICategory(currentBMI)
-  const hasRecords = records.length > 0
 
   return (
     <div className="app-page bg-[var(--carbon-bg)]">
@@ -82,7 +90,11 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
             </div>
             <div className="flex min-w-[72px] flex-col items-center bg-white/10 px-3 py-2 text-center">
               <span
-                className={`h-4 w-4 ${previousDiff !== null && previousDiff > 0 ? 'i-lucide-trending-up' : 'i-lucide-trending-down'}`}
+                className={`h-4 w-4 ${
+                  previousDiff !== null && previousDiff > 0
+                    ? 'i-lucide-trending-up'
+                    : 'i-lucide-trending-down'
+                }`}
               />
               <span className="mt-1 text-[10px] font-bold">
                 {previousDiff === null
@@ -196,9 +208,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
                   <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--carbon-text-secondary)]">
                     最近记录
                   </p>
-                  <p className="mt-1 text-sm text-[var(--carbon-text)]">
-                    {latestRecord ? dayjs(latestRecord.date).format('MM月DD日') : '还没有体重记录'}
-                  </p>
+                  <p className="mt-1 text-sm text-[var(--carbon-text)]">共 {records.length} 条</p>
                 </div>
                 <button
                   onClick={() => onNavigate('add')}
@@ -208,30 +218,41 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
                 </button>
               </div>
 
-              <div className="flex flex-col gap-4 px-4 py-4">
-                <div className="flex items-end justify-between">
-                  <div>
-                    <p className="text-xs text-[var(--carbon-text-secondary)]">最新体重</p>
-                    <p className="mt-1 text-2xl font-light text-[var(--carbon-text)]">
-                      {latestRecord ? latestRecord.weight.toFixed(1) : '--'}
-                      <span className="ml-1 text-sm text-[var(--carbon-text-secondary)]">kg</span>
-                    </p>
+              <div className="flex flex-col">
+                {recentRecords.map(record => (
+                  <div
+                    key={record.id}
+                    className="flex items-center justify-between border-b border-[var(--carbon-border)] px-4 py-3 last:border-b-0"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <span className="text-sm font-medium text-[var(--carbon-text)]">
+                        {record.weight.toFixed(1)} kg
+                      </span>
+                      <p className="mt-0.5 truncate text-xs text-[var(--carbon-text-secondary)]">
+                        {dayjs(record.date).format('MM月DD日')}
+                        {record.note ? ` · ${record.note}` : ''}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => onDeleteRecord(record.id)}
+                      className="ml-3 flex h-8 w-8 items-center justify-center text-[var(--carbon-outline)] transition-colors hover:text-[#da1e28]"
+                      aria-label="删除记录"
+                    >
+                      <span className="i-lucide-trash-2 h-4 w-4" />
+                    </button>
                   </div>
-                  <div className="text-right">
-                    <p className="text-xs text-[var(--carbon-text-secondary)]">身高 / 性别</p>
-                    <p className="mt-1 text-sm text-[var(--carbon-text)]">
-                      {profile.height} cm / {profile.gender === 'male' ? '男' : '女'}
-                    </p>
-                  </div>
-                </div>
+                ))}
+              </div>
 
+              <div className="border-t border-[var(--carbon-border)] px-4 py-3">
                 <div className="border-l-4 border-[var(--carbon-border)] bg-[var(--carbon-surface-subtle)] px-3 py-2.5">
                   <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--carbon-text-secondary)]">
                     备注
                   </p>
                   <p className="mt-1 text-sm leading-6 text-[var(--carbon-text)]">
-                    {latestRecord?.note?.trim() ||
-                      '这条记录还没有备注。你可以在“添加”页补充晨起、饭后或运动后等上下文。'}
+                    {latestRecord?.note?.trim()
+                      ? latestRecord.note
+                      : '这条记录还没有备注。你可以在“添加”页补充晨起、饭后或运动后等上下文。'}
                   </p>
                 </div>
               </div>

@@ -2,12 +2,11 @@ import dayjs from 'dayjs'
 import type { Goal, TimeRange, UserProfile, WeightRecord } from '../types'
 import { calcBMI } from './bmi'
 
-const RANGE_TO_DAYS: Record<TimeRange | '15d', number> = {
+const RANGE_TO_DAYS: Record<TimeRange, number> = {
   '3d': 3,
   '7d': 7,
   '15d': 15,
   '1m': 30,
-  '3m': 90,
 }
 
 // 统一收口统计逻辑，避免多个页面重复计算。
@@ -36,7 +35,7 @@ export function filterRecordsByDays(records: WeightRecord[], days: number): Weig
   )
 }
 
-export function filterRecordsByRange(records: WeightRecord[], range: TimeRange | '15d') {
+export function filterRecordsByRange(records: WeightRecord[], range: TimeRange) {
   return filterRecordsByDays(records, RANGE_TO_DAYS[range])
 }
 

@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import BottomTabBar from './components/BottomTabBar'
+import GoalAchievementModal from './components/GoalAchievementModal'
 import ToastContainer from './components/Toast'
 import AddRecordPage from './pages/AddRecordPage'
 import DashboardPage from './pages/DashboardPage'
@@ -11,6 +12,7 @@ import type { AppTab, Goal, UserProfile, WeightRecord } from './types'
 import { calcBMI } from './utils/bmi'
 import { getCurrentWeight } from './utils/stats'
 import {
+  deleteRecord,
   getGoals,
   getProfile,
   getRecords,
@@ -26,12 +28,32 @@ export default function App() {
   const [records, setRecords] = useState<WeightRecord[]>(() => getRecords())
   const [goals, setGoals] = useState<Goal[]>(() => getGoals())
   const [activeTab, setActiveTab] = useState<AppTab>('dashboard')
-  const today = dayjs().format('YYYY-MM-DD')
+  const [achievedGoal, setAchievedGoal] = useState<Goal | null>(null)
+
+  // 跨午夜日期修复：可见性变化时重新计算当天日期
+  const [today, setToday] = useState(() => dayjs().format('YYYY-MM-DD'))
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        setToday(dayjs().format('YYYY-MM-DD'))
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [])
 
   const refreshAll = useCallback(() => {
     setProfile(getProfile())
     setRecords(getRecords())
     setGoals(getGoals())
+  }, [])
+
+  /** 删除单条体重记录 */
+  const handleDeleteRecord = useCallback((id: string) => {
+    deleteRecord(id)
+    setRecords(getRecords())
+    toast.success('记录已删除')
   }, [])
 
   const handleSetupComplete = (nextProfile: UserProfile) => {
@@ -105,9 +127,10 @@ export default function App() {
           (activeGoal.startWeight < activeGoal.targetWeight && weight >= activeGoal.targetWeight)
 
         if (reached) {
-          saveGoal({ ...activeGoal, isCompleted: true, completedDate: date })
+          const completedGoal = { ...activeGoal, isCompleted: true, completedDate: date }
+          saveGoal(completedGoal)
           setGoals(getGoals())
-          toast.success('目标已达成，已自动归档到里程碑')
+          setAchievedGoal(completedGoal)
         }
       }
 
@@ -122,6 +145,8 @@ export default function App() {
   )
 
   const activeGoal = useMemo(() => goals.find(goal => !goal.isCompleted) ?? null, [goals])
+  /** 已完成的目标列表（里程碑） */
+  const milestones = useMemo(() => goals.filter(g => g.isCompleted), [goals])
   const latestRecord = records.at(-1)
   const todayRecord = useMemo(
     () => records.find(record => record.date === today) ?? null,
@@ -141,6 +166,7 @@ export default function App() {
             records={records}
             goal={activeGoal}
             onNavigate={setActiveTab}
+            onDeleteRecord={handleDeleteRecord}
           />
         )
       case 'trends':
@@ -159,6 +185,7 @@ export default function App() {
             profile={profile}
             records={records}
             goal={activeGoal}
+            milestones={milestones}
             onSaveGoal={handleSaveGoal}
             onProfileUpdate={handleProfileUpdate}
             onReload={refreshAll}
@@ -174,6 +201,16 @@ export default function App() {
       {renderPage()}
       {profile && <BottomTabBar activeTab={activeTab} onChange={setActiveTab} />}
       <ToastContainer />
+      {achievedGoal && (
+        <GoalAchievementModal
+          goal={achievedGoal}
+          onClose={() => setAchievedGoal(null)}
+          onSetNew={() => {
+            setAchievedGoal(null)
+            setActiveTab('profile')
+          }}
+        />
+      )}
     </>
   )
 }

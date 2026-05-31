@@ -2,6 +2,7 @@ import confetti from 'canvas-confetti'
 import dayjs from 'dayjs'
 import { toPng } from 'html-to-image'
 import { useEffect, useRef, useState } from 'react'
+
 import type { Goal } from '../types'
 
 interface Props {
@@ -10,15 +11,23 @@ interface Props {
   onSetNew: () => void
 }
 
+/**
+ * 目标达成庆祝弹窗
+ * - 展示 confetti 动画
+ * - 统计达成数据（用时天数、减/增重量、日均变化）
+ * - 支持保存分享卡片为 PNG 图片
+ */
 export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props) {
   const cardRef = useRef<HTMLDivElement>(null)
   const [saving, setSaving] = useState(false)
 
+  // 计算达成统计数据
   const days = goal.completedDate ? dayjs(goal.completedDate).diff(dayjs(goal.startDate), 'day') : 0
   const weightDiff = Math.abs(goal.startWeight - goal.targetWeight)
   const avgPerDay = days > 0 ? (weightDiff / days).toFixed(2) : '0'
   const direction = goal.startWeight > goal.targetWeight ? '减' : '增'
 
+  /** 根据用时天数返回鼓励语 */
   const getEncouragement = () => {
     if (days <= 7) return '你的毅力令人钦佩！短短一周就达成了目标。'
     if (days <= 30) return '坚持就是胜利，你用行动证明了自己！'
@@ -26,6 +35,7 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
     return '长期坚持是最难的，你做到了，这就是自律的力量。'
   }
 
+  // confetti 庆祝动画
   useEffect(() => {
     const timer = setTimeout(() => {
       confetti({
@@ -40,6 +50,7 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
     return () => clearTimeout(timer)
   }, [])
 
+  /** 保存分享卡片为 PNG 图片 */
   const handleSaveImage = async () => {
     if (!cardRef.current) return
     setSaving(true)
@@ -53,113 +64,90 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
       link.download = `scaletrack-achievement-${dayjs().format('YYYYMMDD')}.png`
       link.href = dataUrl
       link.click()
-    } catch (err) {
-      console.error('Failed to save image:', err)
+    } catch {
+      // 图片保存失败时静默处理
     } finally {
       setSaving(false)
     }
   }
 
   return (
-    <div
-      className="modal-backdrop"
-      onClick={e => {
-        if (e.target === e.currentTarget) onClose()
-      }}
-    >
-      <div className="modal-content w-full max-w-sm">
-        {/* Shareable Card */}
-        <div
-          ref={cardRef}
-          className="bg-white rounded-3xl overflow-hidden"
-          style={{ fontFamily: "'Plus Jakarta Sans', 'DM Sans', sans-serif" }}
-        >
-          {/* Header gradient */}
-          <div className="relative px-6 pt-8 pb-6 bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 text-white overflow-hidden">
-            {/* Decorative circles */}
-            <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white/10" />
-            <div className="absolute -bottom-8 -left-8 w-24 h-24 rounded-full bg-white/5" />
-
-            <div className="relative z-10 text-center">
-              <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                <span className="i-lucide-trophy text-2xl" />
-              </div>
-              <h2 className="text-xl font-bold mb-1">目标达成！</h2>
-              <p className="text-sm text-white/80">
-                ScaleTrack · {dayjs().format('YYYY年MM月DD日')}
-              </p>
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div className="px-6 py-5">
-            <div className="grid grid-cols-3 gap-3 mb-5">
-              <div className="text-center p-3 rounded-2xl bg-stone-50">
-                <div className="text-2xl font-extrabold text-primary-600">{days}</div>
-                <div className="text-[11px] text-stone-500 mt-0.5">天</div>
-              </div>
-              <div className="text-center p-3 rounded-2xl bg-stone-50">
-                <div className="text-2xl font-extrabold text-primary-600">
-                  {weightDiff.toFixed(1)}
-                </div>
-                <div className="text-[11px] text-stone-500 mt-0.5">kg {direction}重</div>
-              </div>
-              <div className="text-center p-3 rounded-2xl bg-stone-50">
-                <div className="text-2xl font-extrabold text-primary-600">{avgPerDay}</div>
-                <div className="text-[11px] text-stone-500 mt-0.5">kg/天</div>
-              </div>
-            </div>
-
-            {/* Weight journey */}
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="text-center">
-                <div className="text-lg font-bold text-stone-800">{goal.startWeight}</div>
-                <div className="text-[11px] text-stone-400">起始</div>
-              </div>
-              <div className="flex-1 h-px bg-gradient-to-r from-stone-200 via-primary-300 to-stone-200 relative">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-primary-500 flex items-center justify-center">
-                  <span className="i-lucide-arrow-right text-white text-xs" />
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-lg font-bold text-primary-600">{goal.targetWeight}</div>
-                <div className="text-[11px] text-stone-400">目标</div>
-              </div>
-            </div>
-
-            <p className="text-sm text-stone-600 text-center leading-relaxed">
-              {getEncouragement()}
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+      <div className="mx-4 flex w-full max-w-sm flex-col bg-[var(--carbon-surface)] shadow-lg">
+        {/* 分享卡片区域（用于截图） */}
+        <div ref={cardRef} className="flex flex-col">
+          {/* 顶部渐变区域 */}
+          <div className="flex flex-col items-center gap-2 bg-[var(--carbon-primary)] px-6 py-6 text-white">
+            <span className="i-lucide-trophy h-10 w-10" />
+            <h2 className="text-xl font-semibold">目标达成！</h2>
+            <p className="text-center text-sm text-white/80">
+              {goal.startWeight.toFixed(1)} → {goal.targetWeight.toFixed(1)} kg
             </p>
           </div>
 
-          {/* Brand footer */}
-          <div className="px-6 py-3 border-t border-stone-100 flex items-center justify-center gap-1.5">
-            <span className="i-lucide-scale text-primary-500 text-sm" />
-            <span className="text-xs font-semibold text-stone-400 tracking-wide">SCALETRACK</span>
+          {/* 统计数据 */}
+          <div className="grid grid-cols-3 gap-px border-b border-[var(--carbon-border)] bg-[var(--carbon-border)]">
+            <div className="flex flex-col items-center gap-1 bg-[var(--carbon-surface)] py-4">
+              <span className="text-xl font-semibold text-[var(--carbon-primary)]">{days}</span>
+              <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--carbon-text-secondary)]">
+                天
+              </span>
+            </div>
+            <div className="flex flex-col items-center gap-1 bg-[var(--carbon-surface)] py-4">
+              <span className="text-xl font-semibold text-[var(--carbon-primary)]">
+                {weightDiff.toFixed(1)}
+              </span>
+              <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--carbon-text-secondary)]">
+                {direction}重 (kg)
+              </span>
+            </div>
+            <div className="flex flex-col items-center gap-1 bg-[var(--carbon-surface)] py-4">
+              <span className="text-xl font-semibold text-[var(--carbon-primary)]">
+                {avgPerDay}
+              </span>
+              <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--carbon-text-secondary)]">
+                日均 (kg)
+              </span>
+            </div>
+          </div>
+
+          {/* 鼓励语 */}
+          <div className="border-b border-[var(--carbon-border)] px-6 py-4">
+            <div className="flex items-start gap-3 bg-[var(--carbon-surface-subtle)] p-3">
+              <span className="i-lucide-sparkles h-4 w-4 shrink-0 text-[var(--carbon-primary)]" />
+              <p className="text-sm leading-6 text-[var(--carbon-text)]">{getEncouragement()}</p>
+            </div>
           </div>
         </div>
 
-        {/* Action buttons (outside the shareable card) */}
-        <div className="mt-4 space-y-2.5">
+        {/* 操作按钮区域（不包含在截图中） */}
+        <div className="flex flex-col gap-2 p-4">
+          {/* 保存图片按钮 */}
           <button
             onClick={handleSaveImage}
             disabled={saving}
-            className="btn-primary w-full py-3.5 text-[15px] font-semibold flex items-center justify-center gap-2"
+            className="flex h-10 items-center justify-center gap-2 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] text-sm font-medium text-[var(--carbon-text)] transition-colors hover:bg-[var(--carbon-surface-subtle)] disabled:opacity-50"
           >
-            <span className={saving ? 'i-lucide-loader-2 animate-spin' : 'i-lucide-download'} />
-            {saving ? '保存中...' : '保存图片分享'}
+            <span className="i-lucide-image-down h-4 w-4" />
+            {saving ? '保存中...' : '保存分享卡片'}
           </button>
-          <div className="flex gap-2.5">
-            <button onClick={onSetNew} className="btn-outline flex-1 py-3 text-sm font-medium">
-              设定新目标
-            </button>
-            <button
-              onClick={onClose}
-              className="btn flex-1 py-3 text-sm font-medium text-[var(--c-text-secondary)] hover:bg-[var(--c-bg-secondary)] rounded-2xl"
-            >
-              稍后再说
-            </button>
-          </div>
+
+          {/* 设定新目标 */}
+          <button
+            onClick={onSetNew}
+            className="flex h-12 items-center justify-center gap-2 bg-[var(--carbon-primary)] text-sm font-semibold text-white transition-colors hover:bg-[var(--carbon-primary-hover)]"
+          >
+            <span className="i-lucide-target h-4 w-4" />
+            设定新目标
+          </button>
+
+          {/* 稍后再说 */}
+          <button
+            onClick={onClose}
+            className="flex h-10 items-center justify-center text-sm text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
+          >
+            稍后再说
+          </button>
         </div>
       </div>
     </div>
