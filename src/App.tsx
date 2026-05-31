@@ -57,8 +57,18 @@ export default function App() {
   }, [])
 
   const handleSetupComplete = (nextProfile: UserProfile) => {
+    const initialRecord: WeightRecord = {
+      id: crypto.randomUUID(),
+      date: dayjs().format('YYYY-MM-DD'),
+      weight: nextProfile.initialWeight,
+      bmi: calcBMI(nextProfile.initialWeight, nextProfile.height),
+      createdAt: new Date().toISOString(),
+    }
+
     saveProfile(nextProfile)
+    saveRecord(initialRecord)
     setProfile(nextProfile)
+    setRecords(getRecords())
     setActiveTab('dashboard')
   }
 
