@@ -6,24 +6,28 @@ import { validateHeight } from '../../utils/validation'
 
 interface Props {
   profile: UserProfile
+  isEditing: boolean
+  onEditingChange: (value: boolean) => void
   onProfileUpdate: (patch: Partial<UserProfile>) => void
 }
 
 /** 基础资料区块内部处理表单态，避免页面文件继续膨胀。 */
-export default function ProfileBasicsSection({ profile, onProfileUpdate }: Props) {
-  const [isEditingProfile, setIsEditingProfile] = useState(false)
+export default function ProfileBasicsSection({
+  profile,
+  isEditing,
+  onEditingChange,
+  onProfileUpdate,
+}: Props) {
   const [heightInput, setHeightInput] = useState(String(profile.height))
   const [genderInput, setGenderInput] = useState<UserProfile['gender']>(profile.gender)
 
   const handleToggleProfileEdit = () => {
-    if (isEditingProfile) {
-      setIsEditingProfile(false)
+    if (isEditing) {
+      onEditingChange(false)
       return
     }
 
-    setHeightInput(String(profile.height))
-    setGenderInput(profile.gender)
-    setIsEditingProfile(true)
+    onEditingChange(true)
   }
 
   const handleSave = () => {
@@ -34,7 +38,7 @@ export default function ProfileBasicsSection({ profile, onProfileUpdate }: Props
     }
 
     onProfileUpdate({ gender: genderInput, height: parsed })
-    setIsEditingProfile(false)
+    onEditingChange(false)
   }
 
   return (
@@ -43,7 +47,7 @@ export default function ProfileBasicsSection({ profile, onProfileUpdate }: Props
         基础信息
       </h3>
       <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)]">
-        {isEditingProfile ? (
+        {isEditing ? (
           <div className="flex flex-col gap-4 p-4">
             <div className="grid grid-cols-2 gap-3">
               {(['male', 'female'] as const).map(value => (

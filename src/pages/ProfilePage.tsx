@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import ProfileBasicsSection from '../components/profile/ProfileBasicsSection'
 import ProfileBMISection from '../components/profile/ProfileBMISection'
 import ProfileDataSection from '../components/profile/ProfileDataSection'
@@ -27,12 +29,31 @@ export default function ProfilePage({
   onProfileUpdate,
   onReload,
 }: Props) {
+  const [isEditingProfile, setIsEditingProfile] = useState(false)
+  const [profileEditVersion, setProfileEditVersion] = useState(0)
   const currentWeight = getCurrentWeight(profile, records)
   const currentBMI = getCurrentBMI(profile, records)
   const bmiCategory = getBMICategory(currentBMI)
   const bmiRange = BMI_RANGES.find(range => range.category === bmiCategory)
   const progress = getGoalProgress(goal, currentWeight)
   const bmiPercent = Math.min(100, Math.max(0, (currentBMI / 35) * 100))
+
+  const handleToggleProfileEdit = () => {
+    setIsEditingProfile(value => {
+      const nextValue = !value
+      if (nextValue) {
+        setProfileEditVersion(version => version + 1)
+      }
+      return nextValue
+    })
+  }
+
+  const handleProfileEditingChange = (value: boolean) => {
+    if (value) {
+      setProfileEditVersion(version => version + 1)
+    }
+    setIsEditingProfile(value)
+  }
 
   return (
     <div className="app-page bg-[var(--carbon-bg)]">
@@ -70,7 +91,13 @@ export default function ProfilePage({
           bmiLabel={bmiRange?.label}
           bmiDescription={bmiRange?.description}
         />
-        <ProfileBasicsSection profile={profile} onProfileUpdate={onProfileUpdate} />
+        <ProfileBasicsSection
+          key={profileEditVersion}
+          profile={profile}
+          isEditing={isEditingProfile}
+          onEditingChange={handleProfileEditingChange}
+          onProfileUpdate={onProfileUpdate}
+        />
         <ProfileDataSection onReload={onReload} />
         <ProfileMilestonesSection milestones={milestones} />
       </main>
