@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { toast, type ToastMessage } from '../utils/toast'
 
-// 全局 Toast 容器组件，放在 App.tsx 根部（中文注释）
+// 全局 Toast 容器组件，统一切到 Carbon 风格提示。
 export default function ToastContainer() {
   const [messages, setMessages] = useState<ToastMessage[]>([])
 
@@ -12,22 +12,22 @@ export default function ToastContainer() {
   if (messages.length === 0) return null
 
   return (
-    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-2.5 w-full max-w-[320px] pointer-events-none">
+    <div className="pointer-events-none fixed left-1/2 top-4 z-[100] flex w-full max-w-[320px] -translate-x-1/2 flex-col gap-2.5">
       {messages.map(msg => (
         <div
           key={msg.id}
-          className="animate-fade-in-up flex items-center gap-3 px-4 py-3 rounded-2xl border border-white/10 dark:border-black/20 bg-white/75 dark:bg-stone-900/80 backdrop-blur-xl shadow-lg shadow-black/5 dark:shadow-black/20 pointer-events-auto transition-all duration-300"
+          className="pointer-events-auto flex items-center gap-3 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-3 shadow-sm transition-all duration-300 animate-fade-in-up"
         >
           {msg.type === 'success' && (
-            <span className="i-lucide-check-circle text-emerald-500 text-base shrink-0" />
+            <span className="i-lucide-check-circle h-4 w-4 shrink-0 text-[#198038]" />
           )}
           {msg.type === 'error' && (
-            <span className="i-lucide-alert-circle text-rose-500 text-base shrink-0" />
+            <span className="i-lucide-alert-circle h-4 w-4 shrink-0 text-[#da1e28]" />
           )}
           {msg.type === 'info' && (
-            <span className="i-lucide-info text-blue-500 text-base shrink-0" />
+            <span className="i-lucide-info h-4 w-4 shrink-0 text-[var(--carbon-primary)]" />
           )}
-          <span className="text-xs font-body font-medium text-stone-800 dark:text-stone-200 leading-relaxed">
+          <span className="text-xs font-medium leading-relaxed text-[var(--carbon-text)]">
             {msg.text}
           </span>
         </div>

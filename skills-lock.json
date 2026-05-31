@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "file-line-audit": {
+      "source": "bosens-China/file-line-audit",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/file-line-audit/SKILL.md",
+      "computedHash": "5d0ac962c44ebd815108aa703ceda63690ba5416eaec627d7c0cf3bd25cc8137"
+    }
+  }
+}

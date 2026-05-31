@@ -43,6 +43,11 @@ export function saveRecord(record: WeightRecord): void {
   localStorage.setItem(KEYS.records, JSON.stringify(records))
 }
 
+export function saveRecords(records: WeightRecord[]): void {
+  const sortedRecords = [...records].sort((a, b) => a.date.localeCompare(b.date))
+  localStorage.setItem(KEYS.records, JSON.stringify(sortedRecords))
+}
+
 export function deleteRecord(id: string): void {
   const records = getRecords().filter(r => r.id !== id)
   localStorage.setItem(KEYS.records, JSON.stringify(records))
@@ -96,7 +101,14 @@ export function exportData(): ExportData {
 
 export function importData(data: ExportData): void {
   if (data.version !== 1) throw new Error('不支持的数据格式')
-  if (data.profile) localStorage.setItem(KEYS.profile, JSON.stringify(data.profile))
-  if (data.records) localStorage.setItem(KEYS.records, JSON.stringify(data.records))
-  if (data.goals) localStorage.setItem(KEYS.goals, JSON.stringify(data.goals))
+  if (data.profile === null) {
+    localStorage.removeItem(KEYS.profile)
+  } else {
+    localStorage.setItem(KEYS.profile, JSON.stringify(data.profile))
+  }
+  localStorage.setItem(
+    KEYS.records,
+    JSON.stringify(Array.isArray(data.records) ? data.records : []),
+  )
+  localStorage.setItem(KEYS.goals, JSON.stringify(Array.isArray(data.goals) ? data.goals : []))
 }

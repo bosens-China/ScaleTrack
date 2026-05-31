@@ -12,6 +12,7 @@ export interface WeightRecord {
   date: string // YYYY-MM-DD
   weight: number // kg
   bmi: number
+  note?: string
   createdAt: string // ISO string
 }
 
@@ -36,3 +37,5 @@ export interface BMIRange {
   color: string
   description: string
 }
+
+export type AppTab = 'dashboard' | 'trends' | 'add' | 'profile'
