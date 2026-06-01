@@ -8,6 +8,7 @@ import {
   getCurrentWeight,
   getGoalProgress,
   getPreviousDiff,
+  getSmoothedWeight,
   getWeeklyChange,
 } from '../utils/stats'
 
@@ -51,7 +52,8 @@ export default function DashboardPage({
   const previousDiff = getPreviousDiff(records)
   const weeklyRecords = filterRecordsByDays(records, 7)
   const weeklyChange = getWeeklyChange(records)
-  const progress = getGoalProgress(goal, currentWeight)
+  const smoothedWeight = getSmoothedWeight(profile, records)
+  const progress = getGoalProgress(goal, smoothedWeight)
   const sparkline = buildSparklinePoints(weeklyRecords)
   const latestBmiTone = getBMIColor(currentBMI)
   const latestCategory = getBMICategory(currentBMI)
@@ -144,13 +146,13 @@ export default function DashboardPage({
                     <polyline
                       points={sparkline}
                       fill="none"
-                      stroke="#0f62fe"
+                      stroke="var(--carbon-primary)"
                       strokeWidth="2"
                       strokeLinecap="square"
                     />
                     <linearGradient id="dashboard-gradient" x1="0%" x2="0%" y1="0%" y2="100%">
-                      <stop offset="0%" stopColor="#0f62fe" stopOpacity="0.10" />
-                      <stop offset="100%" stopColor="#0f62fe" stopOpacity="0" />
+                      <stop offset="0%" stopColor="var(--carbon-primary)" stopOpacity="0.10" />
+                      <stop offset="100%" stopColor="var(--carbon-primary)" stopOpacity="0" />
                     </linearGradient>
                     <polygon points={`${sparkline} 100,40 0,40`} fill="url(#dashboard-gradient)" />
                   </svg>

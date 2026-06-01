@@ -45,6 +45,23 @@ input {
   --app-tabbar-height: calc(60px + max(var(--safe-bottom), 6px));
 }
 
+.dark {
+  --carbon-bg: #131314;
+  --carbon-surface: #1e1f20;
+  --carbon-surface-subtle: #282a2c;
+  --carbon-surface-variant: #1e293b; /* A bit of blue tint for variant */
+  --carbon-surface-strong: #444746;
+  --carbon-inverse: #f8f9fa;
+  --carbon-text: #e3e3e3;
+  --carbon-text-secondary: #c4c7c5;
+  --carbon-outline: #444746;
+  --carbon-border: #333537;
+  --carbon-border-strong: #747775;
+  --carbon-primary: #a8c7fa;
+  --carbon-primary-hover: #8ab4f8;
+  --carbon-primary-soft: rgba(168, 199, 250, 0.12);
+}
+
 html {
   font-size: 16px;
   color-scheme: light;

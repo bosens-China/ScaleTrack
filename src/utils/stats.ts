@@ -14,6 +14,18 @@ export function getCurrentWeight(profile: UserProfile, records: WeightRecord[]):
   return records.at(-1)?.weight ?? profile.initialWeight
 }
 
+export function getSmoothedWeight(profile: UserProfile, records: WeightRecord[], days = 7): number {
+  if (records.length === 0) return profile.initialWeight
+
+  const recentRecords = filterRecordsByDays(records, days)
+  if (recentRecords.length === 0) {
+    return records.at(-1)!.weight
+  }
+
+  const sum = recentRecords.reduce((acc, r) => acc + r.weight, 0)
+  return Number((sum / recentRecords.length).toFixed(1))
+}
+
 export function getCurrentBMI(profile: UserProfile, records: WeightRecord[]): number {
   return calcBMI(getCurrentWeight(profile, records), profile.height)
 }
@@ -74,7 +86,7 @@ export function getWeightStats(records: WeightRecord[]) {
 export function getGoalProgress(goal: Goal | null, currentWeight: number) {
   if (!goal) return null
 
-  const totalDistance = goal.targetWeight - goal.startWeight
+  const totalDistance = Math.abs(goal.startWeight - goal.targetWeight)
   if (totalDistance === 0) {
     return {
       progress: 100,
@@ -82,12 +94,13 @@ export function getGoalProgress(goal: Goal | null, currentWeight: number) {
     }
   }
 
-  const traveledDistance = currentWeight - goal.startWeight
+  const remainingDistance = Math.abs(currentWeight - goal.targetWeight)
+  const traveledDistance = totalDistance - remainingDistance
   const progressRatio = traveledDistance / totalDistance
 
   return {
-    progress: Math.min(100, Math.max(0, Number((progressRatio * 100).toFixed(0)))),
-    remaining: Number(Math.abs(currentWeight - goal.targetWeight).toFixed(1)),
+    progress: Math.min(100, Math.max(0, Math.round(progressRatio * 100))),
+    remaining: Number(remainingDistance.toFixed(1)),
   }
 }
 

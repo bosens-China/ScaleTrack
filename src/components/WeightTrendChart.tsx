@@ -20,17 +20,27 @@ interface Props {
 }
 
 export default function WeightTrendChart({ records }: Props) {
+  const isDark = document.documentElement.classList.contains('dark')
+  const primaryColor = isDark ? '#a8c7fa' : '#0f62fe'
+  const primaryRgb = isDark ? '168, 199, 250' : '15, 98, 254'
+  const tooltipBg = isDark ? '#333537' : '#161616'
+  const tooltipTitle = isDark ? '#e3e3e3' : '#ffffff'
+  const tooltipBody = isDark ? '#c4c7c5' : '#f4f4f4'
+  const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(141, 141, 141, 0.18)'
+  const tickColor = isDark ? '#c4c7c5' : '#6f6f6f'
+  const borderColor = isDark ? '#444746' : '#e0e0e0'
+
   const data = useMemo(
     () => ({
       labels: records.map(record => dayjs(record.date).format('dd').toUpperCase()),
       datasets: [
         {
           data: records.map(record => record.weight),
-          borderColor: '#0f62fe',
+          borderColor: primaryColor,
           backgroundColor: (context: { chart: { ctx: CanvasRenderingContext2D } }) => {
             const gradient = context.chart.ctx.createLinearGradient(0, 0, 0, 240)
-            gradient.addColorStop(0, 'rgba(15, 98, 254, 0.16)')
-            gradient.addColorStop(1, 'rgba(15, 98, 254, 0)')
+            gradient.addColorStop(0, `rgba(${primaryRgb}, 0.16)`)
+            gradient.addColorStop(1, `rgba(${primaryRgb}, 0)`)
             return gradient
           },
           pointRadius: 0,
@@ -41,7 +51,7 @@ export default function WeightTrendChart({ records }: Props) {
         },
       ],
     }),
-    [records],
+    [records, primaryColor, primaryRgb],
   )
 
   const options = useMemo(
@@ -51,9 +61,9 @@ export default function WeightTrendChart({ records }: Props) {
       plugins: {
         legend: { display: false },
         tooltip: {
-          backgroundColor: '#161616',
-          titleColor: '#ffffff',
-          bodyColor: '#f4f4f4',
+          backgroundColor: tooltipBg,
+          titleColor: tooltipTitle,
+          bodyColor: tooltipBody,
           cornerRadius: 0,
           padding: 12,
           displayColors: false,
@@ -71,15 +81,15 @@ export default function WeightTrendChart({ records }: Props) {
         x: {
           grid: { display: false },
           ticks: {
-            color: '#6f6f6f',
+            color: tickColor,
             font: { family: 'IBM Plex Sans, sans-serif', size: 10 },
           },
-          border: { color: '#e0e0e0' },
+          border: { color: borderColor },
         },
         y: {
-          grid: { color: 'rgba(141, 141, 141, 0.18)' },
+          grid: { color: gridColor },
           ticks: {
-            color: '#6f6f6f',
+            color: tickColor,
             font: { family: 'IBM Plex Sans, sans-serif', size: 10 },
             callback: (value: string | number) => `${value}kg`,
           },
@@ -92,7 +102,7 @@ export default function WeightTrendChart({ records }: Props) {
         },
       },
     }),
-    [records],
+    [records, tooltipBg, tooltipTitle, tooltipBody, gridColor, tickColor, borderColor],
   )
 
   if (records.length === 0) {
