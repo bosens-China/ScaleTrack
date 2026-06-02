@@ -106,7 +106,7 @@ body {
 }
 
 .app-main {
-  padding-top: calc(var(--app-header-height) + 12px);
+  padding-top: calc(var(--safe-top) + 12px);
 }
 
 .app-header {

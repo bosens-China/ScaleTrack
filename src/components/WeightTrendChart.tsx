@@ -58,6 +58,9 @@ export default function WeightTrendChart({ records }: Props) {
     () => ({
       responsive: true,
       maintainAspectRatio: false,
+      layout: {
+        padding: { top: 20 },
+      },
       plugins: {
         legend: { display: false },
         tooltip: {
@@ -116,8 +119,13 @@ export default function WeightTrendChart({ records }: Props) {
   }
 
   return (
-    <div className="h-60 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4">
-      <Line data={data} options={options} />
+    <div className="h-60 overflow-x-auto border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4 carbon-scrollbar">
+      <div
+        style={{ minWidth: records.length > 7 ? `${records.length * 40}px` : '100%' }}
+        className="h-full"
+      >
+        <Line data={data} options={options} />
+      </div>
     </div>
   )
 }

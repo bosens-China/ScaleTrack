@@ -5,6 +5,8 @@ export interface UserProfile {
   height: number // cm
   initialWeight: number // kg
   createdAt: string // ISO string
+  nickname?: string
+  avatar?: string
 }
 
 export interface WeightRecord {
@@ -38,7 +40,7 @@ export interface BMIRange {
   description: string
 }
 
-export type AppTab = 'dashboard' | 'trends' | 'add' | 'profile'
+export type AppTab = 'dashboard' | 'trends' | 'add' | 'profile' | 'edit-user-info'
 
 /** 数据导入/导出的标准结构 */
 export interface ExportData {

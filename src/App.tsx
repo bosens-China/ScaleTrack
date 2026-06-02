@@ -5,6 +5,7 @@ import GoalAchievementModal from './components/GoalAchievementModal'
 import ToastContainer from './components/Toast'
 import AddRecordPage from './pages/AddRecordPage'
 import DashboardPage from './pages/DashboardPage'
+import EditUserInfoPage from './pages/EditUserInfoPage'
 import ProfilePage from './pages/ProfilePage'
 import SetupPage from './pages/SetupPage'
 import TrendsPage from './pages/TrendsPage'
@@ -203,6 +204,15 @@ export default function App() {
             onSaveGoal={handleSaveGoal}
             onProfileUpdate={handleProfileUpdate}
             onReload={refreshAll}
+            onNavigate={setActiveTab}
+          />
+        )
+      case 'edit-user-info':
+        return (
+          <EditUserInfoPage
+            profile={profile}
+            onSave={handleProfileUpdate}
+            onCancel={() => setActiveTab('profile')}
           />
         )
       default:
@@ -213,7 +223,9 @@ export default function App() {
   return (
     <>
       {renderPage()}
-      {profile && <BottomTabBar activeTab={activeTab} onChange={setActiveTab} />}
+      {profile && activeTab !== 'edit-user-info' && (
+        <BottomTabBar activeTab={activeTab} onChange={setActiveTab} />
+      )}
       <ToastContainer />
       {achievedGoal && (
         <GoalAchievementModal

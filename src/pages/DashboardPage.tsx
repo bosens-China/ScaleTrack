@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 
+import WeightTrendChart from '../components/WeightTrendChart'
 import type { AppTab, Goal, UserProfile, WeightRecord } from '../types'
 import { getBMICategory, getBMIColor } from '../utils/bmi'
 import {
@@ -20,25 +21,6 @@ interface Props {
   onDeleteRecord: (id: string) => void
 }
 
-function buildSparklinePoints(records: WeightRecord[]) {
-  if (records.length === 0) {
-    return '0,32 100,32'
-  }
-
-  const weights = records.map(record => record.weight)
-  const min = Math.min(...weights)
-  const max = Math.max(...weights)
-  const range = Math.max(max - min, 0.1)
-
-  return records
-    .map((record, index) => {
-      const x = records.length === 1 ? 50 : (index / (records.length - 1)) * 100
-      const y = 35 - ((record.weight - min) / range) * 25
-      return `${x},${y.toFixed(2)}`
-    })
-    .join(' ')
-}
-
 export default function DashboardPage({
   profile,
   records,
@@ -54,10 +36,9 @@ export default function DashboardPage({
   const weeklyChange = getWeeklyChange(records)
   const smoothedWeight = getSmoothedWeight(profile, records)
   const progress = getGoalProgress(profile.initialWeight, goal, smoothedWeight)
-  const sparkline = buildSparklinePoints(weeklyRecords)
   const latestBmiTone = getBMIColor(currentBMI)
   const latestCategory = getBMICategory(currentBMI)
-  const recentRecords = [...records].reverse().slice(0, 5)
+  const recentRecords = [...records].reverse()
   const hasRecords = records.length > 0
   const weeklyDirection =
     weeklyChange === null
@@ -139,30 +120,8 @@ export default function DashboardPage({
                 </button>
               </div>
               <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4 shadow-sm">
-                <div className="h-24 w-full">
-                  <svg className="h-full w-full" preserveAspectRatio="none" viewBox="0 0 100 40">
-                    <polyline
-                      points={sparkline}
-                      fill="none"
-                      stroke="var(--carbon-primary)"
-                      strokeWidth="2"
-                      strokeLinecap="square"
-                    />
-                    <linearGradient id="dashboard-gradient" x1="0%" x2="0%" y1="0%" y2="100%">
-                      <stop offset="0%" stopColor="var(--carbon-primary)" stopOpacity="0.10" />
-                      <stop offset="100%" stopColor="var(--carbon-primary)" stopOpacity="0" />
-                    </linearGradient>
-                    <polygon points={`${sparkline} 100,40 0,40`} fill="url(#dashboard-gradient)" />
-                  </svg>
-                </div>
-                <div className="mt-1.5 flex justify-between border-t border-[var(--carbon-border)] pt-2 text-[11px] font-medium text-[var(--carbon-text-secondary)]">
-                  {Array.from({ length: 7 }, (_, index) =>
-                    dayjs()
-                      .subtract(6 - index, 'day')
-                      .format('dd'),
-                  ).map(label => (
-                    <span key={label}>{label}</span>
-                  ))}
+                <div className="-mx-4 -my-4">
+                  <WeightTrendChart records={weeklyRecords} />
                 </div>
               </div>
             </section>
@@ -218,7 +177,7 @@ export default function DashboardPage({
                 </button>
               </div>
 
-              <div className="flex flex-col">
+              <div className="flex flex-col max-h-[300px] overflow-y-auto carbon-scrollbar">
                 {recentRecords.map(record => (
                   <div
                     key={record.id}
