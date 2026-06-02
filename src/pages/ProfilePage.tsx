@@ -38,7 +38,7 @@ export default function ProfilePage({
   const bmiCategory = getBMICategory(currentBMI)
   const bmiRange = BMI_RANGES.find(range => range.category === bmiCategory)
   const smoothedWeight = getSmoothedWeight(profile, records)
-  const progress = getGoalProgress(profile.initialWeight, goal, smoothedWeight)
+  const progress = getGoalProgress(goal?.startWeight ?? profile.initialWeight, goal, smoothedWeight)
   const getBmiPercent = (bmi: number) => {
     if (bmi < 18.5) return (bmi / 18.5) * 18.5
     if (bmi < 24) return 18.5 + ((bmi - 18.5) / (24 - 18.5)) * 31.5

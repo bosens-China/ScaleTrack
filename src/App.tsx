@@ -105,7 +105,8 @@ export default function App() {
       const goal: Goal = {
         id: activeGoal?.id ?? crypto.randomUUID(),
         targetWeight,
-        startWeight: activeGoal?.startWeight ?? currentWeight,
+        // 每次设置/修改目标时，都以当前体重为起点，确保进度从现在算起
+        startWeight: currentWeight,
         startDate: activeGoal?.startDate ?? dayjs().format('YYYY-MM-DD'),
         isCompleted: false,
       }

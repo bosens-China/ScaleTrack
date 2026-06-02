@@ -35,11 +35,13 @@ export default function DashboardPage({
   const weeklyRecords = filterRecordsByDays(records, 7)
   const weeklyChange = getWeeklyChange(records)
   const smoothedWeight = getSmoothedWeight(profile, records)
-  const progress = getGoalProgress(profile.initialWeight, goal, smoothedWeight)
+  const progress = getGoalProgress(goal?.startWeight ?? profile.initialWeight, goal, smoothedWeight)
   const latestBmiTone = getBMIColor(currentBMI)
   const latestCategory = getBMICategory(currentBMI)
   const recentRecords = [...records].reverse()
   const hasRecords = records.length > 0
+  // 判断是增重目标还是减重目标
+  const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
   const weeklyDirection =
     weeklyChange === null
       ? '暂无变化'
@@ -48,12 +50,21 @@ export default function DashboardPage({
         : weeklyChange < 0
           ? '本周减少'
           : '本周持平'
+  // 增重目标：涨是好事（绿色）；减重目标：涨是坏事（红色）
   const trendTone =
     weeklyChange === null
       ? 'text-[var(--carbon-text-secondary)]'
-      : weeklyChange > 0
-        ? 'text-[#da1e28]'
-        : 'text-[#198038]'
+      : isGainGoal
+        ? weeklyChange > 0
+          ? 'text-[#198038]'
+          : weeklyChange < 0
+            ? 'text-[#da1e28]'
+            : 'text-[var(--carbon-text-secondary)]'
+        : weeklyChange > 0
+          ? 'text-[#da1e28]'
+          : weeklyChange < 0
+            ? 'text-[#198038]'
+            : 'text-[var(--carbon-text-secondary)]'
 
   return (
     <div className="app-page bg-[var(--carbon-bg)]">
@@ -119,23 +130,26 @@ export default function DashboardPage({
                   7 天
                 </button>
               </div>
-              <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4 shadow-sm">
-                <div className="-mx-4 -my-4">
-                  <WeightTrendChart records={weeklyRecords} />
-                </div>
-              </div>
+              <WeightTrendChart records={weeklyRecords} />
             </section>
 
             <section className="grid grid-cols-2 gap-4">
               <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4">
                 <div className="flex items-center gap-2 text-[var(--carbon-text-secondary)]">
                   <span className="i-lucide-flag h-4 w-4" />
-                  <span className="text-[11px] font-medium uppercase tracking-[0.12em]">目标</span>
+                  <span className="text-[11px] font-medium uppercase tracking-[0.12em]">
+                    {isGainGoal ? '增重目标' : '减重目标'}
+                  </span>
                 </div>
                 <p className="mt-3 text-xl font-semibold text-[var(--carbon-text)]">
                   {goal ? `${goal.targetWeight.toFixed(1)} kg` : '未设置'}
                 </p>
-                <div className="mt-3 h-1 bg-[var(--carbon-surface-strong)]">
+                {progress && (
+                  <p className="mt-1 text-[10px] text-[var(--carbon-text-secondary)]">
+                    还差 {progress.remaining} kg
+                  </p>
+                )}
+                <div className="mt-2 h-1 bg-[var(--carbon-surface-strong)]">
                   <div
                     className="h-full bg-[var(--carbon-primary)] transition-all duration-300"
                     style={{ width: `${progress?.progress ?? 0}%` }}

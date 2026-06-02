@@ -49,7 +49,7 @@ export default function EditUserInfoPage({ profile, onSave, onCancel }: Props) {
 
   return (
     <div className="app-page relative bg-[var(--carbon-bg)]">
-      <header className="app-header absolute top-0 z-10 flex w-full items-center justify-between border-b border-[var(--carbon-border)] bg-[var(--carbon-bg)]">
+      <header className="app-header fixed top-0 z-10 flex w-full max-w-[430px] items-center justify-between border-b border-[var(--carbon-border)] bg-[var(--carbon-bg)]">
         <button
           onClick={onCancel}
           className="flex h-10 items-center justify-center px-4 text-[var(--carbon-text-secondary)]"
@@ -60,7 +60,10 @@ export default function EditUserInfoPage({ profile, onSave, onCancel }: Props) {
         <div className="w-14" />
       </header>
 
-      <main className="app-main flex flex-col gap-6 px-4 pb-8 pt-[calc(var(--app-header-height)+16px)]">
+      <main
+        className="flex flex-col gap-6 px-4 pb-8"
+        style={{ paddingTop: 'calc(var(--app-header-height) + 24px)' }}
+      >
         <div className="flex flex-col items-center gap-4">
           <div className="relative cursor-pointer" onClick={() => fileInputRef.current?.click()}>
             {avatar ? (

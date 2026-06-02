@@ -34,14 +34,14 @@ export default function TrendsPage({ records, onNavigate }: Props) {
           <p className="mt-1 text-sm text-[var(--carbon-text-secondary)]">直观查看您的进度</p>
         </div>
 
-        <div className="mb-4 flex overflow-x-auto border-b border-[var(--carbon-border)] carbon-scrollbar">
+        <div className="mb-4 flex gap-1 overflow-x-auto border-b border-[var(--carbon-border)] carbon-scrollbar pb-px">
           {RANGE_OPTIONS.map(option => {
             const isActive = option.key === range
             return (
               <button
                 key={option.key}
                 onClick={() => setRange(option.key)}
-                className={`shrink-0 px-4 flex-1 border-b-2 py-3 text-sm transition-colors ${
+                className={`shrink-0 whitespace-nowrap px-4 border-b-2 py-2.5 text-sm transition-colors ${
                   isActive
                     ? 'border-[var(--carbon-primary)] bg-[var(--carbon-primary)] text-[var(--carbon-text-on-primary)]'
                     : 'border-transparent text-[var(--carbon-text-secondary)] hover:bg-[var(--carbon-surface-variant)]'
