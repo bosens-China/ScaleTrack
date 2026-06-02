@@ -25,7 +25,7 @@ export interface Goal {
   isCompleted: boolean
 }
 
-export type TimeRange = '3d' | '7d' | '15d' | '1m'
+export type TimeRange = '3d' | '7d' | '15d' | '1m' | '3m' | '6m'
 
 export type BMICategory = 'underweight' | 'normal' | 'overweight' | 'obese'
 

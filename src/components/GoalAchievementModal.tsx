@@ -77,7 +77,7 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
         {/* 分享卡片区域（用于截图） */}
         <div ref={cardRef} className="flex flex-col">
           {/* 顶部渐变区域 */}
-          <div className="flex flex-col items-center gap-2 bg-[var(--carbon-primary)] px-6 py-6 text-white">
+          <div className="flex flex-col items-center gap-2 bg-[var(--carbon-primary)] px-6 py-6 text-[var(--carbon-text-on-primary)]">
             <span className="i-lucide-trophy h-10 w-10" />
             <h2 className="text-xl font-semibold">目标达成！</h2>
             <p className="text-center text-sm text-white/80">
@@ -135,7 +135,7 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
           {/* 设定新目标 */}
           <button
             onClick={onSetNew}
-            className="flex h-12 items-center justify-center gap-2 bg-[var(--carbon-primary)] text-sm font-semibold text-white transition-colors hover:bg-[var(--carbon-primary-hover)]"
+            className="flex h-12 items-center justify-center gap-2 bg-[var(--carbon-primary)] text-sm font-semibold text-[var(--carbon-text-on-primary)] transition-colors hover:bg-[var(--carbon-primary-hover)]"
           >
             <span className="i-lucide-target h-4 w-4" />
             设定新目标

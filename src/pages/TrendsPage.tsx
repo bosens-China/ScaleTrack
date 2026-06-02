@@ -7,8 +7,10 @@ import { buildTrendInsight, filterRecordsByRange, getWeightStats } from '../util
 const RANGE_OPTIONS = [
   { key: '3d', label: '3天' },
   { key: '7d', label: '7天' },
-  { key: '15d', label: '15天' },
+  { key: '15d', label: '半月' },
   { key: '1m', label: '1个月' },
+  { key: '3m', label: '3个月' },
+  { key: '6m', label: '半年' },
 ] as const
 
 interface Props {
@@ -32,16 +34,16 @@ export default function TrendsPage({ records, onNavigate }: Props) {
           <p className="mt-1 text-sm text-[var(--carbon-text-secondary)]">直观查看您的进度</p>
         </div>
 
-        <div className="mb-4 flex border-b border-[var(--carbon-border)]">
+        <div className="mb-4 flex overflow-x-auto border-b border-[var(--carbon-border)] carbon-scrollbar">
           {RANGE_OPTIONS.map(option => {
             const isActive = option.key === range
             return (
               <button
                 key={option.key}
                 onClick={() => setRange(option.key)}
-                className={`flex-1 border-b-2 py-3 text-sm transition-colors ${
+                className={`shrink-0 px-4 flex-1 border-b-2 py-3 text-sm transition-colors ${
                   isActive
-                    ? 'border-[var(--carbon-primary)] bg-[var(--carbon-primary)] text-white'
+                    ? 'border-[var(--carbon-primary)] bg-[var(--carbon-primary)] text-[var(--carbon-text-on-primary)]'
                     : 'border-transparent text-[var(--carbon-text-secondary)] hover:bg-[var(--carbon-surface-variant)]'
                 }`}
               >
@@ -117,7 +119,7 @@ export default function TrendsPage({ records, onNavigate }: Props) {
             </div>
             <button
               onClick={() => onNavigate('add')}
-              className="mt-4 flex h-12 items-center justify-center bg-[var(--carbon-primary)] px-5 text-sm font-medium text-white hover:bg-[var(--carbon-primary-hover)]"
+              className="mt-4 flex h-12 items-center justify-center bg-[var(--carbon-primary)] px-5 text-sm font-medium text-[var(--carbon-text-on-primary)] hover:bg-[var(--carbon-primary-hover)]"
             >
               去添加记录
             </button>

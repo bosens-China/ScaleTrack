@@ -53,7 +53,7 @@ export default function DashboardPage({
   const weeklyRecords = filterRecordsByDays(records, 7)
   const weeklyChange = getWeeklyChange(records)
   const smoothedWeight = getSmoothedWeight(profile, records)
-  const progress = getGoalProgress(goal, smoothedWeight)
+  const progress = getGoalProgress(profile.initialWeight, goal, smoothedWeight)
   const sparkline = buildSparklinePoints(weeklyRecords)
   const latestBmiTone = getBMIColor(currentBMI)
   const latestCategory = getBMICategory(currentBMI)
@@ -77,20 +77,18 @@ export default function DashboardPage({
   return (
     <div className="app-page bg-[var(--carbon-bg)]">
       <main className="app-main flex flex-col gap-4 px-4 pb-8 pt-4">
-        <section className="bg-[var(--carbon-primary)] px-4 py-4 text-white shadow-sm">
+        <section className="bg-[var(--carbon-primary)] px-4 py-4 text-[var(--carbon-text-on-primary)] shadow-sm">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/72">
-                当前体重
-              </p>
+              <p className="text-xs font-medium uppercase tracking-[0.18em] opacity-72">当前体重</p>
               <div className="mt-1 flex items-baseline gap-1">
                 <span className="text-4xl font-semibold leading-none">
                   {currentWeight.toFixed(1)}
                 </span>
-                <span className="text-sm text-white/88">kg</span>
+                <span className="text-sm opacity-90">kg</span>
               </div>
             </div>
-            <div className="flex min-w-[72px] flex-col items-center bg-white/10 px-3 py-2 text-center">
+            <div className="flex min-w-[72px] flex-col items-center bg-black/10 dark:bg-black/10 px-3 py-2 text-center">
               <span
                 className={`h-4 w-4 ${
                   previousDiff !== null && previousDiff > 0
@@ -106,9 +104,9 @@ export default function DashboardPage({
             </div>
           </div>
 
-          <div className="mt-4 flex items-center justify-between border-t border-white/12 pt-3">
+          <div className="mt-4 flex items-center justify-between border-t border-[var(--carbon-text-on-primary)] border-opacity-10 pt-3">
             <div>
-              <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/72">BMI</p>
+              <p className="text-xs font-medium uppercase tracking-[0.18em] opacity-72">BMI</p>
               <div className="mt-1 flex items-center gap-2">
                 <span className="text-xl font-semibold">{currentBMI.toFixed(1)}</span>
                 <span
@@ -283,7 +281,7 @@ export default function DashboardPage({
         <section className="flex justify-center pt-1">
           <button
             onClick={() => onNavigate('add')}
-            className="flex min-w-[200px] items-center justify-center gap-3 bg-[var(--carbon-primary)] px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[var(--carbon-primary-hover)]"
+            className="flex min-w-[200px] items-center justify-center gap-3 bg-[var(--carbon-primary)] px-6 py-3 text-sm font-semibold text-[var(--carbon-text-on-primary)] shadow-sm transition-colors hover:bg-[var(--carbon-primary-hover)]"
           >
             <span className="i-lucide-plus h-4 w-4" />
             <span>添加体重记录</span>

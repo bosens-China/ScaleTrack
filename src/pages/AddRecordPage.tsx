@@ -12,7 +12,14 @@ interface Props {
 
 export default function AddRecordPage({ initialWeight, existingRecord, onSave }: Props) {
   const [weight, setWeight] = useState(Number(initialWeight.toFixed(1)))
-  const [note, setNote] = useState(existingRecord?.note ?? '')
+  const [note, setNote] = useState(() => {
+    if (existingRecord?.note) return existingRecord.note
+    const hour = dayjs().hour()
+    if (hour >= 5 && hour < 10) return '早上'
+    if (hour >= 10 && hour < 14) return '中午'
+    if (hour >= 14 && hour < 19) return '下午'
+    return '晚上'
+  })
   const todayLabel = dayjs().format('YYYY年MM月DD日')
   const hasExistingRecord = Boolean(existingRecord)
 
@@ -108,7 +115,7 @@ export default function AddRecordPage({ initialWeight, existingRecord, onSave }:
               note: note.trim() || undefined,
             })
           }
-          className="group flex h-16 w-full items-center justify-between bg-[var(--carbon-primary)] px-6 text-base font-medium text-white transition-colors hover:bg-[var(--carbon-primary-hover)]"
+          className="group flex h-16 w-full items-center justify-between bg-[var(--carbon-primary)] px-6 text-base font-medium text-[var(--carbon-text-on-primary)] transition-colors hover:bg-[var(--carbon-primary-hover)]"
         >
           <span>保存记录</span>
           <span className="i-lucide-check h-5 w-5" />

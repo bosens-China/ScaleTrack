@@ -35,6 +35,7 @@ input {
   --carbon-border: #e0e0e0;
   --carbon-border-strong: #525252;
   --carbon-primary: #0f62fe;
+  --carbon-text-on-primary: #ffffff;
   --carbon-primary-hover: #0043ce;
   --carbon-primary-soft: #d0e2ff;
   --safe-top: env(safe-area-inset-top, 0px);
@@ -58,6 +59,7 @@ input {
   --carbon-border: #333537;
   --carbon-border-strong: #747775;
   --carbon-primary: #a8c7fa;
+  --carbon-text-on-primary: #131314;
   --carbon-primary-hover: #8ab4f8;
   --carbon-primary-soft: rgba(168, 199, 250, 0.12);
 }

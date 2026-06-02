@@ -27,7 +27,11 @@ export default function App() {
   const [profile, setProfile] = useState<UserProfile | null>(getProfile)
   const [records, setRecords] = useState<WeightRecord[]>(() => getRecords())
   const [goals, setGoals] = useState<Goal[]>(() => getGoals())
-  const [activeTab, setActiveTab] = useState<AppTab>('dashboard')
+  const [activeTab, setActiveTab] = useState<AppTab>(() => {
+    const today = dayjs().format('YYYY-MM-DD')
+    const hasTodayRecord = getRecords().some(r => r.date === today)
+    return hasTodayRecord ? 'dashboard' : 'add'
+  })
   const [achievedGoal, setAchievedGoal] = useState<Goal | null>(null)
 
   // 跨午夜日期修复：可见性变化时重新计算当天日期

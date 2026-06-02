@@ -36,7 +36,7 @@ export default function ProfilePage({
   const bmiCategory = getBMICategory(currentBMI)
   const bmiRange = BMI_RANGES.find(range => range.category === bmiCategory)
   const smoothedWeight = getSmoothedWeight(profile, records)
-  const progress = getGoalProgress(goal, smoothedWeight)
+  const progress = getGoalProgress(profile.initialWeight, goal, smoothedWeight)
   const bmiPercent = Math.min(100, Math.max(0, (currentBMI / 35) * 100))
 
   const handleToggleProfileEdit = () => {
@@ -66,7 +66,7 @@ export default function ProfilePage({
             </div>
             <button
               onClick={handleToggleProfileEdit}
-              className="absolute bottom-0 right-0 flex h-7 w-7 items-center justify-center rounded-full border border-[var(--carbon-surface)] bg-[var(--carbon-primary)] text-white shadow-sm"
+              className="absolute bottom-0 right-0 flex h-7 w-7 items-center justify-center rounded-full border border-[var(--carbon-surface)] bg-[var(--carbon-primary)] text-[var(--carbon-text-on-primary)] shadow-sm"
               aria-label="编辑基础信息"
             >
               <span className="i-lucide-pencil h-3.5 w-3.5" />

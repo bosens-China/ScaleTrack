@@ -7,6 +7,8 @@ const RANGE_TO_DAYS: Record<TimeRange, number> = {
   '7d': 7,
   '15d': 15,
   '1m': 30,
+  '3m': 90,
+  '6m': 180,
 }
 
 // 统一收口统计逻辑，避免多个页面重复计算。
@@ -83,10 +85,10 @@ export function getWeightStats(records: WeightRecord[]) {
   }
 }
 
-export function getGoalProgress(goal: Goal | null, currentWeight: number) {
+export function getGoalProgress(initialWeight: number, goal: Goal | null, currentWeight: number) {
   if (!goal) return null
 
-  const totalDistance = Math.abs(goal.startWeight - goal.targetWeight)
+  const totalDistance = Math.abs(initialWeight - goal.targetWeight)
   if (totalDistance === 0) {
     return {
       progress: 100,

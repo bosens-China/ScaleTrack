@@ -153,7 +153,7 @@ export default function SetupPage({ onComplete }: Props) {
 
             <button
               onClick={handleSubmit}
-              className="mt-8 flex h-14 w-full items-center justify-between bg-[var(--carbon-primary)] px-5 text-sm font-medium text-white transition-colors hover:bg-[var(--carbon-primary-hover)]"
+              className="mt-8 flex h-14 w-full items-center justify-between bg-[var(--carbon-primary)] px-5 text-sm font-medium text-[var(--carbon-text-on-primary)] transition-colors hover:bg-[var(--carbon-primary-hover)]"
             >
               <span>开始记录</span>
               <span className="i-lucide-arrow-right h-4 w-4" />

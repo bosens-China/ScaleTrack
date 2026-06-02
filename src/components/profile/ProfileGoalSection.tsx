@@ -101,7 +101,7 @@ export default function ProfileGoalSection({ goal, currentWeight, progress, onSa
             />
             <button
               onClick={handleSave}
-              className="bg-[var(--carbon-primary)] px-5 text-sm font-medium text-white hover:bg-[var(--carbon-primary-hover)]"
+              className="bg-[var(--carbon-primary)] px-5 text-sm font-medium text-[var(--carbon-text-on-primary)] hover:bg-[var(--carbon-primary-hover)]"
             >
               保存
             </button>

@@ -32,7 +32,7 @@ export default function WeightTrendChart({ records }: Props) {
 
   const data = useMemo(
     () => ({
-      labels: records.map(record => dayjs(record.date).format('dd').toUpperCase()),
+      labels: records.map(record => dayjs(record.date).format('MM/DD')),
       datasets: [
         {
           data: records.map(record => record.weight),
@@ -83,6 +83,8 @@ export default function WeightTrendChart({ records }: Props) {
           ticks: {
             color: tickColor,
             font: { family: 'IBM Plex Sans, sans-serif', size: 10 },
+            maxTicksLimit: 7,
+            maxRotation: 0,
           },
           border: { color: borderColor },
         },

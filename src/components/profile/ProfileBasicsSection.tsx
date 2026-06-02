@@ -80,7 +80,7 @@ export default function ProfileBasicsSection({
             />
             <button
               onClick={handleSave}
-              className="h-12 w-full bg-[var(--carbon-primary)] text-sm font-medium text-white hover:bg-[var(--carbon-primary-hover)]"
+              className="h-12 w-full bg-[var(--carbon-primary)] text-sm font-medium text-[var(--carbon-text-on-primary)] hover:bg-[var(--carbon-primary-hover)]"
             >
               保存基础信息
             </button>
