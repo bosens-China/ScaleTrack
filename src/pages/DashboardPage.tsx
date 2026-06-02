@@ -1,8 +1,9 @@
 import dayjs from 'dayjs'
+import { useState } from 'react'
 
-import WeightTrendChart from '../components/WeightTrendChart'
-import type { AppTab, Goal, UserProfile, WeightRecord } from '../types'
-import { getBMICategory, getBMIColor } from '../utils/bmi'
+import WeightTrendChart from '@/components/WeightTrendChart'
+import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
+import { getBMICategory, getBMIColor } from '@/utils/bmi'
 import {
   filterRecordsByDays,
   getCurrentBMI,
@@ -11,13 +12,13 @@ import {
   getPreviousDiff,
   getSmoothedWeight,
   getWeeklyChange,
-} from '../utils/stats'
+} from '@/utils/stats'
 
 interface Props {
   profile: UserProfile
   records: WeightRecord[]
   goal: Goal | null
-  onNavigate: (tab: AppTab) => void
+  onNavigate: (page: AppPage) => void
   onDeleteRecord: (id: string) => void
 }
 
@@ -28,6 +29,8 @@ export default function DashboardPage({
   onNavigate,
   onDeleteRecord,
 }: Props) {
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null)
+
   const currentWeight = getCurrentWeight(profile, records)
   const currentBMI = getCurrentBMI(profile, records)
   const latestRecord = records.at(-1)
@@ -40,7 +43,6 @@ export default function DashboardPage({
   const latestCategory = getBMICategory(currentBMI)
   const recentRecords = [...records].reverse()
   const hasRecords = records.length > 0
-  // 判断是增重目标还是减重目标
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
   const weeklyDirection =
     weeklyChange === null
@@ -50,21 +52,31 @@ export default function DashboardPage({
         : weeklyChange < 0
           ? '本周减少'
           : '本周持平'
-  // 增重目标：涨是好事（绿色）；减重目标：涨是坏事（红色）
   const trendTone =
     weeklyChange === null
       ? 'text-[var(--carbon-text-secondary)]'
       : isGainGoal
         ? weeklyChange > 0
-          ? 'text-[#198038]'
+          ? 'text-[var(--color-success)]'
           : weeklyChange < 0
-            ? 'text-[#da1e28]'
+            ? 'text-[var(--color-danger)]'
             : 'text-[var(--carbon-text-secondary)]'
         : weeklyChange > 0
-          ? 'text-[#da1e28]'
+          ? 'text-[var(--color-danger)]'
           : weeklyChange < 0
-            ? 'text-[#198038]'
+            ? 'text-[var(--color-success)]'
             : 'text-[var(--carbon-text-secondary)]'
+
+  const handleDeleteClick = (id: string) => {
+    setPendingDeleteId(id)
+  }
+
+  const handleConfirmDelete = () => {
+    if (pendingDeleteId) {
+      onDeleteRecord(pendingDeleteId)
+      setPendingDeleteId(null)
+    }
+  }
 
   return (
     <div className="app-page bg-[var(--carbon-bg)]">
@@ -195,24 +207,47 @@ export default function DashboardPage({
                 {recentRecords.map(record => (
                   <div
                     key={record.id}
-                    className="flex items-center justify-between border-b border-[var(--carbon-border)] px-4 py-3 last:border-b-0"
+                    className="flex flex-col border-b border-[var(--carbon-border)] last:border-b-0"
                   >
-                    <div className="min-w-0 flex-1">
-                      <span className="text-sm font-medium text-[var(--carbon-text)]">
-                        {record.weight.toFixed(1)} kg
-                      </span>
-                      <p className="mt-0.5 truncate text-xs text-[var(--carbon-text-secondary)]">
-                        {dayjs(record.date).format('MM月DD日')}
-                        {record.note ? ` · ${record.note}` : ''}
-                      </p>
+                    <div className="flex items-center justify-between px-4 py-3">
+                      <div className="min-w-0 flex-1">
+                        <span className="text-sm font-medium text-[var(--carbon-text)]">
+                          {record.weight.toFixed(1)} kg
+                        </span>
+                        <p className="mt-0.5 truncate text-xs text-[var(--carbon-text-secondary)]">
+                          {dayjs(record.date).format('MM月DD日')}
+                          {record.note ? ` · ${record.note}` : ''}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteClick(record.id)}
+                        className="ml-3 flex h-8 w-8 items-center justify-center text-[var(--carbon-outline)] transition-colors hover:text-[var(--color-danger)]"
+                        aria-label="删除记录"
+                      >
+                        <span className="i-lucide-trash-2 h-4 w-4" />
+                      </button>
                     </div>
-                    <button
-                      onClick={() => onDeleteRecord(record.id)}
-                      className="ml-3 flex h-8 w-8 items-center justify-center text-[var(--carbon-outline)] transition-colors hover:text-[#da1e28]"
-                      aria-label="删除记录"
-                    >
-                      <span className="i-lucide-trash-2 h-4 w-4" />
-                    </button>
+                    {pendingDeleteId === record.id && (
+                      <div className="flex items-center justify-between border-t border-[var(--color-danger)] bg-[var(--carbon-surface-subtle)] px-4 py-2.5">
+                        <p className="text-xs text-[var(--carbon-text-secondary)]">
+                          确认删除这条记录？
+                        </p>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => setPendingDeleteId(null)}
+                            className="px-3 py-1 text-xs text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
+                          >
+                            取消
+                          </button>
+                          <button
+                            onClick={handleConfirmDelete}
+                            className="bg-[var(--color-danger)] px-3 py-1 text-xs font-medium text-white"
+                          >
+                            删除
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -225,7 +260,7 @@ export default function DashboardPage({
                   <p className="mt-1 text-sm leading-6 text-[var(--carbon-text)]">
                     {latestRecord?.note?.trim()
                       ? latestRecord.note
-                      : '这条记录还没有备注。你可以在“添加”页补充晨起、饭后或运动后等上下文。'}
+                      : '这条记录还没有备注。你可以在"添加"页补充晨起、饭后或运动后等上下文。'}
                   </p>
                 </div>
               </div>

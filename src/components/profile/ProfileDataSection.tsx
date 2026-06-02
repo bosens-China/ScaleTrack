@@ -1,8 +1,8 @@
 import type { ChangeEvent } from 'react'
 import { useRef } from 'react'
 
-import { exportData, importData } from '../../utils/storage'
-import { toast } from '../../utils/toast'
+import { exportData, importData } from '@/utils/storage'
+import { toast } from '@/utils/toast'
 
 interface Props {
   onReload: () => void

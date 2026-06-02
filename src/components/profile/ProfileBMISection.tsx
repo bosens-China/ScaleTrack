@@ -1,3 +1,5 @@
+import { BMI_RANGES } from '@/utils/bmi'
+
 interface Props {
   currentBMI: number
   bmiPercent: number
@@ -11,6 +13,8 @@ export default function ProfileBMISection({
   bmiLabel = '正常',
   bmiDescription = '保持健康体重可以降低健康风险。',
 }: Props) {
+  const [underweight, normal, overweight, obese] = BMI_RANGES
+
   return (
     <section className="flex flex-col gap-4 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4">
       <div className="flex items-center justify-between border-b border-[var(--carbon-border)] pb-2">
@@ -29,10 +33,10 @@ export default function ProfileBMISection({
 
       <div className="relative pb-6 pt-4">
         <div className="flex h-2 w-full">
-          <div className="h-full w-[18.5%] bg-[var(--carbon-primary-soft)]" />
-          <div className="h-full w-[31.5%] bg-[var(--carbon-primary)]" />
-          <div className="h-full w-[25%] bg-[#f1c21b]" />
-          <div className="h-full w-[25%] bg-[#fa4d56]" />
+          <div className="h-full w-[18.5%]" style={{ backgroundColor: underweight.color }} />
+          <div className="h-full w-[31.5%]" style={{ backgroundColor: normal.color }} />
+          <div className="h-full w-[25%]" style={{ backgroundColor: overweight.color }} />
+          <div className="h-full w-[25%]" style={{ backgroundColor: obese.color }} />
         </div>
         <div
           className="absolute top-4 -translate-x-1/2 transition-all duration-300"

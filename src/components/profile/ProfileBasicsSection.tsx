@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import type { UserProfile } from '../../types'
-import { toast } from '../../utils/toast'
-import { validateHeight } from '../../utils/validation'
+import type { UserProfile } from '@/types'
+import { toast } from '@/utils/toast'
+import { validateHeight } from '@/utils/validation'
 
 interface Props {
   profile: UserProfile
@@ -26,7 +26,6 @@ export default function ProfileBasicsSection({
       onEditingChange(false)
       return
     }
-
     onEditingChange(true)
   }
 
@@ -36,7 +35,6 @@ export default function ProfileBasicsSection({
       toast.error('请输入有效的身高')
       return
     }
-
     onProfileUpdate({ gender: genderInput, height: parsed })
     onEditingChange(false)
   }

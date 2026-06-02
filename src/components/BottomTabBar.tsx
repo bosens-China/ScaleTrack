@@ -1,4 +1,4 @@
-import type { AppTab } from '../types'
+import type { AppTab } from '@/types'
 
 interface TabDefinition {
   key: AppTab

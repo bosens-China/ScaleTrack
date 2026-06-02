@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /Users/yliu/Desktop/my/ScaleTrack && pnpm exec tsc --noEmit 2>&1)",
+      "Bash(cd /Users/yliu/Desktop/my/ScaleTrack && pnpm lint 2>&1)",
+      "Bash(cd /Users/yliu/Desktop/my/ScaleTrack && pnpm exec tsc --noEmit 2>&1 && pnpm lint 2>&1)",
+      "Bash(cd /Users/yliu/Desktop/my/ScaleTrack && grep -rn \"useMemo\\\\|useCallback\" src/ --include=\"*.ts\" --include=\"*.tsx\")"
+    ]
+  }
+}

@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 import { useState } from 'react'
 
-import WeightRulerPicker from '../components/WeightRulerPicker'
-import type { WeightRecord } from '../types'
+import WeightRulerPicker from '@/components/WeightRulerPicker'
+import type { WeightRecord } from '@/types'
 
 interface Props {
   initialWeight: number

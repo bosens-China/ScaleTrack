@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
-import WeightTrendChart from '../components/WeightTrendChart'
-import type { AppTab, TimeRange, WeightRecord } from '../types'
-import { buildTrendInsight, filterRecordsByRange, getWeightStats } from '../utils/stats'
+import WeightTrendChart from '@/components/WeightTrendChart'
+import type { AppPage, TimeRange, WeightRecord } from '@/types'
+import { buildTrendInsight, filterRecordsByRange, getWeightStats } from '@/utils/stats'
 
 const RANGE_OPTIONS = [
   { key: '3d', label: '3天' },
@@ -15,12 +15,12 @@ const RANGE_OPTIONS = [
 
 interface Props {
   records: WeightRecord[]
-  onNavigate: (tab: AppTab) => void
+  onNavigate: (page: AppPage) => void
 }
 
 export default function TrendsPage({ records, onNavigate }: Props) {
   const [range, setRange] = useState<TimeRange>('7d')
-  const filteredRecords = useMemo(() => filterRecordsByRange(records, range), [range, records])
+  const filteredRecords = filterRecordsByRange(records, range)
   const stats = getWeightStats(filteredRecords)
   const insight = buildTrendInsight(filteredRecords)
   const hasRecords = records.length > 0

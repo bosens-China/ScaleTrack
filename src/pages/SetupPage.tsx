@@ -1,9 +1,9 @@
 import { useId, useState } from 'react'
 
-import WeightRulerPicker from '../components/WeightRulerPicker'
-import type { Gender, UserProfile } from '../types'
-import { BMI_RANGES, calcBMI, getBMICategory, getBMIColor } from '../utils/bmi'
-import { validateHeight, validateWeight, VALIDATION_LIMITS } from '../utils/validation'
+import WeightRulerPicker from '@/components/WeightRulerPicker'
+import type { Gender, UserProfile } from '@/types'
+import { BMI_RANGES, calcBMI, getBMICategory, getBMIColor } from '@/utils/bmi'
+import { validateHeight, validateWeight, VALIDATION_LIMITS } from '@/utils/validation'
 
 interface Props {
   onComplete: (profile: UserProfile) => void
@@ -75,8 +75,8 @@ export default function SetupPage({ onComplete }: Props) {
                     <span
                       className={
                         g === 'male'
-                          ? 'i-lucide-user text-[#198038]'
-                          : 'i-lucide-user-round text-[#da1e28]'
+                          ? 'i-lucide-user text-[var(--color-success)]'
+                          : 'i-lucide-user-round text-[var(--color-danger)]'
                       }
                     />
                     {g === 'male' ? '男' : '女'}
@@ -148,7 +148,9 @@ export default function SetupPage({ onComplete }: Props) {
             )}
 
             {error && (
-              <p className="mt-4 text-xs font-medium text-[#da1e28] animate-fade-in">{error}</p>
+              <p className="mt-4 text-xs font-medium text-[var(--color-danger)] animate-fade-in">
+                {error}
+              </p>
             )}
 
             <button

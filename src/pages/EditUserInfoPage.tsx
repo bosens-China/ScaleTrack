@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
-import type { UserProfile } from '../types'
+
+import type { UserProfile } from '@/types'
+import { cropAndCompressAvatar } from '@/utils/image'
 
 interface Props {
   profile: UserProfile
@@ -12,34 +14,15 @@ export default function EditUserInfoPage({ profile, onSave, onCancel }: Props) {
   const [avatar, setAvatar] = useState(profile.avatar ?? '')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
-
-    const reader = new FileReader()
-    reader.onload = event => {
-      const img = new Image()
-      img.onload = () => {
-        const canvas = document.createElement('canvas')
-        const size = 200 // Compress to 200x200
-        canvas.width = size
-        canvas.height = size
-        const ctx = canvas.getContext('2d')
-        if (ctx) {
-          // simple crop to square
-          const minDim = Math.min(img.width, img.height)
-          const sx = (img.width - minDim) / 2
-          const sy = (img.height - minDim) / 2
-          ctx.drawImage(img, sx, sy, minDim, minDim, 0, 0, size, size)
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.8)
-          setAvatar(dataUrl)
-        }
-      }
-      if (event.target?.result) {
-        img.src = event.target.result as string
-      }
+    try {
+      const dataUrl = await cropAndCompressAvatar(file)
+      setAvatar(dataUrl)
+    } catch {
+      // 图片处理失败时不更新头像
     }
-    reader.readAsDataURL(file)
   }
 
   const handleSave = () => {

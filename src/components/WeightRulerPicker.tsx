@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 const MARKER_WIDTH = 12
 
@@ -20,10 +20,9 @@ export default function WeightRulerPicker({
   const scrollRef = useRef<HTMLDivElement>(null)
   const frameRef = useRef<number | null>(null)
 
-  const markers = useMemo(() => {
-    const total = Math.floor((max - min) / step)
-    return Array.from({ length: total + 1 }, (_, index) => Number((min + index * step).toFixed(1)))
-  }, [max, min, step])
+  const markers = Array.from({ length: Math.floor((max - min) / step) + 1 }, (_, index) =>
+    Number((min + index * step).toFixed(1)),
+  )
 
   useEffect(() => {
     const container = scrollRef.current

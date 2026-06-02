@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-import type { Goal } from '../../types'
+import type { Goal } from '@/types'
 
 interface Props {
   milestones: Goal[]

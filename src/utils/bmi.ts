@@ -56,3 +56,18 @@ export function getBMIColor(bmi: number): string {
 export function getBMIRange(category: BMICategory): BMIRange {
   return BMI_RANGES.find(r => r.category === category)!
 }
+
+/** 将 BMI 值映射为刻度条上的百分比位置（0-100） */
+export function getBmiPercent(bmi: number): number {
+  let percent: number
+  if (bmi < 18.5) {
+    percent = (bmi / 18.5) * 18.5
+  } else if (bmi < 24) {
+    percent = 18.5 + ((bmi - 18.5) / (24 - 18.5)) * 31.5
+  } else if (bmi < 28) {
+    percent = 50 + ((bmi - 24) / (28 - 24)) * 25
+  } else {
+    percent = 75 + Math.min(25, ((bmi - 28) / 7) * 25)
+  }
+  return Math.min(100, Math.max(0, percent))
+}

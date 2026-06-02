@@ -1,14 +1,13 @@
 import { useState } from 'react'
 
-import ProfileBasicsSection from '../components/profile/ProfileBasicsSection'
-import ProfileBMISection from '../components/profile/ProfileBMISection'
-import ProfileDataSection from '../components/profile/ProfileDataSection'
-import ProfileGoalSection from '../components/profile/ProfileGoalSection'
-import ProfileMilestonesSection from '../components/profile/ProfileMilestonesSection'
-
-import type { Goal, UserProfile, WeightRecord } from '../types'
-import { BMI_RANGES, getBMICategory } from '../utils/bmi'
-import { getCurrentBMI, getCurrentWeight, getGoalProgress, getSmoothedWeight } from '../utils/stats'
+import ProfileBasicsSection from '@/components/profile/ProfileBasicsSection'
+import ProfileBMISection from '@/components/profile/ProfileBMISection'
+import ProfileDataSection from '@/components/profile/ProfileDataSection'
+import ProfileGoalSection from '@/components/profile/ProfileGoalSection'
+import ProfileMilestonesSection from '@/components/profile/ProfileMilestonesSection'
+import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
+import { BMI_RANGES, getBMICategory, getBmiPercent } from '@/utils/bmi'
+import { getCurrentBMI, getCurrentWeight, getGoalProgress, getSmoothedWeight } from '@/utils/stats'
 
 interface Props {
   profile: UserProfile
@@ -18,7 +17,7 @@ interface Props {
   onSaveGoal: (targetWeight: number) => void
   onProfileUpdate: (patch: Partial<UserProfile>) => void
   onReload: () => void
-  onNavigate: (tab: import('../types').AppTab) => void
+  onNavigate: (page: AppPage) => void
 }
 
 export default function ProfilePage({
@@ -39,13 +38,7 @@ export default function ProfilePage({
   const bmiRange = BMI_RANGES.find(range => range.category === bmiCategory)
   const smoothedWeight = getSmoothedWeight(profile, records)
   const progress = getGoalProgress(goal?.startWeight ?? profile.initialWeight, goal, smoothedWeight)
-  const getBmiPercent = (bmi: number) => {
-    if (bmi < 18.5) return (bmi / 18.5) * 18.5
-    if (bmi < 24) return 18.5 + ((bmi - 18.5) / (24 - 18.5)) * 31.5
-    if (bmi < 28) return 50 + ((bmi - 24) / (28 - 24)) * 25
-    return 75 + Math.min(25, ((bmi - 28) / 7) * 25)
-  }
-  const bmiPercent = Math.min(100, Math.max(0, getBmiPercent(currentBMI)))
+  const bmiPercent = getBmiPercent(currentBMI)
 
   const handleProfileEditingChange = (value: boolean) => {
     if (value) {

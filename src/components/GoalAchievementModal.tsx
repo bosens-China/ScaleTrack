@@ -3,7 +3,8 @@ import dayjs from 'dayjs'
 import { toPng } from 'html-to-image'
 import { useEffect, useRef, useState } from 'react'
 
-import type { Goal } from '../types'
+import type { Goal } from '@/types'
+import { toast } from '@/utils/toast'
 
 interface Props {
   goal: Goal
@@ -21,13 +22,11 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
   const cardRef = useRef<HTMLDivElement>(null)
   const [saving, setSaving] = useState(false)
 
-  // 计算达成统计数据
   const days = goal.completedDate ? dayjs(goal.completedDate).diff(dayjs(goal.startDate), 'day') : 0
   const weightDiff = Math.abs(goal.startWeight - goal.targetWeight)
   const avgPerDay = days > 0 ? (weightDiff / days).toFixed(2) : '0'
   const direction = goal.startWeight > goal.targetWeight ? '减' : '增'
 
-  /** 根据用时天数返回鼓励语 */
   const getEncouragement = () => {
     if (days <= 7) return '你的毅力令人钦佩！短短一周就达成了目标。'
     if (days <= 30) return '坚持就是胜利，你用行动证明了自己！'
@@ -35,7 +34,6 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
     return '长期坚持是最难的，你做到了，这就是自律的力量。'
   }
 
-  // confetti 庆祝动画
   useEffect(() => {
     const timer = setTimeout(() => {
       confetti({
@@ -50,7 +48,6 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
     return () => clearTimeout(timer)
   }, [])
 
-  /** 保存分享卡片为 PNG 图片 */
   const handleSaveImage = async () => {
     if (!cardRef.current) return
     setSaving(true)
@@ -65,7 +62,7 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
       link.href = dataUrl
       link.click()
     } catch {
-      // 图片保存失败时静默处理
+      toast.error('图片保存失败，请重试')
     } finally {
       setSaving(false)
     }
@@ -76,7 +73,6 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
       <div className="mx-4 flex w-full max-w-sm flex-col bg-[var(--carbon-surface)] shadow-lg">
         {/* 分享卡片区域（用于截图） */}
         <div ref={cardRef} className="flex flex-col">
-          {/* 顶部渐变区域 */}
           <div className="flex flex-col items-center gap-2 bg-[var(--carbon-primary)] px-6 py-6 text-[var(--carbon-text-on-primary)]">
             <span className="i-lucide-trophy h-10 w-10" />
             <h2 className="text-xl font-semibold">目标达成！</h2>
@@ -85,7 +81,6 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
             </p>
           </div>
 
-          {/* 统计数据 */}
           <div className="grid grid-cols-3 gap-px border-b border-[var(--carbon-border)] bg-[var(--carbon-border)]">
             <div className="flex flex-col items-center gap-1 bg-[var(--carbon-surface)] py-4">
               <span className="text-xl font-semibold text-[var(--carbon-primary)]">{days}</span>
@@ -111,7 +106,6 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
             </div>
           </div>
 
-          {/* 鼓励语 */}
           <div className="border-b border-[var(--carbon-border)] px-6 py-4">
             <div className="flex items-start gap-3 bg-[var(--carbon-surface-subtle)] p-3">
               <span className="i-lucide-sparkles h-4 w-4 shrink-0 text-[var(--carbon-primary)]" />
@@ -122,7 +116,6 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
 
         {/* 操作按钮区域（不包含在截图中） */}
         <div className="flex flex-col gap-2 p-4">
-          {/* 保存图片按钮 */}
           <button
             onClick={handleSaveImage}
             disabled={saving}
@@ -132,7 +125,6 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
             {saving ? '保存中...' : '保存分享卡片'}
           </button>
 
-          {/* 设定新目标 */}
           <button
             onClick={onSetNew}
             className="flex h-12 items-center justify-center gap-2 bg-[var(--carbon-primary)] text-sm font-semibold text-[var(--carbon-text-on-primary)] transition-colors hover:bg-[var(--carbon-primary-hover)]"
@@ -141,7 +133,6 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
             设定新目标
           </button>
 
-          {/* 稍后再说 */}
           <button
             onClick={onClose}
             className="flex h-10 items-center justify-center text-sm text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"

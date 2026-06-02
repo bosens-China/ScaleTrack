@@ -1,5 +1,5 @@
+import { toast, type ToastMessage } from '@/utils/toast'
 import { useEffect, useState } from 'react'
-import { toast, type ToastMessage } from '../utils/toast'
 
 // 全局 Toast 容器组件，统一切到 Carbon 风格提示。
 export default function ToastContainer() {
@@ -19,10 +19,10 @@ export default function ToastContainer() {
           className="pointer-events-auto flex items-center gap-3 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-3 shadow-sm transition-all duration-300 animate-fade-in-up"
         >
           {msg.type === 'success' && (
-            <span className="i-lucide-check-circle h-4 w-4 shrink-0 text-[#198038]" />
+            <span className="i-lucide-check-circle h-4 w-4 shrink-0 text-[var(--color-success)]" />
           )}
           {msg.type === 'error' && (
-            <span className="i-lucide-alert-circle h-4 w-4 shrink-0 text-[#da1e28]" />
+            <span className="i-lucide-alert-circle h-4 w-4 shrink-0 text-[var(--color-danger)]" />
           )}
           {msg.type === 'info' && (
             <span className="i-lucide-info h-4 w-4 shrink-0 text-[var(--carbon-primary)]" />

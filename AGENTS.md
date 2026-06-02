@@ -10,3 +10,4 @@
 - 尽量复用 @package.json 依赖，如果需要大量手写代码，考虑查找是否有相关的npm包，避免重复造轮子
 - h5为主，需要考虑dark和light模式
 - 修改后运行eslint和ts的校验
+- React Compiler（babel-plugin-react-compiler）已经启用，注意写法

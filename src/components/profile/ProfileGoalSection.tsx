@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import type { Goal } from '../../types'
-import { toast } from '../../utils/toast'
-import { validateWeight } from '../../utils/validation'
+import type { Goal } from '@/types'
+import { toast } from '@/utils/toast'
+import { validateWeight } from '@/utils/validation'
 
 interface GoalProgress {
   progress: number
@@ -20,7 +20,6 @@ interface Props {
 export default function ProfileGoalSection({ goal, currentWeight, progress, onSaveGoal }: Props) {
   const [isEditingGoal, setIsEditingGoal] = useState(false)
   const [goalInput, setGoalInput] = useState(goal?.targetWeight.toFixed(1) ?? '')
-  // 判断当前目标方向
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
 
   const handleToggleEdit = () => {

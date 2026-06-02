@@ -44,6 +44,9 @@ input {
   --safe-left: env(safe-area-inset-left, 0px);
   --app-header-height: calc(44px + var(--safe-top));
   --app-tabbar-height: calc(60px + max(var(--safe-bottom), 6px));
+  --color-success: #198038;
+  --color-warning: #f1c21b;
+  --color-danger: #da1e28;
 }
 
 .dark {
@@ -62,6 +65,9 @@ input {
   --carbon-text-on-primary: #131314;
   --carbon-primary-hover: #8ab4f8;
   --carbon-primary-soft: rgba(168, 199, 250, 0.12);
+  --color-success: #24a148;
+  --color-warning: #f1c21b;
+  --color-danger: #fa4d56;
 }
 
 html {
