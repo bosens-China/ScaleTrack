@@ -21,6 +21,7 @@ export default function ProfileGoalSection({ goal, currentWeight, progress, onSa
   const [isEditingGoal, setIsEditingGoal] = useState(false)
   const [goalInput, setGoalInput] = useState(goal?.targetWeight.toFixed(1) ?? '')
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
+  const progressLabel = goal ? (isGainGoal ? '增肌进度' : '减脂进度') : '目标进度'
 
   const handleToggleEdit = () => {
     setGoalInput(goal?.targetWeight.toFixed(1) ?? '')
@@ -67,7 +68,7 @@ export default function ProfileGoalSection({ goal, currentWeight, progress, onSa
 
       <div className="flex flex-col gap-3">
         <div className="flex justify-between text-xs text-[var(--carbon-text-secondary)]">
-          <span>{isGainGoal ? '增肌进度' : '减重进度'}</span>
+          <span>{progressLabel}</span>
           <span className="font-semibold text-[var(--carbon-primary)]">
             {progress ? `${progress.progress}%` : '未设置'}
           </span>
@@ -80,9 +81,17 @@ export default function ProfileGoalSection({ goal, currentWeight, progress, onSa
         </div>
         {progress && (
           <p className="text-[11px] text-[var(--carbon-text-secondary)]">
-            还差{' '}
-            <span className="font-semibold text-[var(--carbon-text)]">{progress.remaining} kg</span>{' '}
-            到达目标
+            {progress.remaining === 0 ? (
+              '已达成目标'
+            ) : (
+              <>
+                还差{' '}
+                <span className="font-semibold text-[var(--carbon-text)]">
+                  {progress.remaining} kg
+                </span>{' '}
+                到达目标
+              </>
+            )}
           </p>
         )}
       </div>

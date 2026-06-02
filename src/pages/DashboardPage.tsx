@@ -10,7 +10,6 @@ import {
   getCurrentWeight,
   getGoalProgress,
   getPreviousDiff,
-  getSmoothedWeight,
   getWeeklyChange,
 } from '@/utils/stats'
 
@@ -37,13 +36,13 @@ export default function DashboardPage({
   const previousDiff = getPreviousDiff(records)
   const weeklyRecords = filterRecordsByDays(records, 7)
   const weeklyChange = getWeeklyChange(records)
-  const smoothedWeight = getSmoothedWeight(profile, records)
-  const progress = getGoalProgress(goal?.startWeight ?? profile.initialWeight, goal, smoothedWeight)
+  const progress = getGoalProgress(goal?.startWeight ?? profile.initialWeight, goal, currentWeight)
   const latestBmiTone = getBMIColor(currentBMI)
   const latestCategory = getBMICategory(currentBMI)
   const recentRecords = [...records].reverse()
   const hasRecords = records.length > 0
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
+  const goalLabel = goal ? (isGainGoal ? '增肌目标' : '减脂目标') : '体重目标'
   const weeklyDirection =
     weeklyChange === null
       ? '暂无变化'
@@ -150,7 +149,7 @@ export default function DashboardPage({
                 <div className="flex items-center gap-2 text-[var(--carbon-text-secondary)]">
                   <span className="i-lucide-flag h-4 w-4" />
                   <span className="text-[11px] font-medium uppercase tracking-[0.12em]">
-                    {isGainGoal ? '增重目标' : '减重目标'}
+                    {goalLabel}
                   </span>
                 </div>
                 <p className="mt-3 text-xl font-semibold text-[var(--carbon-text)]">
@@ -158,7 +157,7 @@ export default function DashboardPage({
                 </p>
                 {progress && (
                   <p className="mt-1 text-[10px] text-[var(--carbon-text-secondary)]">
-                    还差 {progress.remaining} kg
+                    {progress.remaining === 0 ? '已达成目标' : `还差 ${progress.remaining} kg`}
                   </p>
                 )}
                 <div className="mt-2 h-1 bg-[var(--carbon-surface-strong)]">

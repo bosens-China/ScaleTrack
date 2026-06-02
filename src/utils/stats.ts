@@ -96,12 +96,16 @@ export function getGoalProgress(initialWeight: number, goal: Goal | null, curren
     }
   }
 
-  const remainingDistance = Math.abs(currentWeight - goal.targetWeight)
+  // 按目标方向计算剩余距离，避免超过目标后进度回落。
+  const isGainGoal = goal.targetWeight > initialWeight
+  const remainingDistance = isGainGoal
+    ? Math.max(0, goal.targetWeight - currentWeight)
+    : Math.max(0, currentWeight - goal.targetWeight)
   const traveledDistance = totalDistance - remainingDistance
   const progressRatio = traveledDistance / totalDistance
 
   return {
-    progress: Math.min(100, Math.max(0, Math.round(progressRatio * 100))),
+    progress: Math.min(100, Math.max(0, Number((progressRatio * 100).toFixed(1)))),
     remaining: Number(remainingDistance.toFixed(1)),
   }
 }

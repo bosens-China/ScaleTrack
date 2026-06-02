@@ -7,7 +7,7 @@ import ProfileGoalSection from '@/components/profile/ProfileGoalSection'
 import ProfileMilestonesSection from '@/components/profile/ProfileMilestonesSection'
 import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
 import { BMI_RANGES, getBMICategory, getBmiPercent } from '@/utils/bmi'
-import { getCurrentBMI, getCurrentWeight, getGoalProgress, getSmoothedWeight } from '@/utils/stats'
+import { getCurrentBMI, getCurrentWeight, getGoalProgress } from '@/utils/stats'
 
 interface Props {
   profile: UserProfile
@@ -36,8 +36,7 @@ export default function ProfilePage({
   const currentBMI = getCurrentBMI(profile, records)
   const bmiCategory = getBMICategory(currentBMI)
   const bmiRange = BMI_RANGES.find(range => range.category === bmiCategory)
-  const smoothedWeight = getSmoothedWeight(profile, records)
-  const progress = getGoalProgress(goal?.startWeight ?? profile.initialWeight, goal, smoothedWeight)
+  const progress = getGoalProgress(goal?.startWeight ?? profile.initialWeight, goal, currentWeight)
   const bmiPercent = getBmiPercent(currentBMI)
 
   const handleProfileEditingChange = (value: boolean) => {
