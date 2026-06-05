@@ -80,7 +80,7 @@ export default function DashboardPage({
   return (
     <div className="app-page bg-[var(--carbon-bg)]">
       <main className="app-main flex flex-col gap-4 px-4 pb-8 pt-4">
-        <section className="bg-[var(--carbon-primary)] px-4 py-4 text-[var(--carbon-text-on-primary)] shadow-sm">
+        <section className="bg-[var(--dashboard-header-bg)] px-4 py-4 text-[var(--dashboard-header-text)] shadow-sm">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.18em] opacity-72">当前体重</p>
@@ -91,7 +91,10 @@ export default function DashboardPage({
                 <span className="text-sm opacity-90">kg</span>
               </div>
             </div>
-            <div className="flex min-w-[72px] flex-col items-center bg-black/10 dark:bg-black/10 px-3 py-2 text-center">
+            <div
+              className="flex min-w-[72px] flex-col items-center px-3 py-2 text-center"
+              style={{ backgroundColor: 'var(--dashboard-header-accent)' }}
+            >
               <span
                 className={`h-4 w-4 ${
                   previousDiff !== null && previousDiff > 0
@@ -107,7 +110,7 @@ export default function DashboardPage({
             </div>
           </div>
 
-          <div className="mt-4 flex items-center justify-between border-t border-[var(--carbon-text-on-primary)] border-opacity-10 pt-3">
+          <div className="mt-4 flex items-center justify-between border-t border-[var(--dashboard-header-text)] border-opacity-10 pt-3">
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.18em] opacity-72">BMI</p>
               <div className="mt-1 flex items-center gap-2">

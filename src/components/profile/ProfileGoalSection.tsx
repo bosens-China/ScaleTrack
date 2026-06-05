@@ -114,7 +114,7 @@ export default function ProfileGoalSection({ goal, currentWeight, progress, onSa
           <label className="text-xs uppercase tracking-[0.16em] text-[var(--carbon-text-secondary)]">
             新目标体重
           </label>
-          <div className="flex gap-3">
+          <div className="flex items-center gap-3">
             <TextInput
               type="number"
               inputMode="decimal"
@@ -126,12 +126,12 @@ export default function ProfileGoalSection({ goal, currentWeight, progress, onSa
                   300,
                 )
               }
-              wrapperClassName="flex-1"
+              wrapperClassName="flex-1 !h-10"
               placeholder="例如：65.0"
             />
             <button
               onClick={handleSave}
-              className="bg-[var(--carbon-primary)] px-5 text-sm font-medium text-[var(--carbon-text-on-primary)] hover:bg-[var(--carbon-primary-hover)]"
+              className="flex h-10 items-center justify-center bg-[var(--carbon-primary)] px-5 text-sm font-medium text-[var(--carbon-text-on-primary)] transition-colors hover:bg-[var(--carbon-primary-hover)]"
             >
               保存
             </button>

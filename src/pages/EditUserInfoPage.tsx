@@ -90,16 +90,16 @@ export default function EditUserInfoPage({ profile, onSave, onCancel }: Props) {
             placeholder="本地用户"
           />
         </section>
-      </main>
 
-      <div className="absolute bottom-[calc(20px+var(--safe-bottom))] left-4 right-4 z-10">
-        <button
-          onClick={handleSave}
-          className="flex h-12 w-full items-center justify-center bg-[var(--carbon-primary)] px-6 text-sm font-medium text-[var(--carbon-text-on-primary)] shadow-sm transition-colors hover:bg-[var(--carbon-primary-hover)]"
-        >
-          保存修改
-        </button>
-      </div>
+        <div className="mt-8">
+          <button
+            onClick={handleSave}
+            className="flex h-12 w-full items-center justify-center bg-[var(--carbon-primary)] px-6 text-sm font-medium text-[var(--carbon-text-on-primary)] shadow-sm transition-colors hover:bg-[var(--carbon-primary-hover)]"
+          >
+            保存修改
+          </button>
+        </div>
+      </main>
     </div>
   )
 }

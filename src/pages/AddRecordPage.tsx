@@ -149,7 +149,7 @@ export default function AddRecordPage({ profile, records, onSave }: Props) {
         </section>
       </main>
 
-      <div className="sticky bottom-[calc(60px+var(--safe-bottom))] mx-auto mt-6 bg-[var(--carbon-bg)] px-4 pt-4">
+      <div className="mx-auto mt-6 px-4">
         <button
           onClick={() =>
             onSave({
@@ -158,10 +158,10 @@ export default function AddRecordPage({ profile, records, onSave }: Props) {
               note: note.trim() || undefined,
             })
           }
-          className="group flex h-16 w-full items-center justify-between bg-[var(--carbon-primary)] px-6 text-base font-medium text-[var(--carbon-text-on-primary)] transition-colors hover:bg-[var(--carbon-primary-hover)]"
+          className="group flex h-14 w-full items-center justify-center gap-2 bg-[var(--carbon-primary)] px-6 text-base font-medium text-[var(--carbon-text-on-primary)] transition-colors hover:bg-[var(--carbon-primary-hover)]"
         >
           <span>保存记录</span>
-          <span className="i-lucide-check h-5 w-5" />
+          <span className="i-lucide-check h-4 w-4" />
         </button>
       </div>
 

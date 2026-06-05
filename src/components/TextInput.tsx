@@ -13,11 +13,11 @@ export default function TextInput({
 }: Props) {
   return (
     <div
-      className={`relative border-b border-[var(--carbon-outline)] transition-colors focus-within:border-[var(--carbon-primary)] ${wrapperClassName}`}
+      className={`relative h-12 border-b border-[var(--carbon-outline)] transition-colors focus-within:border-[var(--carbon-primary)] ${wrapperClassName}`}
     >
       <input
         {...props}
-        className={`h-12 w-full border-none bg-[var(--carbon-surface-subtle)] px-4 text-sm text-[var(--carbon-text)] outline-none placeholder:text-[var(--carbon-text-secondary)] ${
+        className={`h-full w-full border-none bg-[var(--carbon-surface-subtle)] px-4 text-sm text-[var(--carbon-text)] outline-none placeholder:text-[var(--carbon-text-secondary)] ${
           rightElement ? 'pr-11' : ''
         } ${className}`}
       />
