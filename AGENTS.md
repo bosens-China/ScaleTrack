@@ -11,3 +11,4 @@
 - h5为主，需要考虑dark和light模式
 - 修改后运行eslint和ts的校验
 - React Compiler（babel-plugin-react-compiler）已经启用，注意写法
+- 重要模块请添加测试用例，测试框架使用vitest
