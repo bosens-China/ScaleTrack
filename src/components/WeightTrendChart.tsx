@@ -100,6 +100,7 @@ export default function WeightTrendChart({ records }: Props) {
         border: { color: borderColor },
       },
       y: {
+        grace: '5%',
         grid: { color: gridColor },
         ticks: {
           color: tickColor,

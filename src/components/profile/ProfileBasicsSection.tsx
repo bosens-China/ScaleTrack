@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import TextInput from '@/components/TextInput'
+
 import type { UserProfile } from '@/types'
 import { toast } from '@/utils/toast'
 import { validateHeight } from '@/utils/validation'
@@ -62,7 +64,7 @@ export default function ProfileBasicsSection({
                 </button>
               ))}
             </div>
-            <input
+            <TextInput
               type="number"
               inputMode="decimal"
               value={heightInput}
@@ -73,7 +75,6 @@ export default function ProfileBasicsSection({
                   300,
                 )
               }
-              className="h-12 w-full border-b border-[var(--carbon-outline)] bg-[var(--carbon-surface-subtle)] px-4 text-sm outline-none focus:border-[var(--carbon-primary)]"
               placeholder="身高（cm）"
             />
             <button

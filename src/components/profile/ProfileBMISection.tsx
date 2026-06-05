@@ -39,10 +39,10 @@ export default function ProfileBMISection({
           <div className="h-full w-[25%]" style={{ backgroundColor: obese.color }} />
         </div>
         <div
-          className="absolute top-4 -translate-x-1/2 transition-all duration-300"
+          className="absolute top-5 -translate-x-1/2 -translate-y-1/2 transition-all duration-300"
           style={{ left: `${bmiPercent}%` }}
         >
-          <div className="h-3 w-px bg-[var(--carbon-text)]" />
+          <div className="h-5 w-1.5 rounded-full border border-black/10 bg-white shadow-[0_1px_4px_rgba(0,0,0,0.3)] dark:border-white/10 dark:bg-[var(--carbon-text)]" />
         </div>
         <div
           className="absolute top-8 w-[18.5%] text-center text-[10px] text-[var(--carbon-outline)]"

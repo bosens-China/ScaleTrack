@@ -1,12 +1,14 @@
 import dayjs from 'dayjs'
 
-import type { Goal } from '@/types'
+import type { AppPage, Goal } from '@/types'
 
 interface Props {
   milestones: Goal[]
+  onNavigate: (page: AppPage) => void
+  onSelectMilestone: (id: string) => void
 }
 
-export default function ProfileMilestonesSection({ milestones }: Props) {
+export default function ProfileMilestonesSection({ milestones, onSelectMilestone }: Props) {
   return (
     <section className="flex flex-col gap-4">
       <h3 className="px-1 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--carbon-text-secondary)]">
@@ -21,7 +23,7 @@ export default function ProfileMilestonesSection({ milestones }: Props) {
           <div className="flex flex-col">
             {[...milestones].reverse().map(milestone => {
               const days = milestone.completedDate
-                ? dayjs(milestone.completedDate).diff(dayjs(milestone.startDate), 'day')
+                ? dayjs(milestone.completedDate).diff(dayjs(milestone.startDate), 'day') || 1
                 : 0
               const diff = Math.abs(milestone.startWeight - milestone.targetWeight).toFixed(1)
               const direction = milestone.startWeight > milestone.targetWeight ? '减' : '增'
@@ -29,24 +31,30 @@ export default function ProfileMilestonesSection({ milestones }: Props) {
               return (
                 <div
                   key={milestone.id}
-                  className="flex items-start gap-3 border-b border-[var(--carbon-border)] px-4 py-4 last:border-b-0"
+                  onClick={() => onSelectMilestone(milestone.id)}
+                  className="group flex cursor-pointer items-start justify-between border-b border-[var(--carbon-border)] px-4 py-4 transition-colors hover:bg-[var(--carbon-surface-subtle)] last:border-b-0"
                 >
-                  <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--carbon-primary-soft)] text-[var(--carbon-primary)]">
-                    <span className="i-lucide-trophy h-4 w-4" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-[var(--carbon-text)]">
-                      {milestone.startWeight.toFixed(1)} -&gt; {milestone.targetWeight.toFixed(1)}{' '}
-                      kg
-                    </p>
-                    <p className="mt-1 text-xs leading-5 text-[var(--carbon-text-secondary)]">
-                      {direction}重 {diff} kg · 用时 {days} 天
-                    </p>
-                    {milestone.completedDate ? (
-                      <p className="mt-1 text-xs text-[var(--carbon-outline)]">
-                        {dayjs(milestone.completedDate).format('YYYY/MM/DD')} 达成
+                  <div className="flex items-start gap-3 min-w-0">
+                    <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--carbon-primary-soft)] text-[var(--carbon-primary)]">
+                      <span className="i-lucide-trophy h-4 w-4" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium text-[var(--carbon-text)]">
+                        {milestone.startWeight.toFixed(1)} -&gt; {milestone.targetWeight.toFixed(1)}{' '}
+                        kg
                       </p>
-                    ) : null}
+                      <p className="mt-1 text-xs leading-5 text-[var(--carbon-text-secondary)]">
+                        {direction}重 {diff} kg · 用时 {days} 天
+                      </p>
+                      {milestone.completedDate ? (
+                        <p className="mt-1 text-xs text-[var(--carbon-outline)]">
+                          {dayjs(milestone.completedDate).format('YYYY/MM/DD')} 达成
+                        </p>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="mt-2 text-[var(--carbon-outline)] transition-colors group-hover:text-[var(--carbon-primary)]">
+                    <span className="i-lucide-chevron-right h-5 w-5" />
                   </div>
                 </div>
               )

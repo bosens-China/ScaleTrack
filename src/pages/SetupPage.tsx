@@ -1,5 +1,6 @@
 import { useId, useState } from 'react'
 
+import TextInput from '@/components/TextInput'
 import WeightRulerPicker from '@/components/WeightRulerPicker'
 import type { Gender, UserProfile } from '@/types'
 import { BMI_RANGES, calcBMI, getBMICategory, getBMIColor } from '@/utils/bmi'
@@ -92,7 +93,7 @@ export default function SetupPage({ onComplete }: Props) {
               >
                 身高 (cm)
               </label>
-              <input
+              <TextInput
                 id={heightId}
                 type="number"
                 inputMode="decimal"
@@ -102,7 +103,6 @@ export default function SetupPage({ onComplete }: Props) {
                   setHeight(e.target.value)
                   setError('')
                 }}
-                className="h-12 w-full border-b border-[var(--carbon-outline)] bg-[var(--carbon-surface-subtle)] px-4 text-sm text-[var(--carbon-text)] outline-none transition-colors focus:border-[var(--carbon-primary)]"
               />
             </div>
 
@@ -119,15 +119,13 @@ export default function SetupPage({ onComplete }: Props) {
                 </span>
                 <span className="ml-1 text-lg text-[var(--carbon-text-secondary)]">kg</span>
               </div>
-              <div className="-mx-4">
-                <WeightRulerPicker
-                  value={weight}
-                  onChange={w => {
-                    setWeight(w)
-                    setError('')
-                  }}
-                />
-              </div>
+              <WeightRulerPicker
+                value={weight}
+                onChange={w => {
+                  setWeight(w)
+                  setError('')
+                }}
+              />
             </div>
 
             {bmi !== null && (

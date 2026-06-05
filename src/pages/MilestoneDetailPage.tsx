@@ -1,0 +1,167 @@
+import dayjs from 'dayjs'
+
+import WeightTrendChart from '@/components/WeightTrendChart'
+import type { Goal, WeightRecord } from '@/types'
+
+interface Props {
+  milestoneId: string | null
+  milestones: Goal[]
+  records: WeightRecord[]
+  onBack: () => void
+}
+
+export default function MilestoneDetailPage({ milestoneId, milestones, records, onBack }: Props) {
+  const milestone = milestones.find(m => m.id === milestoneId)
+
+  if (!milestone) {
+    return (
+      <div className="app-page bg-[var(--carbon-bg)] flex items-center justify-center">
+        <p className="text-sm text-[var(--carbon-text-secondary)]">未找到里程碑</p>
+        <button onClick={onBack} className="mt-4 text-[var(--carbon-primary)] hover:underline">
+          返回
+        </button>
+      </div>
+    )
+  }
+
+  // Filter records that belong to this milestone's timeframe
+  const periodRecords = records.filter(r => {
+    return (
+      r.date >= milestone.startDate &&
+      (!milestone.completedDate || r.date <= milestone.completedDate)
+    )
+  })
+
+  const days = milestone.completedDate
+    ? dayjs(milestone.completedDate).diff(dayjs(milestone.startDate), 'day') || 1
+    : 1
+  const diff = Math.abs(milestone.startWeight - milestone.targetWeight)
+  const averagePerDay = (diff / days).toFixed(2)
+  const direction = milestone.startWeight > milestone.targetWeight ? '减' : '增'
+
+  return (
+    <div className="app-page relative bg-[var(--carbon-bg)] pb-8 overflow-y-auto carbon-scrollbar">
+      <header className="app-header sticky top-0 z-10 flex w-full max-w-[430px] items-center justify-between border-b border-[var(--carbon-border)] bg-[var(--carbon-bg)] px-4">
+        <button
+          onClick={onBack}
+          className="flex h-10 w-10 items-center justify-center -ml-2 text-[var(--carbon-text-secondary)]"
+        >
+          <span className="i-lucide-chevron-left h-6 w-6" />
+        </button>
+        <h1 className="text-base font-medium text-[var(--carbon-text)]">里程碑详情</h1>
+        <div className="w-10" />
+      </header>
+
+      <main className="flex flex-col gap-6 px-4 pt-6">
+        <section className="flex flex-col items-center text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--carbon-primary-soft)] text-[var(--carbon-primary)]">
+            <span className="i-lucide-trophy h-8 w-8" />
+          </div>
+          <h2 className="mt-4 text-2xl font-semibold text-[var(--carbon-text)]">
+            {milestone.startWeight.toFixed(1)}{' '}
+            <span className="mx-2 text-[var(--carbon-outline)]">-&gt;</span>{' '}
+            {milestone.targetWeight.toFixed(1)} kg
+          </h2>
+          <p className="mt-1 text-sm text-[var(--carbon-text-secondary)]">
+            {dayjs(milestone.startDate).format('YYYY/MM/DD')} -{' '}
+            {milestone.completedDate ? dayjs(milestone.completedDate).format('YYYY/MM/DD') : '至今'}
+          </p>
+        </section>
+
+        <section className="grid grid-cols-3 gap-4 border-y border-[var(--carbon-border)] py-4">
+          <div className="flex flex-col items-center">
+            <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--carbon-text-secondary)]">
+              总{direction}重
+            </span>
+            <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
+              {diff.toFixed(1)} <span className="text-[10px] font-normal">kg</span>
+            </span>
+          </div>
+          <div className="flex flex-col items-center border-l border-r border-[var(--carbon-border)]">
+            <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--carbon-text-secondary)]">
+              共计用时
+            </span>
+            <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
+              {days} <span className="text-[10px] font-normal">天</span>
+            </span>
+          </div>
+          <div className="flex flex-col items-center">
+            <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--carbon-text-secondary)]">
+              日均变化
+            </span>
+            <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
+              {averagePerDay} <span className="text-[10px] font-normal">kg/天</span>
+            </span>
+          </div>
+        </section>
+
+        {periodRecords.length > 0 && (
+          <section className="flex flex-col gap-2">
+            <h3 className="text-sm font-semibold text-[var(--carbon-text)]">阶段进度</h3>
+            <WeightTrendChart records={periodRecords} />
+          </section>
+        )}
+
+        <section className="flex flex-col">
+          <h3 className="mb-2 text-sm font-semibold text-[var(--carbon-text)]">
+            详细记录 ({periodRecords.length})
+          </h3>
+          <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] flex flex-col">
+            {[...periodRecords].reverse().map((record, index, arr) => {
+              const prevRecord = arr[index + 1]
+              let diffTone = 'text-[var(--carbon-text-secondary)]'
+              let diffIcon = 'i-lucide-minus'
+              let diffText = ''
+
+              if (prevRecord) {
+                const rDiff = record.weight - prevRecord.weight
+                if (rDiff > 0) {
+                  diffTone =
+                    direction === '减'
+                      ? 'text-[var(--color-danger)]'
+                      : 'text-[var(--color-success)]'
+                  diffIcon = 'i-lucide-trending-up'
+                  diffText = `+${rDiff.toFixed(1)}`
+                } else if (rDiff < 0) {
+                  diffTone =
+                    direction === '减'
+                      ? 'text-[var(--color-success)]'
+                      : 'text-[var(--color-danger)]'
+                  diffIcon = 'i-lucide-trending-down'
+                  diffText = `${rDiff.toFixed(1)}`
+                } else {
+                  diffText = '持平'
+                }
+              }
+
+              return (
+                <div
+                  key={record.id}
+                  className="flex items-center justify-between border-b border-[var(--carbon-border)] px-4 py-3 last:border-b-0"
+                >
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-[var(--carbon-text)]">
+                        {record.weight.toFixed(1)} kg
+                      </span>
+                      {prevRecord && (
+                        <span className={`flex items-center gap-0.5 text-[11px] ${diffTone}`}>
+                          {diffText !== '持平' && <span className={`${diffIcon} h-3 w-3`} />}
+                          <span>{diffText}</span>
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-0.5 truncate text-xs text-[var(--carbon-text-secondary)]">
+                      {dayjs(record.date).format('MM月DD日')}
+                      {record.note ? ` · ${record.note}` : ''}
+                    </p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+      </main>
+    </div>
+  )
+}

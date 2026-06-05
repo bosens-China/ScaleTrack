@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 
+import TextInput from '@/components/TextInput'
 import type { UserProfile } from '@/types'
 import { cropAndCompressAvatar } from '@/utils/image'
 
@@ -81,16 +82,13 @@ export default function EditUserInfoPage({ profile, onSave, onCancel }: Props) {
           >
             昵称
           </label>
-          <div className="relative border-b border-[var(--carbon-outline)] transition-colors focus-within:border-[var(--carbon-primary)]">
-            <input
-              id="nickname"
-              type="text"
-              value={nickname}
-              onChange={e => setNickname(e.target.value)}
-              placeholder="本地用户"
-              className="h-12 w-full border-none bg-[var(--carbon-surface-subtle)] px-4 text-sm text-[var(--carbon-text)] outline-none placeholder:text-[var(--carbon-text-secondary)]"
-            />
-          </div>
+          <TextInput
+            id="nickname"
+            type="text"
+            value={nickname}
+            onChange={e => setNickname(e.target.value)}
+            placeholder="本地用户"
+          />
         </section>
       </main>
 

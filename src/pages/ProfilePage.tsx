@@ -18,6 +18,7 @@ interface Props {
   onProfileUpdate: (patch: Partial<UserProfile>) => void
   onReload: () => void
   onNavigate: (page: AppPage) => void
+  onSelectMilestone: (id: string) => void
 }
 
 export default function ProfilePage({
@@ -29,6 +30,7 @@ export default function ProfilePage({
   onProfileUpdate,
   onReload,
   onNavigate,
+  onSelectMilestone,
 }: Props) {
   const [isEditingProfile, setIsEditingProfile] = useState(false)
   const [profileEditVersion, setProfileEditVersion] = useState(0)
@@ -36,7 +38,7 @@ export default function ProfilePage({
   const currentBMI = getCurrentBMI(profile, records)
   const bmiCategory = getBMICategory(currentBMI)
   const bmiRange = BMI_RANGES.find(range => range.category === bmiCategory)
-  const progress = getGoalProgress(goal?.startWeight ?? profile.initialWeight, goal, currentWeight)
+  const progress = getGoalProgress(goal, currentWeight, records)
   const bmiPercent = getBmiPercent(currentBMI)
 
   const handleProfileEditingChange = (value: boolean) => {
@@ -102,7 +104,11 @@ export default function ProfilePage({
           onProfileUpdate={onProfileUpdate}
         />
         <ProfileDataSection onReload={onReload} />
-        <ProfileMilestonesSection milestones={milestones} />
+        <ProfileMilestonesSection
+          milestones={milestones}
+          onNavigate={onNavigate}
+          onSelectMilestone={onSelectMilestone}
+        />
       </main>
     </div>
   )

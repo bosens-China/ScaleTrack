@@ -1,11 +1,14 @@
 import { useState } from 'react'
 
+import TextInput from '@/components/TextInput'
+
 import type { Goal } from '@/types'
 import { toast } from '@/utils/toast'
 import { validateWeight } from '@/utils/validation'
 
 interface GoalProgress {
   progress: number
+  currentProgress: number
   remaining: number
 }
 
@@ -73,11 +76,21 @@ export default function ProfileGoalSection({ goal, currentWeight, progress, onSa
             {progress ? `${progress.progress}%` : '未设置'}
           </span>
         </div>
-        <div className="h-1 w-full bg-[var(--carbon-surface-strong)]">
-          <div
-            className="h-full bg-[var(--carbon-primary)] transition-all duration-300"
-            style={{ width: `${progress?.progress ?? 0}%` }}
-          />
+        <div className="flex h-1 w-full bg-[var(--carbon-surface-strong)] overflow-hidden">
+          {progress && (
+            <>
+              <div
+                className="h-full bg-[var(--carbon-primary)] transition-all duration-300"
+                style={{ width: `${progress.currentProgress}%` }}
+              />
+              {progress.progress > progress.currentProgress && (
+                <div
+                  className="h-full bg-[var(--carbon-primary)] opacity-30 transition-all duration-300"
+                  style={{ width: `${progress.progress - progress.currentProgress}%` }}
+                />
+              )}
+            </>
+          )}
         </div>
         {progress && (
           <p className="text-[11px] text-[var(--carbon-text-secondary)]">
@@ -102,7 +115,7 @@ export default function ProfileGoalSection({ goal, currentWeight, progress, onSa
             新目标体重
           </label>
           <div className="flex gap-3">
-            <input
+            <TextInput
               type="number"
               inputMode="decimal"
               value={goalInput}
@@ -113,7 +126,7 @@ export default function ProfileGoalSection({ goal, currentWeight, progress, onSa
                   300,
                 )
               }
-              className="h-12 flex-1 border-b border-[var(--carbon-outline)] bg-[var(--carbon-surface-subtle)] px-4 text-sm outline-none focus:border-[var(--carbon-primary)]"
+              wrapperClassName="flex-1"
               placeholder="例如：65.0"
             />
             <button

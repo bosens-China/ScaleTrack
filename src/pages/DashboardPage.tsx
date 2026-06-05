@@ -32,11 +32,11 @@ export default function DashboardPage({
 
   const currentWeight = getCurrentWeight(profile, records)
   const currentBMI = getCurrentBMI(profile, records)
-  const latestRecord = records.at(-1)
+
   const previousDiff = getPreviousDiff(records)
   const weeklyRecords = filterRecordsByDays(records, 7)
   const weeklyChange = getWeeklyChange(records)
-  const progress = getGoalProgress(goal?.startWeight ?? profile.initialWeight, goal, currentWeight)
+  const progress = getGoalProgress(goal, currentWeight, records)
   const latestBmiTone = getBMIColor(currentBMI)
   const latestCategory = getBMICategory(currentBMI)
   const recentRecords = [...records].reverse()
@@ -160,11 +160,21 @@ export default function DashboardPage({
                     {progress.remaining === 0 ? '已达成目标' : `还差 ${progress.remaining} kg`}
                   </p>
                 )}
-                <div className="mt-2 h-1 bg-[var(--carbon-surface-strong)]">
-                  <div
-                    className="h-full bg-[var(--carbon-primary)] transition-all duration-300"
-                    style={{ width: `${progress?.progress ?? 0}%` }}
-                  />
+                <div className="mt-2 flex h-1 w-full bg-[var(--carbon-surface-strong)] overflow-hidden">
+                  {progress && (
+                    <>
+                      <div
+                        className="h-full bg-[var(--carbon-primary)] transition-all duration-300"
+                        style={{ width: `${progress.currentProgress}%` }}
+                      />
+                      {progress.progress > progress.currentProgress && (
+                        <div
+                          className="h-full bg-[var(--carbon-primary)] opacity-30 transition-all duration-300"
+                          style={{ width: `${progress.progress - progress.currentProgress}%` }}
+                        />
+                      )}
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -203,65 +213,93 @@ export default function DashboardPage({
               </div>
 
               <div className="flex flex-col max-h-[300px] overflow-y-auto carbon-scrollbar">
-                {recentRecords.map(record => (
-                  <div
-                    key={record.id}
-                    className="flex flex-col border-b border-[var(--carbon-border)] last:border-b-0"
-                  >
-                    <div className="flex items-center justify-between px-4 py-3">
-                      <div className="min-w-0 flex-1">
-                        <span className="text-sm font-medium text-[var(--carbon-text)]">
-                          {record.weight.toFixed(1)} kg
-                        </span>
-                        <p className="mt-0.5 truncate text-xs text-[var(--carbon-text-secondary)]">
-                          {dayjs(record.date).format('MM月DD日')}
-                          {record.note ? ` · ${record.note}` : ''}
-                        </p>
-                      </div>
-                      <button
-                        onClick={() => handleDeleteClick(record.id)}
-                        className="ml-3 flex h-8 w-8 items-center justify-center text-[var(--carbon-outline)] transition-colors hover:text-[var(--color-danger)]"
-                        aria-label="删除记录"
-                      >
-                        <span className="i-lucide-trash-2 h-4 w-4" />
-                      </button>
-                    </div>
-                    {pendingDeleteId === record.id && (
-                      <div className="flex items-center justify-between border-t border-[var(--color-danger)] bg-[var(--carbon-surface-subtle)] px-4 py-2.5">
-                        <p className="text-xs text-[var(--carbon-text-secondary)]">
-                          确认删除这条记录？
-                        </p>
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => setPendingDeleteId(null)}
-                            className="px-3 py-1 text-xs text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
-                          >
-                            取消
-                          </button>
-                          <button
-                            onClick={handleConfirmDelete}
-                            className="bg-[var(--color-danger)] px-3 py-1 text-xs font-medium text-white"
-                          >
-                            删除
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+                {recentRecords.map((record, index) => {
+                  const prevRecord = recentRecords[index + 1]
+                  const isFirstRecord = record.id === records[0]?.id
 
-              <div className="border-t border-[var(--carbon-border)] px-4 py-3">
-                <div className="border-l-4 border-[var(--carbon-border)] bg-[var(--carbon-surface-subtle)] px-3 py-2.5">
-                  <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--carbon-text-secondary)]">
-                    备注
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-[var(--carbon-text)]">
-                    {latestRecord?.note?.trim()
-                      ? latestRecord.note
-                      : '这条记录还没有备注。你可以在"添加"页补充晨起、饭后或运动后等上下文。'}
-                  </p>
-                </div>
+                  let diffTone = 'text-[var(--carbon-text-secondary)]'
+                  let diffIcon = 'i-lucide-minus'
+                  let diffText = ''
+
+                  if (prevRecord) {
+                    const diff = record.weight - prevRecord.weight
+                    if (diff > 0) {
+                      diffTone = isGainGoal
+                        ? 'text-[var(--color-success)]'
+                        : 'text-[var(--color-danger)]'
+                      diffIcon = 'i-lucide-trending-up'
+                      diffText = `+${diff.toFixed(1)}`
+                    } else if (diff < 0) {
+                      diffTone = isGainGoal
+                        ? 'text-[var(--color-danger)]'
+                        : 'text-[var(--color-success)]'
+                      diffIcon = 'i-lucide-trending-down'
+                      diffText = `${diff.toFixed(1)}`
+                    } else {
+                      diffText = '持平'
+                    }
+                  }
+
+                  return (
+                    <div
+                      key={record.id}
+                      className="flex flex-col border-b border-[var(--carbon-border)] last:border-b-0"
+                    >
+                      <div className="flex items-center justify-between px-4 py-3">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium text-[var(--carbon-text)]">
+                              {record.weight.toFixed(1)} kg
+                            </span>
+                            {prevRecord && (
+                              <span className={`flex items-center gap-0.5 text-[11px] ${diffTone}`}>
+                                {diffText !== '持平' && <span className={`${diffIcon} h-3 w-3`} />}
+                                <span>{diffText}</span>
+                              </span>
+                            )}
+                            {isFirstRecord && !record.note && (
+                              <span className="rounded-sm bg-[var(--carbon-primary-soft)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--carbon-primary)]">
+                                初始体重
+                              </span>
+                            )}
+                          </div>
+                          <p className="mt-0.5 truncate text-xs text-[var(--carbon-text-secondary)]">
+                            {dayjs(record.date).format('MM月DD日')}
+                            {record.note ? ` · ${record.note}` : ''}
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => handleDeleteClick(record.id)}
+                          className="ml-3 flex h-8 w-8 items-center justify-center text-[var(--carbon-outline)] transition-colors hover:text-[var(--color-danger)]"
+                          aria-label="删除记录"
+                        >
+                          <span className="i-lucide-trash-2 h-4 w-4" />
+                        </button>
+                      </div>
+                      {pendingDeleteId === record.id && (
+                        <div className="flex items-center justify-between border-t border-[var(--color-danger)] bg-[var(--carbon-surface-subtle)] px-4 py-2.5">
+                          <p className="text-xs text-[var(--carbon-text-secondary)]">
+                            确认删除这条记录？
+                          </p>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => setPendingDeleteId(null)}
+                              className="px-3 py-1 text-xs text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
+                            >
+                              取消
+                            </button>
+                            <button
+                              onClick={handleConfirmDelete}
+                              className="bg-[var(--color-danger)] px-3 py-1 text-xs font-medium text-white"
+                            >
+                              删除
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
               </div>
             </section>
           </>
