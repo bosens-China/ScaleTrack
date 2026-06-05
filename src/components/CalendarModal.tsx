@@ -44,10 +44,10 @@ export default function CalendarModal({
   return (
     <>
       <div
-        className="fixed inset-0 z-40 bg-[var(--carbon-bg)]/80 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-[2px] transition-opacity"
         onClick={onClose}
       />
-      <div className="fixed left-0 right-0 top-0 z-50 flex flex-col rounded-b-2xl border-b border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4 shadow-xl animate-in slide-in-from-top-4 fade-in duration-200 sm:mx-auto sm:max-w-[430px]">
+      <div className="fixed left-0 right-0 top-0 z-[70] flex flex-col rounded-b-2xl border-b border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4 shadow-xl animate-in slide-in-from-top-4 fade-in duration-200 sm:mx-auto sm:max-w-[430px]">
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={handlePrevMonth}

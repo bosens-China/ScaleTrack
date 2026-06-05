@@ -105,7 +105,7 @@ export default function WeightTrendChart({ records }: Props) {
         ticks: {
           color: tickColor,
           font: { family: 'IBM Plex Sans, sans-serif', size: 10 },
-          callback: (value: string | number) => `${value}kg`,
+          callback: (value: string | number) => `${Number(Number(value).toFixed(1))}kg`,
         },
         border: { display: false },
       },
