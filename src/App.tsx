@@ -5,6 +5,7 @@ import { useAppState } from '@/hooks/useAppState'
 import AddRecordPage from '@/pages/AddRecordPage'
 import DashboardPage from '@/pages/DashboardPage'
 import EditUserInfoPage from '@/pages/EditUserInfoPage'
+import MilestoneDetailPage from '@/pages/MilestoneDetailPage'
 import ProfilePage from '@/pages/ProfilePage'
 import SetupPage from '@/pages/SetupPage'
 import TrendsPage from '@/pages/TrendsPage'
@@ -17,9 +18,10 @@ export default function App() {
     activeGoal,
     milestones,
     activePage,
-    today,
+    activeMilestoneId,
     achievedGoal,
     setActivePage,
+    setActiveMilestoneId,
     setAchievedGoal,
     handleSetupComplete,
     handleProfileUpdate,
@@ -28,9 +30,6 @@ export default function App() {
     handleDeleteRecord,
     refreshAll,
   } = useAppState()
-
-  const latestRecord = records.at(-1)
-  const todayRecord = records.find(r => r.date === today) ?? null
 
   const renderPage = () => {
     if (!profile) {
@@ -51,13 +50,7 @@ export default function App() {
       case 'trends':
         return <TrendsPage records={records} onNavigate={setActivePage} />
       case 'add':
-        return (
-          <AddRecordPage
-            initialWeight={todayRecord?.weight ?? latestRecord?.weight ?? profile.initialWeight}
-            existingRecord={todayRecord}
-            onSave={handleSaveRecord}
-          />
-        )
+        return <AddRecordPage profile={profile} records={records} onSave={handleSaveRecord} />
       case 'profile':
         return (
           <ProfilePage
@@ -69,6 +62,10 @@ export default function App() {
             onProfileUpdate={handleProfileUpdate}
             onReload={refreshAll}
             onNavigate={setActivePage}
+            onSelectMilestone={id => {
+              setActiveMilestoneId(id)
+              setActivePage('milestone-detail')
+            }}
           />
         )
       case 'edit-user-info':
@@ -79,12 +76,26 @@ export default function App() {
             onCancel={() => setActivePage('profile')}
           />
         )
+      case 'milestone-detail':
+        return (
+          <MilestoneDetailPage
+            milestoneId={activeMilestoneId}
+            milestones={milestones}
+            records={records}
+            onBack={() => {
+              setActiveMilestoneId(null)
+              setActivePage('profile')
+            }}
+          />
+        )
       default:
         return null
     }
   }
 
-  const activeTab = (activePage === 'edit-user-info' ? null : activePage) as AppTab | null
+  const activeTab = (
+    activePage === 'edit-user-info' || activePage === 'milestone-detail' ? null : activePage
+  ) as AppTab | null
 
   return (
     <>

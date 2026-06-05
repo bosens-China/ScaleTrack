@@ -85,27 +85,48 @@ export function getWeightStats(records: WeightRecord[]) {
   }
 }
 
-export function getGoalProgress(initialWeight: number, goal: Goal | null, currentWeight: number) {
+export function getGoalProgress(goal: Goal | null, currentWeight: number, records: WeightRecord[]) {
   if (!goal) return null
 
-  const totalDistance = Math.abs(initialWeight - goal.targetWeight)
+  const isGainGoal = goal.targetWeight > goal.startWeight
+  const goalRecords = records.filter(r => r.date >= goal.startDate)
+
+  let bestWeight = goal.startWeight
+  for (const r of goalRecords) {
+    if (isGainGoal) {
+      if (r.weight > bestWeight) bestWeight = r.weight
+    } else {
+      if (r.weight < bestWeight) bestWeight = r.weight
+    }
+  }
+
+  const totalDistance = Math.abs(goal.startWeight - goal.targetWeight)
   if (totalDistance === 0) {
     return {
       progress: 100,
+      currentProgress: 100,
       remaining: 0,
     }
   }
 
-  // 按目标方向计算剩余距离，避免超过目标后进度回落。
-  const isGainGoal = goal.targetWeight > initialWeight
+  const getProgressVal = (w: number) => {
+    const traveled = isGainGoal ? w - goal.startWeight : goal.startWeight - w
+    return (traveled / totalDistance) * 100
+  }
+
+  let bestProgress = getProgressVal(bestWeight)
+  let currentProgress = getProgressVal(currentWeight)
+
+  bestProgress = Math.min(100, Math.max(0, Number(bestProgress.toFixed(1))))
+  currentProgress = Math.min(100, Math.max(0, Number(currentProgress.toFixed(1))))
+
   const remainingDistance = isGainGoal
     ? Math.max(0, goal.targetWeight - currentWeight)
     : Math.max(0, currentWeight - goal.targetWeight)
-  const traveledDistance = totalDistance - remainingDistance
-  const progressRatio = traveledDistance / totalDistance
 
   return {
-    progress: Math.min(100, Math.max(0, Number((progressRatio * 100).toFixed(1)))),
+    progress: bestProgress,
+    currentProgress: currentProgress,
     remaining: Number(remainingDistance.toFixed(1)),
   }
 }

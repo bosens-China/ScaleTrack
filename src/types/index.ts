@@ -44,7 +44,7 @@ export interface BMIRange {
 export type AppTab = 'dashboard' | 'trends' | 'add' | 'profile'
 
 /** 应用内所有可导航的页面（含不属于底部 Tab 的子页面） */
-export type AppPage = AppTab | 'edit-user-info'
+export type AppPage = AppTab | 'edit-user-info' | 'milestone-detail'
 
 /** 数据导入/导出的标准结构 */
 export interface ExportData {

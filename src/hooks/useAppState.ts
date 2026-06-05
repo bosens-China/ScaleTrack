@@ -22,9 +22,11 @@ export interface AppState {
   activeGoal: Goal | null
   milestones: Goal[]
   activePage: AppPage
+  activeMilestoneId: string | null
   today: string
   achievedGoal: Goal | null
   setActivePage: (page: AppPage) => void
+  setActiveMilestoneId: (id: string | null) => void
   setAchievedGoal: (goal: Goal | null) => void
   handleSetupComplete: (profile: UserProfile) => void
   handleProfileUpdate: (patch: Partial<UserProfile>) => void
@@ -43,6 +45,7 @@ export function useAppState(): AppState {
     return getRecords().some(r => r.date === today) ? 'dashboard' : 'add'
   })
   const [achievedGoal, setAchievedGoal] = useState<Goal | null>(null)
+  const [activeMilestoneId, setActiveMilestoneId] = useState<string | null>(null)
   const [today, setToday] = useState(() => dayjs().format('YYYY-MM-DD'))
 
   // 跨午夜日期修复：页面重新可见时刷新当天日期
@@ -106,7 +109,7 @@ export function useAppState(): AppState {
     const goal: Goal = {
       id: existing?.id ?? crypto.randomUUID(),
       targetWeight,
-      startWeight: currentWeight,
+      startWeight: existing?.startWeight ?? currentWeight,
       startDate: existing?.startDate ?? dayjs().format('YYYY-MM-DD'),
       isCompleted: false,
     }
@@ -143,11 +146,17 @@ export function useAppState(): AppState {
       const reached =
         (active.startWeight > active.targetWeight && weight <= active.targetWeight) ||
         (active.startWeight < active.targetWeight && weight >= active.targetWeight)
+
       if (reached) {
         const completed = { ...active, isCompleted: true, completedDate: date }
         saveGoal(completed)
         setGoals(getGoals())
-        setAchievedGoal(completed)
+
+        // 只有当这条达标记录是最新记录时，才弹出庆祝；若是补填历史记录，则静默转化为里程碑
+        const isLatestRecord = nextRecords[nextRecords.length - 1]?.id === record.id
+        if (isLatestRecord) {
+          setAchievedGoal(completed)
+        }
       }
     }
 
@@ -168,9 +177,11 @@ export function useAppState(): AppState {
     activeGoal,
     milestones,
     activePage,
+    activeMilestoneId,
     today,
     achievedGoal,
     setActivePage,
+    setActiveMilestoneId,
     setAchievedGoal,
     handleSetupComplete,
     handleProfileUpdate,
