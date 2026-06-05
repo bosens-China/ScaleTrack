@@ -27,12 +27,13 @@ export default function CalendarModal({
   const handlePrevMonth = () => setCurrentMonth(prev => prev.subtract(1, 'month'))
   const handleNextMonth = () => setCurrentMonth(prev => prev.add(1, 'month'))
 
-  // Generate calendar grid
+  // Generate calendar grid (Monday first)
   const startDay = currentMonth.startOf('month').day() // 0 (Sun) to 6 (Sat)
   const daysInMonth = currentMonth.daysInMonth()
+  const adjustedStartDay = startDay === 0 ? 6 : startDay - 1
 
   const grid: (dayjs.Dayjs | null)[] = []
-  for (let i = 0; i < startDay; i++) {
+  for (let i = 0; i < adjustedStartDay; i++) {
     grid.push(null)
   }
   for (let i = 1; i <= daysInMonth; i++) {
@@ -68,7 +69,7 @@ export default function CalendarModal({
         </div>
 
         <div className="grid grid-cols-7 gap-1 mb-2">
-          {['日', '一', '二', '三', '四', '五', '六'].map(day => (
+          {['一', '二', '三', '四', '五', '六', '日'].map(day => (
             <div
               key={day}
               className="text-center text-xs font-medium text-[var(--carbon-text-secondary)] py-1"
