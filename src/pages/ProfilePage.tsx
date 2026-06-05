@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import ProfileAboutSection from '@/components/profile/ProfileAboutSection'
 import ProfileBasicsSection from '@/components/profile/ProfileBasicsSection'
 import ProfileBMISection from '@/components/profile/ProfileBMISection'
 import ProfileDataSection from '@/components/profile/ProfileDataSection'
@@ -103,12 +104,13 @@ export default function ProfilePage({
           onEditingChange={handleProfileEditingChange}
           onProfileUpdate={onProfileUpdate}
         />
-        <ProfileDataSection onReload={onReload} />
         <ProfileMilestonesSection
           milestones={milestones}
           onNavigate={onNavigate}
           onSelectMilestone={onSelectMilestone}
         />
+        <ProfileDataSection onReload={onReload} />
+        <ProfileAboutSection />
       </main>
     </div>
   )
