@@ -1,36 +1,70 @@
 import dayjs from 'dayjs'
 import { useState } from 'react'
 
+import CalendarModal from '@/components/CalendarModal'
+import TextInput from '@/components/TextInput'
 import WeightRulerPicker from '@/components/WeightRulerPicker'
-import type { WeightRecord } from '@/types'
+import type { UserProfile, WeightRecord } from '@/types'
+import { getDefaultNote, toggleTagInNote } from '@/utils/note'
 
 interface Props {
-  initialWeight: number
-  existingRecord?: WeightRecord | null
+  profile: UserProfile
+  records: WeightRecord[]
   onSave: (payload: { date: string; weight: number; note?: string }) => void
 }
 
-export default function AddRecordPage({ initialWeight, existingRecord, onSave }: Props) {
-  const [weight, setWeight] = useState(Number(initialWeight.toFixed(1)))
+export default function AddRecordPage({ profile, records, onSave }: Props) {
+  const [selectedDate, setSelectedDate] = useState(() => dayjs().format('YYYY-MM-DD'))
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+  const todayStr = dayjs().format('YYYY-MM-DD')
+
+  const existingRecord = records.find(r => r.date === selectedDate) ?? null
+  const latestRecord = records.at(-1)
+
+  const [weight, setWeight] = useState(() =>
+    existingRecord ? existingRecord.weight : (latestRecord?.weight ?? profile.initialWeight),
+  )
   const [note, setNote] = useState(() => {
     if (existingRecord?.note) return existingRecord.note
-    const hour = dayjs().hour()
-    if (hour >= 5 && hour < 10) return '早上'
-    if (hour >= 10 && hour < 14) return '中午'
-    if (hour >= 14 && hour < 19) return '下午'
-    return '晚上'
+    return getDefaultNote(latestRecord, dayjs().hour())
   })
-  const todayLabel = dayjs().format('YYYY年MM月DD日')
+
+  const handleDateChange = (newDate: string) => {
+    setSelectedDate(newDate)
+    const newExisting = records.find(r => r.date === newDate)
+    if (newExisting) {
+      setWeight(newExisting.weight)
+      setNote(newExisting.note ?? '')
+    } else {
+      setWeight(latestRecord?.weight ?? profile.initialWeight)
+      if (newDate === todayStr) {
+        setNote(getDefaultNote(latestRecord, dayjs().hour()))
+      } else {
+        setNote('')
+      }
+    }
+  }
+
   const hasExistingRecord = Boolean(existingRecord)
 
   return (
     <div className="app-page bg-[var(--carbon-bg)]">
       <main className="app-main flex flex-col gap-8 px-4 pb-8 pt-4">
-        <div className="flex flex-col gap-2">
-          <h2 className="text-[28px] font-light tracking-tight text-[var(--carbon-text)]">
-            记录体重
-          </h2>
-          <p className="text-sm text-[var(--carbon-text-secondary)]">记录您的身体变化</p>
+        <div className="flex items-start justify-between">
+          <div className="flex flex-col gap-2">
+            <h2 className="text-[28px] font-light tracking-tight text-[var(--carbon-text)]">
+              记录体重
+            </h2>
+            <p className="text-sm text-[var(--carbon-text-secondary)]">记录您的身体变化</p>
+          </div>
+
+          <button
+            onClick={() => setIsCalendarOpen(true)}
+            className="flex items-center gap-1.5 rounded-full border border-[var(--carbon-border)] bg-[var(--carbon-surface-subtle)] px-3 py-1.5 text-xs font-medium text-[var(--carbon-text)] transition-colors hover:bg-[var(--carbon-surface-hover)]"
+          >
+            <span className="i-lucide-calendar-days h-3.5 w-3.5 text-[var(--carbon-text-secondary)]" />
+            {selectedDate === todayStr ? '今天' : dayjs(selectedDate).format('MM月DD日')}
+          </button>
         </div>
 
         <section className="pt-1">
@@ -42,10 +76,6 @@ export default function AddRecordPage({ initialWeight, existingRecord, onSave }:
           </div>
 
           <WeightRulerPicker value={weight} onChange={setWeight} />
-
-          <p className="mt-3 text-center text-xs text-[var(--carbon-text-secondary)]">
-            记录日期：{todayLabel}
-          </p>
         </section>
 
         {existingRecord ? (
@@ -54,10 +84,10 @@ export default function AddRecordPage({ initialWeight, existingRecord, onSave }:
               <span className="i-lucide-info h-4 w-4 shrink-0 text-[var(--carbon-primary)]" />
               <div className="flex flex-col gap-2">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--carbon-primary)]">
-                  今日已有记录
+                  该日期已有记录
                 </p>
                 <p className="text-sm leading-6 text-[var(--carbon-text)]">
-                  当前已保存 {existingRecord.weight.toFixed(1)} kg。再次保存会覆盖今天的记录。
+                  当前已保存 {existingRecord.weight.toFixed(1)} kg。再次保存会覆盖旧记录。
                 </p>
                 {existingRecord.note ? (
                   <p className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
@@ -76,31 +106,44 @@ export default function AddRecordPage({ initialWeight, existingRecord, onSave }:
           >
             备注（选填）
           </label>
-          <div className="relative border-b border-[var(--carbon-outline)] transition-colors focus-within:border-[var(--carbon-primary)]">
-            <input
-              id="weight-note"
-              type="text"
-              value={note}
-              onChange={event => setNote(event.target.value)}
-              placeholder="早晨称重，运动后..."
-              className="h-12 w-full border-none bg-[var(--carbon-surface-subtle)] px-4 pr-11 text-sm text-[var(--carbon-text)] outline-none placeholder:text-[var(--carbon-text-secondary)]"
-            />
-            <span className="i-lucide-notebook-pen pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--carbon-text-secondary)]" />
-          </div>
+          <TextInput
+            id="weight-note"
+            type="text"
+            value={note}
+            onChange={event => setNote(event.target.value)}
+            placeholder="早晨称重，运动后..."
+            rightElement={<span className="i-lucide-notebook-pen h-5 w-5" />}
+          />
           <div className="mt-2 flex flex-wrap gap-2">
-            {['晨起空腹', '饭后', '运动后', '睡前'].map(tag => (
-              <button
-                key={tag}
-                onClick={() => setNote(prev => (prev ? `${prev} ${tag}` : tag))}
-                className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-3 py-1.5 text-xs text-[var(--carbon-text-secondary)] transition-colors hover:bg-[var(--carbon-surface-variant)] active:bg-[var(--carbon-surface-active)]"
-              >
-                {tag}
-              </button>
-            ))}
+            {[
+              '晨起空腹',
+              '便后',
+              '饭前',
+              '饭后',
+              '运动后',
+              '大餐后',
+              '睡前',
+              ...(profile.gender === 'female' ? ['生理期'] : []),
+            ].map(tag => {
+              const isActive = note.split(' ').includes(tag)
+              return (
+                <button
+                  key={tag}
+                  onClick={() => setNote(prev => toggleTagInNote(prev, tag))}
+                  className={`border px-3 py-1.5 text-xs transition-colors ${
+                    isActive
+                      ? 'border-[var(--carbon-primary)] bg-[var(--carbon-primary-soft)] text-[var(--carbon-primary)] font-medium'
+                      : 'border-[var(--carbon-border)] bg-[var(--carbon-surface)] text-[var(--carbon-text-secondary)] hover:bg-[var(--carbon-surface-variant)] active:bg-[var(--carbon-surface-active)]'
+                  }`}
+                >
+                  {tag}
+                </button>
+              )
+            })}
           </div>
           <p className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
             {hasExistingRecord
-              ? '如果不修改备注，将保留当前输入框里的内容并覆盖今天的旧备注。'
+              ? '如果不修改备注，将保留当前输入框里的内容并覆盖旧备注。'
               : '备注会随这条体重记录一起保存，适合记录晨起、饭后或运动后等上下文。'}
           </p>
         </section>
@@ -110,7 +153,7 @@ export default function AddRecordPage({ initialWeight, existingRecord, onSave }:
         <button
           onClick={() =>
             onSave({
-              date: dayjs().format('YYYY-MM-DD'),
+              date: selectedDate,
               weight,
               note: note.trim() || undefined,
             })
@@ -121,6 +164,14 @@ export default function AddRecordPage({ initialWeight, existingRecord, onSave }:
           <span className="i-lucide-check h-5 w-5" />
         </button>
       </div>
+
+      <CalendarModal
+        isOpen={isCalendarOpen}
+        onClose={() => setIsCalendarOpen(false)}
+        records={records}
+        selectedDate={selectedDate}
+        onSelectDate={handleDateChange}
+      />
     </div>
   )
 }
