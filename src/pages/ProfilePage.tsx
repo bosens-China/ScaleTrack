@@ -6,6 +6,7 @@ import ProfileBMISection from '@/components/profile/ProfileBMISection'
 import ProfileDataSection from '@/components/profile/ProfileDataSection'
 import ProfileGoalSection from '@/components/profile/ProfileGoalSection'
 import ProfileMilestonesSection from '@/components/profile/ProfileMilestonesSection'
+import ProfileSettingsSection from '@/components/profile/ProfileSettingsSection'
 import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
 import { BMI_RANGES, getBMICategory, getBmiPercent } from '@/utils/bmi'
 import { getCurrentBMI, getCurrentWeight, getGoalProgress } from '@/utils/stats'
@@ -110,6 +111,7 @@ export default function ProfilePage({
           onSelectMilestone={onSelectMilestone}
         />
         <ProfileDataSection onReload={onReload} />
+        <ProfileSettingsSection />
         <ProfileAboutSection />
       </main>
     </div>

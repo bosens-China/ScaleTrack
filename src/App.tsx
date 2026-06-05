@@ -2,6 +2,7 @@ import BottomTabBar from '@/components/BottomTabBar'
 import GoalAchievementModal from '@/components/GoalAchievementModal'
 import ToastContainer from '@/components/Toast'
 import { useAppState } from '@/hooks/useAppState'
+import { useTheme } from '@/hooks/useTheme'
 import AddRecordPage from '@/pages/AddRecordPage'
 import DashboardPage from '@/pages/DashboardPage'
 import EditUserInfoPage from '@/pages/EditUserInfoPage'
@@ -12,6 +13,7 @@ import TrendsPage from '@/pages/TrendsPage'
 import type { AppTab } from '@/types'
 
 export default function App() {
+  useTheme()
   const {
     profile,
     records,
