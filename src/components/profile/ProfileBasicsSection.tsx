@@ -21,6 +21,7 @@ export default function ProfileBasicsSection({
   onProfileUpdate,
 }: Props) {
   const [heightInput, setHeightInput] = useState(String(profile.height))
+  const [ageInput, setAgeInput] = useState(profile.age ? String(profile.age) : '')
   const [genderInput, setGenderInput] = useState<UserProfile['gender']>(profile.gender)
 
   const handleToggleProfileEdit = () => {
@@ -32,12 +33,17 @@ export default function ProfileBasicsSection({
   }
 
   const handleSave = () => {
-    const parsed = Number.parseFloat(heightInput)
-    if (!validateHeight(parsed)) {
+    const parsedHeight = Number.parseFloat(heightInput)
+    if (!validateHeight(parsedHeight)) {
       toast.error('请输入有效的身高')
       return
     }
-    onProfileUpdate({ gender: genderInput, height: parsed })
+    const parsedAge = ageInput ? Number.parseInt(ageInput, 10) : undefined
+    if (parsedAge !== undefined && (Number.isNaN(parsedAge) || parsedAge < 10 || parsedAge > 120)) {
+      toast.error('请输入有效的年龄 (10-120)')
+      return
+    }
+    onProfileUpdate({ gender: genderInput, height: parsedHeight, age: parsedAge })
     onEditingChange(false)
   }
 
@@ -77,6 +83,19 @@ export default function ProfileBasicsSection({
               }
               placeholder="身高（cm）"
             />
+            <TextInput
+              type="number"
+              inputMode="numeric"
+              value={ageInput}
+              onChange={event => setAgeInput(event.target.value)}
+              onFocus={event =>
+                setTimeout(
+                  () => event.target.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+                  300,
+                )
+              }
+              placeholder="年龄 (岁，用于计算代谢)"
+            />
             <button
               onClick={handleSave}
               className="h-12 w-full bg-[var(--carbon-primary)] text-sm font-medium text-[var(--carbon-text-on-primary)] hover:bg-[var(--carbon-primary-hover)]"
@@ -108,6 +127,17 @@ export default function ProfileBasicsSection({
                   <p className="text-sm font-medium text-[var(--carbon-text)]">性别</p>
                   <p className="text-xs text-[var(--carbon-text-secondary)]">
                     {profile.gender === 'male' ? '男' : '女'}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between border-b border-[var(--carbon-border)] p-4">
+              <div className="flex items-center gap-4">
+                <span className="i-lucide-calendar h-5 w-5 text-[var(--carbon-text-secondary)]" />
+                <div>
+                  <p className="text-sm font-medium text-[var(--carbon-text)]">年龄</p>
+                  <p className="text-xs text-[var(--carbon-text-secondary)]">
+                    {profile.age ? `${profile.age} 岁` : '未设置'}
                   </p>
                 </div>
               </div>

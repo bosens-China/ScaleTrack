@@ -13,18 +13,25 @@ interface Props {
 export default function SetupPage({ onComplete }: Props) {
   const heightId = useId()
   const weightId = useId()
+  const ageId = useId()
   const [gender, setGender] = useState<Gender>('male')
   const [height, setHeight] = useState('')
+  const [age, setAge] = useState('')
   const [weight, setWeight] = useState(60.0)
   const [error, setError] = useState('')
 
   const heightNum = parseFloat(height)
+  const ageNum = parseInt(age, 10)
   const weightNum = weight
   const bmi = heightNum > 0 && weightNum > 0 ? calcBMI(weightNum, heightNum) : null
 
   const handleSubmit = () => {
     if (!validateHeight(heightNum)) {
       setError(VALIDATION_LIMITS.height.errorMsg)
+      return
+    }
+    if (age !== '' && (isNaN(ageNum) || ageNum < 10 || ageNum > 120)) {
+      setError('请输入有效的年龄 (10-120)')
       return
     }
     if (!validateWeight(weightNum)) {
@@ -35,6 +42,7 @@ export default function SetupPage({ onComplete }: Props) {
     const profile: UserProfile = {
       gender,
       height: heightNum,
+      age: isNaN(ageNum) ? undefined : ageNum,
       initialWeight: weightNum,
       createdAt: new Date().toISOString(),
     }
@@ -101,6 +109,26 @@ export default function SetupPage({ onComplete }: Props) {
                 value={height}
                 onChange={e => {
                   setHeight(e.target.value)
+                  setError('')
+                }}
+              />
+            </div>
+
+            <div className="mt-6 flex flex-col gap-2">
+              <label
+                htmlFor={ageId}
+                className="block text-xs font-semibold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]"
+              >
+                年龄 (岁，选填)
+              </label>
+              <TextInput
+                id={ageId}
+                type="number"
+                inputMode="numeric"
+                placeholder="例如：25"
+                value={age}
+                onChange={e => {
+                  setAge(e.target.value)
                   setError('')
                 }}
               />
