@@ -6,16 +6,8 @@ import type { Goal } from '@/types'
 import { toast } from '@/utils/toast'
 import { validateWeight } from '@/utils/validation'
 
-interface GoalProgress {
-  progress: number
-  currentProgress: number
-  remaining: number
-}
-
 interface Props {
   goal: Goal | null
-  currentWeight: number
-  progress: GoalProgress | null
   onSaveGoal: (targetWeight: number) => void
 }
 
