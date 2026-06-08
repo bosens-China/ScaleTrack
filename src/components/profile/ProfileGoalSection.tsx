@@ -20,11 +20,9 @@ interface Props {
 }
 
 /** 目标区块自行管理编辑态，页面层只保留数据编排。 */
-export default function ProfileGoalSection({ goal, currentWeight, progress, onSaveGoal }: Props) {
+export default function ProfileGoalSection({ goal, onSaveGoal }: Props) {
   const [isEditingGoal, setIsEditingGoal] = useState(false)
   const [goalInput, setGoalInput] = useState(goal?.targetWeight.toFixed(1) ?? '')
-  const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
-  const progressLabel = goal ? (isGainGoal ? '增肌进度' : '减脂进度') : '目标进度'
 
   const handleToggleEdit = () => {
     setGoalInput(goal?.targetWeight.toFixed(1) ?? '')
@@ -43,77 +41,27 @@ export default function ProfileGoalSection({ goal, currentWeight, progress, onSa
   }
 
   return (
-    <section className="flex flex-col gap-4 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4">
-      <div className="flex items-center justify-between border-b border-[var(--carbon-border)] pb-2">
+    <section className="flex flex-col gap-2 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4">
+      <div className="flex items-center justify-between">
         <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--carbon-text-secondary)]">
-          目标设置
+          目标体重
         </h3>
         <button onClick={handleToggleEdit} className="text-sm text-[var(--carbon-primary)]">
           {goal ? '调整' : '设置'}
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-px overflow-hidden border border-[var(--carbon-border)] bg-[var(--carbon-border)]">
-        <div className="bg-[var(--carbon-surface)] p-4">
-          <p className="text-xs text-[var(--carbon-text-secondary)]">当前体重</p>
-          <p className="mt-1 text-2xl font-light text-[var(--carbon-primary)]">
-            {currentWeight.toFixed(1)} <span className="text-sm">kg</span>
-          </p>
-        </div>
-        <div className="bg-[var(--carbon-surface)] p-4">
-          <p className="text-xs text-[var(--carbon-text-secondary)]">目标体重</p>
-          <p className="mt-1 text-2xl font-light text-[var(--carbon-text-secondary)]">
+      {!isEditingGoal && (
+        <div className="mt-1">
+          <p className="text-2xl font-light text-[var(--carbon-text)]">
             {goal ? `${goal.targetWeight.toFixed(1)} ` : '-- '}
-            <span className="text-sm">kg</span>
+            <span className="text-sm text-[var(--carbon-text-secondary)]">kg</span>
           </p>
         </div>
-      </div>
+      )}
 
-      <div className="flex flex-col gap-3">
-        <div className="flex justify-between text-xs text-[var(--carbon-text-secondary)]">
-          <span>{progressLabel}</span>
-          <span className="font-semibold text-[var(--carbon-primary)]">
-            {progress ? `${progress.progress}%` : '未设置'}
-          </span>
-        </div>
-        <div className="flex h-1 w-full bg-[var(--carbon-surface-strong)] overflow-hidden">
-          {progress && (
-            <>
-              <div
-                className="h-full bg-[var(--carbon-primary)] transition-all duration-300"
-                style={{ width: `${progress.currentProgress}%` }}
-              />
-              {progress.progress > progress.currentProgress && (
-                <div
-                  className="h-full bg-[var(--carbon-primary)] opacity-30 transition-all duration-300"
-                  style={{ width: `${progress.progress - progress.currentProgress}%` }}
-                />
-              )}
-            </>
-          )}
-        </div>
-        {progress && (
-          <p className="text-[11px] text-[var(--carbon-text-secondary)]">
-            {progress.remaining === 0 ? (
-              '已达成目标'
-            ) : (
-              <>
-                还差{' '}
-                <span className="font-semibold text-[var(--carbon-text)]">
-                  {progress.remaining} kg
-                </span>{' '}
-                到达目标
-              </>
-            )}
-          </p>
-        )}
-      </div>
-
-      {isEditingGoal ? (
-        <div className="flex flex-col gap-3 border-t border-[var(--carbon-border)] pt-4">
-          <label className="text-xs uppercase tracking-[0.16em] text-[var(--carbon-text-secondary)]">
-            新目标体重
-          </label>
+      {isEditingGoal && (
+        <div className="flex flex-col gap-3 pt-3">
           <div className="flex items-center gap-3">
             <TextInput
               type="number"
@@ -136,8 +84,11 @@ export default function ProfileGoalSection({ goal, currentWeight, progress, onSa
               保存
             </button>
           </div>
+          <p className="text-xs text-[var(--carbon-text-secondary)]">
+            更新目标后，主页的进度追踪器会自动重置进度。
+          </p>
         </div>
-      ) : null}
+      )}
     </section>
   )
 }

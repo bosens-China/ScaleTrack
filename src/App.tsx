@@ -50,7 +50,14 @@ export default function App() {
           />
         )
       case 'trends':
-        return <TrendsPage records={records} onNavigate={setActivePage} />
+        return (
+          <TrendsPage
+            records={records}
+            goal={activeGoal}
+            onNavigate={setActivePage}
+            onDeleteRecord={handleDeleteRecord}
+          />
+        )
       case 'add':
         return <AddRecordPage profile={profile} records={records} onSave={handleSaveRecord} />
       case 'profile':

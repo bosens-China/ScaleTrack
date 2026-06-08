@@ -1,12 +1,8 @@
-import dayjs from 'dayjs'
-import { useState } from 'react'
-
 import WeightTrendChart from '@/components/WeightTrendChart'
 import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
-import { getBMICategory, getBMIColor } from '@/utils/bmi'
+import { calculateMetabolismStats } from '@/utils/metabolism'
 import {
   filterRecordsByDays,
-  getCurrentBMI,
   getCurrentWeight,
   getGoalProgress,
   getPreviousDiff,
@@ -21,28 +17,19 @@ interface Props {
   onDeleteRecord: (id: string) => void
 }
 
-export default function DashboardPage({
-  profile,
-  records,
-  goal,
-  onNavigate,
-  onDeleteRecord,
-}: Props) {
-  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null)
-
+export default function DashboardPage({ profile, records, goal, onNavigate }: Props) {
   const currentWeight = getCurrentWeight(profile, records)
-  const currentBMI = getCurrentBMI(profile, records)
-
   const previousDiff = getPreviousDiff(records)
   const weeklyRecords = filterRecordsByDays(records, 7)
   const weeklyChange = getWeeklyChange(records)
   const progress = getGoalProgress(goal, currentWeight, records)
-  const latestBmiTone = getBMIColor(currentBMI)
-  const latestCategory = getBMICategory(currentBMI)
-  const recentRecords = [...records].reverse()
   const hasRecords = records.length > 0
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
   const goalLabel = goal ? (isGainGoal ? '增肌目标' : '减脂目标') : '体重目标'
+
+  // Calculate Metabolism
+  const metabolism = calculateMetabolismStats(profile, records, 7)
+
   const weeklyDirection =
     weeklyChange === null
       ? '暂无变化'
@@ -66,33 +53,34 @@ export default function DashboardPage({
             ? 'text-[var(--color-success)]'
             : 'text-[var(--carbon-text-secondary)]'
 
-  const handleDeleteClick = (id: string) => {
-    setPendingDeleteId(id)
-  }
-
-  const handleConfirmDelete = () => {
-    if (pendingDeleteId) {
-      onDeleteRecord(pendingDeleteId)
-      setPendingDeleteId(null)
-    }
-  }
-
   return (
     <div className="app-page bg-[var(--carbon-bg)]">
       <main className="app-main flex flex-col gap-4 px-4 pb-8 pt-4">
-        <section className="bg-[var(--dashboard-header-bg)] px-4 py-4 text-[var(--dashboard-header-text)] shadow-sm">
+        {!profile.age && (
+          <div className="flex items-center justify-between bg-[var(--carbon-primary-soft)] border border-[var(--carbon-primary)] px-4 py-3 text-sm text-[var(--carbon-text)]">
+            <span>补充年龄以解锁每日代谢(TDEE)追踪</span>
+            <button
+              onClick={() => onNavigate('profile')}
+              className="font-medium text-[var(--carbon-primary)] hover:underline whitespace-nowrap ml-4"
+            >
+              去设置
+            </button>
+          </div>
+        )}
+
+        <section className="bg-[var(--dashboard-header-bg)] px-4 py-5 text-[var(--dashboard-header-text)] shadow-sm">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.18em] opacity-72">当前体重</p>
               <div className="mt-1 flex items-baseline gap-1">
-                <span className="text-4xl font-semibold leading-none">
+                <span className="text-[44px] font-semibold leading-none">
                   {currentWeight.toFixed(1)}
                 </span>
-                <span className="text-sm opacity-90">kg</span>
+                <span className="text-base opacity-90">kg</span>
               </div>
             </div>
             <div
-              className="flex min-w-[72px] flex-col items-center px-3 py-2 text-center"
+              className="flex min-w-[72px] flex-col items-center px-3 py-2 text-center rounded-sm"
               style={{ backgroundColor: 'var(--dashboard-header-accent)' }}
             >
               <span
@@ -109,27 +97,6 @@ export default function DashboardPage({
               </span>
             </div>
           </div>
-
-          <div className="mt-4 flex items-center justify-between border-t border-[var(--dashboard-header-text)] border-opacity-10 pt-3">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-[0.18em] opacity-72">BMI</p>
-              <div className="mt-1 flex items-center gap-2">
-                <span className="text-xl font-semibold">{currentBMI.toFixed(1)}</span>
-                <span
-                  className="px-2 py-0.5 text-[10px] font-bold uppercase"
-                  style={{ backgroundColor: '#ffffff', color: latestBmiTone }}
-                >
-                  {latestCategory === 'underweight'
-                    ? '偏瘦'
-                    : latestCategory === 'normal'
-                      ? '正常'
-                      : latestCategory === 'overweight'
-                        ? '偏胖'
-                        : '肥胖'}
-                </span>
-              </div>
-            </div>
-          </div>
         </section>
 
         {hasRecords ? (
@@ -141,168 +108,105 @@ export default function DashboardPage({
                   onClick={() => onNavigate('trends')}
                   className="text-xs font-medium text-[var(--carbon-primary)] hover:underline"
                 >
-                  7 天
+                  更多趋势
                 </button>
               </div>
               <WeightTrendChart records={weeklyRecords} />
             </section>
 
-            <section className="grid grid-cols-2 gap-4">
-              <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4">
-                <div className="flex items-center gap-2 text-[var(--carbon-text-secondary)]">
-                  <span className="i-lucide-flag h-4 w-4" />
-                  <span className="text-[11px] font-medium uppercase tracking-[0.12em]">
-                    {goalLabel}
-                  </span>
-                </div>
-                <p className="mt-3 text-xl font-semibold text-[var(--carbon-text)]">
+            <section className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4">
+              <div className="flex items-center gap-2 text-[var(--carbon-text-secondary)]">
+                <span className="i-lucide-flag h-4 w-4 text-[var(--carbon-primary)]" />
+                <span className="text-[11px] font-medium uppercase tracking-[0.12em]">
+                  {goalLabel}
+                </span>
+              </div>
+              <div className="mt-3 flex items-baseline justify-between">
+                <p className="text-xl font-semibold text-[var(--carbon-text)]">
                   {goal ? `${goal.targetWeight.toFixed(1)} kg` : '未设置'}
                 </p>
                 {progress && (
-                  <p className="mt-1 text-[10px] text-[var(--carbon-text-secondary)]">
+                  <p className="text-xs text-[var(--carbon-text-secondary)]">
                     {progress.remaining === 0 ? '已达成目标' : `还差 ${progress.remaining} kg`}
                   </p>
                 )}
-                <div className="mt-2 flex h-1 w-full bg-[var(--carbon-surface-strong)] overflow-hidden">
-                  {progress && (
-                    <>
-                      <div
-                        className="h-full bg-[var(--carbon-primary)] transition-all duration-300"
-                        style={{ width: `${progress.currentProgress}%` }}
-                      />
-                      {progress.progress > progress.currentProgress && (
-                        <div
-                          className="h-full bg-[var(--carbon-primary)] opacity-30 transition-all duration-300"
-                          style={{ width: `${progress.progress - progress.currentProgress}%` }}
-                        />
-                      )}
-                    </>
-                  )}
-                </div>
               </div>
-
-              <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4">
-                <div className="flex items-center gap-2 text-[var(--carbon-text-secondary)]">
-                  <span className="i-lucide-scale h-4 w-4" />
-                  <span className="text-[11px] font-medium uppercase tracking-[0.12em]">
-                    周变化
-                  </span>
-                </div>
-                <p className={`mt-3 text-xl font-semibold ${trendTone}`}>
-                  {weeklyChange === null
-                    ? '--'
-                    : `${weeklyChange > 0 ? '+' : ''}${weeklyChange.toFixed(1)} kg`}
-                </p>
-                <p className="mt-1 text-[10px] text-[var(--carbon-text-secondary)]">
-                  {weeklyDirection}
-                </p>
+              <div className="mt-3 flex h-1.5 w-full bg-[var(--carbon-surface-strong)] overflow-hidden rounded-full">
+                {progress && (
+                  <>
+                    <div
+                      className="h-full bg-[var(--carbon-primary)] transition-all duration-300"
+                      style={{ width: `${progress.currentProgress}%` }}
+                    />
+                    {progress.progress > progress.currentProgress && (
+                      <div
+                        className="h-full bg-[var(--carbon-primary)] opacity-30 transition-all duration-300"
+                        style={{ width: `${progress.progress - progress.currentProgress}%` }}
+                      />
+                    )}
+                  </>
+                )}
               </div>
             </section>
 
-            <section className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)]">
-              <div className="flex items-center justify-between border-b border-[var(--carbon-border)] px-4 py-2.5">
-                <div>
-                  <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--carbon-text-secondary)]">
-                    最近记录
-                  </p>
-                  <p className="mt-1 text-sm text-[var(--carbon-text)]">共 {records.length} 条</p>
+            <section className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4">
+              <div className="flex items-center justify-between border-b border-[var(--carbon-border)] pb-3 mb-3">
+                <div className="flex items-center gap-2 text-[var(--carbon-text-secondary)]">
+                  <span className="i-lucide-activity h-4 w-4 text-[var(--carbon-primary)]" />
+                  <span className="text-[11px] font-medium uppercase tracking-[0.12em]">
+                    近期身体表现
+                  </span>
                 </div>
-                <button
-                  onClick={() => onNavigate('add')}
-                  className="text-xs font-medium text-[var(--carbon-primary)] hover:underline"
-                >
-                  更新
-                </button>
+                {weeklyChange !== null && (
+                  <div className={`flex items-baseline gap-1 ${trendTone}`}>
+                    <span className="text-sm font-semibold">
+                      {weeklyChange > 0 ? '+' : ''}
+                      {weeklyChange.toFixed(1)} kg
+                    </span>
+                    <span className="text-[10px]">({weeklyDirection})</span>
+                  </div>
+                )}
               </div>
 
-              <div className="flex flex-col max-h-[300px] overflow-y-auto carbon-scrollbar">
-                {recentRecords.map((record, index) => {
-                  const prevRecord = recentRecords[index + 1]
-                  const isFirstRecord = record.id === records[0]?.id
-
-                  let diffTone = 'text-[var(--carbon-text-secondary)]'
-                  let diffIcon = 'i-lucide-minus'
-                  let diffText = ''
-
-                  if (prevRecord) {
-                    const diff = record.weight - prevRecord.weight
-                    if (diff > 0) {
-                      diffTone = isGainGoal
-                        ? 'text-[var(--color-success)]'
-                        : 'text-[var(--color-danger)]'
-                      diffIcon = 'i-lucide-trending-up'
-                      diffText = `+${diff.toFixed(1)}`
-                    } else if (diff < 0) {
-                      diffTone = isGainGoal
-                        ? 'text-[var(--color-danger)]'
-                        : 'text-[var(--color-success)]'
-                      diffIcon = 'i-lucide-trending-down'
-                      diffText = `${diff.toFixed(1)}`
-                    } else {
-                      diffText = '持平'
-                    }
-                  }
-
-                  return (
-                    <div
-                      key={record.id}
-                      className="flex flex-col border-b border-[var(--carbon-border)] last:border-b-0"
+              <div className="flex flex-col gap-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-[var(--carbon-text-secondary)]">
+                    静态基础代谢 (BMR)
+                  </span>
+                  <span className="text-sm font-medium text-[var(--carbon-text)]">
+                    {metabolism.bmr ? `${metabolism.bmr} kcal` : '需设置年龄'}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-[var(--carbon-text-secondary)]">
+                    日均热量盈亏 (趋势)
+                  </span>
+                  {metabolism.isDataSufficient && metabolism.tdeeTrend !== null ? (
+                    <span
+                      className={`text-sm font-semibold ${metabolism.tdeeTrend < 0 ? 'text-[var(--color-success)]' : metabolism.tdeeTrend > 0 ? 'text-[var(--color-danger)]' : 'text-[var(--carbon-text)]'}`}
                     >
-                      <div className="flex items-center justify-between px-4 py-3">
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium text-[var(--carbon-text)]">
-                              {record.weight.toFixed(1)} kg
-                            </span>
-                            {prevRecord && (
-                              <span className={`flex items-center gap-0.5 text-[11px] ${diffTone}`}>
-                                {diffText !== '持平' && <span className={`${diffIcon} h-3 w-3`} />}
-                                <span>{diffText}</span>
-                              </span>
-                            )}
-                            {isFirstRecord && !record.note && (
-                              <span className="rounded-sm bg-[var(--carbon-primary-soft)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--carbon-primary)]">
-                                初始体重
-                              </span>
-                            )}
-                          </div>
-                          <p className="mt-0.5 truncate text-xs text-[var(--carbon-text-secondary)]">
-                            {dayjs(record.date).format('MM月DD日')}
-                            {record.note ? ` · ${record.note}` : ''}
-                          </p>
-                        </div>
-                        <button
-                          onClick={() => handleDeleteClick(record.id)}
-                          className="ml-3 flex h-8 w-8 items-center justify-center text-[var(--carbon-outline)] transition-colors hover:text-[var(--color-danger)]"
-                          aria-label="删除记录"
-                        >
-                          <span className="i-lucide-trash-2 h-4 w-4" />
-                        </button>
-                      </div>
-                      {pendingDeleteId === record.id && (
-                        <div className="flex items-center justify-between border-t border-[var(--color-danger)] bg-[var(--carbon-surface-subtle)] px-4 py-2.5">
-                          <p className="text-xs text-[var(--carbon-text-secondary)]">
-                            确认删除这条记录？
-                          </p>
-                          <div className="flex gap-2">
-                            <button
-                              onClick={() => setPendingDeleteId(null)}
-                              className="px-3 py-1 text-xs text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
-                            >
-                              取消
-                            </button>
-                            <button
-                              onClick={handleConfirmDelete}
-                              className="bg-[var(--color-danger)] px-3 py-1 text-xs font-medium text-white"
-                            >
-                              删除
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )
-                })}
+                      {metabolism.tdeeTrend > 0 ? '+' : ''}
+                      {metabolism.tdeeTrend} kcal
+                    </span>
+                  ) : (
+                    <span className="text-xs text-[var(--carbon-text-secondary)]">
+                      数据不足 (需7天以上)
+                    </span>
+                  )}
+                </div>
+                {metabolism.isDataSufficient && metabolism.tdeeTrend !== null && (
+                  <div className="mt-1 flex items-start gap-1.5 rounded bg-[var(--carbon-surface-subtle)] p-2">
+                    <span className="i-lucide-info h-3 w-3 mt-0.5 shrink-0 text-[var(--carbon-text-secondary)]" />
+                    <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
+                      基于最近 {metabolism.trendDays} 天趋势推算。
+                      {metabolism.tdeeTrend < 0
+                        ? '你正处于热量赤字状态，干得漂亮！'
+                        : metabolism.tdeeTrend > 0
+                          ? '你正处于热量盈余状态。'
+                          : '你的摄入与消耗完全平衡。'}
+                    </p>
+                  </div>
+                )}
               </div>
             </section>
           </>
@@ -326,13 +230,13 @@ export default function DashboardPage({
           </section>
         )}
 
-        <section className="flex justify-center pt-1">
+        <section className="flex justify-center pt-2">
           <button
             onClick={() => onNavigate('add')}
-            className="flex min-w-[200px] items-center justify-center gap-3 bg-[var(--carbon-primary)] px-6 py-3 text-sm font-semibold text-[var(--carbon-text-on-primary)] shadow-sm transition-colors hover:bg-[var(--carbon-primary-hover)]"
+            className="flex min-w-[200px] items-center justify-center gap-3 bg-[var(--carbon-primary)] px-6 py-3.5 text-sm font-semibold text-[var(--carbon-text-on-primary)] shadow-sm transition-colors hover:bg-[var(--carbon-primary-hover)] rounded-sm"
           >
             <span className="i-lucide-plus h-4 w-4" />
-            <span>添加体重记录</span>
+            <span>添加今日记录</span>
           </button>
         </section>
       </main>

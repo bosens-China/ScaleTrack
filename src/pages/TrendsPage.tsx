@@ -1,7 +1,8 @@
+import dayjs from 'dayjs'
 import { useState } from 'react'
 
 import WeightTrendChart from '@/components/WeightTrendChart'
-import type { AppPage, TimeRange, WeightRecord } from '@/types'
+import type { AppPage, Goal, TimeRange, WeightRecord } from '@/types'
 import { buildTrendInsight, filterRecordsByRange, getWeightStats } from '@/utils/stats'
 
 const RANGE_OPTIONS = [
@@ -15,20 +16,38 @@ const RANGE_OPTIONS = [
 
 interface Props {
   records: WeightRecord[]
+  goal: Goal | null
   onNavigate: (page: AppPage) => void
+  onDeleteRecord: (id: string) => void
 }
 
-export default function TrendsPage({ records, onNavigate }: Props) {
+export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }: Props) {
   const [range, setRange] = useState<TimeRange>('7d')
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null)
+
   const filteredRecords = filterRecordsByRange(records, range)
   const stats = getWeightStats(filteredRecords)
   const insight = buildTrendInsight(filteredRecords)
   const hasRecords = records.length > 0
   const hasChartData = filteredRecords.length > 0
 
+  const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
+  const recentRecords = [...records].reverse()
+
+  const handleDeleteClick = (id: string) => {
+    setPendingDeleteId(id)
+  }
+
+  const handleConfirmDelete = () => {
+    if (pendingDeleteId) {
+      onDeleteRecord(pendingDeleteId)
+      setPendingDeleteId(null)
+    }
+  }
+
   return (
     <div className="app-page bg-[var(--carbon-bg)]">
-      <main className="app-main px-4">
+      <main className="app-main px-4 pb-8 pt-4">
         <div className="mb-4">
           <h2 className="text-2xl font-normal text-[var(--carbon-text)]">体重趋势</h2>
           <p className="mt-1 text-sm text-[var(--carbon-text-secondary)]">直观查看您的进度</p>
@@ -123,6 +142,112 @@ export default function TrendsPage({ records, onNavigate }: Props) {
             >
               去添加记录
             </button>
+          </section>
+        )}
+
+        {hasRecords && (
+          <section className="mt-6 border border-[var(--carbon-border)] bg-[var(--carbon-surface)]">
+            <div className="flex items-center justify-between border-b border-[var(--carbon-border)] px-4 py-3">
+              <div className="flex items-center gap-2">
+                <span className="i-lucide-list h-4 w-4 text-[var(--carbon-primary)]" />
+                <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--carbon-text-secondary)]">
+                  所有记录
+                </span>
+              </div>
+              <p className="text-xs font-medium text-[var(--carbon-text)]">
+                共 {records.length} 条
+              </p>
+            </div>
+
+            <div className="flex flex-col">
+              {recentRecords.map((record, index) => {
+                const prevRecord = recentRecords[index + 1]
+                const isFirstRecord = record.id === records[0]?.id
+
+                let diffTone = 'text-[var(--carbon-text-secondary)]'
+                let diffIcon = 'i-lucide-minus'
+                let diffText = ''
+
+                if (prevRecord) {
+                  const diff = record.weight - prevRecord.weight
+                  if (diff > 0) {
+                    diffTone = isGainGoal
+                      ? 'text-[var(--color-success)]'
+                      : 'text-[var(--color-danger)]'
+                    diffIcon = 'i-lucide-trending-up'
+                    diffText = `+${diff.toFixed(1)}`
+                  } else if (diff < 0) {
+                    diffTone = isGainGoal
+                      ? 'text-[var(--color-danger)]'
+                      : 'text-[var(--color-success)]'
+                    diffIcon = 'i-lucide-trending-down'
+                    diffText = `${diff.toFixed(1)}`
+                  } else {
+                    diffText = '持平'
+                  }
+                }
+
+                return (
+                  <div
+                    key={record.id}
+                    className="flex flex-col border-b border-[var(--carbon-border)] last:border-b-0"
+                  >
+                    <div className="flex items-center justify-between px-4 py-3">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-medium text-[var(--carbon-text)]">
+                            {record.weight.toFixed(1)} kg
+                          </span>
+                          {prevRecord && (
+                            <span className={`flex items-center gap-0.5 text-[11px] ${diffTone}`}>
+                              {diffText !== '持平' && <span className={`${diffIcon} h-3 w-3`} />}
+                              <span>{diffText}</span>
+                            </span>
+                          )}
+                          {isFirstRecord && !record.note && (
+                            <span className="rounded-sm bg-[var(--carbon-primary-soft)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--carbon-primary)]">
+                              初始体重
+                            </span>
+                          )}
+                        </div>
+                        <p className="mt-0.5 truncate text-xs text-[var(--carbon-text-secondary)]">
+                          {dayjs(record.date).format('YYYY年MM月DD日')}
+                          {record.note ? ` · ${record.note}` : ''}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteClick(record.id)}
+                        className="ml-3 flex h-8 w-8 items-center justify-center text-[var(--carbon-outline)] transition-colors hover:text-[var(--color-danger)]"
+                        aria-label="删除记录"
+                      >
+                        <span className="i-lucide-trash-2 h-4 w-4" />
+                      </button>
+                    </div>
+                    {pendingDeleteId === record.id && (
+                      <div className="flex items-center justify-between border-t border-[var(--color-danger)] bg-[var(--carbon-surface-subtle)] px-4 py-2.5">
+                        <p className="text-xs text-[var(--carbon-text-secondary)]">
+                          确认删除这条记录？
+                        </p>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => setPendingDeleteId(null)}
+                            className="px-3 py-1 text-xs text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
+                          >
+                            取消
+                          </button>
+                          <button
+                            onClick={handleConfirmDelete}
+                            className="bg-[var(--color-danger)] px-3 py-1 text-xs font-medium text-white"
+                          >
+                            删除
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
           </section>
         )}
       </main>
