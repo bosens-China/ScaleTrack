@@ -3,10 +3,18 @@ export type Gender = 'male' | 'female'
 export interface UserProfile {
   gender: Gender
   height: number // cm
+  age?: number // optional for legacy users
   initialWeight: number // kg
   createdAt: string // ISO string
   nickname?: string
   avatar?: string
+}
+
+export interface MetabolismStats {
+  bmr: number | null
+  tdeeTrend: number | null // the actual deficit/surplus
+  trendDays: number
+  isDataSufficient: boolean
 }
 
 export interface WeightRecord {
