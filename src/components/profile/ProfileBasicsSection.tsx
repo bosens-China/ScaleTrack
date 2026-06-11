@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
-import BirthDatePicker from '@/components/BirthDatePicker'
+import dayjs from 'dayjs'
+
+import BirthDatePickerModal from '@/components/BirthDatePickerModal'
 import TextInput from '@/components/TextInput'
 
 import type { UserProfile } from '@/types'
@@ -24,6 +26,7 @@ export default function ProfileBasicsSection({
 }: Props) {
   const [heightInput, setHeightInput] = useState(String(profile.height))
   const [birthDateInput, setBirthDateInput] = useState<string | undefined>(profile.birthDate)
+  const [isPickerOpen, setIsPickerOpen] = useState(false)
   const [genderInput, setGenderInput] = useState<UserProfile['gender']>(profile.gender)
 
   const handleToggleProfileEdit = () => {
@@ -84,7 +87,30 @@ export default function ProfileBasicsSection({
               <span className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
                 出生年月日
               </span>
-              <BirthDatePicker value={birthDateInput} onChange={setBirthDateInput} />
+              <button
+                type="button"
+                onClick={() => setIsPickerOpen(true)}
+                className="flex h-12 w-full items-center justify-between border-b border-[var(--carbon-border)] bg-[var(--carbon-bg)] px-3 text-sm transition-colors hover:bg-[var(--carbon-surface-variant)]"
+              >
+                <span
+                  className={
+                    birthDateInput
+                      ? 'text-[var(--carbon-text)]'
+                      : 'text-[var(--carbon-text-secondary)]'
+                  }
+                >
+                  {birthDateInput
+                    ? dayjs(birthDateInput).format('YYYY年 MM月 DD日')
+                    : '请选择出生日期'}
+                </span>
+                <span className="i-lucide-calendar h-4 w-4 text-[var(--carbon-text-secondary)]" />
+              </button>
+              <BirthDatePickerModal
+                isOpen={isPickerOpen}
+                onClose={() => setIsPickerOpen(false)}
+                value={birthDateInput}
+                onChange={setBirthDateInput}
+              />
             </div>
             <button
               onClick={handleSave}

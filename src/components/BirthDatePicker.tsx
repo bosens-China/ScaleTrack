@@ -56,8 +56,7 @@ function ScrollColumn({ options, value, onChange }: ColumnProps) {
                 scrollSnapAlign: 'center',
                 color: isSelected ? 'var(--carbon-text)' : 'var(--carbon-text-secondary)',
                 fontWeight: isSelected ? 500 : 400,
-                transform: isSelected ? 'scale(1.1)' : 'scale(0.9)',
-                opacity: isSelected ? 1 : 0.5,
+                opacity: isSelected ? 1 : 0.6,
               }}
             >
               {opt.label}

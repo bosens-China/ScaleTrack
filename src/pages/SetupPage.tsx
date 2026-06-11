@@ -1,6 +1,8 @@
 import { useId, useState } from 'react'
 
-import BirthDatePicker from '@/components/BirthDatePicker'
+import dayjs from 'dayjs'
+
+import BirthDatePickerModal from '@/components/BirthDatePickerModal'
 import TextInput from '@/components/TextInput'
 import WeightRulerPicker from '@/components/WeightRulerPicker'
 import type { Gender, UserProfile } from '@/types'
@@ -17,6 +19,7 @@ export default function SetupPage({ onComplete }: Props) {
   const [gender, setGender] = useState<Gender>('male')
   const [height, setHeight] = useState('')
   const [birthDate, setBirthDate] = useState<string | undefined>()
+  const [isPickerOpen, setIsPickerOpen] = useState(false)
   const [weight, setWeight] = useState(60.0)
   const [error, setError] = useState('')
 
@@ -113,15 +116,29 @@ export default function SetupPage({ onComplete }: Props) {
               <label className="block text-xs font-semibold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
                 出生年月日 (选填)
               </label>
-              <div className="pt-2">
-                <BirthDatePicker
-                  value={birthDate}
-                  onChange={date => {
-                    setBirthDate(date)
-                    setError('')
-                  }}
-                />
-              </div>
+              <button
+                type="button"
+                onClick={() => setIsPickerOpen(true)}
+                className="flex h-12 w-full items-center justify-between border-b border-[var(--carbon-border)] bg-[var(--carbon-bg)] px-3 text-sm transition-colors hover:bg-[var(--carbon-surface-variant)]"
+              >
+                <span
+                  className={
+                    birthDate ? 'text-[var(--carbon-text)]' : 'text-[var(--carbon-text-secondary)]'
+                  }
+                >
+                  {birthDate ? dayjs(birthDate).format('YYYY年 MM月 DD日') : '请选择出生日期'}
+                </span>
+                <span className="i-lucide-calendar h-4 w-4 text-[var(--carbon-text-secondary)]" />
+              </button>
+              <BirthDatePickerModal
+                isOpen={isPickerOpen}
+                onClose={() => setIsPickerOpen(false)}
+                value={birthDate}
+                onChange={date => {
+                  setBirthDate(date)
+                  setError('')
+                }}
+              />
             </div>
 
             <div className="mt-6 flex flex-col gap-2">
