@@ -46,19 +46,24 @@ function ScrollColumn({ options, value, onChange }: ColumnProps) {
           paddingBottom: '40px',
         }}
       >
-        {options.map(opt => (
-          <div
-            key={opt.value}
-            className="flex h-[40px] items-center justify-center text-sm transition-colors"
-            style={{
-              scrollSnapAlign: 'center',
-              color: opt.value === value ? 'var(--carbon-text)' : 'var(--carbon-text-secondary)',
-              fontWeight: opt.value === value ? 500 : 400,
-            }}
-          >
-            {opt.label}
-          </div>
-        ))}
+        {options.map(opt => {
+          const isSelected = opt.value === value
+          return (
+            <div
+              key={opt.value}
+              className="flex h-[40px] items-center justify-center text-sm transition-all duration-200"
+              style={{
+                scrollSnapAlign: 'center',
+                color: isSelected ? 'var(--carbon-text)' : 'var(--carbon-text-secondary)',
+                fontWeight: isSelected ? 500 : 400,
+                transform: isSelected ? 'scale(1.1)' : 'scale(0.9)',
+                opacity: isSelected ? 1 : 0.5,
+              }}
+            >
+              {opt.label}
+            </div>
+          )
+        })}
       </div>
     </div>
   )
