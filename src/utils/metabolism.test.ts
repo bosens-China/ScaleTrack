@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { describe, expect, it } from 'vitest'
 import type { UserProfile, WeightRecord } from '../types'
 import { calculateBMR, calculateMetabolismStats } from './metabolism'
@@ -24,7 +25,7 @@ describe('calculateMetabolismStats', () => {
   const profile: UserProfile = {
     gender: 'male',
     height: 175,
-    age: 30,
+    birthDate: dayjs().subtract(30, 'year').format('YYYY-MM-DD'),
     initialWeight: 75,
     createdAt: '2023-01-01T00:00:00Z',
   }

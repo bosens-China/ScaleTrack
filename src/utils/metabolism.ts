@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import type { Gender, MetabolismStats, UserProfile, WeightRecord } from '../types'
+import { getProfileAge } from './age'
 
 /**
  * 计算静态基础代谢率 (BMR) - Mifflin-St Jeor 公式
@@ -72,7 +73,7 @@ export function calculateMetabolismStats(
 ): MetabolismStats {
   // 1. 计算当前静态 BMR
   const currentWeight = records.at(-1)?.weight ?? profile.initialWeight
-  const bmr = calculateBMR(profile.gender, currentWeight, profile.height, profile.age)
+  const bmr = calculateBMR(profile.gender, currentWeight, profile.height, getProfileAge(profile))
 
   // 2. 过滤有效天数
   if (records.length < 2) {

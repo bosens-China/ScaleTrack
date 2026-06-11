@@ -1,5 +1,6 @@
 import { useId, useState } from 'react'
 
+import BirthDatePicker from '@/components/BirthDatePicker'
 import TextInput from '@/components/TextInput'
 import WeightRulerPicker from '@/components/WeightRulerPicker'
 import type { Gender, UserProfile } from '@/types'
@@ -13,25 +14,19 @@ interface Props {
 export default function SetupPage({ onComplete }: Props) {
   const heightId = useId()
   const weightId = useId()
-  const ageId = useId()
   const [gender, setGender] = useState<Gender>('male')
   const [height, setHeight] = useState('')
-  const [age, setAge] = useState('')
+  const [birthDate, setBirthDate] = useState<string | undefined>()
   const [weight, setWeight] = useState(60.0)
   const [error, setError] = useState('')
 
   const heightNum = parseFloat(height)
-  const ageNum = parseInt(age, 10)
   const weightNum = weight
   const bmi = heightNum > 0 && weightNum > 0 ? calcBMI(weightNum, heightNum) : null
 
   const handleSubmit = () => {
     if (!validateHeight(heightNum)) {
       setError(VALIDATION_LIMITS.height.errorMsg)
-      return
-    }
-    if (age !== '' && (isNaN(ageNum) || ageNum < 10 || ageNum > 120)) {
-      setError('请输入有效的年龄 (10-120)')
       return
     }
     if (!validateWeight(weightNum)) {
@@ -42,7 +37,7 @@ export default function SetupPage({ onComplete }: Props) {
     const profile: UserProfile = {
       gender,
       height: heightNum,
-      age: isNaN(ageNum) ? undefined : ageNum,
+      birthDate,
       initialWeight: weightNum,
       createdAt: new Date().toISOString(),
     }
@@ -115,23 +110,18 @@ export default function SetupPage({ onComplete }: Props) {
             </div>
 
             <div className="mt-6 flex flex-col gap-2">
-              <label
-                htmlFor={ageId}
-                className="block text-xs font-semibold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]"
-              >
-                年龄 (岁，选填)
+              <label className="block text-xs font-semibold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
+                出生年月日 (选填)
               </label>
-              <TextInput
-                id={ageId}
-                type="number"
-                inputMode="numeric"
-                placeholder="例如：25"
-                value={age}
-                onChange={e => {
-                  setAge(e.target.value)
-                  setError('')
-                }}
-              />
+              <div className="pt-2">
+                <BirthDatePicker
+                  value={birthDate}
+                  onChange={date => {
+                    setBirthDate(date)
+                    setError('')
+                  }}
+                />
+              </div>
             </div>
 
             <div className="mt-6 flex flex-col gap-2">

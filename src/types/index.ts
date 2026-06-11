@@ -3,7 +3,9 @@ export type Gender = 'male' | 'female'
 export interface UserProfile {
   gender: Gender
   height: number // cm
-  age?: number // optional for legacy users
+  /** @deprecated use birthDate instead */
+  age?: number
+  birthDate?: string // YYYY-MM-DD
   initialWeight: number // kg
   createdAt: string // ISO string
   nickname?: string

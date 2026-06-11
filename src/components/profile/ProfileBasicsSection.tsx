@@ -1,8 +1,10 @@
 import { useState } from 'react'
 
+import BirthDatePicker from '@/components/BirthDatePicker'
 import TextInput from '@/components/TextInput'
 
 import type { UserProfile } from '@/types'
+import { getProfileAge } from '@/utils/age'
 import { toast } from '@/utils/toast'
 import { validateHeight } from '@/utils/validation'
 
@@ -21,7 +23,7 @@ export default function ProfileBasicsSection({
   onProfileUpdate,
 }: Props) {
   const [heightInput, setHeightInput] = useState(String(profile.height))
-  const [ageInput, setAgeInput] = useState(profile.age ? String(profile.age) : '')
+  const [birthDateInput, setBirthDateInput] = useState<string | undefined>(profile.birthDate)
   const [genderInput, setGenderInput] = useState<UserProfile['gender']>(profile.gender)
 
   const handleToggleProfileEdit = () => {
@@ -38,12 +40,7 @@ export default function ProfileBasicsSection({
       toast.error('请输入有效的身高')
       return
     }
-    const parsedAge = ageInput ? Number.parseInt(ageInput, 10) : undefined
-    if (parsedAge !== undefined && (Number.isNaN(parsedAge) || parsedAge < 10 || parsedAge > 120)) {
-      toast.error('请输入有效的年龄 (10-120)')
-      return
-    }
-    onProfileUpdate({ gender: genderInput, height: parsedHeight, age: parsedAge })
+    onProfileUpdate({ gender: genderInput, height: parsedHeight, birthDate: birthDateInput })
     onEditingChange(false)
   }
 
@@ -83,19 +80,12 @@ export default function ProfileBasicsSection({
               }
               placeholder="身高（cm）"
             />
-            <TextInput
-              type="number"
-              inputMode="numeric"
-              value={ageInput}
-              onChange={event => setAgeInput(event.target.value)}
-              onFocus={event =>
-                setTimeout(
-                  () => event.target.scrollIntoView({ behavior: 'smooth', block: 'center' }),
-                  300,
-                )
-              }
-              placeholder="年龄 (岁，用于计算代谢)"
-            />
+            <div className="flex flex-col gap-2">
+              <span className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
+                出生年月日
+              </span>
+              <BirthDatePicker value={birthDateInput} onChange={setBirthDateInput} />
+            </div>
             <button
               onClick={handleSave}
               className="h-12 w-full bg-[var(--carbon-primary)] text-sm font-medium text-[var(--carbon-text-on-primary)] hover:bg-[var(--carbon-primary-hover)]"
@@ -137,7 +127,9 @@ export default function ProfileBasicsSection({
                 <div>
                   <p className="text-sm font-medium text-[var(--carbon-text)]">年龄</p>
                   <p className="text-xs text-[var(--carbon-text-secondary)]">
-                    {profile.age ? `${profile.age} 岁` : '未设置'}
+                    {getProfileAge(profile) !== undefined
+                      ? `${getProfileAge(profile)} 岁`
+                      : '未设置'}
                   </p>
                 </div>
               </div>

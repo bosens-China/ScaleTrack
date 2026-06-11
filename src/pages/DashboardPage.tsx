@@ -1,5 +1,6 @@
 import WeightTrendChart from '@/components/WeightTrendChart'
 import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
+import { getProfileAge, hasBirthDateMigrationNeeded } from '@/utils/age'
 import { calculateMetabolismStats } from '@/utils/metabolism'
 import {
   filterRecordsByDays,
@@ -56,17 +57,36 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
   return (
     <div className="app-page bg-[var(--carbon-bg)]">
       <main className="app-main flex flex-col gap-4 px-4 pb-8 pt-4">
-        {!profile.age && (
-          <div className="flex items-center justify-between bg-[var(--carbon-primary-soft)] border border-[var(--carbon-primary)] px-4 py-3 text-sm text-[var(--carbon-text)]">
-            <span>补充年龄以解锁每日代谢(TDEE)追踪</span>
+        {hasBirthDateMigrationNeeded(profile) && (
+          <div className="relative flex items-start justify-between overflow-hidden rounded-sm border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-3 text-sm shadow-sm">
+            <div className="absolute bottom-0 left-0 top-0 w-1 bg-[var(--color-warning)]" />
+            <span className="pl-1 leading-relaxed text-[var(--carbon-text-secondary)]">
+              我们升级了年龄记录方式，请
+              <span className="font-medium text-[var(--carbon-text)]">重新设置出生日期</span>
+              以保持计算准确。
+            </span>
             <button
               onClick={() => onNavigate('profile')}
-              className="font-medium text-[var(--carbon-primary)] hover:underline whitespace-nowrap ml-4"
+              className="mt-0.5 shrink-0 whitespace-nowrap font-medium text-[var(--carbon-primary)] hover:underline"
             >
-              去设置
+              去更新
             </button>
           </div>
         )}
+
+        {!hasBirthDateMigrationNeeded(profile) &&
+          getProfileAge(profile) === undefined &&
+          !metabolism.isDataSufficient && (
+            <div className="flex items-center justify-between bg-[var(--carbon-primary-soft)] border border-[var(--carbon-primary)] px-4 py-3 text-sm text-[var(--carbon-text)] rounded-sm">
+              <span>补充出生日期以解锁每日代谢(TDEE)追踪</span>
+              <button
+                onClick={() => onNavigate('profile')}
+                className="font-medium text-[var(--carbon-primary)] hover:underline whitespace-nowrap ml-4 shrink-0"
+              >
+                去设置
+              </button>
+            </div>
+          )}
 
         <section className="bg-[var(--dashboard-header-bg)] px-4 py-5 text-[var(--dashboard-header-text)] shadow-sm">
           <div className="flex items-start justify-between">
