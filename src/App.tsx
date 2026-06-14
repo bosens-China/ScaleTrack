@@ -1,5 +1,6 @@
 import BottomTabBar from '@/components/BottomTabBar'
 import GoalAchievementModal from '@/components/GoalAchievementModal'
+import PwaUpdateBanner from '@/components/PwaUpdateBanner'
 import ToastContainer from '@/components/Toast'
 import { useAppState } from '@/hooks/useAppState'
 import { useTheme } from '@/hooks/useTheme'
@@ -113,6 +114,7 @@ export default function App() {
         <BottomTabBar activeTab={activeTab} onChange={setActivePage} />
       )}
       <ToastContainer />
+      <PwaUpdateBanner />
       {achievedGoal && (
         <GoalAchievementModal
           goal={achievedGoal}
