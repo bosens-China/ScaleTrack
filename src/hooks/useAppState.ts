@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 
 import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
 import { calcBMI } from '@/utils/bmi'
+import { reconcileLatestGoalState, shouldCelebrateGoalCompletion } from '@/utils/goal-state'
 import { getCurrentWeight } from '@/utils/stats'
 import {
   deleteRecord,
@@ -67,7 +68,17 @@ export function useAppState(): AppState {
 
   const handleDeleteRecord = (id: string) => {
     deleteRecord(id)
-    setRecords(getRecords())
+    const nextRecords = getRecords()
+    setRecords(nextRecords)
+
+    const reconcileResult = reconcileLatestGoalState(goals, nextRecords)
+    if (reconcileResult.changed && reconcileResult.nextGoal) {
+      saveGoal(reconcileResult.nextGoal)
+      setGoals(getGoals())
+      if (!reconcileResult.nextGoal.isCompleted) {
+        setAchievedGoal(current => (current?.id === reconcileResult.nextGoal?.id ? null : current))
+      }
+    }
     toast.success('记录已删除')
   }
 
@@ -141,22 +152,22 @@ export function useAppState(): AppState {
     const nextRecords = getRecords()
     setRecords(nextRecords)
 
-    const active = goals.find(g => !g.isCompleted) ?? null
-    if (active) {
-      const reached =
-        (active.startWeight > active.targetWeight && weight <= active.targetWeight) ||
-        (active.startWeight < active.targetWeight && weight >= active.targetWeight)
+    const reconcileResult = reconcileLatestGoalState(goals, nextRecords)
+    if (reconcileResult.changed && reconcileResult.nextGoal) {
+      saveGoal(reconcileResult.nextGoal)
+      setGoals(getGoals())
 
-      if (reached) {
-        const completed = { ...active, isCompleted: true, completedDate: date }
-        saveGoal(completed)
-        setGoals(getGoals())
-
-        // 只有当这条达标记录是最新记录时，才弹出庆祝；若是补填历史记录，则静默转化为里程碑
-        const isLatestRecord = nextRecords[nextRecords.length - 1]?.id === record.id
-        if (isLatestRecord) {
-          setAchievedGoal(completed)
-        }
+      if (
+        shouldCelebrateGoalCompletion({
+          previousGoal: reconcileResult.previousGoal,
+          nextGoal: reconcileResult.nextGoal,
+          recordDate: date,
+          today,
+        })
+      ) {
+        setAchievedGoal(reconcileResult.nextGoal)
+      } else if (!reconcileResult.nextGoal.isCompleted) {
+        setAchievedGoal(current => (current?.id === reconcileResult.nextGoal?.id ? null : current))
       }
     }
 
