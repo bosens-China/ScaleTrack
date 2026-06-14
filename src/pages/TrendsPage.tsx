@@ -3,7 +3,12 @@ import { useState } from 'react'
 
 import WeightTrendChart from '@/components/WeightTrendChart'
 import type { AppPage, Goal, TimeRange, WeightRecord } from '@/types'
-import { buildTrendInsight, filterRecordsByRange, getWeightStats } from '@/utils/stats'
+import {
+  buildTrendInsight,
+  filterRecordsByRange,
+  getMetricStats,
+  type TrendMetric,
+} from '@/utils/stats'
 
 const RANGE_OPTIONS = [
   { key: '3d', label: '3天' },
@@ -23,13 +28,18 @@ interface Props {
 
 export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }: Props) {
   const [range, setRange] = useState<TimeRange>('7d')
+  const [metric, setMetric] = useState<TrendMetric>('weight')
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null)
 
   const filteredRecords = filterRecordsByRange(records, range)
-  const stats = getWeightStats(filteredRecords)
-  const insight = buildTrendInsight(filteredRecords)
+  const stats = getMetricStats(filteredRecords, metric)
+  const insight = buildTrendInsight(filteredRecords, metric)
   const hasRecords = records.length > 0
   const hasChartData = filteredRecords.length > 0
+  const metricUnit = metric === 'weight' ? 'kg' : ''
+  const averageLabel = metric === 'weight' ? '平均体重' : '平均 BMI'
+  const pageTitle = metric === 'weight' ? '体重趋势' : 'BMI 趋势'
+  const pageDescription = metric === 'weight' ? '直观查看您的进度' : '观察 BMI 变化与身体状态走势'
 
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
   const recentRecords = [...records].reverse()
@@ -46,11 +56,37 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
   }
 
   return (
-    <div className="app-page bg-[var(--carbon-bg)]">
+    <div className="app-page bg-[var(--carbon-bg)] animate-fade-in">
       <main className="app-main px-4 pb-8 pt-4">
-        <div className="mb-4">
-          <h2 className="text-2xl font-normal text-[var(--carbon-text)]">体重趋势</h2>
-          <p className="mt-1 text-sm text-[var(--carbon-text-secondary)]">直观查看您的进度</p>
+        <div className="mb-4 flex items-start justify-between">
+          <div>
+            <h2 className="text-2xl font-normal text-[var(--carbon-text)]">{pageTitle}</h2>
+            <p className="mt-1 text-sm text-[var(--carbon-text-secondary)]">{pageDescription}</p>
+          </div>
+          {hasChartData && (
+            <div className="flex bg-[var(--carbon-surface-subtle)] border border-[var(--carbon-border)] rounded-sm overflow-hidden p-0.5">
+              <button
+                onClick={() => setMetric('weight')}
+                className={`px-3 py-1 text-xs font-medium transition-all duration-200 rounded-[2px] active:scale-95 ${
+                  metric === 'weight'
+                    ? 'bg-[var(--carbon-bg)] text-[var(--carbon-text)] shadow-[0_1px_3px_rgba(0,0,0,0.1)]'
+                    : 'text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]'
+                }`}
+              >
+                体重
+              </button>
+              <button
+                onClick={() => setMetric('bmi')}
+                className={`px-3 py-1 text-xs font-medium transition-all duration-200 rounded-[2px] active:scale-95 ${
+                  metric === 'bmi'
+                    ? 'bg-[var(--carbon-bg)] text-[var(--carbon-text)] shadow-[0_1px_3px_rgba(0,0,0,0.1)]'
+                    : 'text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]'
+                }`}
+              >
+                BMI
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="mb-4 flex gap-1 overflow-x-auto border-b border-[var(--carbon-border)] carbon-scrollbar pb-px">
@@ -60,7 +96,7 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
               <button
                 key={option.key}
                 onClick={() => setRange(option.key)}
-                className={`shrink-0 whitespace-nowrap px-4 border-b-2 py-2.5 text-sm transition-colors ${
+                className={`shrink-0 whitespace-nowrap px-4 border-b-2 py-2.5 text-sm transition-colors active:scale-95 ${
                   isActive
                     ? 'border-[var(--carbon-primary)] bg-[var(--carbon-primary)] text-[var(--carbon-text-on-primary)]'
                     : 'border-transparent text-[var(--carbon-text-secondary)] hover:bg-[var(--carbon-surface-variant)]'
@@ -74,7 +110,7 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
 
         {hasChartData ? (
           <>
-            <WeightTrendChart records={filteredRecords} />
+            <WeightTrendChart records={filteredRecords} metric={metric} />
 
             <section className="mt-4 grid grid-cols-2 gap-px overflow-hidden border border-[var(--carbon-border)] bg-[var(--carbon-border)]">
               <div className="bg-[var(--carbon-surface)] p-4">
@@ -83,7 +119,11 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
                   <span className="text-3xl font-light text-[var(--carbon-text)]">
                     {stats.max ?? '--'}
                   </span>
-                  <span className="text-xs text-[var(--carbon-text-secondary)]">kg</span>
+                  {metricUnit && (
+                    <span className="text-xs text-[var(--carbon-text-secondary)]">
+                      {metricUnit}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="bg-[var(--carbon-surface)] p-4">
@@ -92,17 +132,27 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
                   <span className="text-3xl font-light text-[var(--carbon-text)]">
                     {stats.min ?? '--'}
                   </span>
-                  <span className="text-xs text-[var(--carbon-text-secondary)]">kg</span>
+                  {metricUnit && (
+                    <span className="text-xs text-[var(--carbon-text-secondary)]">
+                      {metricUnit}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="col-span-2 flex items-center justify-between bg-[var(--carbon-surface)] p-4">
                 <div>
-                  <span className="text-xs text-[var(--carbon-text-secondary)]">平均体重</span>
+                  <span className="text-xs text-[var(--carbon-text-secondary)]">
+                    {averageLabel}
+                  </span>
                   <div className="mt-2 flex items-baseline gap-1">
                     <span className="text-4xl font-light text-[var(--carbon-primary)]">
                       {stats.average ?? '--'}
                     </span>
-                    <span className="text-sm text-[var(--carbon-text-secondary)]">kg</span>
+                    {metricUnit && (
+                      <span className="text-sm text-[var(--carbon-text-secondary)]">
+                        {metricUnit}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="flex h-12 w-12 items-center justify-center bg-[var(--carbon-primary-soft)] text-[var(--carbon-primary)]">
@@ -138,7 +188,7 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
             </div>
             <button
               onClick={() => onNavigate('add')}
-              className="mt-4 flex h-12 items-center justify-center bg-[var(--carbon-primary)] px-5 text-sm font-medium text-[var(--carbon-text-on-primary)] hover:bg-[var(--carbon-primary-hover)]"
+              className="mt-4 flex h-12 items-center justify-center bg-[var(--carbon-primary)] px-5 text-sm font-medium text-[var(--carbon-text-on-primary)] hover:bg-[var(--carbon-primary-hover)] active:scale-[0.98] transition-transform rounded-sm"
             >
               去添加记录
             </button>

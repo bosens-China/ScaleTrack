@@ -28,9 +28,10 @@ function getIsDark() {
 
 interface Props {
   records: WeightRecord[]
+  metric?: 'weight' | 'bmi'
 }
 
-export default function WeightTrendChart({ records }: Props) {
+export default function WeightTrendChart({ records, metric = 'weight' }: Props) {
   const isDark = useSyncExternalStore(subscribeDarkMode, getIsDark)
 
   const primaryColor = isDark ? '#a8c7fa' : '#0f62fe'
@@ -46,7 +47,7 @@ export default function WeightTrendChart({ records }: Props) {
     labels: records.map(record => dayjs(record.date).format('MM/DD')),
     datasets: [
       {
-        data: records.map(record => record.weight),
+        data: records.map(record => (metric === 'bmi' ? record.bmi : record.weight)),
         borderColor: primaryColor,
         backgroundColor: (context: { chart: { ctx: CanvasRenderingContext2D } }) => {
           const gradient = context.chart.ctx.createLinearGradient(0, 0, 0, 240)
@@ -84,7 +85,8 @@ export default function WeightTrendChart({ records }: Props) {
             if (index === undefined) return ''
             return dayjs(records[index]?.date).format('MM月DD日')
           },
-          label: (item: TooltipItem<'line'>) => `${(item.parsed.y ?? 0).toFixed(1)} kg`,
+          label: (item: TooltipItem<'line'>) =>
+            `${(item.parsed.y ?? 0).toFixed(1)}${metric === 'weight' ? ' kg' : ''}`,
         },
       },
     },
@@ -105,7 +107,8 @@ export default function WeightTrendChart({ records }: Props) {
         ticks: {
           color: tickColor,
           font: { family: 'IBM Plex Sans, sans-serif', size: 10 },
-          callback: (value: string | number) => `${Number(Number(value).toFixed(1))}kg`,
+          callback: (value: string | number) =>
+            `${Number(Number(value).toFixed(1))}${metric === 'weight' ? 'kg' : ''}`,
         },
         border: { display: false },
       },

@@ -2,6 +2,8 @@ import dayjs from 'dayjs'
 import type { Goal, TimeRange, UserProfile, WeightRecord } from '../types'
 import { calcBMI } from './bmi'
 
+export type TrendMetric = 'weight' | 'bmi'
+
 const RANGE_TO_DAYS: Record<TimeRange, number> = {
   '3d': 3,
   '7d': 7,
@@ -62,7 +64,7 @@ export function getWeeklyChange(records: WeightRecord[]): number | null {
   return Number((latest.weight - first.weight).toFixed(1))
 }
 
-export function getWeightStats(records: WeightRecord[]) {
+export function getMetricStats(records: WeightRecord[], metric: TrendMetric = 'weight') {
   if (records.length === 0) {
     return {
       min: null,
@@ -72,17 +74,26 @@ export function getWeightStats(records: WeightRecord[]) {
     }
   }
 
-  const weights = records.map(record => record.weight)
-  const total = weights.reduce((sum, value) => sum + value, 0)
+  const values = records.map(record => (metric === 'bmi' ? record.bmi : record.weight))
+  const total = values.reduce((sum, value) => sum + value, 0)
   const latest = records.at(-1)
   const first = records[0]
+  const latestValue = latest ? (metric === 'bmi' ? latest.bmi : latest.weight) : null
+  const firstValue = first ? (metric === 'bmi' ? first.bmi : first.weight) : null
 
   return {
-    min: Number(Math.min(...weights).toFixed(1)),
-    max: Number(Math.max(...weights).toFixed(1)),
-    average: Number((total / weights.length).toFixed(1)),
-    delta: latest && first ? Number((latest.weight - first.weight).toFixed(1)) : null,
+    min: Number(Math.min(...values).toFixed(1)),
+    max: Number(Math.max(...values).toFixed(1)),
+    average: Number((total / values.length).toFixed(1)),
+    delta:
+      latestValue !== null && firstValue !== null
+        ? Number((latestValue - firstValue).toFixed(1))
+        : null,
   }
+}
+
+export function getWeightStats(records: WeightRecord[]) {
+  return getMetricStats(records, 'weight')
 }
 
 export function getGoalProgress(goal: Goal | null, currentWeight: number, records: WeightRecord[]) {
@@ -131,12 +142,22 @@ export function getGoalProgress(goal: Goal | null, currentWeight: number, record
   }
 }
 
-export function buildTrendInsight(records: WeightRecord[]): string {
+export function buildTrendInsight(records: WeightRecord[], metric: TrendMetric = 'weight'): string {
   if (records.length < 2) {
     return '样本还不够，再记录几次后，这里会给出更有参考价值的趋势洞察。'
   }
 
-  const delta = getWeightStats(records).delta ?? 0
+  const delta = getMetricStats(records, metric).delta ?? 0
+  if (metric === 'bmi') {
+    if (delta < 0) {
+      return `这段时间 BMI 下降了 ${Math.abs(delta).toFixed(1)}，整体趋势在向更轻盈的方向变化。`
+    }
+    if (delta > 0) {
+      return `这段时间 BMI 上升了 ${delta.toFixed(1)}，建议结合饮食与作息一起观察变化原因。`
+    }
+    return '最近 BMI 整体较为稳定，说明这段时间身体指标波动不大。'
+  }
+
   if (delta < 0) {
     return `这段时间体重下降了 ${Math.abs(delta).toFixed(1)}kg，当前节奏保持得不错。`
   }
