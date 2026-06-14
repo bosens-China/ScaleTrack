@@ -28,7 +28,7 @@ export default function BottomTabBar({ activeTab, onChange }: Props) {
           <button
             key={tab.key}
             onClick={() => onChange(tab.key)}
-            className={`flex flex-1 flex-col items-center justify-center gap-1 border-t-2 pb-1 pt-2 transition-colors duration-150 ${
+            className={`flex flex-1 flex-col items-center justify-center gap-1 border-t-2 pb-1 pt-2 transition-all duration-150 active:scale-95 ${
               isActive
                 ? 'border-[var(--carbon-primary)] bg-[var(--carbon-primary-soft)] text-[var(--carbon-primary)]'
                 : 'border-transparent text-[var(--carbon-text-secondary)] hover:bg-[var(--carbon-surface-variant)]'
