@@ -1,4 +1,7 @@
 import dayjs from 'dayjs'
+import { useState } from 'react'
+
+import SharePosterModal from '@/components/SharePosterModal'
 
 import WeightTrendChart from '@/components/WeightTrendChart'
 import type { Goal, WeightRecord } from '@/types'
@@ -11,6 +14,7 @@ interface Props {
 }
 
 export default function MilestoneDetailPage({ milestoneId, milestones, records, onBack }: Props) {
+  const [isShareOpen, setIsShareOpen] = useState(false)
   const milestone = milestones.find(m => m.id === milestoneId)
 
   if (!milestone) {
@@ -44,12 +48,17 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
       <header className="app-header sticky top-0 z-10 flex w-full max-w-[430px] items-center justify-between border-b border-[var(--carbon-border)] bg-[var(--carbon-bg)] px-4">
         <button
           onClick={onBack}
-          className="flex h-10 w-10 items-center justify-center -ml-2 text-[var(--carbon-text-secondary)]"
+          className="flex h-10 w-10 items-center justify-center -ml-2 text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
         >
           <span className="i-lucide-chevron-left h-6 w-6" />
         </button>
         <h1 className="text-base font-medium text-[var(--carbon-text)]">里程碑详情</h1>
-        <div className="w-10" />
+        <button
+          onClick={() => setIsShareOpen(true)}
+          className="flex h-10 w-10 items-center justify-center -mr-2 text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-primary)]"
+        >
+          <span className="i-lucide-share h-5 w-5" />
+        </button>
       </header>
 
       <main className="flex flex-col gap-6 px-4 pt-6">
@@ -162,6 +171,57 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
           </div>
         </section>
       </main>
+
+      <SharePosterModal
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        filenamePrefix="milestone"
+      >
+        <div className="flex flex-col p-6 bg-[var(--carbon-bg)] items-center text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--carbon-primary-soft)] text-[var(--carbon-primary)] mb-4">
+            <span className="i-lucide-trophy h-8 w-8" />
+          </div>
+          <p className="text-xs font-medium uppercase tracking-[0.16em] text-[var(--carbon-text-secondary)] mb-1">
+            达成里程碑
+          </p>
+          <h2 className="text-2xl font-bold text-[var(--carbon-text)]">
+            {milestone.startWeight.toFixed(1)}{' '}
+            <span className="mx-2 text-[var(--carbon-outline)]">-&gt;</span>{' '}
+            {milestone.targetWeight.toFixed(1)} kg
+          </h2>
+          <p className="mt-2 text-xs text-[var(--carbon-text-secondary)]">
+            {dayjs(milestone.startDate).format('YYYY/MM/DD')} -{' '}
+            {milestone.completedDate ? dayjs(milestone.completedDate).format('YYYY/MM/DD') : '至今'}
+          </p>
+
+          <div className="grid grid-cols-3 gap-4 w-full border-t border-[var(--carbon-border)] pt-5 mt-5">
+            <div className="flex flex-col items-center">
+              <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--carbon-text-secondary)]">
+                总{direction}重
+              </span>
+              <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
+                {diff.toFixed(1)} <span className="text-[10px] font-normal">kg</span>
+              </span>
+            </div>
+            <div className="flex flex-col items-center border-l border-r border-[var(--carbon-border)]">
+              <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--carbon-text-secondary)]">
+                用时
+              </span>
+              <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
+                {days} <span className="text-[10px] font-normal">天</span>
+              </span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--carbon-text-secondary)]">
+                日均
+              </span>
+              <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
+                {averagePerDay} <span className="text-[10px] font-normal">kg/天</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </SharePosterModal>
     </div>
   )
 }

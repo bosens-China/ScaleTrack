@@ -1,3 +1,6 @@
+import { useState } from 'react'
+
+import SharePosterModal from '@/components/SharePosterModal'
 import WeightTrendChart from '@/components/WeightTrendChart'
 import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
 import { calculateMetabolismStats } from '@/utils/metabolism'
@@ -18,6 +21,8 @@ interface Props {
 }
 
 export default function DashboardPage({ profile, records, goal, onNavigate }: Props) {
+  const [isShareOpen, setIsShareOpen] = useState(false)
+
   const currentWeight = getCurrentWeight(profile, records)
   const previousDiff = getPreviousDiff(records)
   const weeklyRecords = filterRecordsByDays(records, 7)
@@ -53,9 +58,38 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
             ? 'text-[var(--color-success)]'
             : 'text-[var(--carbon-text-secondary)]'
 
+  let targetDaysText = null
+  if (
+    metabolism.isDataSufficient &&
+    metabolism.tdeeTrend !== null &&
+    goal &&
+    progress &&
+    progress.remaining > 0
+  ) {
+    if (isGainGoal && metabolism.tdeeTrend > 0) {
+      const days = Math.ceil((progress.remaining * 7700) / metabolism.tdeeTrend)
+      targetDaysText = `按照本周表现，预计大约 ${days} 天可达成目标！`
+    } else if (!isGainGoal && metabolism.tdeeTrend < 0) {
+      const days = Math.ceil((progress.remaining * 7700) / Math.abs(metabolism.tdeeTrend))
+      targetDaysText = `按照本周表现，预计大约 ${days} 天可达成目标！`
+    }
+  }
+
   return (
-    <div className="app-page bg-[var(--carbon-bg)]">
-      <main className="app-main flex flex-col gap-4 px-4 pb-8 pt-4">
+    <div className="app-page bg-[var(--carbon-bg)] animate-fade-in">
+      <header className="flex w-full items-center justify-between px-4 pt-4 pb-2">
+        <h1 className="text-lg font-semibold tracking-wide text-[var(--carbon-text)]">总览</h1>
+        {hasRecords && (
+          <button
+            onClick={() => setIsShareOpen(true)}
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--carbon-surface)] text-[var(--carbon-text-secondary)] shadow-sm hover:text-[var(--carbon-primary)] transition-colors border border-[var(--carbon-border)]"
+          >
+            <span className="i-lucide-share h-4 w-4" />
+          </button>
+        )}
+      </header>
+
+      <main className="app-main flex flex-col gap-4 px-4 pb-8 pt-2">
         {profile.age !== undefined &&
           profile.birthDate === undefined &&
           !metabolism.isDataSufficient && (
@@ -202,16 +236,27 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
                   )}
                 </div>
                 {metabolism.isDataSufficient && metabolism.tdeeTrend !== null && (
-                  <div className="mt-1 flex items-start gap-1.5 rounded bg-[var(--carbon-surface-subtle)] p-2">
-                    <span className="i-lucide-info h-3 w-3 mt-0.5 shrink-0 text-[var(--carbon-text-secondary)]" />
-                    <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
-                      基于最近 {metabolism.trendDays} 天趋势推算。
-                      {metabolism.tdeeTrend < 0
-                        ? '你正处于热量赤字状态，干得漂亮！'
-                        : metabolism.tdeeTrend > 0
-                          ? '你正处于热量盈余状态。'
-                          : '你的摄入与消耗完全平衡。'}
-                    </p>
+                  <div className="mt-1 flex items-start gap-1.5 rounded bg-[var(--carbon-surface-subtle)] p-3 border-l-2 border-[var(--carbon-primary)]">
+                    <span className="i-lucide-lightbulb h-4 w-4 mt-0.5 shrink-0 text-[var(--carbon-primary)]" />
+                    <div className="flex flex-col gap-1">
+                      <p className="text-[12px] font-medium leading-relaxed text-[var(--carbon-text)]">
+                        {metabolism.tdeeTrend < 0
+                          ? '🔥 你正处于热量赤字状态，干得漂亮！'
+                          : metabolism.tdeeTrend > 0
+                            ? '📈 你正处于热量盈余状态。'
+                            : '⚖️ 你的摄入与消耗完全平衡。'}
+                      </p>
+                      {targetDaysText && (
+                        <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
+                          {targetDaysText}
+                        </p>
+                      )}
+                      {!targetDaysText && progress && progress.remaining > 0 && (
+                        <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
+                          保持当前节奏，适度调整饮食结构以{isGainGoal ? '增加' : '减少'}热量摄入。
+                        </p>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>
@@ -240,13 +285,70 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
         <section className="flex justify-center pt-2">
           <button
             onClick={() => onNavigate('add')}
-            className="flex min-w-[200px] items-center justify-center gap-3 bg-[var(--carbon-primary)] px-6 py-3.5 text-sm font-semibold text-[var(--carbon-text-on-primary)] shadow-sm transition-colors hover:bg-[var(--carbon-primary-hover)] rounded-sm"
+            className="flex min-w-[200px] items-center justify-center gap-3 bg-[var(--carbon-primary)] px-6 py-3.5 text-sm font-semibold text-[var(--carbon-text-on-primary)] shadow-sm transition-transform active:scale-[0.98] hover:bg-[var(--carbon-primary-hover)] rounded-sm"
           >
             <span className="i-lucide-plus h-4 w-4" />
             <span>添加今日记录</span>
           </button>
         </section>
       </main>
+
+      <SharePosterModal isOpen={isShareOpen} onClose={() => setIsShareOpen(false)}>
+        <div className="flex flex-col gap-4 p-5 bg-[var(--carbon-bg)]">
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
+                当前体重
+              </p>
+              <div className="mt-1 flex items-baseline gap-1">
+                <span className="text-[44px] font-semibold leading-none text-[var(--carbon-text)]">
+                  {currentWeight.toFixed(1)}
+                </span>
+                <span className="text-base text-[var(--carbon-text-secondary)]">kg</span>
+              </div>
+            </div>
+            {weeklyChange !== null && (
+              <div className="flex flex-col items-end text-right">
+                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
+                  本周变化
+                </p>
+                <div className={`mt-1 text-xl font-bold ${trendTone}`}>
+                  {weeklyChange > 0 ? '+' : ''}
+                  {weeklyChange.toFixed(1)} kg
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4 rounded-sm">
+            <div className="flex items-center gap-2 text-[var(--carbon-text-secondary)] mb-3">
+              <span className="i-lucide-activity h-4 w-4 text-[var(--carbon-primary)]" />
+              <span className="text-[11px] font-medium uppercase tracking-[0.12em]">近期状态</span>
+            </div>
+            <div className="flex flex-col gap-2">
+              {progress && (
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-[var(--carbon-text-secondary)]">目标进度</span>
+                  <span className="font-medium text-[var(--carbon-text)]">
+                    {progress.remaining === 0 ? '已达成！' : `还差 ${progress.remaining} kg`}
+                  </span>
+                </div>
+              )}
+              {metabolism.isDataSufficient && metabolism.tdeeTrend !== null && (
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-[var(--carbon-text-secondary)]">日均热量盈亏</span>
+                  <span
+                    className={`font-medium ${metabolism.tdeeTrend < 0 ? 'text-[var(--color-success)]' : metabolism.tdeeTrend > 0 ? 'text-[var(--color-danger)]' : 'text-[var(--carbon-text)]'}`}
+                  >
+                    {metabolism.tdeeTrend > 0 ? '+' : ''}
+                    {metabolism.tdeeTrend} kcal
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </SharePosterModal>
     </div>
   )
 }

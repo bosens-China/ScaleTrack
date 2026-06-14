@@ -1,9 +1,9 @@
 import confetti from 'canvas-confetti'
 import dayjs from 'dayjs'
-import { toPng } from 'html-to-image'
 import { useEffect, useRef, useState } from 'react'
 
 import type { Goal } from '@/types'
+import { generateShareImage, processShareOrDownload } from '@/utils/share'
 import { toast } from '@/utils/toast'
 
 interface Props {
@@ -52,16 +52,11 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
     if (!cardRef.current) return
     setSaving(true)
     try {
-      const dataUrl = await toPng(cardRef.current, {
-        quality: 1,
-        pixelRatio: 3,
-        backgroundColor: '#ffffff',
-      })
-      const link = document.createElement('a')
-      link.download = `scaletrack-achievement-${dayjs().format('YYYYMMDD')}.png`
-      link.href = dataUrl
-      link.click()
-    } catch {
+      const url = await generateShareImage(cardRef.current)
+      const filename = `scaletrack-achievement-${dayjs().format('YYYYMMDD')}.png`
+      await processShareOrDownload(url, filename)
+    } catch (err) {
+      console.error(err)
       toast.error('图片保存失败，请重试')
     } finally {
       setSaving(false)
@@ -121,8 +116,12 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
             disabled={saving}
             className="flex h-10 items-center justify-center gap-2 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] text-sm font-medium text-[var(--carbon-text)] transition-colors hover:bg-[var(--carbon-surface-subtle)] disabled:opacity-50"
           >
-            <span className="i-lucide-image-down h-4 w-4" />
-            {saving ? '保存中...' : '保存分享卡片'}
+            {saving ? (
+              <span className="i-lucide-loader-2 h-4 w-4 animate-spin" />
+            ) : (
+              <span className="i-lucide-share h-4 w-4" />
+            )}
+            {saving ? '正在生成...' : '分享或保存卡片'}
           </button>
 
           <button
