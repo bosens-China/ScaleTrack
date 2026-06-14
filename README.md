@@ -1,87 +1,42 @@
 # ScaleTrack
 
-本地体重与 BMI 追踪应用。记录每日体重，可视化趋势变化，设定目标并追踪达成。
+本地优先的体重与 BMI 追踪应用。数据保存在浏览器本地，支持每日记录、趋势查看、目标追踪、里程碑和数据导入导出。
 
-## 功能
+## Features
 
-- **每日记录** — 自研顶部抽屉式日历组件，支持随时补填历史体重数据，精准还原历史时间轴
-- **动态代谢推算** — 利用 Mifflin-St Jeor 和 OLS 线性回归，通过你的无感体重打卡，自动推算 TDEE 与日均热量缺口
-- **趋势图表与明细** — 双 Y 轴折线图（体重 + BMI），支持多重时间跨度切换，并无缝关联历史流水账明细
-- **BMI 体征分级** — 遵循中国标准（偏瘦/正常/偏胖/肥胖），直观彩色标尺与数据点着色
-- **目标追踪** — 采用**“高水位锚定+幽灵反弹条”**算法，直观展示历史最佳与当前波动的心理缓冲空间
-- **里程碑** — 动态阶段目标管理，补填历史数据达成时静默生成里程碑，最新数据达成时触发满屏撒花动画
-- **数据管理** — JSON 格式导入/导出，本地存储，隐私安全
-- **深色模式** — 支持 Dark / Light 主题完美切换与沉浸式体验
+- 体重、BMI、目标进度和历史趋势记录
+- 中国 BMI 标准分级与可视化反馈
+- 动态代谢与阶段目标辅助分析
+- 本地 JSON 数据导入/导出
+- 深色模式与移动端优先体验
+- PWA 安装、离线访问与新版本提示
 
-## 技术栈
+## PWA
 
-| 类别     | 技术                        |
-| -------- | --------------------------- |
-| 框架     | React 19 + TypeScript       |
-| 构建     | Vite 8                      |
-| 测试     | Vitest                      |
-| 样式     | UnoCSS (preset-mini)        |
-| 图标     | Lucide (UnoCSS Icons)       |
-| 字体     | Plus Jakarta Sans + DM Sans |
-| 图表     | Chart.js + react-chartjs-2  |
-| 日期     | dayjs                       |
-| 动画     | canvas-confetti             |
-| 图片导出 | html-to-image               |
-| 存储     | localStorage                |
+生产构建会生成 `manifest.webmanifest` 和 Service Worker。部署后，在支持 PWA 的浏览器中打开应用，可通过浏览器菜单将 ScaleTrack 安装到桌面或手机主屏。
 
-## 开发
+应用更新时，新的资源会在后台缓存。检测到新版本后，页面会提示更新；也可以在「我的 / 关于 ScaleTrack」中查看当前版本并手动检查更新。更新不会修改本地体重数据。
+
+当前部署路径配置为 `/ScaleTrack/`，如果部署到站点根路径或其他子路径，需要同步调整 `vite.config.ts` 中的 `base`、manifest `start_url`、`scope` 和 Workbox fallback。
+
+## Development
 
 ```bash
-# 安装依赖
 pnpm install
-
-# 启动开发服务器
 pnpm dev
-
-# 构建
-pnpm build
-
-# 代码检查
 pnpm lint
-
-# 单元测试
+pnpm typecheck
 pnpm test
-pnpm test:watch
+pnpm build
 ```
 
-## 项目结构
+## Tech Stack
 
-```
-src/
-├── types/          # TypeScript 类型定义
-├── utils/          # 工具函数（BMI 计算、存储、主题）
-├── components/     # UI 组件
-│   ├── ThemeToggle.tsx
-│   ├── RecordForm.tsx
-│   ├── WeightChart.tsx
-│   ├── BMILegend.tsx
-│   ├── GoalTracker.tsx
-│   ├── GoalAchievementModal.tsx
-│   ├── MilestoneList.tsx
-│   ├── RecordList.tsx
-│   └── DataImportExport.tsx
-├── pages/          # 页面
-│   ├── SetupPage.tsx
-│   └── Dashboard.tsx
-├── App.tsx         # 根组件
-└── main.tsx        # 入口
-```
-
-## BMI 分级标准（中国）
-
-| 分级 | 范围      |
-| ---- | --------- |
-| 偏瘦 | < 18.5    |
-| 正常 | 18.5 ~ 24 |
-| 偏胖 | 24 ~ 28   |
-| 肥胖 | ≥ 28      |
-
-BMI = 体重(kg) ÷ 身高(m)²
+- React 19 + TypeScript
+- Vite 8
+- UnoCSS
+- Vitest
+- vite-plugin-pwa + Workbox
 
 ## License
 
