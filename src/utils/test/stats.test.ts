@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import type { Goal, UserProfile, WeightRecord } from '../types'
-import { getCurrentWeight, getGoalProgress } from './stats'
+import type { Goal, UserProfile, WeightRecord } from '../../types'
+import { buildTrendInsight, getCurrentWeight, getGoalProgress, getMetricStats } from '../stats'
 
 describe('Stats Utils', () => {
   const mockProfile: UserProfile = {
@@ -111,6 +111,23 @@ describe('Stats Utils', () => {
         currentProgress: 100,
         remaining: 0,
       })
+    })
+  })
+
+  describe('getMetricStats', () => {
+    it('should calculate bmi stats when metric is bmi', () => {
+      expect(getMetricStats(mockRecords, 'bmi')).toEqual({
+        min: 25.6,
+        max: 26.4,
+        average: 26,
+        delta: 0.3,
+      })
+    })
+  })
+
+  describe('buildTrendInsight', () => {
+    it('should build bmi insight with the correct metric wording', () => {
+      expect(buildTrendInsight(mockRecords, 'bmi')).toContain('BMI 上升了 0.3')
     })
   })
 })

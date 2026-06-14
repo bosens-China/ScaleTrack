@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { describe, expect, it } from 'vitest'
-import type { UserProfile } from '../types'
-import { getAgeFromBirthDate, getProfileAge, hasBirthDateMigrationNeeded } from './age'
+import type { UserProfile } from '../../types'
+import { getAgeFromBirthDate, getProfileAge, hasBirthDateMigrationNeeded } from '../age'
 
 describe('age utility', () => {
   describe('getAgeFromBirthDate', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { calcBMI, getBMICategory, getBMIColor } from './bmi'
+import { calcBMI, getBMICategory, getBMIColor } from '../bmi'
 
 describe('BMI Utils', () => {
   describe('calcBMI', () => {

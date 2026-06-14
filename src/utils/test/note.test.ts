@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import type { WeightRecord } from '../types'
-import { getDefaultNote, getTimeOfDay, toggleTagInNote } from './note'
+import type { WeightRecord } from '../../types'
+import { getDefaultNote, getTimeOfDay, toggleTagInNote } from '../note'
 
 describe('Note Utils', () => {
   describe('getTimeOfDay', () => {

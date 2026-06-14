@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { describe, expect, it } from 'vitest'
-import type { UserProfile, WeightRecord } from '../types'
-import { calculateBMR, calculateMetabolismStats } from './metabolism'
+import type { UserProfile, WeightRecord } from '../../types'
+import { calculateBMR, calculateMetabolismStats } from '../metabolism'
 
 describe('calculateBMR', () => {
   it('should return null if age is missing', () => {
