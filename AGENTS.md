@@ -13,3 +13,4 @@
 - React Compiler（babel-plugin-react-compiler）已经启用，注意写法
 - 重要模块请添加测试用例，测试框架使用vitest
 - 功能和界面，确保是符合中文用户的使用习惯
+- test文件请放置到test目录下，方便审阅
