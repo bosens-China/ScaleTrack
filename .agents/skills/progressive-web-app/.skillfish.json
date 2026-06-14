@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "progressive-web-app",
+  "owner": "secondsky",
+  "repo": "claude-skills",
+  "path": "plugins/progressive-web-app/skills/progressive-web-app",
+  "branch": "main",
+  "sha": "8f83ca9a24d0394ddda79116cfb8b0235189b3b5",
+  "source": "manual"
+}
