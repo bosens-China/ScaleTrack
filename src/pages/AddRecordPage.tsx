@@ -6,6 +6,8 @@ import TextInput from '@/components/TextInput'
 import WeightRulerPicker from '@/components/WeightRulerPicker'
 import type { UserProfile, WeightRecord } from '@/types'
 import { getDefaultNote, toggleTagInNote } from '@/utils/note'
+import { getEarliestRecordDate, isRecordDateSelectable } from '@/utils/record-date'
+import { toast } from '@/utils/toast'
 
 interface Props {
   profile: UserProfile
@@ -17,6 +19,7 @@ export default function AddRecordPage({ profile, records, onSave }: Props) {
   const [selectedDate, setSelectedDate] = useState(() => dayjs().format('YYYY-MM-DD'))
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
   const todayStr = dayjs().format('YYYY-MM-DD')
+  const earliestDateStr = getEarliestRecordDate(todayStr)
 
   const existingRecord = records.find(r => r.date === selectedDate) ?? null
   const latestRecord = records.at(-1)
@@ -30,6 +33,11 @@ export default function AddRecordPage({ profile, records, onSave }: Props) {
   })
 
   const handleDateChange = (newDate: string) => {
+    if (!isRecordDateSelectable(newDate, todayStr)) {
+      toast.error('仅支持补录最近 1 个月内的记录')
+      return
+    }
+
     setSelectedDate(newDate)
     const newExisting = records.find(r => r.date === newDate)
     if (newExisting) {
@@ -56,6 +64,9 @@ export default function AddRecordPage({ profile, records, onSave }: Props) {
               记录体重
             </h2>
             <p className="text-sm text-[var(--carbon-text-secondary)]">记录您的身体变化</p>
+            <p className="text-xs text-[var(--carbon-text-secondary)]">
+              可补录范围：{dayjs(earliestDateStr).format('MM月DD日')} 至今天
+            </p>
           </div>
 
           <button
@@ -151,13 +162,18 @@ export default function AddRecordPage({ profile, records, onSave }: Props) {
 
       <div className="mx-auto mt-6 px-4">
         <button
-          onClick={() =>
+          onClick={() => {
+            if (!isRecordDateSelectable(selectedDate, todayStr)) {
+              toast.error('仅支持补录最近 1 个月内的记录')
+              return
+            }
+
             onSave({
               date: selectedDate,
               weight,
               note: note.trim() || undefined,
             })
-          }
+          }}
           className="group flex h-14 w-full items-center justify-center gap-2 bg-[var(--carbon-primary)] px-6 text-base font-medium text-[var(--carbon-text-on-primary)] transition-colors hover:bg-[var(--carbon-primary-hover)]"
         >
           <span>保存记录</span>
@@ -166,6 +182,7 @@ export default function AddRecordPage({ profile, records, onSave }: Props) {
       </div>
 
       <CalendarModal
+        key={`${selectedDate}-${isCalendarOpen ? 'open' : 'closed'}`}
         isOpen={isCalendarOpen}
         onClose={() => setIsCalendarOpen(false)}
         records={records}

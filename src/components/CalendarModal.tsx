@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import { useState } from 'react'
 
 import type { WeightRecord } from '@/types'
+import { getEarliestRecordDate, isRecordDateSelectable } from '@/utils/record-date'
 
 interface Props {
   isOpen: boolean
@@ -23,6 +24,8 @@ export default function CalendarModal({
   if (!isOpen) return null
 
   const todayStr = dayjs().format('YYYY-MM-DD')
+  const earliestDateStr = getEarliestRecordDate(todayStr)
+  const earliestMonth = dayjs(earliestDateStr).startOf('month')
 
   const handlePrevMonth = () => setCurrentMonth(prev => prev.subtract(1, 'month'))
   const handleNextMonth = () => setCurrentMonth(prev => prev.add(1, 'month'))
@@ -52,7 +55,8 @@ export default function CalendarModal({
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={handlePrevMonth}
-            className="p-2 text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
+            disabled={currentMonth.isSame(earliestMonth, 'month')}
+            className="p-2 text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)] disabled:opacity-30"
           >
             <span className="i-lucide-chevron-left h-5 w-5" />
           </button>
@@ -84,7 +88,9 @@ export default function CalendarModal({
             if (!dateObj) return <div key={`empty-${i}`} />
 
             const dateStr = dateObj.format('YYYY-MM-DD')
+            const isSelectable = isRecordDateSelectable(dateStr, todayStr)
             const isFuture = dateStr > todayStr
+            const isExpired = dateStr < earliestDateStr
             const isSelected = dateStr === selectedDate
             const hasRecord = recordDates.has(dateStr)
             const isToday = dateStr === todayStr
@@ -92,20 +98,28 @@ export default function CalendarModal({
             return (
               <button
                 key={dateStr}
-                disabled={isFuture}
+                disabled={!isSelectable}
                 onClick={() => {
+                  if (!isSelectable) return
                   onSelectDate(dateStr)
                   onClose()
                 }}
                 className={`
                   relative flex h-10 w-full flex-col items-center justify-center rounded-lg border text-sm transition-colors
-                  ${isFuture ? 'opacity-30 cursor-not-allowed border-transparent text-[var(--carbon-text-secondary)]' : 'cursor-pointer hover:bg-[var(--carbon-surface-hover)]'}
+                  ${!isSelectable ? 'opacity-30 cursor-not-allowed border-transparent text-[var(--carbon-text-secondary)]' : 'cursor-pointer hover:bg-[var(--carbon-surface-hover)]'}
                   ${isSelected ? 'border-[var(--carbon-primary)] bg-[var(--carbon-primary-soft)] text-[var(--carbon-primary)] font-semibold' : 'border-transparent text-[var(--carbon-text)]'}
                   ${isToday && !isSelected ? 'border-[var(--carbon-border)]' : ''}
                 `}
+                aria-label={
+                  isFuture
+                    ? `${dateStr}，未来日期不可选择`
+                    : isExpired
+                      ? `${dateStr}，超出可补录范围`
+                      : dateStr
+                }
               >
                 <span>{dateObj.date()}</span>
-                {!isFuture && (
+                {isSelectable && (
                   <div className="absolute bottom-1.5 flex justify-center">
                     {hasRecord ? (
                       <span className="h-1 w-1 rounded-full bg-[var(--carbon-primary)]" />
@@ -129,6 +143,9 @@ export default function CalendarModal({
             <span>未记录</span>
           </div>
         </div>
+        <p className="mt-3 text-center text-[11px] leading-5 text-[var(--carbon-text-secondary)]">
+          仅支持补录最近 1 个月内的数据，今天仍可重复覆盖保存。
+        </p>
       </div>
     </>
   )
