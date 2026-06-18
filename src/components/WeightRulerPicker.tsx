@@ -12,8 +12,9 @@ interface Props {
 
 export default function WeightRulerPicker({
   value,
-  min = 30,
-  max = 150,
+  // 与 validation.ts 的体重校验范围（20-300）对齐，避免极端体重无法录入或被强制 clamp
+  min = 20,
+  max = 300,
   step = 0.1,
   onChange,
 }: Props) {
