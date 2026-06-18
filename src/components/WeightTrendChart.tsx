@@ -7,6 +7,8 @@ import {
   LinearScale,
   PointElement,
   Tooltip,
+  type Chart,
+  type Plugin,
   type TooltipItem,
 } from 'chart.js'
 import dayjs from 'dayjs'
@@ -29,9 +31,11 @@ function getIsDark() {
 interface Props {
   records: WeightRecord[]
   metric?: 'weight' | 'bmi'
+  /** 目标体重；仅在体重指标下叠加一条目标参考线 */
+  goalWeight?: number
 }
 
-export default function WeightTrendChart({ records, metric = 'weight' }: Props) {
+export default function WeightTrendChart({ records, metric = 'weight', goalWeight }: Props) {
   const isDark = useSyncExternalStore(subscribeDarkMode, getIsDark)
 
   const primaryColor = isDark ? '#a8c7fa' : '#0f62fe'
@@ -42,6 +46,44 @@ export default function WeightTrendChart({ records, metric = 'weight' }: Props) 
   const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(141, 141, 141, 0.18)'
   const tickColor = isDark ? '#c4c7c5' : '#6f6f6f'
   const borderColor = isDark ? '#444746' : '#e0e0e0'
+  const goalColor = isDark ? '#fbbf24' : '#f59e0b'
+
+  // 目标线只在体重指标下展示，BMI 指标不叠加
+  const showGoal = metric === 'weight' && typeof goalWeight === 'number'
+
+  // 自定义插件：在目标体重处画一条虚线 + 文案标签
+  const goalLinePlugin: Plugin<'line'> = {
+    id: 'goalLine',
+    afterDatasetsDraw(chart: Chart) {
+      if (!showGoal || goalWeight === undefined) return
+      const { ctx, chartArea, scales } = chart
+      const y = scales.y.getPixelForValue(goalWeight)
+      // 目标超出当前可视范围时不绘制，避免贴边误导
+      if (y < chartArea.top || y > chartArea.bottom) return
+
+      ctx.save()
+      ctx.beginPath()
+      ctx.setLineDash([5, 4])
+      ctx.lineWidth = 1.5
+      ctx.strokeStyle = goalColor
+      ctx.moveTo(chartArea.left, y)
+      ctx.lineTo(chartArea.right, y)
+      ctx.stroke()
+
+      const label = `目标 ${goalWeight.toFixed(1)}`
+      ctx.setLineDash([])
+      ctx.font = '10px IBM Plex Sans, sans-serif'
+      ctx.textBaseline = 'bottom'
+      ctx.textAlign = 'right'
+      const padding = 4
+      const textWidth = ctx.measureText(label).width
+      ctx.fillStyle = goalColor
+      ctx.fillRect(chartArea.right - textWidth - padding * 2, y - 16, textWidth + padding * 2, 14)
+      ctx.fillStyle = isDark ? '#161616' : '#ffffff'
+      ctx.fillText(label, chartArea.right - padding, y - 3)
+      ctx.restore()
+    },
+  }
 
   const data = {
     labels: records.map(record => dayjs(record.date).format('MM/DD')),
@@ -55,7 +97,8 @@ export default function WeightTrendChart({ records, metric = 'weight' }: Props) 
           gradient.addColorStop(1, `rgba(${primaryRgb}, 0)`)
           return gradient
         },
-        pointRadius: 0,
+        // 仅有一条记录时折线无法成形，显示一个可见的点避免图表空白
+        pointRadius: records.length === 1 ? 4 : 0,
         pointHoverRadius: 4,
         borderWidth: 2,
         fill: true,
@@ -103,6 +146,9 @@ export default function WeightTrendChart({ records, metric = 'weight' }: Props) 
       },
       y: {
         grace: '5%',
+        // 目标体重纳入纵轴建议范围，保证目标线始终落在可视区内
+        suggestedMin: showGoal ? goalWeight : undefined,
+        suggestedMax: showGoal ? goalWeight : undefined,
         grid: { color: gridColor },
         ticks: {
           color: tickColor,
@@ -134,7 +180,7 @@ export default function WeightTrendChart({ records, metric = 'weight' }: Props) 
         style={{ minWidth: records.length > 7 ? `${records.length * 40}px` : '100%' }}
         className="h-full"
       >
-        <Line data={data} options={options} />
+        <Line data={data} options={options} plugins={showGoal ? [goalLinePlugin] : []} />
       </div>
     </div>
   )

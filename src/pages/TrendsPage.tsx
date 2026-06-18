@@ -63,7 +63,7 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
             <h2 className="text-2xl font-normal text-[var(--carbon-text)]">{pageTitle}</h2>
             <p className="mt-1 text-sm text-[var(--carbon-text-secondary)]">{pageDescription}</p>
           </div>
-          {hasChartData && (
+          {hasRecords && (
             <div className="flex bg-[var(--carbon-surface-subtle)] border border-[var(--carbon-border)] rounded-sm overflow-hidden p-0.5">
               <button
                 onClick={() => setMetric('weight')}
@@ -110,7 +110,11 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
 
         {hasChartData ? (
           <>
-            <WeightTrendChart records={filteredRecords} metric={metric} />
+            <WeightTrendChart
+              records={filteredRecords}
+              metric={metric}
+              goalWeight={goal?.targetWeight}
+            />
 
             <section className="mt-4 grid grid-cols-2 gap-px overflow-hidden border border-[var(--carbon-border)] bg-[var(--carbon-border)]">
               <div className="bg-[var(--carbon-surface)] p-4">
