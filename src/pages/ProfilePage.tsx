@@ -9,14 +9,14 @@ import ProfileMilestonesSection from '@/components/profile/ProfileMilestonesSect
 import ProfileSettingsSection from '@/components/profile/ProfileSettingsSection'
 import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
 import { BMI_RANGES, getBMICategory, getBmiPercent } from '@/utils/bmi'
-import { getCurrentBMI } from '@/utils/stats'
+import { getCurrentBMI, getCurrentWeight } from '@/utils/stats'
 
 interface Props {
   profile: UserProfile
   records: WeightRecord[]
   goal: Goal | null
   milestones: Goal[]
-  onSaveGoal: (targetWeight: number) => void
+  onSaveGoal: (targetWeight: number, targetDate?: string) => void
   onProfileUpdate: (patch: Partial<UserProfile>) => void
   onReload: () => void
   onNavigate: (page: AppPage) => void
@@ -37,6 +37,7 @@ export default function ProfilePage({
   const [isEditingProfile, setIsEditingProfile] = useState(false)
   const [profileEditVersion, setProfileEditVersion] = useState(0)
   const currentBMI = getCurrentBMI(profile, records)
+  const currentWeight = getCurrentWeight(profile, records)
   const bmiCategory = getBMICategory(currentBMI)
   const bmiRange = BMI_RANGES.find(range => range.category === bmiCategory)
   const bmiPercent = getBmiPercent(currentBMI)
@@ -84,7 +85,7 @@ export default function ProfilePage({
           </div>
         </section>
 
-        <ProfileGoalSection goal={goal} onSaveGoal={onSaveGoal} />
+        <ProfileGoalSection goal={goal} currentWeight={currentWeight} onSaveGoal={onSaveGoal} />
         <ProfileBMISection
           currentBMI={currentBMI}
           bmiPercent={bmiPercent}

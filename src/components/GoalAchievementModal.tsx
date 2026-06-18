@@ -22,10 +22,22 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
   const cardRef = useRef<HTMLDivElement>(null)
   const [saving, setSaving] = useState(false)
 
-  const days = goal.completedDate ? dayjs(goal.completedDate).diff(dayjs(goal.startDate), 'day') : 0
+  // 当日达成时 diff 为 0，兜底为 1 天，避免展示「0 天达成」（与里程碑详情页一致）
+  const days = goal.completedDate
+    ? dayjs(goal.completedDate).diff(dayjs(goal.startDate), 'day') || 1
+    : 0
   const weightDiff = Math.abs(goal.startWeight - goal.targetWeight)
   const avgPerDay = days > 0 ? (weightDiff / days).toFixed(2) : '0'
   const direction = goal.startWeight > goal.targetWeight ? '减' : '增'
+
+  // 设了目标日期时，对比实际达成日，给出提前/准时/超期反馈
+  let scheduleNote: string | null = null
+  if (goal.targetDate && goal.completedDate) {
+    const aheadDays = dayjs(goal.targetDate).diff(dayjs(goal.completedDate), 'day')
+    if (aheadDays > 0) scheduleNote = `比计划提前 ${aheadDays} 天达成 🎯`
+    else if (aheadDays === 0) scheduleNote = '正好如期达成 🎯'
+    else scheduleNote = `比计划晚了 ${Math.abs(aheadDays)} 天，但你坚持到了最后`
+  }
 
   const getEncouragement = () => {
     if (days <= 7) return '你的毅力令人钦佩！短短一周就达成了目标。'
@@ -101,7 +113,13 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
             </div>
           </div>
 
-          <div className="border-b border-[var(--carbon-border)] px-6 py-4">
+          <div className="flex flex-col gap-2 border-b border-[var(--carbon-border)] px-6 py-4">
+            {scheduleNote && (
+              <div className="flex items-center gap-2 text-xs font-medium text-[var(--carbon-primary)]">
+                <span className="i-lucide-calendar-check h-4 w-4 shrink-0" />
+                <span>{scheduleNote}</span>
+              </div>
+            )}
             <div className="flex items-start gap-3 bg-[var(--carbon-surface-subtle)] p-3">
               <span className="i-lucide-sparkles h-4 w-4 shrink-0 text-[var(--carbon-primary)]" />
               <p className="text-sm leading-6 text-[var(--carbon-text)]">{getEncouragement()}</p>

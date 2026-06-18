@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { useState } from 'react'
 
 import SharePosterModal from '@/components/SharePosterModal'
@@ -32,8 +33,8 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
   const goalLabel = goal ? (isGainGoal ? '增肌目标' : '减脂目标') : '体重目标'
 
-  // Calculate Metabolism
-  const metabolism = calculateMetabolismStats(profile, records, 7)
+  // 代谢趋势只看最近 30 天，避免历史平台期/早期快速变化稀释当前速率
+  const metabolism = calculateMetabolismStats(profile, filterRecordsByDays(records, 30), 7)
 
   const weeklyDirection =
     weeklyChange === null
@@ -58,7 +59,15 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
             ? 'text-[var(--color-success)]'
             : 'text-[var(--carbon-text-secondary)]'
 
-  let targetDaysText = null
+  // 距用户设定的目标日期还有多少天（未设置或已达成则为 null）
+  const todayStr = dayjs().format('YYYY-MM-DD')
+  const daysUntilTarget =
+    goal?.targetDate && progress && progress.remaining > 0
+      ? dayjs(goal.targetDate).diff(dayjs(todayStr), 'day')
+      : null
+
+  // 基于近期代谢趋势预测的剩余达成天数
+  let predictedDays: number | null = null
   if (
     metabolism.isDataSufficient &&
     metabolism.tdeeTrend !== null &&
@@ -67,11 +76,24 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
     progress.remaining > 0
   ) {
     if (isGainGoal && metabolism.tdeeTrend > 0) {
-      const days = Math.ceil((progress.remaining * 7700) / metabolism.tdeeTrend)
-      targetDaysText = `按照本周表现，预计大约 ${days} 天可达成目标！`
+      predictedDays = Math.ceil((progress.remaining * 7700) / metabolism.tdeeTrend)
     } else if (!isGainGoal && metabolism.tdeeTrend < 0) {
-      const days = Math.ceil((progress.remaining * 7700) / Math.abs(metabolism.tdeeTrend))
-      targetDaysText = `按照本周表现，预计大约 ${days} 天可达成目标！`
+      predictedDays = Math.ceil((progress.remaining * 7700) / Math.abs(metabolism.tdeeTrend))
+    }
+  }
+
+  let targetDaysText = null
+  if (predictedDays !== null) {
+    targetDaysText = `按照近期表现，预计大约 ${predictedDays} 天可达成目标！`
+    // 用户设了目标日期时，对比预测与剩余天数，给出领先/落后提示
+    if (daysUntilTarget !== null) {
+      if (daysUntilTarget <= 0) {
+        targetDaysText += ' 目标日期已到，继续加油。'
+      } else if (predictedDays <= daysUntilTarget) {
+        targetDaysText += ` 距目标日期还有 ${daysUntilTarget} 天，进度领先于计划。`
+      } else {
+        targetDaysText += ` 距目标日期仅剩 ${daysUntilTarget} 天，需要再加把劲。`
+      }
     }
   }
 
@@ -126,9 +148,11 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
             >
               <span
                 className={`h-4 w-4 ${
-                  previousDiff !== null && previousDiff > 0
-                    ? 'i-lucide-trending-up'
-                    : 'i-lucide-trending-down'
+                  previousDiff === null || previousDiff === 0
+                    ? 'i-lucide-minus'
+                    : previousDiff > 0
+                      ? 'i-lucide-trending-up'
+                      : 'i-lucide-trending-down'
                 }`}
               />
               <span className="mt-1 text-[10px] font-bold">
@@ -172,6 +196,14 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
                   </p>
                 )}
               </div>
+              {goal?.targetDate && (
+                <p className="mt-1.5 flex items-center gap-1 text-[11px] text-[var(--carbon-text-secondary)]">
+                  <span className="i-lucide-calendar-clock h-3 w-3" />
+                  {dayjs(goal.targetDate).format('YYYY/MM/DD')} 达成
+                  {daysUntilTarget !== null &&
+                    (daysUntilTarget > 0 ? ` · 剩 ${daysUntilTarget} 天` : ' · 已到期')}
+                </p>
+              )}
               <div className="mt-3 flex h-1.5 w-full bg-[var(--carbon-surface-strong)] overflow-hidden rounded-full">
                 {progress && (
                   <>

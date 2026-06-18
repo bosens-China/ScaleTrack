@@ -175,6 +175,8 @@ function isValidGoal(g: unknown): g is Goal {
   if (!isFiniteNumber(g.targetWeight) || g.targetWeight < 20 || g.targetWeight > 300) return false
   if (!isFiniteNumber(g.startWeight) || g.startWeight < 20 || g.startWeight > 300) return false
   if (!isValidDateString(g.startDate)) return false
+  if ('targetDate' in g && g.targetDate !== undefined && !isValidDateString(g.targetDate))
+    return false
   if (typeof g.isCompleted !== 'boolean') return false
   if ('completedDate' in g && g.completedDate !== undefined && !isValidDateString(g.completedDate))
     return false

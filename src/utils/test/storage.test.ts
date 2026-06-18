@@ -127,6 +127,48 @@ describe('storage importData', () => {
     ).toThrow('用户信息数据结构不完整或数值不合理')
   })
 
+  it('should accept a goal with a valid targetDate', () => {
+    importData({
+      version: 1,
+      exportedAt: '2026-06-14T00:00:00.000Z',
+      profile: null,
+      records: [],
+      goals: [
+        {
+          id: 'g-1',
+          targetWeight: 70,
+          startWeight: 80,
+          startDate: '2026-06-01',
+          targetDate: '2026-09-01',
+          isCompleted: false,
+        },
+      ],
+    })
+
+    expect(getGoals()[0]?.targetDate).toBe('2026-09-01')
+  })
+
+  it('should reject a goal with an invalid targetDate', () => {
+    expect(() =>
+      importData({
+        version: 1,
+        exportedAt: '2026-06-14T00:00:00.000Z',
+        profile: null,
+        records: [],
+        goals: [
+          {
+            id: 'g-1',
+            targetWeight: 70,
+            startWeight: 80,
+            startDate: '2026-06-01',
+            targetDate: '2026/09/01',
+            isCompleted: false,
+          },
+        ],
+      }),
+    ).toThrow('部分目标数据结构不完整或数值不合理')
+  })
+
   it('should reject multiple active goals', () => {
     expect(() =>
       importData({

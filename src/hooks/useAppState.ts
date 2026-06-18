@@ -31,7 +31,7 @@ export interface AppState {
   setAchievedGoal: (goal: Goal | null) => void
   handleSetupComplete: (profile: UserProfile) => void
   handleProfileUpdate: (patch: Partial<UserProfile>) => void
-  handleSaveGoal: (targetWeight: number) => void
+  handleSaveGoal: (targetWeight: number, targetDate?: string) => void
   handleSaveRecord: (payload: { date: string; weight: number; note?: string }) => void
   handleDeleteRecord: (id: string) => void
   refreshAll: () => void
@@ -113,7 +113,7 @@ export function useAppState(): AppState {
     toast.success('基础信息已更新')
   }
 
-  const handleSaveGoal = (targetWeight: number) => {
+  const handleSaveGoal = (targetWeight: number, targetDate?: string) => {
     if (!profile) return
     const existing = goals.find(g => !g.isCompleted) ?? null
     const currentWeight = getCurrentWeight(profile, records)
@@ -122,6 +122,7 @@ export function useAppState(): AppState {
       targetWeight,
       startWeight: existing?.startWeight ?? currentWeight,
       startDate: existing?.startDate ?? dayjs().format('YYYY-MM-DD'),
+      targetDate,
       isCompleted: false,
     }
     saveGoal(goal)

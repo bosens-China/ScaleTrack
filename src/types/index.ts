@@ -33,6 +33,8 @@ export interface Goal {
   targetWeight: number
   startWeight: number
   startDate: string
+  /** 用户自定义的期望达成日期（选填，YYYY-MM-DD） */
+  targetDate?: string
   completedDate?: string
   isCompleted: boolean
 }
