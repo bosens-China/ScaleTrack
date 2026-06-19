@@ -76,6 +76,30 @@ input {
   --dashboard-header-accent: rgba(0, 0, 0, 0.2);
 }
 
+/* 分享海报是对外的品牌图，固定使用浅色 Carbon 调色板，
+   不随应用的 .dark 主题翻转，避免出现「浅色文字 + 白底」导致标题看不清 */
+.share-poster {
+  --carbon-bg: #ffffff;
+  --carbon-surface: #ffffff;
+  --carbon-surface-subtle: #f4f4f4;
+  --carbon-surface-variant: #f0f4ff;
+  --carbon-surface-strong: #e0e0e0;
+  --carbon-inverse: #393939;
+  --carbon-text: #161616;
+  --carbon-text-secondary: #525252;
+  --carbon-outline: #8d8d8d;
+  --carbon-border: #e0e0e0;
+  --carbon-border-strong: #525252;
+  --carbon-primary: #0f62fe;
+  --carbon-text-on-primary: #ffffff;
+  --carbon-primary-hover: #0043ce;
+  --carbon-primary-soft: #d0e2ff;
+  --color-success: #198038;
+  --color-warning: #f1c21b;
+  --color-danger: #da1e28;
+  color: var(--carbon-text);
+}
+
 html {
   font-size: 16px;
   color-scheme: light;

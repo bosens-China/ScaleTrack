@@ -75,7 +75,7 @@ export default function SharePosterModal({
 
       {/* 海报预览区 */}
       <div className="w-full max-w-sm overflow-hidden rounded-sm bg-white shadow-2xl relative">
-        <div ref={cardRef} className="flex flex-col bg-white">
+        <div ref={cardRef} className="share-poster flex flex-col bg-white">
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--carbon-border)]">
             <div className="flex items-center gap-2">
