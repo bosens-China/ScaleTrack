@@ -4,11 +4,14 @@ import { useState } from 'react'
 import SharePosterModal from '@/components/SharePosterModal'
 import WeightTrendChart from '@/components/WeightTrendChart'
 import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
+import { getBMICategory, getBMIRange } from '@/utils/bmi'
 import { calculateMetabolismStats } from '@/utils/metabolism'
 import {
   filterRecordsByDays,
+  getCurrentBMI,
   getCurrentWeight,
   getGoalProgress,
+  getMetricStats,
   getPreviousDiff,
   getWeeklyChange,
 } from '@/utils/stats'
@@ -35,6 +38,30 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
 
   // 代谢趋势只看最近 30 天，避免历史平台期/早期快速变化稀释当前速率
   const metabolism = calculateMetabolismStats(profile, filterRecordsByDays(records, 30), 7)
+
+  // 分享海报用：当前 BMI 分级（快照）
+  const currentBMI = getCurrentBMI(profile, records)
+  const bmiRange = getBMIRange(getBMICategory(currentBMI))
+
+  // 分享海报用：从首条记录到现在的累计变化（进步/变化，作为海报主角）
+  const firstRecord = records[0]
+  const totalDelta = getMetricStats(records).delta // 末次 - 首次，减重为负
+  const recordCount = records.length
+  // 坚持天数：首条记录到今天（含两端）
+  const daysTracked = firstRecord ? dayjs().diff(dayjs(firstRecord.date), 'day') + 1 : 0
+  // 至少两条且确有变化时，用累计变化做主角；否则回退到当前体重
+  const hasShareProgress = recordCount >= 2 && totalDelta !== null && totalDelta !== 0
+  // 累计变化的着色逻辑与本周变化一致（增肌目标下增重为正向）
+  const deltaTone =
+    totalDelta === null || totalDelta === 0
+      ? 'text-[var(--carbon-text)]'
+      : isGainGoal
+        ? totalDelta > 0
+          ? 'text-[var(--color-success)]'
+          : 'text-[var(--color-danger)]'
+        : totalDelta > 0
+          ? 'text-[var(--color-danger)]'
+          : 'text-[var(--color-success)]'
 
   const weeklyDirection =
     weeklyChange === null
@@ -327,7 +354,25 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
 
       <SharePosterModal isOpen={isShareOpen} onClose={() => setIsShareOpen(false)}>
         <div className="flex flex-col gap-4 p-5 bg-[var(--carbon-bg)]">
-          <div className="flex items-start justify-between">
+          {/* 主角：累计变化（进步）；记录不足或无变化时回退为当前体重 */}
+          {hasShareProgress && firstRecord && totalDelta !== null ? (
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
+                累计变化
+              </p>
+              <div className="mt-1 flex items-baseline gap-1">
+                <span className={`text-[44px] font-semibold leading-none ${deltaTone}`}>
+                  {totalDelta > 0 ? '+' : ''}
+                  {totalDelta.toFixed(1)}
+                </span>
+                <span className="text-base text-[var(--carbon-text-secondary)]">kg</span>
+              </div>
+              <p className="mt-2 text-xs text-[var(--carbon-text-secondary)]">
+                起始 {firstRecord.weight.toFixed(1)} → 现在 {currentWeight.toFixed(1)} kg · 坚持{' '}
+                {daysTracked} 天 / {recordCount} 次记录
+              </p>
+            </div>
+          ) : (
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
                 当前体重
@@ -339,46 +384,53 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
                 <span className="text-base text-[var(--carbon-text-secondary)]">kg</span>
               </div>
             </div>
+          )}
+
+          {/* 快照条：当前体重（主角为进步时才补）+ BMI 分级 + 本周变化 */}
+          <div className="flex items-center justify-between border border-[var(--carbon-border)] bg-[var(--carbon-surface-subtle)] px-4 py-3 rounded-sm">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+              {hasShareProgress && (
+                <span className="font-medium text-[var(--carbon-text)]">
+                  {currentWeight.toFixed(1)} kg
+                </span>
+              )}
+              <span className="inline-flex items-center gap-1.5 text-[var(--carbon-text-secondary)]">
+                <span
+                  className="h-2 w-2 rounded-full"
+                  style={{ backgroundColor: bmiRange.color }}
+                />
+                BMI {currentBMI} · {bmiRange.label}
+              </span>
+            </div>
             {weeklyChange !== null && (
-              <div className="flex flex-col items-end text-right">
-                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-                  本周变化
-                </p>
-                <div className={`mt-1 text-xl font-bold ${trendTone}`}>
-                  {weeklyChange > 0 ? '+' : ''}
-                  {weeklyChange.toFixed(1)} kg
-                </div>
-              </div>
+              <span className={`text-sm font-semibold ${trendTone}`}>
+                本周 {weeklyChange > 0 ? '+' : ''}
+                {weeklyChange.toFixed(1)} kg
+              </span>
             )}
           </div>
 
-          <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4 rounded-sm">
-            <div className="flex items-center gap-2 text-[var(--carbon-text-secondary)] mb-3">
-              <span className="i-lucide-activity h-4 w-4 text-[var(--carbon-primary)]" />
-              <span className="text-[11px] font-medium uppercase tracking-[0.12em]">近期状态</span>
+          {/* 目标进度 */}
+          {goal && progress && (
+            <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4 rounded-sm">
+              <div className="flex items-center justify-between text-sm mb-2">
+                <span className="text-[var(--carbon-text-secondary)]">{goalLabel}</span>
+                <span className="font-medium text-[var(--carbon-text)]">
+                  {progress.remaining === 0 ? '已达成！🎉' : `还差 ${progress.remaining} kg`}
+                </span>
+              </div>
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--carbon-surface-strong)]">
+                <div
+                  className="h-full rounded-full bg-[var(--carbon-primary)]"
+                  style={{ width: `${progress.currentProgress}%` }}
+                />
+              </div>
+              <div className="mt-1.5 flex justify-between text-[11px] text-[var(--carbon-text-secondary)]">
+                <span>目标 {goal.targetWeight} kg</span>
+                <span>{progress.currentProgress}%</span>
+              </div>
             </div>
-            <div className="flex flex-col gap-2">
-              {progress && (
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-[var(--carbon-text-secondary)]">目标进度</span>
-                  <span className="font-medium text-[var(--carbon-text)]">
-                    {progress.remaining === 0 ? '已达成！' : `还差 ${progress.remaining} kg`}
-                  </span>
-                </div>
-              )}
-              {metabolism.isDataSufficient && metabolism.tdeeTrend !== null && (
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-[var(--carbon-text-secondary)]">日均热量盈亏</span>
-                  <span
-                    className={`font-medium ${metabolism.tdeeTrend < 0 ? 'text-[var(--color-success)]' : metabolism.tdeeTrend > 0 ? 'text-[var(--color-danger)]' : 'text-[var(--carbon-text)]'}`}
-                  >
-                    {metabolism.tdeeTrend > 0 ? '+' : ''}
-                    {metabolism.tdeeTrend} kcal
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
+          )}
         </div>
       </SharePosterModal>
     </div>
