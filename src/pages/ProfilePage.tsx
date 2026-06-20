@@ -17,6 +17,7 @@ interface Props {
   goal: Goal | null
   milestones: Goal[]
   onSaveGoal: (targetWeight: number, targetDate?: string) => void
+  onAbandonGoal: () => void
   onProfileUpdate: (patch: Partial<UserProfile>) => void
   onReload: () => void
   onNavigate: (page: AppPage) => void
@@ -29,6 +30,7 @@ export default function ProfilePage({
   goal,
   milestones,
   onSaveGoal,
+  onAbandonGoal,
   onProfileUpdate,
   onReload,
   onNavigate,
@@ -85,7 +87,12 @@ export default function ProfilePage({
           </div>
         </section>
 
-        <ProfileGoalSection goal={goal} currentWeight={currentWeight} onSaveGoal={onSaveGoal} />
+        <ProfileGoalSection
+          goal={goal}
+          currentWeight={currentWeight}
+          onSaveGoal={onSaveGoal}
+          onAbandonGoal={onAbandonGoal}
+        />
         <ProfileBMISection
           currentBMI={currentBMI}
           bmiPercent={bmiPercent}

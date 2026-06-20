@@ -1,9 +1,12 @@
+import { useEffect, useState } from 'react'
+
 import BottomTabBar from '@/components/BottomTabBar'
 import GoalAchievementModal from '@/components/GoalAchievementModal'
 import PwaUpdateBanner from '@/components/PwaUpdateBanner'
 import ToastContainer from '@/components/Toast'
 import { useAppState } from '@/hooks/useAppState'
 import { useTheme } from '@/hooks/useTheme'
+import { WeightUnitContext } from '@/hooks/weight-unit-context'
 import AddRecordPage from '@/pages/AddRecordPage'
 import DashboardPage from '@/pages/DashboardPage'
 import EditUserInfoPage from '@/pages/EditUserInfoPage'
@@ -12,9 +15,41 @@ import ProfilePage from '@/pages/ProfilePage'
 import SetupPage from '@/pages/SetupPage'
 import TrendsPage from '@/pages/TrendsPage'
 import type { AppTab } from '@/types'
+import { hydrateStore } from '@/utils/storage'
 
 export default function App() {
+  // 主题在水合前即应用，避免启动画面闪烁
   useTheme()
+  const [ready, setReady] = useState(false)
+
+  // 启动时先把数据从 IndexedDB 水合到内存缓存（含旧 localStorage 迁移）
+  useEffect(() => {
+    let active = true
+    hydrateStore()
+      .catch(err => console.error('数据初始化失败', err))
+      .finally(() => {
+        if (active) setReady(true)
+      })
+    return () => {
+      active = false
+    }
+  }, [])
+
+  if (!ready) {
+    return (
+      <div className="app-page flex items-center justify-center bg-[var(--carbon-bg)]">
+        <div className="flex flex-col items-center gap-3 text-[var(--carbon-text-secondary)]">
+          <span className="i-lucide-loader-2 h-7 w-7 animate-spin text-[var(--carbon-primary)]" />
+          <span className="text-sm">正在加载本地数据…</span>
+        </div>
+      </div>
+    )
+  }
+
+  return <AppInner />
+}
+
+function AppInner() {
   const {
     profile,
     records,
@@ -29,10 +64,19 @@ export default function App() {
     handleSetupComplete,
     handleProfileUpdate,
     handleSaveGoal,
+    handleAbandonGoal,
     handleSaveRecord,
+    handleUpdateRecord,
     handleDeleteRecord,
     refreshAll,
   } = useAppState()
+
+  // 当前体重单位来自用户资料（缺省 kg），切换时持久化到资料
+  const weightUnit = profile?.weightUnit ?? 'kg'
+  const weightUnitValue = {
+    unit: weightUnit,
+    setUnit: (unit: typeof weightUnit) => handleProfileUpdate({ weightUnit: unit }),
+  }
 
   const renderPage = () => {
     if (!profile) {
@@ -56,6 +100,7 @@ export default function App() {
             records={records}
             goal={activeGoal}
             onNavigate={setActivePage}
+            onUpdateRecord={handleUpdateRecord}
             onDeleteRecord={handleDeleteRecord}
           />
         )
@@ -69,6 +114,7 @@ export default function App() {
             goal={activeGoal}
             milestones={milestones}
             onSaveGoal={handleSaveGoal}
+            onAbandonGoal={handleAbandonGoal}
             onProfileUpdate={handleProfileUpdate}
             onReload={refreshAll}
             onNavigate={setActivePage}
@@ -108,7 +154,7 @@ export default function App() {
   ) as AppTab | null
 
   return (
-    <>
+    <WeightUnitContext.Provider value={weightUnitValue}>
       {renderPage()}
       {profile && activeTab !== null && (
         <BottomTabBar activeTab={activeTab} onChange={setActivePage} />
@@ -125,6 +171,6 @@ export default function App() {
           }}
         />
       )}
-    </>
+    </WeightUnitContext.Provider>
   )
 }

@@ -6,6 +6,7 @@ import { calcBMI } from '@/utils/bmi'
 import { reconcileLatestGoalState, shouldCelebrateGoalCompletion } from '@/utils/goal-state'
 import { getCurrentWeight } from '@/utils/stats'
 import {
+  deleteGoal,
   deleteRecord,
   getGoals,
   getProfile,
@@ -32,7 +33,9 @@ export interface AppState {
   handleSetupComplete: (profile: UserProfile) => void
   handleProfileUpdate: (patch: Partial<UserProfile>) => void
   handleSaveGoal: (targetWeight: number, targetDate?: string) => void
+  handleAbandonGoal: () => void
   handleSaveRecord: (payload: { date: string; weight: number; note?: string }) => void
+  handleUpdateRecord: (id: string, patch: { weight?: number; note?: string }) => void
   handleDeleteRecord: (id: string) => void
   refreshAll: () => void
 }
@@ -130,6 +133,15 @@ export function useAppState(): AppState {
     toast.success('目标体重已保存')
   }
 
+  const handleAbandonGoal = () => {
+    const existing = goals.find(g => !g.isCompleted)
+    if (!existing) return
+    deleteGoal(existing.id)
+    setGoals(getGoals())
+    setAchievedGoal(current => (current?.id === existing.id ? null : current))
+    toast.success('已放弃当前目标')
+  }
+
   const handleSaveRecord = ({
     date,
     weight,
@@ -180,6 +192,34 @@ export function useAppState(): AppState {
     setActivePage('dashboard')
   }
 
+  /** 内联编辑已有记录的体重/备注，不离开当前页面 */
+  const handleUpdateRecord = (id: string, patch: { weight?: number; note?: string }) => {
+    if (!profile) return
+    const target = records.find(r => r.id === id)
+    if (!target) return
+
+    const nextWeight = patch.weight ?? target.weight
+    const updated: WeightRecord = {
+      ...target,
+      weight: nextWeight,
+      bmi: calcBMI(nextWeight, profile.height),
+      note: patch.note !== undefined ? patch.note || undefined : target.note,
+    }
+    saveRecord(updated)
+    const nextRecords = getRecords()
+    setRecords(nextRecords)
+
+    const reconcileResult = reconcileLatestGoalState(goals, nextRecords)
+    if (reconcileResult.changed && reconcileResult.nextGoal) {
+      saveGoal(reconcileResult.nextGoal)
+      setGoals(getGoals())
+      if (!reconcileResult.nextGoal.isCompleted) {
+        setAchievedGoal(current => (current?.id === reconcileResult.nextGoal?.id ? null : current))
+      }
+    }
+    toast.success('记录已更新')
+  }
+
   const activeGoal = goals.find(g => !g.isCompleted) ?? null
   const milestones = goals.filter(g => g.isCompleted)
 
@@ -198,7 +238,9 @@ export function useAppState(): AppState {
     handleSetupComplete,
     handleProfileUpdate,
     handleSaveGoal,
+    handleAbandonGoal,
     handleSaveRecord,
+    handleUpdateRecord,
     handleDeleteRecord,
     refreshAll,
   }

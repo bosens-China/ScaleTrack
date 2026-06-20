@@ -3,8 +3,11 @@ import { useState } from 'react'
 
 import SharePosterModal from '@/components/SharePosterModal'
 import WeightTrendChart from '@/components/WeightTrendChart'
+import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
 import { getBMICategory, getBMIRange } from '@/utils/bmi'
+import { buildCalorieGuidance } from '@/utils/calorie-guidance'
+import { isGoalOverdue } from '@/utils/goal-state'
 import { calculateMetabolismStats } from '@/utils/metabolism'
 import {
   filterRecordsByDays,
@@ -15,6 +18,8 @@ import {
   getPreviousDiff,
   getWeeklyChange,
 } from '@/utils/stats'
+import { calculateStreak } from '@/utils/streak'
+import { formatWeight, formatWeightValue, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
 
 interface Props {
   profile: UserProfile
@@ -26,6 +31,8 @@ interface Props {
 
 export default function DashboardPage({ profile, records, goal, onNavigate }: Props) {
   const [isShareOpen, setIsShareOpen] = useState(false)
+  const { unit } = useWeightUnit()
+  const unitLabel = WEIGHT_UNIT_LABEL[unit]
 
   const currentWeight = getCurrentWeight(profile, records)
   const previousDiff = getPreviousDiff(records)
@@ -92,6 +99,18 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
     goal?.targetDate && progress && progress.remaining > 0
       ? dayjs(goal.targetDate).diff(dayjs(todayStr), 'day')
       : null
+  const goalOverdue = isGoalOverdue(goal, todayStr) && (progress?.remaining ?? 0) > 0
+  const streak = calculateStreak(records, todayStr)
+
+  // 热量建议与健康速度护栏
+  const calorieGuidance = buildCalorieGuidance({
+    goal,
+    remaining: progress?.remaining ?? null,
+    currentWeight,
+    today: todayStr,
+    tdeeTrend: metabolism.tdeeTrend,
+    isDataSufficient: metabolism.isDataSufficient,
+  })
 
   // 基于近期代谢趋势预测的剩余达成天数
   let predictedDays: number | null = null
@@ -164,9 +183,9 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
               <p className="text-xs font-medium uppercase tracking-[0.18em] opacity-72">当前体重</p>
               <div className="mt-1 flex items-baseline gap-1">
                 <span className="text-[44px] font-semibold leading-none">
-                  {currentWeight.toFixed(1)}
+                  {formatWeightValue(currentWeight, unit)}
                 </span>
-                <span className="text-base opacity-90">kg</span>
+                <span className="text-base opacity-90">{unitLabel}</span>
               </div>
             </div>
             <div
@@ -185,7 +204,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
               <span className="mt-1 text-[10px] font-bold">
                 {previousDiff === null
                   ? '暂无对比'
-                  : `${previousDiff > 0 ? '+' : ''}${previousDiff.toFixed(1)}kg`}
+                  : formatWeight(previousDiff, unit, { sign: true, withSpace: false })}
               </span>
             </div>
           </div>
@@ -195,7 +214,18 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
           <>
             <section className="flex flex-col gap-2">
               <div className="flex items-end justify-between px-0.5">
-                <h2 className="text-sm font-semibold text-[var(--carbon-text)]">最近进度</h2>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-sm font-semibold text-[var(--carbon-text)]">最近进度</h2>
+                  {streak.current > 0 && (
+                    <span
+                      className="flex items-center gap-1 rounded-full bg-[var(--carbon-primary-soft)] px-2 py-0.5 text-[11px] font-medium text-[var(--carbon-primary)]"
+                      title={`最长连续 ${streak.longest} 天`}
+                    >
+                      <span className="i-lucide-flame h-3 w-3" />
+                      连续 {streak.current} 天
+                    </span>
+                  )}
+                </div>
                 <button
                   onClick={() => onNavigate('trends')}
                   className="text-xs font-medium text-[var(--carbon-primary)] hover:underline"
@@ -203,7 +233,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
                   更多趋势
                 </button>
               </div>
-              <WeightTrendChart records={weeklyRecords} />
+              <WeightTrendChart records={weeklyRecords} unit={unit} />
             </section>
 
             <section className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4">
@@ -215,21 +245,38 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
               </div>
               <div className="mt-3 flex items-baseline justify-between">
                 <p className="text-xl font-semibold text-[var(--carbon-text)]">
-                  {goal ? `${goal.targetWeight.toFixed(1)} kg` : '未设置'}
+                  {goal ? formatWeight(goal.targetWeight, unit) : '未设置'}
                 </p>
                 {progress && (
                   <p className="text-xs text-[var(--carbon-text-secondary)]">
-                    {progress.remaining === 0 ? '已达成目标' : `还差 ${progress.remaining} kg`}
+                    {progress.remaining === 0
+                      ? '已达成目标'
+                      : `还差 ${formatWeight(progress.remaining, unit)}`}
                   </p>
                 )}
               </div>
               {goal?.targetDate && (
-                <p className="mt-1.5 flex items-center gap-1 text-[11px] text-[var(--carbon-text-secondary)]">
+                <p
+                  className={`mt-1.5 flex items-center gap-1 text-[11px] ${goalOverdue ? 'text-[var(--color-warning)]' : 'text-[var(--carbon-text-secondary)]'}`}
+                >
                   <span className="i-lucide-calendar-clock h-3 w-3" />
                   {dayjs(goal.targetDate).format('YYYY/MM/DD')} 达成
                   {daysUntilTarget !== null &&
                     (daysUntilTarget > 0 ? ` · 剩 ${daysUntilTarget} 天` : ' · 已到期')}
                 </p>
+              )}
+              {goalOverdue && (
+                <div className="mt-2 flex items-center justify-between border-l-2 border-[var(--color-warning)] bg-[var(--carbon-surface-subtle)] px-3 py-2">
+                  <span className="text-[11px] leading-4 text-[var(--carbon-text-secondary)]">
+                    目标日期已过仍未达成，去延期或重设目标？
+                  </span>
+                  <button
+                    onClick={() => onNavigate('profile')}
+                    className="ml-2 shrink-0 whitespace-nowrap text-[11px] font-medium text-[var(--carbon-primary)] hover:underline"
+                  >
+                    去调整
+                  </button>
+                </div>
               )}
               <div className="mt-3 flex h-1.5 w-full bg-[var(--carbon-surface-strong)] overflow-hidden rounded-full">
                 {progress && (
@@ -260,8 +307,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
                 {weeklyChange !== null && (
                   <div className={`flex items-baseline gap-1 ${trendTone}`}>
                     <span className="text-sm font-semibold">
-                      {weeklyChange > 0 ? '+' : ''}
-                      {weeklyChange.toFixed(1)} kg
+                      {formatWeight(weeklyChange, unit, { sign: true })}
                     </span>
                     <span className="text-[10px]">({weeklyDirection})</span>
                   </div>
@@ -310,12 +356,37 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
                           {targetDaysText}
                         </p>
                       )}
-                      {!targetDaysText && progress && progress.remaining > 0 && (
+                      {calorieGuidance.requiredDailyAdjustment !== null &&
+                      calorieGuidance.requiredDailyAdjustment > 0 ? (
                         <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
-                          保持当前节奏，适度调整饮食结构以{isGainGoal ? '增加' : '减少'}热量摄入。
+                          要按目标日期达成，建议在当前基础上每天再多制造约{' '}
+                          {calorieGuidance.requiredDailyAdjustment} kcal 的
+                          {isGainGoal ? '热量盈余' : '热量缺口'}。
                         </p>
+                      ) : calorieGuidance.onTrack ? (
+                        <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
+                          按当前节奏即可如期达成，保持住就好。
+                        </p>
+                      ) : (
+                        !targetDaysText &&
+                        progress &&
+                        progress.remaining > 0 && (
+                          <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
+                            保持当前节奏，适度调整饮食结构以{isGainGoal ? '增加' : '减少'}热量摄入。
+                          </p>
+                        )
                       )}
                     </div>
+                  </div>
+                )}
+
+                {/* 健康速度护栏：减重/增重过快时给出提醒（不依赖代谢数据是否充足） */}
+                {calorieGuidance.paceMessage && (
+                  <div className="mt-1 flex items-start gap-1.5 rounded bg-[var(--carbon-surface-subtle)] p-3 border-l-2 border-[var(--color-warning)]">
+                    <span className="i-lucide-triangle-alert h-4 w-4 mt-0.5 shrink-0 text-[var(--color-warning)]" />
+                    <p className="text-[11px] leading-relaxed text-[var(--carbon-text)]">
+                      {calorieGuidance.paceMessage}
+                    </p>
                   </div>
                 )}
               </div>
@@ -363,13 +434,14 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
               <div className="mt-1 flex items-baseline gap-1">
                 <span className={`text-[44px] font-semibold leading-none ${deltaTone}`}>
                   {totalDelta > 0 ? '+' : ''}
-                  {totalDelta.toFixed(1)}
+                  {formatWeightValue(totalDelta, unit)}
                 </span>
-                <span className="text-base text-[var(--carbon-text-secondary)]">kg</span>
+                <span className="text-base text-[var(--carbon-text-secondary)]">{unitLabel}</span>
               </div>
               <p className="mt-2 text-xs text-[var(--carbon-text-secondary)]">
-                起始 {firstRecord.weight.toFixed(1)} → 现在 {currentWeight.toFixed(1)} kg · 坚持{' '}
-                {daysTracked} 天 / {recordCount} 次记录
+                起始 {formatWeightValue(firstRecord.weight, unit)} → 现在{' '}
+                {formatWeightValue(currentWeight, unit)} {unitLabel} · 坚持 {daysTracked} 天 /{' '}
+                {recordCount} 次记录
               </p>
             </div>
           ) : (
@@ -379,9 +451,9 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
               </p>
               <div className="mt-1 flex items-baseline gap-1">
                 <span className="text-[44px] font-semibold leading-none text-[var(--carbon-text)]">
-                  {currentWeight.toFixed(1)}
+                  {formatWeightValue(currentWeight, unit)}
                 </span>
-                <span className="text-base text-[var(--carbon-text-secondary)]">kg</span>
+                <span className="text-base text-[var(--carbon-text-secondary)]">{unitLabel}</span>
               </div>
             </div>
           )}
@@ -391,7 +463,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
               {hasShareProgress && (
                 <span className="font-medium text-[var(--carbon-text)]">
-                  {currentWeight.toFixed(1)} kg
+                  {formatWeight(currentWeight, unit)}
                 </span>
               )}
               <span className="inline-flex items-center gap-1.5 text-[var(--carbon-text-secondary)]">
@@ -404,8 +476,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
             </div>
             {weeklyChange !== null && (
               <span className={`text-sm font-semibold ${trendTone}`}>
-                本周 {weeklyChange > 0 ? '+' : ''}
-                {weeklyChange.toFixed(1)} kg
+                本周 {formatWeight(weeklyChange, unit, { sign: true })}
               </span>
             )}
           </div>
@@ -416,7 +487,9 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
               <div className="flex items-center justify-between text-sm mb-2">
                 <span className="text-[var(--carbon-text-secondary)]">{goalLabel}</span>
                 <span className="font-medium text-[var(--carbon-text)]">
-                  {progress.remaining === 0 ? '已达成！🎉' : `还差 ${progress.remaining} kg`}
+                  {progress.remaining === 0
+                    ? '已达成！🎉'
+                    : `还差 ${formatWeight(progress.remaining, unit)}`}
                 </span>
               </div>
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--carbon-surface-strong)]">
@@ -426,7 +499,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
                 />
               </div>
               <div className="mt-1.5 flex justify-between text-[11px] text-[var(--carbon-text-secondary)]">
-                <span>目标 {goal.targetWeight} kg</span>
+                <span>目标 {formatWeight(goal.targetWeight, unit)}</span>
                 <span>{progress.currentProgress}%</span>
               </div>
             </div>

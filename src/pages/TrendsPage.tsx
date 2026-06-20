@@ -1,7 +1,9 @@
 import dayjs from 'dayjs'
 import { useState } from 'react'
 
+import TextInput from '@/components/TextInput'
 import WeightTrendChart from '@/components/WeightTrendChart'
+import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { AppPage, Goal, TimeRange, WeightRecord } from '@/types'
 import {
   buildTrendInsight,
@@ -9,6 +11,15 @@ import {
   getMetricStats,
   type TrendMetric,
 } from '@/utils/stats'
+import { toast } from '@/utils/toast'
+import { validateWeight } from '@/utils/validation'
+import {
+  formatWeight,
+  formatWeightValue,
+  fromDisplayWeight,
+  toDisplayWeight,
+  WEIGHT_UNIT_LABEL,
+} from '@/utils/weight-unit'
 
 const RANGE_OPTIONS = [
   { key: '3d', label: '3天' },
@@ -23,21 +34,35 @@ interface Props {
   records: WeightRecord[]
   goal: Goal | null
   onNavigate: (page: AppPage) => void
+  onUpdateRecord: (id: string, patch: { weight?: number; note?: string }) => void
   onDeleteRecord: (id: string) => void
 }
 
-export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }: Props) {
+export default function TrendsPage({
+  records,
+  goal,
+  onNavigate,
+  onUpdateRecord,
+  onDeleteRecord,
+}: Props) {
+  const { unit } = useWeightUnit()
   const [range, setRange] = useState<TimeRange>('7d')
   const [metric, setMetric] = useState<TrendMetric>('weight')
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null)
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editWeight, setEditWeight] = useState('')
+  const [editNote, setEditNote] = useState('')
 
   const filteredRecords = filterRecordsByRange(records, range)
   const stats = getMetricStats(filteredRecords, metric)
-  const insight = buildTrendInsight(filteredRecords, metric)
+  const insight = buildTrendInsight(filteredRecords, metric, unit)
   const hasRecords = records.length > 0
   const hasChartData = filteredRecords.length > 0
-  const metricUnit = metric === 'weight' ? 'kg' : ''
+  const metricUnit = metric === 'weight' ? WEIGHT_UNIT_LABEL[unit] : ''
   const averageLabel = metric === 'weight' ? '平均体重' : '平均 BMI'
+  // 体重指标下，统计值需按单位换算展示；BMI 指标保持原值
+  const fmtStat = (value: number | null) =>
+    value === null ? '--' : metric === 'weight' ? formatWeightValue(value, unit) : value
   const pageTitle = metric === 'weight' ? '体重趋势' : 'BMI 趋势'
   const pageDescription = metric === 'weight' ? '直观查看您的进度' : '观察 BMI 变化与身体状态走势'
 
@@ -45,6 +70,7 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
   const recentRecords = [...records].reverse()
 
   const handleDeleteClick = (id: string) => {
+    setEditingId(null)
     setPendingDeleteId(id)
   }
 
@@ -53,6 +79,24 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
       onDeleteRecord(pendingDeleteId)
       setPendingDeleteId(null)
     }
+  }
+
+  const handleEditClick = (record: WeightRecord) => {
+    setPendingDeleteId(null)
+    setEditingId(record.id)
+    setEditWeight(formatWeightValue(record.weight, unit))
+    setEditNote(record.note ?? '')
+  }
+
+  const handleConfirmEdit = (id: string) => {
+    const parsedDisplay = Number.parseFloat(editWeight)
+    const parsed = fromDisplayWeight(parsedDisplay, unit)
+    if (Number.isNaN(parsedDisplay) || !validateWeight(parsed)) {
+      toast.error('请输入有效的体重')
+      return
+    }
+    onUpdateRecord(id, { weight: parsed, note: editNote.trim() })
+    setEditingId(null)
   }
 
   return (
@@ -114,6 +158,7 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
               records={filteredRecords}
               metric={metric}
               goalWeight={goal?.targetWeight}
+              unit={unit}
             />
 
             <section className="mt-4 grid grid-cols-2 gap-px overflow-hidden border border-[var(--carbon-border)] bg-[var(--carbon-border)]">
@@ -121,7 +166,7 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
                 <span className="text-xs text-[var(--carbon-text-secondary)]">最高</span>
                 <div className="mt-2 flex items-baseline gap-1">
                   <span className="text-3xl font-light text-[var(--carbon-text)]">
-                    {stats.max ?? '--'}
+                    {fmtStat(stats.max)}
                   </span>
                   {metricUnit && (
                     <span className="text-xs text-[var(--carbon-text-secondary)]">
@@ -134,7 +179,7 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
                 <span className="text-xs text-[var(--carbon-text-secondary)]">最低</span>
                 <div className="mt-2 flex items-baseline gap-1">
                   <span className="text-3xl font-light text-[var(--carbon-text)]">
-                    {stats.min ?? '--'}
+                    {fmtStat(stats.min)}
                   </span>
                   {metricUnit && (
                     <span className="text-xs text-[var(--carbon-text-secondary)]">
@@ -150,7 +195,7 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
                   </span>
                   <div className="mt-2 flex items-baseline gap-1">
                     <span className="text-4xl font-light text-[var(--carbon-primary)]">
-                      {stats.average ?? '--'}
+                      {fmtStat(stats.average)}
                     </span>
                     {metricUnit && (
                       <span className="text-sm text-[var(--carbon-text-secondary)]">
@@ -224,22 +269,25 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
 
                 if (prevRecord) {
                   const diff = record.weight - prevRecord.weight
+                  const dispDiff = toDisplayWeight(diff, unit)
                   if (diff > 0) {
                     diffTone = isGainGoal
                       ? 'text-[var(--color-success)]'
                       : 'text-[var(--color-danger)]'
                     diffIcon = 'i-lucide-trending-up'
-                    diffText = `+${diff.toFixed(1)}`
+                    diffText = `+${dispDiff.toFixed(1)}`
                   } else if (diff < 0) {
                     diffTone = isGainGoal
                       ? 'text-[var(--color-danger)]'
                       : 'text-[var(--color-success)]'
                     diffIcon = 'i-lucide-trending-down'
-                    diffText = `${diff.toFixed(1)}`
+                    diffText = `${dispDiff.toFixed(1)}`
                   } else {
                     diffText = '持平'
                   }
                 }
+
+                const isEditing = editingId === record.id
 
                 return (
                   <div
@@ -250,7 +298,7 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
                           <span className="text-sm font-medium text-[var(--carbon-text)]">
-                            {record.weight.toFixed(1)} kg
+                            {formatWeight(record.weight, unit)}
                           </span>
                           {prevRecord && (
                             <span className={`flex items-center gap-0.5 text-[11px] ${diffTone}`}>
@@ -269,14 +317,57 @@ export default function TrendsPage({ records, goal, onNavigate, onDeleteRecord }
                           {record.note ? ` · ${record.note}` : ''}
                         </p>
                       </div>
-                      <button
-                        onClick={() => handleDeleteClick(record.id)}
-                        className="ml-3 flex h-8 w-8 items-center justify-center text-[var(--carbon-outline)] transition-colors hover:text-[var(--color-danger)]"
-                        aria-label="删除记录"
-                      >
-                        <span className="i-lucide-trash-2 h-4 w-4" />
-                      </button>
+                      <div className="ml-3 flex shrink-0 items-center">
+                        <button
+                          onClick={() => (isEditing ? setEditingId(null) : handleEditClick(record))}
+                          className={`flex h-8 w-8 items-center justify-center transition-colors hover:text-[var(--carbon-primary)] ${isEditing ? 'text-[var(--carbon-primary)]' : 'text-[var(--carbon-outline)]'}`}
+                          aria-label="编辑记录"
+                        >
+                          <span className="i-lucide-pencil h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteClick(record.id)}
+                          className="flex h-8 w-8 items-center justify-center text-[var(--carbon-outline)] transition-colors hover:text-[var(--color-danger)]"
+                          aria-label="删除记录"
+                        >
+                          <span className="i-lucide-trash-2 h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
+
+                    {isEditing && (
+                      <div className="flex flex-col gap-3 border-t border-[var(--carbon-primary)] bg-[var(--carbon-surface-subtle)] px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <TextInput
+                            type="number"
+                            inputMode="decimal"
+                            value={editWeight}
+                            onChange={event => setEditWeight(event.target.value)}
+                            wrapperClassName="flex-1 !h-10"
+                            placeholder={`体重（${WEIGHT_UNIT_LABEL[unit]}）`}
+                          />
+                          <button
+                            onClick={() => handleConfirmEdit(record.id)}
+                            className="flex h-10 shrink-0 items-center justify-center bg-[var(--carbon-primary)] px-4 text-xs font-medium text-[var(--carbon-text-on-primary)] hover:bg-[var(--carbon-primary-hover)]"
+                          >
+                            保存
+                          </button>
+                          <button
+                            onClick={() => setEditingId(null)}
+                            className="flex h-10 shrink-0 items-center justify-center px-3 text-xs text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
+                          >
+                            取消
+                          </button>
+                        </div>
+                        <TextInput
+                          type="text"
+                          value={editNote}
+                          onChange={event => setEditNote(event.target.value)}
+                          placeholder="备注（选填）"
+                          wrapperClassName="!h-10"
+                        />
+                      </div>
+                    )}
                     {pendingDeleteId === record.id && (
                       <div className="flex items-center justify-between border-t border-[var(--color-danger)] bg-[var(--carbon-surface-subtle)] px-4 py-2.5">
                         <p className="text-xs text-[var(--carbon-text-secondary)]">
