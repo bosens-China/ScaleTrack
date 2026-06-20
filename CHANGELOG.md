@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.0.0...scaletrack-v1.1.0) (2026-06-20)
+
+
+### ✨ 新功能
+
+* 将单位/目标/热量/打卡/记录编辑接入页面与状态层 ([c87d046](https://github.com/bosens-China/ScaleTrack/commit/c87d0467f395d3ff5e2c72890f7075ba0565885a))
+* 支持体重单位 kg/斤 切换 ([0d81cf4](https://github.com/bosens-China/ScaleTrack/commit/0d81cf45dbe8f19a1c5f1285528687de50b44b32))
+* 支持目标放弃与过期处理 ([a270d75](https://github.com/bosens-China/ScaleTrack/commit/a270d75db27d6ec9a90fd289500aed7f4bb6adf2))
+* 新增动态热量建议与健康速度护栏 ([3dc7f13](https://github.com/bosens-China/ScaleTrack/commit/3dc7f13846e16813f860671ba7db1bdc7c6260b7))
+* 新增连续打卡统计 ([fd8b5ec](https://github.com/bosens-China/ScaleTrack/commit/fd8b5ecfa3d03eda97c1e2ea98667d38e6edc117))
+* 本地数据迁移至 IndexedDB，支持导入合并与备份提醒 ([de90c04](https://github.com/bosens-China/ScaleTrack/commit/de90c04040d188884f9b1a4b7cb0faec81d8494a))
+
 ## 1.0.0 (2026-06-19)
 
 
