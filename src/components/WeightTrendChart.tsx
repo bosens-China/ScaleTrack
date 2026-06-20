@@ -1,10 +1,11 @@
-import type { WeightRecord } from '@/types'
+import type { WeightRecord, WeightUnit } from '@/types'
+import { toDisplayWeight, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
 import {
   CategoryScale,
   Chart as ChartJS,
   Filler,
-  LineElement,
   LinearScale,
+  LineElement,
   PointElement,
   Tooltip,
   type Chart,
@@ -33,10 +34,19 @@ interface Props {
   metric?: 'weight' | 'bmi'
   /** 目标体重；仅在体重指标下叠加一条目标参考线 */
   goalWeight?: number
+  /** 体重展示单位（图表数据仍以 kg 计算，仅坐标/提示文案换算） */
+  unit?: WeightUnit
 }
 
-export default function WeightTrendChart({ records, metric = 'weight', goalWeight }: Props) {
+export default function WeightTrendChart({
+  records,
+  metric = 'weight',
+  goalWeight,
+  unit = 'kg',
+}: Props) {
   const isDark = useSyncExternalStore(subscribeDarkMode, getIsDark)
+  // 体重指标下的单位后缀（BMI 无单位）
+  const weightUnitLabel = WEIGHT_UNIT_LABEL[unit]
 
   const primaryColor = isDark ? '#a8c7fa' : '#0f62fe'
   const primaryRgb = isDark ? '168, 199, 250' : '15, 98, 254'
@@ -70,7 +80,7 @@ export default function WeightTrendChart({ records, metric = 'weight', goalWeigh
       ctx.lineTo(chartArea.right, y)
       ctx.stroke()
 
-      const label = `目标 ${goalWeight.toFixed(1)}`
+      const label = `目标 ${toDisplayWeight(goalWeight, unit).toFixed(1)}`
       ctx.setLineDash([])
       ctx.font = '10px IBM Plex Sans, sans-serif'
       ctx.textBaseline = 'bottom'
@@ -128,8 +138,12 @@ export default function WeightTrendChart({ records, metric = 'weight', goalWeigh
             if (index === undefined) return ''
             return dayjs(records[index]?.date).format('MM月DD日')
           },
-          label: (item: TooltipItem<'line'>) =>
-            `${(item.parsed.y ?? 0).toFixed(1)}${metric === 'weight' ? ' kg' : ''}`,
+          label: (item: TooltipItem<'line'>) => {
+            const raw = item.parsed.y ?? 0
+            return metric === 'weight'
+              ? `${toDisplayWeight(raw, unit).toFixed(1)} ${weightUnitLabel}`
+              : raw.toFixed(1)
+          },
         },
       },
     },
@@ -154,7 +168,9 @@ export default function WeightTrendChart({ records, metric = 'weight', goalWeigh
           color: tickColor,
           font: { family: 'IBM Plex Sans, sans-serif', size: 10 },
           callback: (value: string | number) =>
-            `${Number(Number(value).toFixed(1))}${metric === 'weight' ? 'kg' : ''}`,
+            metric === 'weight'
+              ? `${Number(toDisplayWeight(Number(value), unit).toFixed(1))}${weightUnitLabel}`
+              : `${Number(Number(value).toFixed(1))}`,
         },
         border: { display: false },
       },

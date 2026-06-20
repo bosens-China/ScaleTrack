@@ -2,9 +2,11 @@ import confetti from 'canvas-confetti'
 import dayjs from 'dayjs'
 import { useEffect, useRef, useState } from 'react'
 
+import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { Goal } from '@/types'
 import { generateShareImage, processShareOrDownload } from '@/utils/share'
 import { toast } from '@/utils/toast'
+import { formatWeightValue, toDisplayWeight, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
 
 interface Props {
   goal: Goal
@@ -21,13 +23,15 @@ interface Props {
 export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props) {
   const cardRef = useRef<HTMLDivElement>(null)
   const [saving, setSaving] = useState(false)
+  const { unit } = useWeightUnit()
+  const unitLabel = WEIGHT_UNIT_LABEL[unit]
 
   // 当日达成时 diff 为 0，兜底为 1 天，避免展示「0 天达成」（与里程碑详情页一致）
   const days = goal.completedDate
     ? dayjs(goal.completedDate).diff(dayjs(goal.startDate), 'day') || 1
     : 0
   const weightDiff = Math.abs(goal.startWeight - goal.targetWeight)
-  const avgPerDay = days > 0 ? (weightDiff / days).toFixed(2) : '0'
+  const avgPerDay = days > 0 ? (toDisplayWeight(weightDiff, unit) / days).toFixed(2) : '0'
   const direction = goal.startWeight > goal.targetWeight ? '减' : '增'
 
   // 设了目标日期时，对比实际达成日，给出提前/准时/超期反馈
@@ -84,7 +88,8 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
             <span className="i-lucide-trophy h-10 w-10" />
             <h2 className="text-xl font-semibold">目标达成！</h2>
             <p className="text-center text-sm text-white/80">
-              {goal.startWeight.toFixed(1)} → {goal.targetWeight.toFixed(1)} kg
+              {formatWeightValue(goal.startWeight, unit)} →{' '}
+              {formatWeightValue(goal.targetWeight, unit)} {unitLabel}
             </p>
           </div>
 
@@ -97,10 +102,10 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
             </div>
             <div className="flex flex-col items-center gap-1 bg-[var(--carbon-surface)] py-4">
               <span className="text-xl font-semibold text-[var(--carbon-primary)]">
-                {weightDiff.toFixed(1)}
+                {formatWeightValue(weightDiff, unit)}
               </span>
               <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--carbon-text-secondary)]">
-                {direction}重 (kg)
+                {direction}重 ({unitLabel})
               </span>
             </div>
             <div className="flex flex-col items-center gap-1 bg-[var(--carbon-surface)] py-4">
@@ -108,7 +113,7 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
                 {avgPerDay}
               </span>
               <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--carbon-text-secondary)]">
-                日均 (kg)
+                日均 ({unitLabel})
               </span>
             </div>
           </div>

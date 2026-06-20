@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
-import type { Goal, TimeRange, UserProfile, WeightRecord } from '../types'
+import type { Goal, TimeRange, UserProfile, WeightRecord, WeightUnit } from '../types'
 import { calcBMI } from './bmi'
+import { formatWeightValue } from './weight-unit'
 
 export type TrendMetric = 'weight' | 'bmi'
 
@@ -142,7 +143,11 @@ export function getGoalProgress(goal: Goal | null, currentWeight: number, record
   }
 }
 
-export function buildTrendInsight(records: WeightRecord[], metric: TrendMetric = 'weight'): string {
+export function buildTrendInsight(
+  records: WeightRecord[],
+  metric: TrendMetric = 'weight',
+  unit: WeightUnit = 'kg',
+): string {
   if (records.length < 2) {
     return '样本还不够，再记录几次后，这里会给出更有参考价值的趋势洞察。'
   }
@@ -158,11 +163,12 @@ export function buildTrendInsight(records: WeightRecord[], metric: TrendMetric =
     return '最近 BMI 整体较为稳定，说明这段时间身体指标波动不大。'
   }
 
+  const unitLabel = unit === 'jin' ? '斤' : 'kg'
   if (delta < 0) {
-    return `这段时间体重下降了 ${Math.abs(delta).toFixed(1)}kg，当前节奏保持得不错。`
+    return `这段时间体重下降了 ${formatWeightValue(Math.abs(delta), unit)}${unitLabel}，当前节奏保持得不错。`
   }
   if (delta > 0) {
-    return `这段时间体重上升了 ${delta.toFixed(1)}kg，建议留意饮食与作息变化。`
+    return `这段时间体重上升了 ${formatWeightValue(delta, unit)}${unitLabel}，建议留意饮食与作息变化。`
   }
   return '最近体重整体较为稳定，说明你的记录波动控制得比较平稳。'
 }

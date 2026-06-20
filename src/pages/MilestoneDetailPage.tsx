@@ -4,7 +4,14 @@ import { useState } from 'react'
 import SharePosterModal from '@/components/SharePosterModal'
 
 import WeightTrendChart from '@/components/WeightTrendChart'
+import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { Goal, WeightRecord } from '@/types'
+import {
+  formatWeight,
+  formatWeightValue,
+  toDisplayWeight,
+  WEIGHT_UNIT_LABEL,
+} from '@/utils/weight-unit'
 
 interface Props {
   milestoneId: string | null
@@ -15,6 +22,8 @@ interface Props {
 
 export default function MilestoneDetailPage({ milestoneId, milestones, records, onBack }: Props) {
   const [isShareOpen, setIsShareOpen] = useState(false)
+  const { unit } = useWeightUnit()
+  const unitLabel = WEIGHT_UNIT_LABEL[unit]
   const milestone = milestones.find(m => m.id === milestoneId)
 
   if (!milestone) {
@@ -40,7 +49,7 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
     ? dayjs(milestone.completedDate).diff(dayjs(milestone.startDate), 'day') || 1
     : 1
   const diff = Math.abs(milestone.startWeight - milestone.targetWeight)
-  const averagePerDay = (diff / days).toFixed(2)
+  const averagePerDay = (toDisplayWeight(diff, unit) / days).toFixed(2)
   const direction = milestone.startWeight > milestone.targetWeight ? '减' : '增'
 
   return (
@@ -67,9 +76,9 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
             <span className="i-lucide-trophy h-8 w-8" />
           </div>
           <h2 className="mt-4 text-2xl font-semibold text-[var(--carbon-text)]">
-            {milestone.startWeight.toFixed(1)}{' '}
+            {formatWeightValue(milestone.startWeight, unit)}{' '}
             <span className="mx-2 text-[var(--carbon-outline)]">-&gt;</span>{' '}
-            {milestone.targetWeight.toFixed(1)} kg
+            {formatWeightValue(milestone.targetWeight, unit)} {unitLabel}
           </h2>
           <p className="mt-1 text-sm text-[var(--carbon-text-secondary)]">
             {dayjs(milestone.startDate).format('YYYY/MM/DD')} -{' '}
@@ -83,7 +92,8 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
               总{direction}重
             </span>
             <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
-              {diff.toFixed(1)} <span className="text-[10px] font-normal">kg</span>
+              {formatWeightValue(diff, unit)}{' '}
+              <span className="text-[10px] font-normal">{unitLabel}</span>
             </span>
           </div>
           <div className="flex flex-col items-center border-l border-r border-[var(--carbon-border)]">
@@ -99,7 +109,7 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
               日均变化
             </span>
             <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
-              {averagePerDay} <span className="text-[10px] font-normal">kg/天</span>
+              {averagePerDay} <span className="text-[10px] font-normal">{unitLabel}/天</span>
             </span>
           </div>
         </section>
@@ -124,20 +134,21 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
 
               if (prevRecord) {
                 const rDiff = record.weight - prevRecord.weight
+                const dispDiff = toDisplayWeight(rDiff, unit)
                 if (rDiff > 0) {
                   diffTone =
                     direction === '减'
                       ? 'text-[var(--color-danger)]'
                       : 'text-[var(--color-success)]'
                   diffIcon = 'i-lucide-trending-up'
-                  diffText = `+${rDiff.toFixed(1)}`
+                  diffText = `+${dispDiff.toFixed(1)}`
                 } else if (rDiff < 0) {
                   diffTone =
                     direction === '减'
                       ? 'text-[var(--color-success)]'
                       : 'text-[var(--color-danger)]'
                   diffIcon = 'i-lucide-trending-down'
-                  diffText = `${rDiff.toFixed(1)}`
+                  diffText = `${dispDiff.toFixed(1)}`
                 } else {
                   diffText = '持平'
                 }
@@ -151,7 +162,7 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
                   <div className="flex flex-col">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium text-[var(--carbon-text)]">
-                        {record.weight.toFixed(1)} kg
+                        {formatWeight(record.weight, unit)}
                       </span>
                       {prevRecord && (
                         <span className={`flex items-center gap-0.5 text-[11px] ${diffTone}`}>
@@ -185,9 +196,9 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
             达成里程碑
           </p>
           <h2 className="text-2xl font-bold text-[var(--carbon-text)]">
-            {milestone.startWeight.toFixed(1)}{' '}
+            {formatWeightValue(milestone.startWeight, unit)}{' '}
             <span className="mx-2 text-[var(--carbon-outline)]">-&gt;</span>{' '}
-            {milestone.targetWeight.toFixed(1)} kg
+            {formatWeightValue(milestone.targetWeight, unit)} {unitLabel}
           </h2>
           <p className="mt-2 text-xs text-[var(--carbon-text-secondary)]">
             {dayjs(milestone.startDate).format('YYYY/MM/DD')} -{' '}
@@ -200,7 +211,8 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
                 总{direction}重
               </span>
               <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
-                {diff.toFixed(1)} <span className="text-[10px] font-normal">kg</span>
+                {formatWeightValue(diff, unit)}{' '}
+                <span className="text-[10px] font-normal">{unitLabel}</span>
               </span>
             </div>
             <div className="flex flex-col items-center border-l border-r border-[var(--carbon-border)]">
@@ -216,7 +228,7 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
                 日均
               </span>
               <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
-                {averagePerDay} <span className="text-[10px] font-normal">kg/天</span>
+                {averagePerDay} <span className="text-[10px] font-normal">{unitLabel}/天</span>
               </span>
             </div>
           </div>

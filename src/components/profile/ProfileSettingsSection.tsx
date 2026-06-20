@@ -1,8 +1,11 @@
 import type { ThemeType } from '@/hooks/useTheme'
 import { useTheme } from '@/hooks/useTheme'
+import { useWeightUnit } from '@/hooks/weight-unit-context'
+import { WEIGHT_UNIT_OPTIONS } from '@/utils/weight-unit'
 
 export default function ProfileSettingsSection() {
   const { theme, setTheme } = useTheme()
+  const { unit, setUnit } = useWeightUnit()
 
   const THEMES: { label: string; value: ThemeType; icon: string }[] = [
     { label: '跟随系统', value: 'auto', icon: 'i-lucide-monitor' },
@@ -38,6 +41,32 @@ export default function ProfileSettingsSection() {
                 }`}
               >
                 <span className={`${icon} h-4 w-4`} />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-4 flex items-center justify-between border-t border-[var(--carbon-border)] pt-4">
+          <div className="flex items-center gap-4">
+            <span className="i-lucide-scale h-5 w-5 text-[var(--carbon-text-secondary)]" />
+            <div>
+              <p className="text-sm font-medium text-[var(--carbon-text)]">体重单位</p>
+              <p className="text-xs text-[var(--carbon-text-secondary)]">切换体重展示与录入单位</p>
+            </div>
+          </div>
+
+          <div className="flex items-center rounded-md border border-[var(--carbon-border)] bg-[var(--carbon-surface-subtle)] p-0.5">
+            {WEIGHT_UNIT_OPTIONS.map(({ value, label }) => (
+              <button
+                key={value}
+                onClick={() => setUnit(value)}
+                className={`flex h-7 items-center justify-center rounded px-3 text-xs font-medium transition-colors ${
+                  unit === value
+                    ? 'bg-[var(--carbon-surface)] text-[var(--carbon-primary)] shadow-sm'
+                    : 'text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]'
+                }`}
+              >
+                {label}
               </button>
             ))}
           </div>

@@ -1,5 +1,8 @@
 export type Gender = 'male' | 'female'
 
+/** 体重展示/输入单位（存储始终为 kg） */
+export type WeightUnit = 'kg' | 'jin'
+
 export interface UserProfile {
   gender: Gender
   height: number // cm
@@ -10,6 +13,8 @@ export interface UserProfile {
   createdAt: string // ISO string
   nickname?: string
   avatar?: string
+  /** 体重展示/输入单位偏好，缺省视为 kg */
+  weightUnit?: WeightUnit
 }
 
 export interface MetabolismStats {

@@ -1,6 +1,8 @@
 import dayjs from 'dayjs'
 
+import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { AppPage, Goal } from '@/types'
+import { formatWeightValue, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
 
 interface Props {
   milestones: Goal[]
@@ -9,6 +11,8 @@ interface Props {
 }
 
 export default function ProfileMilestonesSection({ milestones, onSelectMilestone }: Props) {
+  const { unit } = useWeightUnit()
+  const unitLabel = WEIGHT_UNIT_LABEL[unit]
   return (
     <section className="flex flex-col gap-4">
       <h3 className="px-1 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--carbon-text-secondary)]">
@@ -25,7 +29,10 @@ export default function ProfileMilestonesSection({ milestones, onSelectMilestone
               const days = milestone.completedDate
                 ? dayjs(milestone.completedDate).diff(dayjs(milestone.startDate), 'day') || 1
                 : 0
-              const diff = Math.abs(milestone.startWeight - milestone.targetWeight).toFixed(1)
+              const diff = formatWeightValue(
+                Math.abs(milestone.startWeight - milestone.targetWeight),
+                unit,
+              )
               const direction = milestone.startWeight > milestone.targetWeight ? '减' : '增'
 
               return (
@@ -40,11 +47,11 @@ export default function ProfileMilestonesSection({ milestones, onSelectMilestone
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium text-[var(--carbon-text)]">
-                        {milestone.startWeight.toFixed(1)} -&gt; {milestone.targetWeight.toFixed(1)}{' '}
-                        kg
+                        {formatWeightValue(milestone.startWeight, unit)} -&gt;{' '}
+                        {formatWeightValue(milestone.targetWeight, unit)} {unitLabel}
                       </p>
                       <p className="mt-1 text-xs leading-5 text-[var(--carbon-text-secondary)]">
-                        {direction}重 {diff} kg · 用时 {days} 天
+                        {direction}重 {diff} {unitLabel} · 用时 {days} 天
                       </p>
                       {milestone.completedDate ? (
                         <p className="mt-1 text-xs text-[var(--carbon-outline)]">

@@ -4,10 +4,12 @@ import { useState } from 'react'
 import CalendarModal from '@/components/CalendarModal'
 import TextInput from '@/components/TextInput'
 import WeightRulerPicker from '@/components/WeightRulerPicker'
+import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { UserProfile, WeightRecord } from '@/types'
 import { getDefaultNote, toggleTagInNote } from '@/utils/note'
 import { getEarliestRecordDate, isRecordDateSelectable } from '@/utils/record-date'
 import { toast } from '@/utils/toast'
+import { formatWeight, formatWeightValue, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
 
 interface Props {
   profile: UserProfile
@@ -16,6 +18,7 @@ interface Props {
 }
 
 export default function AddRecordPage({ profile, records, onSave }: Props) {
+  const { unit } = useWeightUnit()
   const [selectedDate, setSelectedDate] = useState(() => dayjs().format('YYYY-MM-DD'))
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
   const todayStr = dayjs().format('YYYY-MM-DD')
@@ -81,9 +84,11 @@ export default function AddRecordPage({ profile, records, onSave }: Props) {
         <section className="pt-1">
           <div className="mb-4 flex items-baseline justify-center">
             <span className="text-[80px] font-light leading-none text-[var(--carbon-text)]">
-              {weight.toFixed(1)}
+              {formatWeightValue(weight, unit)}
             </span>
-            <span className="ml-1 text-[20px] text-[var(--carbon-text-secondary)]">kg</span>
+            <span className="ml-1 text-[20px] text-[var(--carbon-text-secondary)]">
+              {WEIGHT_UNIT_LABEL[unit]}
+            </span>
           </div>
 
           <WeightRulerPicker value={weight} onChange={setWeight} />
@@ -98,7 +103,7 @@ export default function AddRecordPage({ profile, records, onSave }: Props) {
                   该日期已有记录
                 </p>
                 <p className="text-sm leading-6 text-[var(--carbon-text)]">
-                  当前已保存 {existingRecord.weight.toFixed(1)} kg。再次保存会覆盖旧记录。
+                  当前已保存 {formatWeight(existingRecord.weight, unit)}。再次保存会覆盖旧记录。
                 </p>
                 {existingRecord.note ? (
                   <p className="text-xs leading-5 text-[var(--carbon-text-secondary)]">

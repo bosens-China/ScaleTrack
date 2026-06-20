@@ -5,10 +5,12 @@ import dayjs from 'dayjs'
 import BirthDatePickerModal from '@/components/BirthDatePickerModal'
 import TextInput from '@/components/TextInput'
 
+import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { UserProfile } from '@/types'
 import { getProfileAge } from '@/utils/age'
 import { toast } from '@/utils/toast'
 import { validateHeight } from '@/utils/validation'
+import { formatWeight } from '@/utils/weight-unit'
 
 interface Props {
   profile: UserProfile
@@ -24,6 +26,7 @@ export default function ProfileBasicsSection({
   onEditingChange,
   onProfileUpdate,
 }: Props) {
+  const { unit } = useWeightUnit()
   const [heightInput, setHeightInput] = useState(String(profile.height))
   const [birthDateInput, setBirthDateInput] = useState<string | undefined>(profile.birthDate)
   const [isPickerOpen, setIsPickerOpen] = useState(false)
@@ -166,7 +169,7 @@ export default function ProfileBasicsSection({
                 <div>
                   <p className="text-sm font-medium text-[var(--carbon-text)]">初始体重</p>
                   <p className="text-xs text-[var(--carbon-text-secondary)]">
-                    {profile.initialWeight.toFixed(1)} kg
+                    {formatWeight(profile.initialWeight, unit)}
                   </p>
                 </div>
               </div>

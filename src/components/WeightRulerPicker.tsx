@@ -1,5 +1,8 @@
 import { useEffect, useRef } from 'react'
 
+import { useWeightUnit } from '@/hooks/weight-unit-context'
+import { toDisplayWeight } from '@/utils/weight-unit'
+
 const MARKER_WIDTH = 12
 
 interface Props {
@@ -18,6 +21,8 @@ export default function WeightRulerPicker({
   step = 0.1,
   onChange,
 }: Props) {
+  // 刻度内部始终以 kg 计算（保证精度网格不变），仅刻度文案按单位换算
+  const { unit } = useWeightUnit()
   const scrollRef = useRef<HTMLDivElement>(null)
   const frameRef = useRef<number | null>(null)
 
@@ -82,7 +87,7 @@ export default function WeightRulerPicker({
                 />
                 {isMajor ? (
                   <span className="mt-3 text-[11px] font-medium text-[var(--carbon-text-secondary)]">
-                    {marker}
+                    {toDisplayWeight(marker, unit)}
                   </span>
                 ) : (
                   <span className="mt-3 h-[16px]" />
