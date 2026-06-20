@@ -2,7 +2,11 @@ import { describe, expect, it } from 'vitest'
 
 import type { Goal, WeightRecord } from '@/types'
 
-import { reconcileLatestGoalState, shouldCelebrateGoalCompletion } from '../goal-state'
+import {
+  isGoalOverdue,
+  reconcileLatestGoalState,
+  shouldCelebrateGoalCompletion,
+} from '../goal-state'
 
 describe('goal-state', () => {
   it('should complete the active goal when a record reaches the target', () => {
@@ -162,5 +166,33 @@ describe('goal-state', () => {
         today: '2026-06-14',
       }),
     ).toBe(false)
+  })
+
+  describe('isGoalOverdue', () => {
+    const base: Goal = {
+      id: 'g1',
+      targetWeight: 70,
+      startWeight: 80,
+      startDate: '2026-06-01',
+      targetDate: '2026-06-15',
+      isCompleted: false,
+    }
+
+    it('returns true when target date has passed and goal is unfinished', () => {
+      expect(isGoalOverdue(base, '2026-06-20')).toBe(true)
+    })
+
+    it('returns false on or before the target date', () => {
+      expect(isGoalOverdue(base, '2026-06-15')).toBe(false)
+      expect(isGoalOverdue(base, '2026-06-10')).toBe(false)
+    })
+
+    it('returns false when there is no goal, no target date, or already completed', () => {
+      expect(isGoalOverdue(null, '2026-06-20')).toBe(false)
+      expect(isGoalOverdue({ ...base, targetDate: undefined }, '2026-06-20')).toBe(false)
+      expect(
+        isGoalOverdue({ ...base, isCompleted: true, completedDate: '2026-06-10' }, '2026-06-20'),
+      ).toBe(false)
+    })
   })
 })

@@ -91,6 +91,14 @@ export function reconcileLatestGoalState(
 }
 
 /**
+ * 判断目标是否已过期：设置了期望达成日期、尚未完成、且该日期早于今天。
+ */
+export function isGoalOverdue(goal: Goal | null, today: string): boolean {
+  if (!goal || goal.isCompleted || !goal.targetDate) return false
+  return goal.targetDate < today
+}
+
+/**
  * 只有“今天这次提交”首次把目标推进到达成状态时，才弹庆祝动画。
  */
 export function shouldCelebrateGoalCompletion(params: {
