@@ -1,22 +1,18 @@
 import dayjs from 'dayjs'
 import { useState } from 'react'
 
-import SharePosterModal from '@/components/SharePosterModal'
+import DashboardMetabolismCard from '@/components/DashboardMetabolismCard'
+import DashboardSharePoster from '@/components/DashboardSharePoster'
 import WeightTrendChart from '@/components/WeightTrendChart'
 import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
-import { getBMICategory, getBMIRange } from '@/utils/bmi'
-import { buildCalorieGuidance } from '@/utils/calorie-guidance'
 import { isGoalOverdue } from '@/utils/goal-state'
 import { calculateMetabolismStats } from '@/utils/metabolism'
 import {
   filterRecordsByDays,
-  getCurrentBMI,
   getCurrentWeight,
   getGoalProgress,
-  getMetricStats,
   getPreviousDiff,
-  getWeeklyChange,
 } from '@/utils/stats'
 import { calculateStreak } from '@/utils/streak'
 import { formatWeight, formatWeightValue, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
@@ -37,113 +33,23 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
   const currentWeight = getCurrentWeight(profile, records)
   const previousDiff = getPreviousDiff(records)
   const weeklyRecords = filterRecordsByDays(records, 7)
-  const weeklyChange = getWeeklyChange(records)
   const progress = getGoalProgress(goal, currentWeight, records)
   const hasRecords = records.length > 0
-  const todayRecordStr = dayjs().format('YYYY-MM-DD')
-  const hasTodayRecord = records.some(r => r.date === todayRecordStr)
+  const todayStr = dayjs().format('YYYY-MM-DD')
+  const hasTodayRecord = records.some(r => r.date === todayStr)
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
   const goalLabel = goal ? (isGainGoal ? '增肌目标' : '减脂目标') : '体重目标'
 
   // 代谢趋势只看最近 30 天，避免历史平台期/早期快速变化稀释当前速率
   const metabolism = calculateMetabolismStats(profile, filterRecordsByDays(records, 30), 7)
 
-  // 分享海报用：当前 BMI 分级（快照）
-  const currentBMI = getCurrentBMI(profile, records)
-  const bmiRange = getBMIRange(getBMICategory(currentBMI))
-
-  // 分享海报用：从首条记录到现在的累计变化（进步/变化，作为海报主角）
-  const firstRecord = records[0]
-  const totalDelta = getMetricStats(records).delta // 末次 - 首次，减重为负
-  const recordCount = records.length
-  // 坚持天数：首条记录到今天（含两端）
-  const daysTracked = firstRecord ? dayjs().diff(dayjs(firstRecord.date), 'day') + 1 : 0
-  // 至少两条且确有变化时，用累计变化做主角；否则回退到当前体重
-  const hasShareProgress = recordCount >= 2 && totalDelta !== null && totalDelta !== 0
-  // 累计变化的着色逻辑与本周变化一致（增肌目标下增重为正向）
-  const deltaTone =
-    totalDelta === null || totalDelta === 0
-      ? 'text-[var(--carbon-text)]'
-      : isGainGoal
-        ? totalDelta > 0
-          ? 'text-[var(--color-success)]'
-          : 'text-[var(--color-danger)]'
-        : totalDelta > 0
-          ? 'text-[var(--color-danger)]'
-          : 'text-[var(--color-success)]'
-
-  const weeklyDirection =
-    weeklyChange === null
-      ? '暂无变化'
-      : weeklyChange > 0
-        ? '近7天增加'
-        : weeklyChange < 0
-          ? '近7天减少'
-          : '近7天持平'
-  const trendTone =
-    weeklyChange === null
-      ? 'text-[var(--carbon-text-secondary)]'
-      : isGainGoal
-        ? weeklyChange > 0
-          ? 'text-[var(--color-success)]'
-          : weeklyChange < 0
-            ? 'text-[var(--color-danger)]'
-            : 'text-[var(--carbon-text-secondary)]'
-        : weeklyChange > 0
-          ? 'text-[var(--color-danger)]'
-          : weeklyChange < 0
-            ? 'text-[var(--color-success)]'
-            : 'text-[var(--carbon-text-secondary)]'
-
   // 距用户设定的目标日期还有多少天（未设置或已达成则为 null）
-  const todayStr = dayjs().format('YYYY-MM-DD')
   const daysUntilTarget =
     goal?.targetDate && progress && progress.remaining > 0
       ? dayjs(goal.targetDate).diff(dayjs(todayStr), 'day')
       : null
   const goalOverdue = isGoalOverdue(goal, todayStr) && (progress?.remaining ?? 0) > 0
   const streak = calculateStreak(records, todayStr)
-
-  // 热量建议与健康速度护栏
-  const calorieGuidance = buildCalorieGuidance({
-    goal,
-    remaining: progress?.remaining ?? null,
-    currentWeight,
-    today: todayStr,
-    tdeeTrend: metabolism.tdeeTrend,
-    isDataSufficient: metabolism.isDataSufficient,
-  })
-
-  // 基于近期代谢趋势预测的剩余达成天数
-  let predictedDays: number | null = null
-  if (
-    metabolism.isDataSufficient &&
-    metabolism.tdeeTrend !== null &&
-    goal &&
-    progress &&
-    progress.remaining > 0
-  ) {
-    if (isGainGoal && metabolism.tdeeTrend > 0) {
-      predictedDays = Math.ceil((progress.remaining * 7700) / metabolism.tdeeTrend)
-    } else if (!isGainGoal && metabolism.tdeeTrend < 0) {
-      predictedDays = Math.ceil((progress.remaining * 7700) / Math.abs(metabolism.tdeeTrend))
-    }
-  }
-
-  let targetDaysText = null
-  if (predictedDays !== null) {
-    targetDaysText = `按照近期表现，预计大约 ${predictedDays} 天可达成目标！`
-    // 用户设了目标日期时，对比预测与剩余天数，给出领先/落后提示
-    if (daysUntilTarget !== null) {
-      if (daysUntilTarget <= 0) {
-        targetDaysText += ' 目标日期已到，继续加油。'
-      } else if (predictedDays <= daysUntilTarget) {
-        targetDaysText += ` 距目标日期还有 ${daysUntilTarget} 天，进度领先于计划。`
-      } else {
-        targetDaysText += ` 距目标日期仅剩 ${daysUntilTarget} 天，需要再加把劲。`
-      }
-    }
-  }
 
   return (
     <div className="app-page bg-[var(--carbon-bg)] animate-fade-in">
@@ -315,101 +221,14 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
               </div>
             </section>
 
-            <section className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4">
-              <div className="flex items-center justify-between border-b border-[var(--carbon-border)] pb-3 mb-3">
-                <div className="flex items-center gap-2 text-[var(--carbon-text-secondary)]">
-                  <span className="i-lucide-activity h-4 w-4 text-[var(--carbon-primary)]" />
-                  <span className="text-[11px] font-medium uppercase tracking-[0.12em]">
-                    近期身体表现
-                  </span>
-                </div>
-                {weeklyChange !== null && (
-                  <div className={`flex items-baseline gap-1 ${trendTone}`}>
-                    <span className="text-sm font-semibold">
-                      {formatWeight(weeklyChange, unit, { sign: true })}
-                    </span>
-                    <span className="text-[10px]">({weeklyDirection})</span>
-                  </div>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-[var(--carbon-text-secondary)]">
-                    静态基础代谢 (BMR)
-                  </span>
-                  <span className="text-sm font-medium text-[var(--carbon-text)]">
-                    {metabolism.bmr ? `${metabolism.bmr} kcal` : '需设置年龄'}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-[var(--carbon-text-secondary)]">
-                    日均热量盈亏 (趋势)
-                  </span>
-                  {metabolism.isDataSufficient && metabolism.tdeeTrend !== null ? (
-                    <span
-                      className={`text-sm font-semibold ${metabolism.tdeeTrend < 0 ? 'text-[var(--color-success)]' : metabolism.tdeeTrend > 0 ? 'text-[var(--color-danger)]' : 'text-[var(--carbon-text)]'}`}
-                    >
-                      {metabolism.tdeeTrend > 0 ? '+' : ''}
-                      {metabolism.tdeeTrend} kcal
-                    </span>
-                  ) : (
-                    <span className="text-xs text-[var(--carbon-text-secondary)]">
-                      数据不足 (需7天以上)
-                    </span>
-                  )}
-                </div>
-                {metabolism.isDataSufficient && metabolism.tdeeTrend !== null && (
-                  <div className="mt-1 flex items-start gap-1.5 rounded bg-[var(--carbon-surface-subtle)] p-3 border-l-2 border-[var(--carbon-primary)]">
-                    <span className="i-lucide-lightbulb h-4 w-4 mt-0.5 shrink-0 text-[var(--carbon-primary)]" />
-                    <div className="flex flex-col gap-1">
-                      <p className="text-[12px] font-medium leading-relaxed text-[var(--carbon-text)]">
-                        {metabolism.tdeeTrend < 0
-                          ? '🔥 你正处于热量赤字状态，干得漂亮！'
-                          : metabolism.tdeeTrend > 0
-                            ? '📈 你正处于热量盈余状态。'
-                            : '⚖️ 你的摄入与消耗完全平衡。'}
-                      </p>
-                      {targetDaysText && (
-                        <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
-                          {targetDaysText}
-                        </p>
-                      )}
-                      {calorieGuidance.requiredDailyAdjustment !== null &&
-                      calorieGuidance.requiredDailyAdjustment > 0 ? (
-                        <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
-                          要按目标日期达成，建议在当前基础上每天再多制造约{' '}
-                          {calorieGuidance.requiredDailyAdjustment} kcal 的
-                          {isGainGoal ? '热量盈余' : '热量缺口'}。
-                        </p>
-                      ) : calorieGuidance.onTrack ? (
-                        <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
-                          按当前节奏即可如期达成，保持住就好。
-                        </p>
-                      ) : (
-                        !targetDaysText &&
-                        progress &&
-                        progress.remaining > 0 && (
-                          <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
-                            保持当前节奏，适度调整饮食结构以{isGainGoal ? '增加' : '减少'}热量摄入。
-                          </p>
-                        )
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {/* 健康速度护栏：减重/增重过快时给出提醒（不依赖代谢数据是否充足） */}
-                {calorieGuidance.paceMessage && (
-                  <div className="mt-1 flex items-start gap-1.5 rounded bg-[var(--carbon-surface-subtle)] p-3 border-l-2 border-[var(--color-warning)]">
-                    <span className="i-lucide-triangle-alert h-4 w-4 mt-0.5 shrink-0 text-[var(--color-warning)]" />
-                    <p className="text-[11px] leading-relaxed text-[var(--carbon-text)]">
-                      {calorieGuidance.paceMessage}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </section>
+            <DashboardMetabolismCard
+              metabolism={metabolism}
+              records={records}
+              goal={goal}
+              progress={progress}
+              currentWeight={currentWeight}
+              unit={unit}
+            />
           </>
         ) : (
           <section className="flex flex-col gap-4 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4">
@@ -442,89 +261,14 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
         </section>
       </main>
 
-      <SharePosterModal isOpen={isShareOpen} onClose={() => setIsShareOpen(false)}>
-        <div className="flex flex-col gap-4 p-5 bg-[var(--carbon-bg)]">
-          {/* 主角：累计变化（进步）；记录不足或无变化时回退为当前体重 */}
-          {hasShareProgress && firstRecord && totalDelta !== null ? (
-            <div>
-              <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-                累计变化
-              </p>
-              <div className="mt-1 flex items-baseline gap-1">
-                <span className={`text-[44px] font-semibold leading-none ${deltaTone}`}>
-                  {totalDelta > 0 ? '+' : ''}
-                  {formatWeightValue(totalDelta, unit)}
-                </span>
-                <span className="text-base text-[var(--carbon-text-secondary)]">{unitLabel}</span>
-              </div>
-              <p className="mt-2 text-xs text-[var(--carbon-text-secondary)]">
-                起始 {formatWeightValue(firstRecord.weight, unit)} → 现在{' '}
-                {formatWeightValue(currentWeight, unit)} {unitLabel} · 坚持 {daysTracked} 天 /{' '}
-                {recordCount} 次记录
-              </p>
-            </div>
-          ) : (
-            <div>
-              <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-                当前体重
-              </p>
-              <div className="mt-1 flex items-baseline gap-1">
-                <span className="text-[44px] font-semibold leading-none text-[var(--carbon-text)]">
-                  {formatWeightValue(currentWeight, unit)}
-                </span>
-                <span className="text-base text-[var(--carbon-text-secondary)]">{unitLabel}</span>
-              </div>
-            </div>
-          )}
-
-          {/* 快照条：当前体重（主角为进步时才补）+ BMI 分级 + 本周变化 */}
-          <div className="flex items-center justify-between border border-[var(--carbon-border)] bg-[var(--carbon-surface-subtle)] px-4 py-3 rounded-sm">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
-              {hasShareProgress && (
-                <span className="font-medium text-[var(--carbon-text)]">
-                  {formatWeight(currentWeight, unit)}
-                </span>
-              )}
-              <span className="inline-flex items-center gap-1.5 text-[var(--carbon-text-secondary)]">
-                <span
-                  className="h-2 w-2 rounded-full"
-                  style={{ backgroundColor: bmiRange.color }}
-                />
-                BMI {currentBMI} · {bmiRange.label}
-              </span>
-            </div>
-            {weeklyChange !== null && (
-              <span className={`text-sm font-semibold ${trendTone}`}>
-                近7天 {formatWeight(weeklyChange, unit, { sign: true })}
-              </span>
-            )}
-          </div>
-
-          {/* 目标进度 */}
-          {goal && progress && (
-            <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-4 py-4 rounded-sm">
-              <div className="flex items-center justify-between text-sm mb-2">
-                <span className="text-[var(--carbon-text-secondary)]">{goalLabel}</span>
-                <span className="font-medium text-[var(--carbon-text)]">
-                  {progress.remaining === 0
-                    ? '已达成！🎉'
-                    : `还差 ${formatWeight(progress.remaining, unit)}`}
-                </span>
-              </div>
-              <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--carbon-surface-strong)]">
-                <div
-                  className="h-full rounded-full bg-[var(--carbon-primary)]"
-                  style={{ width: `${progress.currentProgress}%` }}
-                />
-              </div>
-              <div className="mt-1.5 flex justify-between text-[11px] text-[var(--carbon-text-secondary)]">
-                <span>目标 {formatWeight(goal.targetWeight, unit)}</span>
-                <span>{progress.currentProgress}%</span>
-              </div>
-            </div>
-          )}
-        </div>
-      </SharePosterModal>
+      <DashboardSharePoster
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
+        profile={profile}
+        records={records}
+        goal={goal}
+        unit={unit}
+      />
     </div>
   )
 }
