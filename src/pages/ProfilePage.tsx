@@ -8,7 +8,7 @@ import ProfileGoalSection from '@/components/profile/ProfileGoalSection'
 import ProfileMilestonesSection from '@/components/profile/ProfileMilestonesSection'
 import ProfileSettingsSection from '@/components/profile/ProfileSettingsSection'
 import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
-import { BMI_RANGES, getBMICategory, getBmiPercent } from '@/utils/bmi'
+import { BMI_RANGES, getBMICategory, getBmiPercent, getRecommendedWeight } from '@/utils/bmi'
 import { getCurrentBMI, getCurrentWeight } from '@/utils/stats'
 
 interface Props {
@@ -90,6 +90,7 @@ export default function ProfilePage({
         <ProfileGoalSection
           goal={goal}
           currentWeight={currentWeight}
+          recommendedWeight={getRecommendedWeight(profile.height)}
           onSaveGoal={onSaveGoal}
           onAbandonGoal={onAbandonGoal}
         />

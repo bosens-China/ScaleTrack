@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import type { WeightRecord } from '../../types'
-import { getDefaultNote, getTimeOfDay, toggleTagInNote } from '../note'
+import {
+  getAutoNoteTag,
+  getDefaultNote,
+  getTimeOfDay,
+  toggleTagInNote,
+  WEIGH_IN_TAGS,
+} from '../note'
 
 describe('Note Utils', () => {
   describe('getTimeOfDay', () => {
@@ -18,33 +23,27 @@ describe('Note Utils', () => {
     })
   })
 
-  describe('getDefaultNote', () => {
-    const mockHour = 8 // 早晨
-
-    it('should return getTimeOfDay if latestRecord is missing or has no note', () => {
-      expect(getDefaultNote(null, mockHour)).toBe('早晨')
-      expect(getDefaultNote(undefined, mockHour)).toBe('早晨')
-
-      const recordWithoutNote: WeightRecord = {
-        id: '1',
-        date: '2026-06-01',
-        weight: 80,
-        bmi: 25,
-        createdAt: '',
-      }
-      expect(getDefaultNote(recordWithoutNote, mockHour)).toBe('早晨')
+  describe('getAutoNoteTag', () => {
+    it('早晨时段带入“晨起空腹”（且属于标签词表）', () => {
+      expect(getAutoNoteTag(5)).toBe('晨起空腹')
+      expect(getAutoNoteTag(8)).toBe('晨起空腹')
+      expect(getAutoNoteTag(9)).toBe('晨起空腹')
+      expect(WEIGH_IN_TAGS).toContain('晨起空腹')
     })
 
-    it('should return the note from the latest record if it exists', () => {
-      const recordWithNote: WeightRecord = {
-        id: '2',
-        date: '2026-06-01',
-        weight: 80,
-        bmi: 25,
-        createdAt: '',
-        note: '晨起空腹',
-      }
-      expect(getDefaultNote(recordWithNote, mockHour)).toBe('晨起空腹')
+    it('其它时段不带入自由文本，返回空串', () => {
+      expect(getAutoNoteTag(0)).toBe('')
+      expect(getAutoNoteTag(4)).toBe('')
+      expect(getAutoNoteTag(10)).toBe('')
+      expect(getAutoNoteTag(15)).toBe('')
+      expect(getAutoNoteTag(22)).toBe('')
+    })
+  })
+
+  describe('getDefaultNote', () => {
+    it('默认备注等价于按当前时段推断的标签，不再复制旧记录备注', () => {
+      expect(getDefaultNote(8)).toBe('晨起空腹')
+      expect(getDefaultNote(15)).toBe('')
     })
   })
 

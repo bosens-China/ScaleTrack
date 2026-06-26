@@ -41,6 +41,26 @@ export function calcBMI(weight: number, heightCm: number): number {
   return Number((weight / (heightM * heightM)).toFixed(1))
 }
 
+// 中国标准 BMI 正常区间
+export const HEALTHY_BMI = { min: 18.5, max: 24 } as const
+
+// 健康体重区间（kg）：BMI 正常区间下限/上限对应的体重
+export function getHealthyWeightRange(heightCm: number): { min: number; max: number } {
+  const heightM = heightCm / 100
+  return {
+    min: Number((HEALTHY_BMI.min * heightM * heightM).toFixed(1)),
+    max: Number((HEALTHY_BMI.max * heightM * heightM).toFixed(1)),
+  }
+}
+
+// 推荐体重（kg）：BMI 正常区间中值（21.25）对应的体重，
+// 用作“该减/增多少合适”的锚点，避免用户对目标无从下手
+export function getRecommendedWeight(heightCm: number): number {
+  const heightM = heightCm / 100
+  const midBmi = (HEALTHY_BMI.min + HEALTHY_BMI.max) / 2
+  return Number((midBmi * heightM * heightM).toFixed(1))
+}
+
 export function getBMICategory(bmi: number): BMICategory {
   if (bmi < 18.5) return 'underweight'
   if (bmi < 24) return 'normal'

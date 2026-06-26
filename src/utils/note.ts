@@ -1,4 +1,17 @@
-import type { WeightRecord } from '../types'
+// 称重场景标签：与添加页 tag 列表共用同一词表，
+// 保证“自动带入的备注”一定是下方能点亮/点掉的标签，而不是孤立的自由文本。
+export const WEIGH_IN_TAGS = [
+  '晨起空腹',
+  '便后',
+  '饭前',
+  '饭后',
+  '运动后',
+  '大餐后',
+  '睡前',
+] as const
+
+// 仅女性展示的场景标签
+export const FEMALE_WEIGH_IN_TAGS = ['生理期'] as const
 
 export function getTimeOfDay(hour: number): string {
   if (hour >= 0 && hour < 5) return '凌晨'
@@ -8,14 +21,19 @@ export function getTimeOfDay(hour: number): string {
   return '晚上'
 }
 
-export function getDefaultNote(
-  latestRecord: WeightRecord | undefined | null,
-  currentHour: number,
-): string {
-  if (latestRecord && latestRecord.note) {
-    return latestRecord.note
-  }
-  return getTimeOfDay(currentHour)
+// 根据当前时段推断一个“称重场景”标签：
+// 早晨是体重打卡最典型的场景，默认带入“晨起空腹”；
+// 其它时段没有明确对应的场景标签，返回空串，避免写入词表里不存在的文本。
+export function getAutoNoteTag(hour: number): string {
+  if (hour >= 5 && hour < 10) return '晨起空腹'
+  return ''
+}
+
+// 新记录的默认备注：按当前时段自动带入一个标签（可能为空）。
+// 注意：不再复制上一条记录的备注——跨天/跨时段沿用旧备注既过时，
+// 又可能和当前时段、当前 tag 高亮状态相互矛盾。
+export function getDefaultNote(currentHour: number): string {
+  return getAutoNoteTag(currentHour)
 }
 
 export function toggleTagInNote(currentNote: string, tag: string): string {

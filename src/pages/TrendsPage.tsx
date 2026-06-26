@@ -159,6 +159,7 @@ export default function TrendsPage({
               metric={metric}
               goalWeight={goal?.targetWeight}
               unit={unit}
+              showMovingAverage
             />
 
             <section className="mt-4 grid grid-cols-2 gap-px overflow-hidden border border-[var(--carbon-border)] bg-[var(--carbon-border)]">

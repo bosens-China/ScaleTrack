@@ -16,6 +16,8 @@ import { formatWeightValue, fromDisplayWeight, WEIGHT_UNIT_LABEL } from '@/utils
 interface Props {
   goal: Goal | null
   currentWeight: number
+  /** 推荐目标体重（kg）：BMI 正常区间中值，作为“减/增多少合适”的锚点 */
+  recommendedWeight: number
   onSaveGoal: (targetWeight: number, targetDate?: string) => void
   onAbandonGoal: () => void
 }
@@ -24,6 +26,7 @@ interface Props {
 export default function ProfileGoalSection({
   goal,
   currentWeight,
+  recommendedWeight,
   onSaveGoal,
   onAbandonGoal,
 }: Props) {
@@ -38,8 +41,12 @@ export default function ProfileGoalSection({
   const overdue = isGoalOverdue(goal, today)
   const unitLabel = WEIGHT_UNIT_LABEL[unit]
 
+  // 推荐体重的展示字符串（按当前单位换算）
+  const recommendedInput = formatWeightValue(recommendedWeight, unit)
+
   const handleToggleEdit = () => {
-    setGoalInput(goal ? formatWeightValue(goal.targetWeight, unit) : '')
+    // 还没有目标时，默认填入推荐体重，避免用户对“减/增多少”无从下手
+    setGoalInput(goal ? formatWeightValue(goal.targetWeight, unit) : recommendedInput)
     setTargetDate(goal?.targetDate)
     setIsConfirmingAbandon(false)
     setIsEditingGoal(value => !value)
@@ -194,6 +201,16 @@ export default function ProfileGoalSection({
               </button>
             )}
           </div>
+
+          {/* 推荐体重：BMI 正常区间中值，点一下即可填入 */}
+          <button
+            type="button"
+            onClick={() => setGoalInput(recommendedInput)}
+            className="flex items-center gap-1.5 self-start rounded-full border border-[var(--carbon-border)] bg-[var(--carbon-surface-subtle)] px-3 py-1.5 text-xs text-[var(--carbon-text-secondary)] transition-colors hover:border-[var(--carbon-primary)] hover:text-[var(--carbon-primary)]"
+          >
+            <span className="i-lucide-sparkles h-3.5 w-3.5 text-[var(--carbon-primary)]" />
+            推荐 {recommendedInput} {unitLabel}（BMI 正常中值）
+          </button>
 
           <p className="text-xs text-[var(--carbon-text-secondary)]">
             更新目标后，主页的进度追踪器会自动重置进度。

@@ -65,6 +65,16 @@ export function getWeeklyChange(records: WeightRecord[]): number | null {
   return Number((latest.weight - first.weight).toFixed(1))
 }
 
+// 尾部滑动平均（默认窗口 7），用于平滑体重的日间水分波动。
+// 第 i 个点取其与之前最多 (window-1) 个点的平均，首点等于自身，输出长度与输入一致。
+export function movingAverage(values: number[], window = 7): number[] {
+  return values.map((_, i) => {
+    const slice = values.slice(Math.max(0, i - window + 1), i + 1)
+    const sum = slice.reduce((acc, v) => acc + v, 0)
+    return Number((sum / slice.length).toFixed(1))
+  })
+}
+
 export function getMetricStats(records: WeightRecord[], metric: TrendMetric = 'weight') {
   if (records.length === 0) {
     return {

@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { calcBMI, getBMICategory, getBMIColor } from '../bmi'
+import {
+  calcBMI,
+  getBMICategory,
+  getBMIColor,
+  getHealthyWeightRange,
+  getRecommendedWeight,
+} from '../bmi'
 
 describe('BMI Utils', () => {
   describe('calcBMI', () => {
@@ -45,6 +51,29 @@ describe('BMI Utils', () => {
       expect(getBMIColor(22.0)).toBe('#10b981') // normal
       expect(getBMIColor(25.0)).toBe('#f59e0b') // overweight
       expect(getBMIColor(30.0)).toBe('#f43f5e') // obese
+    })
+  })
+
+  describe('getRecommendedWeight', () => {
+    it('返回 BMI 21.25 对应的体重（正常区间中值）', () => {
+      // 175cm: 21.25 * 1.75^2 = 65.078 -> 65.1
+      expect(getRecommendedWeight(175)).toBe(65.1)
+      // 160cm: 21.25 * 1.60^2 = 54.4
+      expect(getRecommendedWeight(160)).toBe(54.4)
+    })
+
+    it('推荐体重落在健康区间内', () => {
+      const { min, max } = getHealthyWeightRange(175)
+      const rec = getRecommendedWeight(175)
+      expect(rec).toBeGreaterThan(min)
+      expect(rec).toBeLessThan(max)
+    })
+  })
+
+  describe('getHealthyWeightRange', () => {
+    it('返回 BMI 18.5 与 24 对应的体重区间', () => {
+      // 175cm: 18.5*3.0625=56.7, 24*3.0625=73.5
+      expect(getHealthyWeightRange(175)).toEqual({ min: 56.7, max: 73.5 })
     })
   })
 })

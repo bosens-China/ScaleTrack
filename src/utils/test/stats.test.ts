@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import type { Goal, UserProfile, WeightRecord } from '../../types'
-import { buildTrendInsight, getCurrentWeight, getGoalProgress, getMetricStats } from '../stats'
+import {
+  buildTrendInsight,
+  getCurrentWeight,
+  getGoalProgress,
+  getMetricStats,
+  movingAverage,
+} from '../stats'
 
 describe('Stats Utils', () => {
   const mockProfile: UserProfile = {
@@ -128,6 +134,23 @@ describe('Stats Utils', () => {
   describe('buildTrendInsight', () => {
     it('should build bmi insight with the correct metric wording', () => {
       expect(buildTrendInsight(mockRecords, 'bmi')).toContain('BMI 上升了 0.3')
+    })
+  })
+
+  describe('movingAverage', () => {
+    it('首点等于自身，窗口内取尾部平均', () => {
+      // 窗口 3：[1, (1+2)/2=1.5, (1+2+3)/3=2, (2+3+4)/3=3]
+      expect(movingAverage([1, 2, 3, 4], 3)).toEqual([1, 1.5, 2, 3])
+    })
+
+    it('输出长度与输入一致，结果保留 1 位小数', () => {
+      const result = movingAverage([80, 79.5, 79, 78.6, 78.2], 7)
+      expect(result).toHaveLength(5)
+      expect(result[4]).toBe(79.1) // (80+79.5+79+78.6+78.2)/5 = 79.06 -> 79.1
+    })
+
+    it('空数组返回空数组', () => {
+      expect(movingAverage([])).toEqual([])
     })
   })
 })

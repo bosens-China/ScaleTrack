@@ -1,4 +1,5 @@
 import type { WeightRecord, WeightUnit } from '@/types'
+import { movingAverage } from '@/utils/stats'
 import { toDisplayWeight, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
 import {
   CategoryScale,
@@ -36,6 +37,8 @@ interface Props {
   goalWeight?: number
   /** 体重展示单位（图表数据仍以 kg 计算，仅坐标/提示文案换算） */
   unit?: WeightUnit
+  /** 是否叠加 7 日移动平均线，平滑日间水分波动（迷你图默认不显示） */
+  showMovingAverage?: boolean
 }
 
 export default function WeightTrendChart({
@@ -43,6 +46,7 @@ export default function WeightTrendChart({
   metric = 'weight',
   goalWeight,
   unit = 'kg',
+  showMovingAverage = false,
 }: Props) {
   const isDark = useSyncExternalStore(subscribeDarkMode, getIsDark)
   // 体重指标下的单位后缀（BMI 无单位）
@@ -57,9 +61,16 @@ export default function WeightTrendChart({
   const tickColor = isDark ? '#c4c7c5' : '#6f6f6f'
   const borderColor = isDark ? '#444746' : '#e0e0e0'
   const goalColor = isDark ? '#fbbf24' : '#f59e0b'
+  // 均线用紫色，和主色蓝、目标线琥珀区分开
+  const maColor = isDark ? '#be95ff' : '#8a3ffc'
 
   // 目标线只在体重指标下展示，BMI 指标不叠加
   const showGoal = metric === 'weight' && typeof goalWeight === 'number'
+
+  // 数据点过少时均线意义不大，至少 4 个点才叠加
+  const metricValues = records.map(record => (metric === 'bmi' ? record.bmi : record.weight))
+  const showMA = showMovingAverage && records.length >= 4
+  const maValues = showMA ? movingAverage(metricValues, 7) : []
 
   // 自定义插件：在目标体重处画一条虚线 + 文案标签
   const goalLinePlugin: Plugin<'line'> = {
@@ -99,7 +110,8 @@ export default function WeightTrendChart({
     labels: records.map(record => dayjs(record.date).format('MM/DD')),
     datasets: [
       {
-        data: records.map(record => (metric === 'bmi' ? record.bmi : record.weight)),
+        label: '实际',
+        data: metricValues,
         borderColor: primaryColor,
         backgroundColor: (context: { chart: { ctx: CanvasRenderingContext2D } }) => {
           const gradient = context.chart.ctx.createLinearGradient(0, 0, 0, 240)
@@ -114,6 +126,23 @@ export default function WeightTrendChart({
         fill: true,
         tension: 0.32,
       },
+      // 7 日移动平均线：虚线、无填充，作为更稳的趋势参考
+      ...(showMA
+        ? [
+            {
+              label: '7日均线',
+              data: maValues,
+              borderColor: maColor,
+              backgroundColor: 'transparent',
+              pointRadius: 0,
+              pointHoverRadius: 0,
+              borderWidth: 2,
+              borderDash: [4, 3],
+              fill: false,
+              tension: 0.32,
+            },
+          ]
+        : []),
     ],
   }
 
@@ -140,9 +169,13 @@ export default function WeightTrendChart({
           },
           label: (item: TooltipItem<'line'>) => {
             const raw = item.parsed.y ?? 0
-            return metric === 'weight'
-              ? `${toDisplayWeight(raw, unit).toFixed(1)} ${weightUnitLabel}`
-              : raw.toFixed(1)
+            const value =
+              metric === 'weight'
+                ? `${toDisplayWeight(raw, unit).toFixed(1)} ${weightUnitLabel}`
+                : raw.toFixed(1)
+            // 有均线时区分两条线，避免提示里两个数字看不出谁是谁
+            const label = item.dataset.label
+            return showMA && label ? `${label}：${value}` : value
           },
         },
       },
@@ -191,12 +224,26 @@ export default function WeightTrendChart({
   }
 
   return (
-    <div className="h-60 overflow-x-auto border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4 carbon-scrollbar">
-      <div
-        style={{ minWidth: records.length > 7 ? `${records.length * 40}px` : '100%' }}
-        className="h-full"
-      >
-        <Line data={data} options={options} plugins={showGoal ? [goalLinePlugin] : []} />
+    <div className="flex flex-col gap-2">
+      {showMA && (
+        <div className="flex items-center gap-4 px-1 text-[10px] text-[var(--carbon-text-secondary)]">
+          <span className="flex items-center gap-1.5">
+            <span className="h-0.5 w-4 rounded" style={{ backgroundColor: primaryColor }} />
+            实际
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-4 border-t-2 border-dashed" style={{ borderColor: maColor }} />
+            7日均线
+          </span>
+        </div>
+      )}
+      <div className="h-60 overflow-x-auto border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4 carbon-scrollbar">
+        <div
+          style={{ minWidth: records.length > 7 ? `${records.length * 40}px` : '100%' }}
+          className="h-full"
+        >
+          <Line data={data} options={options} plugins={showGoal ? [goalLinePlugin] : []} />
+        </div>
       </div>
     </div>
   )

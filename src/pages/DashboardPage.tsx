@@ -40,6 +40,8 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
   const weeklyChange = getWeeklyChange(records)
   const progress = getGoalProgress(goal, currentWeight, records)
   const hasRecords = records.length > 0
+  const todayRecordStr = dayjs().format('YYYY-MM-DD')
+  const hasTodayRecord = records.some(r => r.date === todayRecordStr)
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
   const goalLabel = goal ? (isGainGoal ? '增肌目标' : '减脂目标') : '体重目标'
 
@@ -74,10 +76,10 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
     weeklyChange === null
       ? '暂无变化'
       : weeklyChange > 0
-        ? '本周增加'
+        ? '近7天增加'
         : weeklyChange < 0
-          ? '本周减少'
-          : '本周持平'
+          ? '近7天减少'
+          : '近7天持平'
   const trendTone =
     weeklyChange === null
       ? 'text-[var(--carbon-text-secondary)]'
@@ -158,6 +160,23 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
       </header>
 
       <main className="app-main flex flex-col gap-4 px-4 pb-8 pt-2">
+        {/* 今日未记录的轻提醒：已有历史记录但今天还没打卡时出现，引导快速补录 */}
+        {hasRecords && !hasTodayRecord && (
+          <button
+            onClick={() => onNavigate('add')}
+            className="flex items-center justify-between gap-3 rounded-sm border border-[var(--carbon-border)] bg-[var(--carbon-primary-soft)] px-4 py-3 text-left transition-colors hover:bg-[var(--carbon-surface-hover)]"
+          >
+            <span className="flex items-center gap-2 text-sm text-[var(--carbon-text)]">
+              <span className="i-lucide-calendar-plus h-4 w-4 shrink-0 text-[var(--carbon-primary)]" />
+              今天还没有记录体重
+            </span>
+            <span className="flex shrink-0 items-center gap-0.5 text-xs font-medium text-[var(--carbon-primary)]">
+              去记录
+              <span className="i-lucide-chevron-right h-3.5 w-3.5" />
+            </span>
+          </button>
+        )}
+
         {profile.age !== undefined &&
           profile.birthDate === undefined &&
           !metabolism.isDataSufficient && (
@@ -476,7 +495,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
             </div>
             {weeklyChange !== null && (
               <span className={`text-sm font-semibold ${trendTone}`}>
-                本周 {formatWeight(weeklyChange, unit, { sign: true })}
+                近7天 {formatWeight(weeklyChange, unit, { sign: true })}
               </span>
             )}
           </div>
