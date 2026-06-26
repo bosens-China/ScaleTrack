@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.1.0...scaletrack-v1.2.0) (2026-06-26)
+
+
+### ✨ 新功能
+
+* 优化打卡备注、趋势均线与目标推荐体验 ([2d1a395](https://github.com/bosens-China/ScaleTrack/commit/2d1a395bd9474751a7a32ce0762b1bf8152ef008))
+
+
+### ♻️ 重构
+
+* 拆分超长文件，控制单文件行数 ([a4742e9](https://github.com/bosens-China/ScaleTrack/commit/a4742e9db7efc0de924d6b5d4cd2367aa577588a))
+
 ## [1.1.0](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.0.0...scaletrack-v1.1.0) (2026-06-20)
 
 
