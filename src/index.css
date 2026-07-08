@@ -22,6 +22,11 @@ input {
   font: inherit;
 }
 
+:where(button, a, input, [tabindex]:not([tabindex='-1'])):focus-visible {
+  outline: 2px solid var(--carbon-primary);
+  outline-offset: 2px;
+}
+
 :root {
   --carbon-bg: #ffffff;
   --carbon-surface: #ffffff;

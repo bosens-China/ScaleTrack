@@ -62,7 +62,7 @@ export default function ProfilePage({
             {profile.avatar ? (
               <img
                 src={profile.avatar}
-                alt="Avatar"
+                alt={profile.nickname ? `${profile.nickname}的头像` : '用户头像'}
                 className="h-20 w-20 rounded-full border border-[var(--carbon-border)] object-cover bg-white"
               />
             ) : (

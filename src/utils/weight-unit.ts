@@ -7,7 +7,7 @@ import type { WeightUnit } from '../types'
  * 仅在「展示」与「输入」环节按用户选择的单位换算。这样切换单位不会污染数据，
  * 也不会引入累积的换算误差。
  *
- * 1 斤 = 0.5 kg（中国市斤）。
+ * 1 斤 = 0.5 kg。
  */
 
 /** 1 斤对应的千克数 */
@@ -22,7 +22,7 @@ export const WEIGHT_UNIT_LABEL: Record<WeightUnit, string> = {
 /** 可供切换的单位列表（用于设置项渲染） */
 export const WEIGHT_UNIT_OPTIONS: { value: WeightUnit; label: string }[] = [
   { value: 'kg', label: '公斤 kg' },
-  { value: 'jin', label: '市斤' },
+  { value: 'jin', label: '斤' },
 ]
 
 /** kg -> 展示单位的数值 */

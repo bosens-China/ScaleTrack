@@ -15,7 +15,7 @@
 
 生产构建会生成 `manifest.webmanifest` 和 Service Worker。部署后，在支持 PWA 的浏览器中打开应用，可通过浏览器菜单将 ScaleTrack 安装到桌面或手机主屏。
 
-应用更新时，新的资源会在后台缓存。检测到新版本后，页面会提示更新；也可以在「我的 / 关于 ScaleTrack」中查看当前版本并手动检查更新。更新不会修改本地体重数据。
+应用更新时，新的资源会在后台缓存。检测到新版本后，页面会提示更新；也可以在「个人中心 / 关于 ScaleTrack」中查看当前版本并手动检查更新。更新不会修改本地体重数据。
 
 当前部署路径配置为 `/ScaleTrack/`，如果部署到站点根路径或其他子路径，需要同步调整 `vite.config.ts` 中的 `base`、manifest `start_url`、`scope` 和 Workbox fallback。
 

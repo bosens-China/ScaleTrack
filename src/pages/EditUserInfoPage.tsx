@@ -53,7 +53,7 @@ export default function EditUserInfoPage({ profile, onSave, onCancel }: Props) {
             {avatar ? (
               <img
                 src={avatar}
-                alt="Avatar"
+                alt={nickname.trim() ? `${nickname.trim()}的头像` : '用户头像'}
                 className="h-24 w-24 rounded-full border border-[var(--carbon-border)] object-cover"
               />
             ) : (
