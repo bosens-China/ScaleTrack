@@ -348,6 +348,7 @@ interface WeightRecord {
   bmi: number
   note?: string
   createdAt: string // ISO string
+  updatedAt?: string // ISO string
 }
 ```
 

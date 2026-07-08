@@ -203,6 +203,15 @@ function record(date: string, weight: number, createdAt: string): WeightRecord {
   return { id: `r-${date}-${createdAt}`, date, weight, bmi: 22, createdAt }
 }
 
+function editedRecord(
+  date: string,
+  weight: number,
+  createdAt: string,
+  updatedAt: string,
+): WeightRecord {
+  return { ...record(date, weight, createdAt), updatedAt }
+}
+
 describe('mergeImport', () => {
   it('unions records by date and keeps the newer one on conflict', () => {
     const current = {
@@ -216,7 +225,7 @@ describe('mergeImport', () => {
     const incoming = {
       profile: null,
       records: [
-        // 同一天，createdAt 更新 → 应覆盖
+        // 旧导出没有 updatedAt 时，回退按 createdAt 判断新旧
         record('2026-06-11', 79.9, '2026-06-11T20:00:00.000Z'),
         record('2026-06-12', 79, '2026-06-12T08:00:00.000Z'),
       ],
@@ -226,6 +235,23 @@ describe('mergeImport', () => {
     const merged = mergeImport(current, incoming)
     expect(merged.records.map(r => r.date)).toEqual(['2026-06-10', '2026-06-11', '2026-06-12'])
     expect(merged.records.find(r => r.date === '2026-06-11')?.weight).toBe(79.9)
+  })
+
+  it('uses updatedAt before createdAt when records conflict', () => {
+    const current = {
+      profile: null,
+      records: [
+        editedRecord('2026-06-11', 79.5, '2026-06-11T08:00:00.000Z', '2026-06-12T08:00:00.000Z'),
+      ],
+      goals: [],
+    }
+    const incoming = {
+      profile: null,
+      records: [record('2026-06-11', 70, '2026-06-11T20:00:00.000Z')],
+      goals: [],
+    }
+
+    expect(mergeImport(current, incoming).records[0].weight).toBe(79.5)
   })
 
   it('keeps the existing record when its createdAt is newer', () => {

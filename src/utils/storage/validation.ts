@@ -59,8 +59,14 @@ function isValidRecord(r: unknown): r is WeightRecord {
   if (!isFiniteNumber(r.weight) || r.weight < 20 || r.weight > 300) return false
   if (!isFiniteNumber(r.bmi) || r.bmi <= 0 || r.bmi > 100) return false
   if (!isValidIsoDatetime(r.createdAt)) return false
+  if ('updatedAt' in r && r.updatedAt !== undefined && !isValidIsoDatetime(r.updatedAt))
+    return false
   if ('note' in r && r.note !== undefined && typeof r.note !== 'string') return false
   return true
+}
+
+function getRecordModifiedAt(record: WeightRecord) {
+  return record.updatedAt ?? record.createdAt
 }
 
 /** 校验单条目标的必需字段及数值范围 */
@@ -143,7 +149,7 @@ export function mergeImport(current: ImportPayload, incoming: ImportPayload): Im
   for (const r of current.records) byDate.set(r.date, r)
   for (const r of incoming.records) {
     const existing = byDate.get(r.date)
-    if (!existing || r.createdAt > existing.createdAt) byDate.set(r.date, r)
+    if (!existing || getRecordModifiedAt(r) > getRecordModifiedAt(existing)) byDate.set(r.date, r)
   }
   const records = [...byDate.values()].sort((a, b) => a.date.localeCompare(b.date))
 

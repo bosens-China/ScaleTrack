@@ -86,12 +86,14 @@ export function useAppState(): AppState {
   }
 
   const handleSetupComplete = (nextProfile: UserProfile) => {
+    const now = new Date().toISOString()
     const initialRecord: WeightRecord = {
       id: crypto.randomUUID(),
       date: dayjs().format('YYYY-MM-DD'),
       weight: nextProfile.initialWeight,
       bmi: calcBMI(nextProfile.initialWeight, nextProfile.height),
-      createdAt: new Date().toISOString(),
+      createdAt: now,
+      updatedAt: now,
     }
     saveProfile(nextProfile)
     saveRecord(initialRecord)
@@ -153,13 +155,15 @@ export function useAppState(): AppState {
   }) => {
     if (!profile) return
     const existingRecord = records.find(r => r.date === date)
+    const now = new Date().toISOString()
     const record: WeightRecord = {
       id: existingRecord?.id ?? crypto.randomUUID(),
       date,
       weight,
       bmi: calcBMI(weight, profile.height),
       note,
-      createdAt: new Date().toISOString(),
+      createdAt: existingRecord?.createdAt ?? now,
+      updatedAt: now,
     }
     saveRecord(record)
     const nextRecords = getRecords()
@@ -204,6 +208,7 @@ export function useAppState(): AppState {
       weight: nextWeight,
       bmi: calcBMI(nextWeight, profile.height),
       note: patch.note !== undefined ? patch.note || undefined : target.note,
+      updatedAt: new Date().toISOString(),
     }
     saveRecord(updated)
     const nextRecords = getRecords()
