@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.1](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.2.0...scaletrack-v1.2.1) (2026-07-08)
+
+
+### 🐛 修复
+
+* 优化移动端与中文使用细节 ([a2a7661](https://github.com/bosens-China/ScaleTrack/commit/a2a76616136dc08e0e5d56ea3fef9597a250b477))
+* 保留记录更新时间用于导入合并 ([83ac68e](https://github.com/bosens-China/ScaleTrack/commit/83ac68ea458aa0960314fd4228d3fc341a9e4bc5))
+* 调整代谢趋势估算口径 ([d2400e8](https://github.com/bosens-China/ScaleTrack/commit/d2400e8a19f193c07c7a851d75718c8d883e5bae))
+
+
+### ♻️ 重构
+
+* 删除未使用工具函数 ([694a007](https://github.com/bosens-China/ScaleTrack/commit/694a0071275b5c3ec823e96051a1863e4ca15376))
+
 ## [1.2.0](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.1.0...scaletrack-v1.2.0) (2026-06-26)
 
 
