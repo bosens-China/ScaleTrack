@@ -74,14 +74,6 @@ export function deleteGoal(id: string): void {
   persist('goals')
 }
 
-export function getActiveGoal(): Goal | null {
-  return cache.goals.find(g => !g.isCompleted) ?? null
-}
-
-export function getMilestones(): Goal[] {
-  return cache.goals.filter(g => g.isCompleted)
-}
-
 // ---- 备份时间 ----
 
 export function getLastBackupAt(): string | null {

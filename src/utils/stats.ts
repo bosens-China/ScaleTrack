@@ -19,18 +19,6 @@ export function getCurrentWeight(profile: UserProfile, records: WeightRecord[]):
   return records.at(-1)?.weight ?? profile.initialWeight
 }
 
-export function getSmoothedWeight(profile: UserProfile, records: WeightRecord[], days = 7): number {
-  if (records.length === 0) return profile.initialWeight
-
-  const recentRecords = filterRecordsByDays(records, days)
-  if (recentRecords.length === 0) {
-    return records.at(-1)!.weight
-  }
-
-  const sum = recentRecords.reduce((acc, r) => acc + r.weight, 0)
-  return Number((sum / recentRecords.length).toFixed(1))
-}
-
 export function getCurrentBMI(profile: UserProfile, records: WeightRecord[]): number {
   return calcBMI(getCurrentWeight(profile, records), profile.height)
 }
@@ -101,10 +89,6 @@ export function getMetricStats(records: WeightRecord[], metric: TrendMetric = 'w
         ? Number((latestValue - firstValue).toFixed(1))
         : null,
   }
-}
-
-export function getWeightStats(records: WeightRecord[]) {
-  return getMetricStats(records, 'weight')
 }
 
 export function getGoalProgress(goal: Goal | null, currentWeight: number, records: WeightRecord[]) {

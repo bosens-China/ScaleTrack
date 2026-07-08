@@ -34,17 +34,6 @@ describe('Stats Utils', () => {
     })
   })
 
-  describe('getSmoothedWeight', () => {
-    it('should calculate the average of recent days', () => {
-      // 5 records average: (80 + 79.5 + 79 + 78.5 + 81) / 5 = 398 / 5 = 79.6
-      // Let's assume today is 2026-06-05 so all 5 are within 7 days.
-      // Wait, filterRecordsByDays uses dayjs(), which depends on real current date!
-      // So this test might be flaky if run on different dates.
-      // We will skip full integration of dayjs mocking and just rely on the fallback logic
-      // if they are out of range (returns latest).
-    })
-  })
-
   describe('getGoalProgress', () => {
     it('should return null if goal is null', () => {
       expect(getGoalProgress(null, 80, [])).toBeNull()
