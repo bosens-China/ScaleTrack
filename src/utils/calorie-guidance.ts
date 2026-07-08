@@ -6,7 +6,7 @@ import type { Goal } from '../types'
  * 热量建议与健康速度护栏
  *
  * 沿用应用「无感热量追踪」的理念：不依赖活动系数去估算绝对摄入，
- * 而是以「体重变化速率 × 7700kcal/kg」反推每日能量盈亏，给出相对当前节奏的可执行建议，
+ * 而是以「体重变化速率 × 7700kcal/kg」粗略估算每日热量方向，给出相对当前节奏的参考建议，
  * 并对过快的减重/增重速度给出健康提醒。
  */
 
@@ -43,7 +43,7 @@ export interface CalorieGuidanceInput {
   currentWeight: number
   /** 今天 YYYY-MM-DD */
   today: string
-  /** 近期日均热量盈亏（kcal/day，负为赤字），数据不足时为 null */
+  /** 近期日均热量趋势估算（kcal/day，负数表示可能赤字），数据不足时为 null */
   tdeeTrend: number | null
   /** 代谢趋势数据是否充足 */
   isDataSufficient: boolean
@@ -56,7 +56,7 @@ export interface CalorieGuidance {
   paceSource: 'plan' | 'current' | null
   /** 评估所用的每周变化幅度（kg，正数） */
   paceWeeklyKg: number | null
-  /** 为按目标日期达成，相对当前节奏每天还需多制造的热量缺口/盈余（kcal，正数）；onTrack 时为 0 */
+  /** 为按目标日期达成，相对当前趋势的每日参考调整量（kcal，正数）；onTrack 时为 0 */
   requiredDailyAdjustment: number | null
   /** 按当前节奏是否已能在目标日期前达成；无法判断时为 null */
   onTrack: boolean | null

@@ -41,7 +41,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
   const goalLabel = goal ? (isGainGoal ? '增肌目标' : '减脂目标') : '体重目标'
 
   // 代谢趋势只看最近 30 天，避免历史平台期/早期快速变化稀释当前速率
-  const metabolism = calculateMetabolismStats(profile, filterRecordsByDays(records, 30), 7)
+  const metabolism = calculateMetabolismStats(profile, filterRecordsByDays(records, 30))
 
   // 距用户设定的目标日期还有多少天（未设置或已达成则为 null）
   const daysUntilTarget =
@@ -91,7 +91,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
               <span className="pl-1 leading-relaxed text-[var(--carbon-text-secondary)]">
                 我们升级了记录方式，请
                 <span className="font-medium text-[var(--carbon-text)]">重新设置出生日期</span>
-                以解锁精准的每日代谢追踪。
+                以启用更稳定的代谢趋势估算。
               </span>
               <button
                 onClick={() => onNavigate('profile')}

@@ -30,44 +30,54 @@ describe('calculateMetabolismStats', () => {
     createdAt: '2023-01-01T00:00:00Z',
   }
 
+  function record(id: string, date: string, weight: number): WeightRecord {
+    return { id, date, weight, bmi: 24, createdAt: '' }
+  }
+
   it('should return insufficient data if less than minDays', () => {
-    const records: WeightRecord[] = [
-      { id: '1', date: '2023-01-01', weight: 75, bmi: 24, createdAt: '' },
-      { id: '2', date: '2023-01-04', weight: 74, bmi: 24, createdAt: '' },
-    ]
-    const result = calculateMetabolismStats(profile, records, 7)
+    const records: WeightRecord[] = [record('1', '2023-01-01', 75), record('2', '2023-01-04', 74)]
+    const result = calculateMetabolismStats(profile, records, 7, 2)
     expect(result.isDataSufficient).toBe(false)
     expect(result.trendDays).toBe(4) // 01-01 to 01-04 is 4 days inclusive
   })
 
+  it('should require enough records by default', () => {
+    const records: WeightRecord[] = [
+      record('1', '2023-01-01', 75),
+      record('2', '2023-01-07', 74.4),
+      record('3', '2023-01-14', 73.7),
+    ]
+    const result = calculateMetabolismStats(profile, records)
+    expect(result.isDataSufficient).toBe(false)
+    expect(result.trendDays).toBe(0)
+  })
+
   it('should calculate trend correctly for a steady loss', () => {
     // Losing 0.1kg per day
-    const records: WeightRecord[] = [
-      { id: '1', date: '2023-01-01', weight: 75.0, bmi: 24, createdAt: '' },
-      { id: '2', date: '2023-01-02', weight: 74.9, bmi: 24, createdAt: '' },
-      { id: '3', date: '2023-01-03', weight: 74.8, bmi: 24, createdAt: '' },
-      { id: '4', date: '2023-01-04', weight: 74.7, bmi: 24, createdAt: '' },
-      { id: '5', date: '2023-01-05', weight: 74.6, bmi: 24, createdAt: '' },
-      { id: '6', date: '2023-01-06', weight: 74.5, bmi: 24, createdAt: '' },
-      { id: '7', date: '2023-01-07', weight: 74.4, bmi: 24, createdAt: '' },
-    ]
-    const result = calculateMetabolismStats(profile, records, 7)
+    const records = Array.from({ length: 14 }, (_, index) =>
+      record(
+        `${index + 1}`,
+        dayjs('2023-01-01').add(index, 'day').format('YYYY-MM-DD'),
+        75 - index * 0.1,
+      ),
+    )
+    const result = calculateMetabolismStats(profile, records)
     expect(result.isDataSufficient).toBe(true)
-    expect(result.trendDays).toBe(7)
+    expect(result.trendDays).toBe(14)
     // -0.1kg/day * 7700 = -770 kcal/day
     expect(result.tdeeTrend).toBeCloseTo(-770, -1)
   })
 
   it('should handle missing days correctly with OLS regression', () => {
     const records: WeightRecord[] = [
-      { id: '1', date: '2023-01-01', weight: 75.0, bmi: 24, createdAt: '' },
-      // Missed 01-02, 01-03
-      { id: '4', date: '2023-01-04', weight: 74.4, bmi: 24, createdAt: '' }, // Should have been 74.4 at -0.2kg/day
-      { id: '7', date: '2023-01-07', weight: 73.8, bmi: 24, createdAt: '' }, // Should have been 73.8 at -0.2kg/day
+      record('1', '2023-01-01', 75.0),
+      record('5', '2023-01-05', 74.2),
+      record('10', '2023-01-10', 73.2),
+      record('14', '2023-01-14', 72.4),
     ]
-    const result = calculateMetabolismStats(profile, records, 7)
+    const result = calculateMetabolismStats(profile, records)
     expect(result.isDataSufficient).toBe(true)
-    expect(result.trendDays).toBe(7)
+    expect(result.trendDays).toBe(14)
     // -0.2kg/day * 7700 = -1540 kcal/day
     expect(result.tdeeTrend).toBeCloseTo(-1540, -1)
   })

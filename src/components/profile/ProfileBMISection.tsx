@@ -77,6 +77,9 @@ export default function ProfileBMISection({
             您的 BMI 处于 <span className="font-semibold">{bmiLabel}</span> 范围。{bmiDescription}
           </p>
         </div>
+        <p className="mt-2 text-xs leading-5 text-[var(--carbon-text-secondary)]">
+          国内 BMI 分级适合做初筛；肌肉量较高的运动人群，建议结合体脂率、腰围或围度一起观察。
+        </p>
       </div>
     </section>
   )

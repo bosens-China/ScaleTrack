@@ -19,7 +19,7 @@ export interface UserProfile {
 
 export interface MetabolismStats {
   bmr: number | null
-  tdeeTrend: number | null // the actual deficit/surplus
+  tdeeTrend: number | null // kcal/day trend estimate, negative means likely deficit
   trendDays: number
   isDataSufficient: boolean
 }

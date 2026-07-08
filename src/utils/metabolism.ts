@@ -2,6 +2,9 @@ import dayjs from 'dayjs'
 import type { Gender, MetabolismStats, UserProfile, WeightRecord } from '../types'
 import { getProfileAge } from './age'
 
+export const METABOLISM_MIN_DAYS = 14
+export const METABOLISM_MIN_RECORDS = 4
+
 /**
  * 计算静态基础代谢率 (BMR) - Mifflin-St Jeor 公式
  */
@@ -64,19 +67,21 @@ function calculateWeightTrendSlope(records: WeightRecord[]): number {
  * 综合计算代谢表现
  * @param profile 用户配置
  * @param records 体重记录（建议传入最近 30 天的数据）
- * @param minDays 最小需要的天数（默认7天）
+ * @param minDays 最小需要的自然天数（默认14天）
+ * @param minRecords 最小需要的记录数（默认4条）
  */
 export function calculateMetabolismStats(
   profile: UserProfile,
   records: WeightRecord[],
-  minDays: number = 7,
+  minDays: number = METABOLISM_MIN_DAYS,
+  minRecords: number = METABOLISM_MIN_RECORDS,
 ): MetabolismStats {
   // 1. 计算当前静态 BMR
   const currentWeight = records.at(-1)?.weight ?? profile.initialWeight
   const bmr = calculateBMR(profile.gender, currentWeight, profile.height, getProfileAge(profile))
 
-  // 2. 过滤有效天数
-  if (records.length < 2) {
+  // 2. 过滤有效样本，避免把水分/糖原短期波动解释成热量趋势
+  if (records.length < minRecords) {
     return { bmr, tdeeTrend: null, trendDays: 0, isDataSufficient: false }
   }
 

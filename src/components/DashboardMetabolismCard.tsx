@@ -2,7 +2,11 @@ import dayjs from 'dayjs'
 
 import type { Goal, WeightRecord, WeightUnit } from '@/types'
 import { buildCalorieGuidance } from '@/utils/calorie-guidance'
-import type { calculateMetabolismStats } from '@/utils/metabolism'
+import {
+  METABOLISM_MIN_DAYS,
+  METABOLISM_MIN_RECORDS,
+  type calculateMetabolismStats,
+} from '@/utils/metabolism'
 import { getGoalProgress, getWeeklyChange } from '@/utils/stats'
 import { formatWeight } from '@/utils/weight-unit'
 
@@ -72,7 +76,7 @@ export default function DashboardMetabolismCard({
     isDataSufficient: metabolism.isDataSufficient,
   })
 
-  // 基于近期代谢趋势预测的剩余达成天数
+  // 基于近期体重趋势粗略估算剩余达成天数
   let predictedDays: number | null = null
   if (
     metabolism.isDataSufficient &&
@@ -90,15 +94,15 @@ export default function DashboardMetabolismCard({
 
   let targetDaysText = null
   if (predictedDays !== null) {
-    targetDaysText = `按照近期表现，预计大约 ${predictedDays} 天可达成目标！`
+    targetDaysText = `按近期趋势粗略估计，约 ${predictedDays} 天可能达成目标。`
     // 用户设了目标日期时，对比预测与剩余天数，给出领先/落后提示
     if (daysUntilTarget !== null) {
       if (daysUntilTarget <= 0) {
         targetDaysText += ' 目标日期已到，继续加油。'
       } else if (predictedDays <= daysUntilTarget) {
-        targetDaysText += ` 距目标日期还有 ${daysUntilTarget} 天，进度领先于计划。`
+        targetDaysText += ` 距目标日期还有 ${daysUntilTarget} 天，目前趋势大致领先于计划。`
       } else {
-        targetDaysText += ` 距目标日期仅剩 ${daysUntilTarget} 天，需要再加把劲。`
+        targetDaysText += ` 距目标日期仅剩 ${daysUntilTarget} 天，后续可能需要调整节奏。`
       }
     }
   }
@@ -128,7 +132,7 @@ export default function DashboardMetabolismCard({
           </span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-sm text-[var(--carbon-text-secondary)]">日均热量盈亏 (趋势)</span>
+          <span className="text-sm text-[var(--carbon-text-secondary)]">日均热量趋势估算</span>
           {metabolism.isDataSufficient && metabolism.tdeeTrend !== null ? (
             <span
               className={`text-sm font-semibold ${metabolism.tdeeTrend < 0 ? 'text-[var(--color-success)]' : metabolism.tdeeTrend > 0 ? 'text-[var(--color-danger)]' : 'text-[var(--carbon-text)]'}`}
@@ -138,7 +142,7 @@ export default function DashboardMetabolismCard({
             </span>
           ) : (
             <span className="text-xs text-[var(--carbon-text-secondary)]">
-              数据不足 (需7天以上)
+              数据不足 (需{METABOLISM_MIN_DAYS}天且{METABOLISM_MIN_RECORDS}条记录)
             </span>
           )}
         </div>
@@ -148,10 +152,10 @@ export default function DashboardMetabolismCard({
             <div className="flex flex-col gap-1">
               <p className="text-[12px] font-medium leading-relaxed text-[var(--carbon-text)]">
                 {metabolism.tdeeTrend < 0
-                  ? '🔥 你正处于热量赤字状态，干得漂亮！'
+                  ? '近期体重趋势显示可能处于热量赤字。'
                   : metabolism.tdeeTrend > 0
-                    ? '📈 你正处于热量盈余状态。'
-                    : '⚖️ 你的摄入与消耗完全平衡。'}
+                    ? '近期体重趋势显示可能处于热量盈余。'
+                    : '近期体重趋势基本稳定。'}
               </p>
               {targetDaysText && (
                 <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
@@ -163,11 +167,11 @@ export default function DashboardMetabolismCard({
                 <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
                   要按目标日期达成，建议在当前基础上每天再多制造约{' '}
                   {calorieGuidance.requiredDailyAdjustment} kcal 的
-                  {isGainGoal ? '热量盈余' : '热量缺口'}。
+                  {isGainGoal ? '热量盈余' : '热量缺口'}，仅作趋势参考。
                 </p>
               ) : calorieGuidance.onTrack ? (
                 <p className="text-[11px] leading-relaxed text-[var(--carbon-text-secondary)]">
-                  按当前节奏即可如期达成，保持住就好。
+                  当前趋势大致支持如期达成，继续观察即可。
                 </p>
               ) : (
                 !targetDaysText &&
