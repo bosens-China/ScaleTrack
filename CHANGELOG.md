@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.2.1...scaletrack-v1.3.0) (2026-07-27)
+
+
+### ✨ 新功能
+
+* 新增运动打卡与运动风界面 ([6ec7311](https://github.com/bosens-China/ScaleTrack/commit/6ec7311bbae89fd765d9acf437ba8b9857a9f5d0))
+
+
+### 📝 文档
+
+* 更新运动打卡产品说明 ([7d7c07b](https://github.com/bosens-China/ScaleTrack/commit/7d7c07bd1aad9932cb8bdca8765f724ab51c255b))
+
 ## [1.2.1](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.2.0...scaletrack-v1.2.1) (2026-07-08)
 
 
