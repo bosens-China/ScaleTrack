@@ -1,4 +1,12 @@
-import type { ExportData, Goal, UserProfile, WeightRecord } from '../../types'
+import type {
+  ActivityRecord,
+  ActivityType,
+  ExportData,
+  Goal,
+  UserProfile,
+  WeightRecord,
+} from '../../types'
+import { BUILT_IN_ACTIVITY_TYPES } from '../activity'
 import { cache, persist } from './core'
 import { type ImportPayload, mergeImport, validateImportData } from './validation'
 
@@ -50,6 +58,41 @@ export function deleteRecord(id: string): void {
   persist('records')
 }
 
+// ---- Activity records & types ----
+
+export function getActivityRecords(): ActivityRecord[] {
+  return cache.activityRecords
+}
+
+export function saveActivityRecord(record: ActivityRecord): void {
+  const records = [...cache.activityRecords]
+  const index = records.findIndex(item => item.id === record.id)
+  if (index >= 0) records[index] = record
+  else records.push(record)
+  records.sort((a, b) => a.date.localeCompare(b.date) || a.createdAt.localeCompare(b.createdAt))
+  cache.activityRecords = records
+  persist('activityRecords')
+}
+
+export function deleteActivityRecord(id: string): void {
+  cache.activityRecords = cache.activityRecords.filter(record => record.id !== id)
+  persist('activityRecords')
+}
+
+export function getActivityTypes(): ActivityType[] {
+  return [...BUILT_IN_ACTIVITY_TYPES, ...cache.customActivityTypes]
+}
+
+export function saveActivityType(type: ActivityType): void {
+  cache.customActivityTypes = [...cache.customActivityTypes, type]
+  persist('customActivityTypes')
+}
+
+export function deleteActivityType(id: string): void {
+  cache.customActivityTypes = cache.customActivityTypes.filter(type => type.id !== id)
+  persist('customActivityTypes')
+}
+
 // ---- Goals ----
 
 export function getGoals(): Goal[] {
@@ -90,11 +133,13 @@ export function recordBackup(at: string = new Date().toISOString()): void {
 
 export function exportData(): ExportData {
   return {
-    version: 1,
+    version: 2,
     exportedAt: new Date().toISOString(),
     profile: cache.profile,
     records: cache.records,
     goals: cache.goals,
+    activityRecords: cache.activityRecords,
+    activityTypes: cache.customActivityTypes,
   }
 }
 
@@ -105,7 +150,13 @@ export function importData(data: unknown, mode: 'replace' | 'merge' = 'replace')
   const next: ImportPayload =
     mode === 'merge'
       ? mergeImport(
-          { profile: cache.profile, records: cache.records, goals: cache.goals },
+          {
+            profile: cache.profile,
+            records: cache.records,
+            goals: cache.goals,
+            activityRecords: cache.activityRecords,
+            activityTypes: cache.customActivityTypes,
+          },
           incoming,
         )
       : incoming
@@ -113,7 +164,11 @@ export function importData(data: unknown, mode: 'replace' | 'merge' = 'replace')
   cache.profile = next.profile
   cache.records = next.records
   cache.goals = next.goals
+  cache.activityRecords = next.activityRecords
+  cache.customActivityTypes = next.activityTypes
   persist('profile')
   persist('records')
   persist('goals')
+  persist('activityRecords')
+  persist('customActivityTypes')
 }

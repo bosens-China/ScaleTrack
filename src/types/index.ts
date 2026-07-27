@@ -34,6 +34,30 @@ export interface WeightRecord {
   updatedAt?: string // ISO string
 }
 
+/** 运动类型；内置类型由应用提供，自定义类型会写入本地存储 */
+export interface ActivityType {
+  id: string
+  name: string
+  icon: string
+  color: string
+  isBuiltIn: boolean
+  createdAt?: string
+}
+
+/** 单次运动记录保留类型快照，删除自定义类型后历史记录仍可正常展示 */
+export interface ActivityRecord {
+  id: string
+  activityTypeId: string
+  activityName: string
+  activityIcon: string
+  activityColor: string
+  date: string // YYYY-MM-DD
+  durationMinutes: number
+  note?: string
+  createdAt: string // ISO string
+  updatedAt?: string // ISO string
+}
+
 export interface Goal {
   id: string
   targetWeight: number
@@ -58,17 +82,19 @@ export interface BMIRange {
   description: string
 }
 
-/** 底部导航栏的四个真实 Tab */
-export type AppTab = 'dashboard' | 'trends' | 'add' | 'profile'
+/** 底部导航栏的五个真实 Tab */
+export type AppTab = 'dashboard' | 'trends' | 'add' | 'activity' | 'profile'
 
 /** 应用内所有可导航的页面（含不属于底部 Tab 的子页面） */
 export type AppPage = AppTab | 'edit-user-info' | 'milestone-detail'
 
 /** 数据导入/导出的标准结构 */
 export interface ExportData {
-  version: 1
+  version: 2
   exportedAt: string
   profile: UserProfile | null
   records: WeightRecord[]
   goals: Goal[]
+  activityRecords: ActivityRecord[]
+  activityTypes: ActivityType[]
 }

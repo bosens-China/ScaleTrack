@@ -28,57 +28,78 @@ input {
 }
 
 :root {
-  --carbon-bg: #ffffff;
-  --carbon-surface: #ffffff;
-  --carbon-surface-subtle: #f4f4f4;
-  --carbon-surface-variant: #f0f4ff;
-  --carbon-surface-strong: #e0e0e0;
-  --carbon-inverse: #393939;
-  --carbon-text: #161616;
-  --carbon-text-secondary: #525252;
-  --carbon-outline: #8d8d8d;
-  --carbon-border: #e0e0e0;
-  --carbon-border-strong: #525252;
-  --carbon-primary: #0f62fe;
+  --carbon-bg: #f4f6f0;
+  --carbon-surface: #fcfdf9;
+  --carbon-surface-subtle: #eaeee5;
+  --carbon-surface-variant: #edf5db;
+  --carbon-surface-strong: #dce2d6;
+  --carbon-surface-hover: #e3e9dd;
+  --carbon-surface-active: #d8dfd2;
+  --carbon-inverse: #171b18;
+  --carbon-text: #171b18;
+  --carbon-text-secondary: #586257;
+  --carbon-outline: #828d80;
+  --carbon-border: #d2d9ce;
+  --carbon-border-strong: #566054;
+  --carbon-primary: #426b08;
   --carbon-text-on-primary: #ffffff;
-  --carbon-primary-hover: #0043ce;
-  --carbon-primary-soft: #d0e2ff;
+  --carbon-primary-hover: #315304;
+  --carbon-primary-soft: #e3f3bd;
+  --sport-accent: #c7f36b;
+  --sport-accent-text: #141a0d;
+  --sport-cyan: #42d9f5;
+  --sport-hero-bg: #171c18;
+  --sport-hero-text: #f7faef;
+  --sport-hero-number: rgba(199, 243, 107, 0.08);
+  --sport-hero-border: rgba(247, 250, 239, 0.22);
+  --tabbar-bg: rgba(252, 253, 249, 0.9);
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
   --app-header-height: calc(44px + var(--safe-top));
-  --app-tabbar-height: calc(60px + max(var(--safe-bottom), 6px));
-  --color-success: #198038;
-  --color-warning: #f1c21b;
-  --color-danger: #da1e28;
-  --dashboard-header-bg: var(--carbon-primary);
-  --dashboard-header-text: var(--carbon-text-on-primary);
-  --dashboard-header-accent: rgba(0, 0, 0, 0.1);
+  --app-tabbar-height: calc(68px + max(var(--safe-bottom), 6px));
+  --color-success: #3f7b0b;
+  --color-warning: #a76500;
+  --color-danger: #c62f3d;
+  --dashboard-header-bg: #171c18;
+  --dashboard-header-text: #f7faef;
+  --dashboard-header-accent: rgba(199, 243, 107, 0.14);
+  --font-display: 'DIN Condensed', 'Arial Narrow', 'Avenir Next Condensed', sans-serif;
 }
 
 .dark {
-  --carbon-bg: #131314;
-  --carbon-surface: #1e1f20;
-  --carbon-surface-subtle: #282a2c;
-  --carbon-surface-variant: #1e293b; /* A bit of blue tint for variant */
-  --carbon-surface-strong: #444746;
-  --carbon-inverse: #f8f9fa;
-  --carbon-text: #e3e3e3;
-  --carbon-text-secondary: #c4c7c5;
-  --carbon-outline: #444746;
-  --carbon-border: #333537;
-  --carbon-border-strong: #747775;
-  --carbon-primary: #78a9ff;
-  --carbon-text-on-primary: #161616;
-  --carbon-primary-hover: #a6c8ff;
-  --carbon-primary-soft: rgba(120, 169, 255, 0.15);
-  --color-success: #24a148;
-  --color-warning: #f1c21b;
-  --color-danger: #fa4d56;
-  --dashboard-header-bg: var(--carbon-surface-variant);
-  --dashboard-header-text: var(--carbon-text);
-  --dashboard-header-accent: rgba(0, 0, 0, 0.2);
+  --carbon-bg: #0d100e;
+  --carbon-surface: #171b18;
+  --carbon-surface-subtle: #202620;
+  --carbon-surface-variant: #28351f;
+  --carbon-surface-strong: #343d34;
+  --carbon-surface-hover: #293029;
+  --carbon-surface-active: #333c33;
+  --carbon-inverse: #f3f6ef;
+  --carbon-text: #f1f5ed;
+  --carbon-text-secondary: #aeb8aa;
+  --carbon-outline: #778174;
+  --carbon-border: #343c34;
+  --carbon-border-strong: #7d8879;
+  --carbon-primary: #c7f36b;
+  --carbon-text-on-primary: #12170d;
+  --carbon-primary-hover: #d7ff86;
+  --carbon-primary-soft: rgba(199, 243, 107, 0.14);
+  --sport-accent: #c7f36b;
+  --sport-accent-text: #12170d;
+  --sport-cyan: #42d9f5;
+  --sport-hero-bg: #171d18;
+  --sport-hero-text: #f4f8ee;
+  --sport-hero-number: rgba(199, 243, 107, 0.07);
+  --sport-hero-border: rgba(244, 248, 238, 0.2);
+  --tabbar-bg: rgba(15, 18, 16, 0.9);
+  --color-success: #9ddb52;
+  --color-warning: #ffbd52;
+  --color-danger: #ff6b78;
+  --dashboard-header-bg: #171d18;
+  --dashboard-header-text: #f4f8ee;
+  --dashboard-header-accent: rgba(199, 243, 107, 0.14);
 }
 
 /* 分享海报是对外的品牌图，固定使用浅色 Carbon 调色板，
@@ -95,10 +116,10 @@ input {
   --carbon-outline: #8d8d8d;
   --carbon-border: #e0e0e0;
   --carbon-border-strong: #525252;
-  --carbon-primary: #0f62fe;
+  --carbon-primary: #426b08;
   --carbon-text-on-primary: #ffffff;
-  --carbon-primary-hover: #0043ce;
-  --carbon-primary-soft: #d0e2ff;
+  --carbon-primary-hover: #315304;
+  --carbon-primary-soft: #e3f3bd;
   --color-success: #198038;
   --color-warning: #f1c21b;
   --color-danger: #da1e28;
@@ -112,11 +133,20 @@ html {
   scrollbar-gutter: stable both-edges;
 }
 
+.dark {
+  color-scheme: dark;
+}
+
 body {
   font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC',
-    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-  background-color: var(--carbon-bg);
+    'Avenir Next',
+    -apple-system,
+    BlinkMacSystemFont,
+    'PingFang SC',
+    'Hiragino Sans GB',
+    'Microsoft YaHei',
+    sans-serif;
+  background-color: #dfe4db;
   color: var(--carbon-text);
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
@@ -131,6 +161,7 @@ body {
   margin: 0 auto;
   position: relative;
   background-color: var(--carbon-bg);
+  box-shadow: 0 0 48px rgba(13, 16, 14, 0.12);
 }
 
 .app-page {
@@ -152,6 +183,122 @@ body {
 .app-tabbar {
   height: var(--app-tabbar-height);
   padding-bottom: max(var(--safe-bottom), 6px);
+}
+
+.sport-grid-bg {
+  background-image:
+    linear-gradient(rgba(86, 96, 84, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(86, 96, 84, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.sport-panel {
+  border: 1px solid var(--carbon-border);
+  background: var(--carbon-surface);
+  box-shadow: 0 12px 30px rgba(20, 27, 17, 0.045);
+}
+
+.sport-kicker {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--carbon-primary);
+}
+
+.sport-hero {
+  border: 1px solid var(--sport-hero-border);
+  background:
+    linear-gradient(115deg, rgba(199, 243, 107, 0.08), transparent 48%), var(--sport-hero-bg);
+  color: var(--sport-hero-text);
+  box-shadow: 0 20px 40px rgba(13, 16, 14, 0.18);
+}
+
+.sport-weight-hero {
+  position: relative;
+  overflow: hidden;
+  background-image: repeating-linear-gradient(
+    115deg,
+    transparent,
+    transparent 18px,
+    rgba(199, 243, 107, 0.025) 18px,
+    rgba(199, 243, 107, 0.025) 19px
+  );
+  border-left: 4px solid var(--sport-accent);
+}
+
+.sport-primary-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--sport-accent);
+  color: var(--sport-accent-text);
+  box-shadow: 0 10px 24px rgba(89, 117, 33, 0.2);
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.sport-primary-button:hover {
+  filter: brightness(0.95);
+}
+
+.sport-primary-button:active {
+  transform: translateY(1px);
+}
+
+.sport-range {
+  appearance: none;
+  height: 44px;
+  accent-color: var(--sport-accent);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.sport-range::-webkit-slider-runnable-track {
+  height: 5px;
+  background: var(--carbon-surface-strong);
+}
+
+.sport-range::-webkit-slider-thumb {
+  width: 24px;
+  height: 24px;
+  margin-top: -9.5px;
+  appearance: none;
+  border: 5px solid var(--carbon-text);
+  border-radius: 999px;
+  background: var(--sport-accent);
+  box-shadow: 0 0 0 3px var(--carbon-surface);
+}
+
+.sport-range::-moz-range-track {
+  height: 5px;
+  background: var(--carbon-surface-strong);
+}
+
+.sport-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 5px solid var(--carbon-text);
+  border-radius: 999px;
+  background: var(--sport-accent);
+  box-shadow: 0 0 0 3px var(--carbon-surface);
+}
+
+.sport-number-input {
+  border: 0;
+  outline: 0;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.sport-number-input::-webkit-inner-spin-button,
+.sport-number-input::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
 }
 
 @media (min-width: 431px) {
@@ -214,5 +361,20 @@ body {
 }
 
 ::selection {
-  background: #d0e2ff;
+  background: var(--sport-accent);
+  color: var(--sport-accent-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

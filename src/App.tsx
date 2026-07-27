@@ -7,7 +7,8 @@ import ToastContainer from '@/components/Toast'
 import { useAppState } from '@/hooks/useAppState'
 import { useTheme } from '@/hooks/useTheme'
 import { WeightUnitContext } from '@/hooks/weight-unit-context'
-import AddRecordPage from '@/pages/AddRecordPage'
+import ActivityPage from '@/pages/ActivityPage'
+import AddPage from '@/pages/AddPage'
 import DashboardPage from '@/pages/DashboardPage'
 import EditUserInfoPage from '@/pages/EditUserInfoPage'
 import MilestoneDetailPage from '@/pages/MilestoneDetailPage'
@@ -53,6 +54,8 @@ function AppInner() {
   const {
     profile,
     records,
+    activityRecords,
+    activityTypes,
     activeGoal,
     milestones,
     activePage,
@@ -68,8 +71,17 @@ function AppInner() {
     handleSaveRecord,
     handleUpdateRecord,
     handleDeleteRecord,
+    handleSaveActivityRecord,
+    handleDeleteActivityRecord,
+    handleAddActivityType,
+    handleDeleteActivityType,
     refreshAll,
   } = useAppState()
+
+  // 底部 Tab 与保存后跳页都应从页面顶部开始，避免长页面继承上一页滚动位置
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [activePage])
 
   // 当前体重单位来自用户资料（缺省 kg），切换时持久化到资料
   const weightUnit = profile?.weightUnit ?? 'kg'
@@ -89,6 +101,7 @@ function AppInner() {
           <DashboardPage
             profile={profile}
             records={records}
+            activityRecords={activityRecords}
             goal={activeGoal}
             onNavigate={setActivePage}
             onDeleteRecord={handleDeleteRecord}
@@ -105,7 +118,29 @@ function AppInner() {
           />
         )
       case 'add':
-        return <AddRecordPage profile={profile} records={records} onSave={handleSaveRecord} />
+        return (
+          <AddPage
+            profile={profile}
+            records={records}
+            activityTypes={activityTypes}
+            onSaveWeight={handleSaveRecord}
+            onSaveActivity={handleSaveActivityRecord}
+            onAddActivityType={handleAddActivityType}
+            onDeleteActivityType={handleDeleteActivityType}
+          />
+        )
+      case 'activity':
+        return (
+          <ActivityPage
+            activityRecords={activityRecords}
+            activityTypes={activityTypes}
+            onNavigate={setActivePage}
+            onSaveRecord={handleSaveActivityRecord}
+            onDeleteRecord={handleDeleteActivityRecord}
+            onAddType={handleAddActivityType}
+            onDeleteType={handleDeleteActivityType}
+          />
+        )
       case 'profile':
         return (
           <ProfilePage

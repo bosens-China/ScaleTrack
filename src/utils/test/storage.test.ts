@@ -2,7 +2,14 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import type { Goal, WeightRecord } from '@/types'
 
-import { getGoals, getProfile, getRecords, importData, mergeImport } from '../storage'
+import {
+  getGoals,
+  getProfile,
+  getRecords,
+  importData,
+  mergeImport,
+  type ImportPayload,
+} from '../storage'
 
 function createLocalStorageMock(): Storage {
   const store = new Map<string, string>()
@@ -212,25 +219,32 @@ function editedRecord(
   return { ...record(date, weight, createdAt), updatedAt }
 }
 
+function payload(patch: Partial<ImportPayload> = {}): ImportPayload {
+  return {
+    profile: null,
+    records: [],
+    goals: [],
+    activityRecords: [],
+    activityTypes: [],
+    ...patch,
+  }
+}
+
 describe('mergeImport', () => {
   it('unions records by date and keeps the newer one on conflict', () => {
-    const current = {
-      profile: null,
+    const current = payload({
       records: [
         record('2026-06-10', 80, '2026-06-10T08:00:00.000Z'),
         record('2026-06-11', 79.5, '2026-06-11T08:00:00.000Z'),
       ],
-      goals: [],
-    }
-    const incoming = {
-      profile: null,
+    })
+    const incoming = payload({
       records: [
         // 旧导出没有 updatedAt 时，回退按 createdAt 判断新旧
         record('2026-06-11', 79.9, '2026-06-11T20:00:00.000Z'),
         record('2026-06-12', 79, '2026-06-12T08:00:00.000Z'),
       ],
-      goals: [],
-    }
+    })
 
     const merged = mergeImport(current, incoming)
     expect(merged.records.map(r => r.date)).toEqual(['2026-06-10', '2026-06-11', '2026-06-12'])
@@ -238,33 +252,25 @@ describe('mergeImport', () => {
   })
 
   it('uses updatedAt before createdAt when records conflict', () => {
-    const current = {
-      profile: null,
+    const current = payload({
       records: [
         editedRecord('2026-06-11', 79.5, '2026-06-11T08:00:00.000Z', '2026-06-12T08:00:00.000Z'),
       ],
-      goals: [],
-    }
-    const incoming = {
-      profile: null,
+    })
+    const incoming = payload({
       records: [record('2026-06-11', 70, '2026-06-11T20:00:00.000Z')],
-      goals: [],
-    }
+    })
 
     expect(mergeImport(current, incoming).records[0].weight).toBe(79.5)
   })
 
   it('keeps the existing record when its createdAt is newer', () => {
-    const current = {
-      profile: null,
+    const current = payload({
       records: [record('2026-06-11', 79.5, '2026-06-11T20:00:00.000Z')],
-      goals: [],
-    }
-    const incoming = {
-      profile: null,
+    })
+    const incoming = payload({
       records: [record('2026-06-11', 70, '2026-06-11T08:00:00.000Z')],
-      goals: [],
-    }
+    })
     expect(mergeImport(current, incoming).records[0].weight).toBe(79.5)
   })
 
@@ -293,8 +299,8 @@ describe('mergeImport', () => {
     }
 
     const merged = mergeImport(
-      { profile: null, records: [], goals: [currentActive, milestone] },
-      { profile: null, records: [], goals: [incomingActive] },
+      payload({ goals: [currentActive, milestone] }),
+      payload({ goals: [incomingActive] }),
     )
 
     const actives = merged.goals.filter(g => !g.isCompleted)
@@ -311,12 +317,9 @@ describe('mergeImport', () => {
       initialWeight: 80,
       createdAt: '2026-01-01T00:00:00.000Z',
     }
-    expect(
-      mergeImport(
-        { profile: null, records: [], goals: [] },
-        { profile: incomingProfile, records: [], goals: [] },
-      ).profile,
-    ).toBe(incomingProfile)
+    expect(mergeImport(payload(), payload({ profile: incomingProfile })).profile).toBe(
+      incomingProfile,
+    )
   })
 })
 

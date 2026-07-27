@@ -1,4 +1,4 @@
-import type { Goal, UserProfile, WeightRecord } from '../../types'
+import type { ActivityRecord, ActivityType, Goal, UserProfile, WeightRecord } from '../../types'
 
 // ---- 通用类型守卫 ----
 
@@ -69,6 +69,42 @@ function getRecordModifiedAt(record: WeightRecord) {
   return record.updatedAt ?? record.createdAt
 }
 
+function isValidActivityType(type: unknown): type is ActivityType {
+  if (!isPlainObject(type)) return false
+  if (!isNonEmptyString(type.id) || !isNonEmptyString(type.name)) return false
+  if (!isNonEmptyString(type.icon) || !/^#[0-9a-f]{6}$/i.test(String(type.color))) return false
+  if (type.isBuiltIn !== false) return false
+  if (!isValidIsoDatetime(type.createdAt)) return false
+  return true
+}
+
+function isValidActivityRecord(record: unknown): record is ActivityRecord {
+  if (!isPlainObject(record)) return false
+  if (!isNonEmptyString(record.id) || !isNonEmptyString(record.activityTypeId)) return false
+  if (!isNonEmptyString(record.activityName) || !isNonEmptyString(record.activityIcon)) return false
+  if (!/^#[0-9a-f]{6}$/i.test(String(record.activityColor))) return false
+  if (!isValidDateString(record.date)) return false
+  if (
+    !isFiniteNumber(record.durationMinutes) ||
+    record.durationMinutes < 5 ||
+    record.durationMinutes > 1440
+  )
+    return false
+  if (!isValidIsoDatetime(record.createdAt)) return false
+  if (
+    'updatedAt' in record &&
+    record.updatedAt !== undefined &&
+    !isValidIsoDatetime(record.updatedAt)
+  )
+    return false
+  if ('note' in record && record.note !== undefined && typeof record.note !== 'string') return false
+  return true
+}
+
+function getActivityRecordModifiedAt(record: ActivityRecord) {
+  return record.updatedAt ?? record.createdAt
+}
+
 /** 校验单条目标的必需字段及数值范围 */
 function isValidGoal(g: unknown): g is Goal {
   if (!isPlainObject(g)) return false
@@ -90,12 +126,14 @@ export interface ImportPayload {
   profile: UserProfile | null
   records: WeightRecord[]
   goals: Goal[]
+  activityRecords: ActivityRecord[]
+  activityTypes: ActivityType[]
 }
 
 /** 校验导入数据结构并返回规范化后的载荷（按日期排序的记录）；不写入存储 */
 export function validateImportData(data: unknown): ImportPayload {
   if (!isPlainObject(data)) throw new Error('导入数据必须是对象')
-  if (data.version !== 1) throw new Error('不支持的数据格式')
+  if (data.version !== 1 && data.version !== 2) throw new Error('不支持的数据格式')
   if (!isValidIsoDatetime(data.exportedAt)) throw new Error('导出时间格式错误')
 
   // 校验 profile
@@ -127,14 +165,39 @@ export function validateImportData(data: unknown): ImportPayload {
     throw new Error('同时只能存在一个进行中的目标')
   }
 
+  const activityRecords = data.version === 1 ? [] : data.activityRecords
+  const activityTypes = data.version === 1 ? [] : data.activityTypes
+
+  if (!Array.isArray(activityRecords) || !activityRecords.every(isValidActivityRecord)) {
+    throw new Error('部分运动记录数据结构不完整或数值不合理')
+  }
+  if (new Set(activityRecords.map(record => record.id)).size !== activityRecords.length) {
+    throw new Error('运动记录 ID 重复')
+  }
+  if (!Array.isArray(activityTypes) || !activityTypes.every(isValidActivityType)) {
+    throw new Error('自定义运动类型数据结构不完整')
+  }
+  if (new Set(activityTypes.map(type => type.id)).size !== activityTypes.length) {
+    throw new Error('运动类型 ID 重复')
+  }
+  const normalizedTypeNames = activityTypes.map(type => type.name.trim().toLocaleLowerCase())
+  if (new Set(normalizedTypeNames).size !== normalizedTypeNames.length) {
+    throw new Error('运动类型名称重复')
+  }
+
   const sortedRecords = [...(data.records as WeightRecord[])].sort((a, b) =>
     a.date.localeCompare(b.date),
+  )
+  const sortedActivityRecords = [...(activityRecords as ActivityRecord[])].sort(
+    (a, b) => a.date.localeCompare(b.date) || a.createdAt.localeCompare(b.createdAt),
   )
 
   return {
     profile: data.profile as UserProfile | null,
     records: sortedRecords,
     goals: data.goals as Goal[],
+    activityRecords: sortedActivityRecords,
+    activityTypes: activityTypes as ActivityType[],
   }
 }
 
@@ -165,9 +228,32 @@ export function mergeImport(current: ImportPayload, incoming: ImportPayload): Im
     goals = goals.filter(g => g.isCompleted || g.id === keep.id)
   }
 
+  const activityRecordsById = new Map<string, ActivityRecord>()
+  for (const record of current.activityRecords) activityRecordsById.set(record.id, record)
+  for (const record of incoming.activityRecords) {
+    const existing = activityRecordsById.get(record.id)
+    if (!existing || getActivityRecordModifiedAt(record) > getActivityRecordModifiedAt(existing)) {
+      activityRecordsById.set(record.id, record)
+    }
+  }
+  const activityRecords = [...activityRecordsById.values()].sort(
+    (a, b) => a.date.localeCompare(b.date) || a.createdAt.localeCompare(b.createdAt),
+  )
+
+  const activityTypesByName = new Map<string, ActivityType>()
+  for (const type of current.activityTypes) {
+    activityTypesByName.set(type.name.trim().toLocaleLowerCase(), type)
+  }
+  for (const type of incoming.activityTypes) {
+    const name = type.name.trim().toLocaleLowerCase()
+    if (!activityTypesByName.has(name)) activityTypesByName.set(name, type)
+  }
+
   return {
     profile: current.profile ?? incoming.profile,
     records,
     goals,
+    activityRecords,
+    activityTypes: [...activityTypesByName.values()],
   }
 }

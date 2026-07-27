@@ -5,7 +5,8 @@ import DashboardMetabolismCard from '@/components/DashboardMetabolismCard'
 import DashboardSharePoster from '@/components/DashboardSharePoster'
 import WeightTrendChart from '@/components/WeightTrendChart'
 import { useWeightUnit } from '@/hooks/weight-unit-context'
-import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
+import type { ActivityRecord, AppPage, Goal, UserProfile, WeightRecord } from '@/types'
+import { getActivityWeekStats } from '@/utils/activity'
 import { isGoalOverdue } from '@/utils/goal-state'
 import { calculateMetabolismStats } from '@/utils/metabolism'
 import {
@@ -20,12 +21,19 @@ import { formatWeight, formatWeightValue, WEIGHT_UNIT_LABEL } from '@/utils/weig
 interface Props {
   profile: UserProfile
   records: WeightRecord[]
+  activityRecords: ActivityRecord[]
   goal: Goal | null
   onNavigate: (page: AppPage) => void
   onDeleteRecord: (id: string) => void
 }
 
-export default function DashboardPage({ profile, records, goal, onNavigate }: Props) {
+export default function DashboardPage({
+  profile,
+  records,
+  activityRecords,
+  goal,
+  onNavigate,
+}: Props) {
   const [isShareOpen, setIsShareOpen] = useState(false)
   const { unit } = useWeightUnit()
   const unitLabel = WEIGHT_UNIT_LABEL[unit]
@@ -50,13 +58,22 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
       : null
   const goalOverdue = isGoalOverdue(goal, todayStr) && (progress?.remaining ?? 0) > 0
   const streak = calculateStreak(records, todayStr)
+  const activityWeek = getActivityWeekStats(activityRecords, todayStr)
+  const latestActivity = activityRecords.at(-1)
 
   return (
     <div className="app-page bg-[var(--carbon-bg)] animate-fade-in">
-      <header className="flex w-full items-center justify-between px-4 pt-4 pb-2">
-        <h1 className="text-lg font-semibold tracking-wide text-[var(--carbon-text)]">总览</h1>
+      <header className="flex w-full items-end justify-between px-4 pt-4 pb-2">
+        <div>
+          <p className="sport-kicker">Daily performance</p>
+          <h1 className="mt-1 text-[28px] font-black tracking-[-0.04em] text-[var(--carbon-text)]">
+            今日总览
+          </h1>
+        </div>
         {hasRecords && (
           <button
+            type="button"
+            aria-label="分享进展"
             onClick={() => setIsShareOpen(true)}
             className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--carbon-surface)] text-[var(--carbon-text-secondary)] shadow-sm hover:text-[var(--carbon-primary)] transition-colors border border-[var(--carbon-border)]"
           >
@@ -102,7 +119,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
             </div>
           )}
 
-        <section className="bg-[var(--dashboard-header-bg)] px-4 py-5 text-[var(--dashboard-header-text)] shadow-sm">
+        <section className="sport-weight-hero bg-[var(--dashboard-header-bg)] px-5 py-5 text-[var(--dashboard-header-text)] shadow-sm">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.18em] opacity-72">当前体重</p>
@@ -134,6 +151,60 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
             </div>
           </div>
         </section>
+
+        <button
+          onClick={() => onNavigate('activity')}
+          className="sport-panel group relative overflow-hidden p-4 text-left transition-colors hover:border-[var(--carbon-primary)]"
+        >
+          <span className="absolute -right-2 -top-8 text-[92px] font-black leading-none text-[var(--carbon-surface-strong)] opacity-55">
+            MOVE
+          </span>
+          <div className="relative">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="sport-kicker">This week / 运动节律</p>
+                <div className="mt-2 flex items-end gap-2">
+                  <span className="text-[38px] font-black leading-none text-[var(--carbon-text)]">
+                    {activityWeek.activeDays}
+                  </span>
+                  <span className="pb-1 text-xs font-bold text-[var(--carbon-text-secondary)]">
+                    天 · {activityWeek.sessions} 次
+                  </span>
+                </div>
+              </div>
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--sport-accent)] text-[var(--sport-accent-text)]">
+                <span className="i-lucide-activity h-5 w-5" />
+              </span>
+            </div>
+
+            <div className="mt-4 grid grid-cols-7 gap-2">
+              {activityWeek.days.map((day, index) => (
+                <span key={day.date} className="flex flex-col items-center gap-1.5">
+                  <span className="text-[9px] font-bold text-[var(--carbon-text-secondary)]">
+                    {['一', '二', '三', '四', '五', '六', '日'][index]}
+                  </span>
+                  <span
+                    className={`h-1.5 w-full ${
+                      day.active ? 'bg-[var(--sport-accent)]' : 'bg-[var(--carbon-surface-strong)]'
+                    }`}
+                  />
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-3 flex items-center justify-between border-t border-[var(--carbon-border)] pt-3 text-xs">
+              <span className="truncate text-[var(--carbon-text-secondary)]">
+                {latestActivity
+                  ? `最近：${latestActivity.activityName} · ${latestActivity.durationMinutes} 分钟`
+                  : '还没有运动记录，从一次打卡开始'}
+              </span>
+              <span className="ml-3 flex shrink-0 items-center gap-1 font-bold text-[var(--carbon-primary)]">
+                查看
+                <span className="i-lucide-arrow-right h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </div>
+          </div>
+        </button>
 
         {hasRecords ? (
           <>
@@ -256,7 +327,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
             className="flex min-w-[200px] items-center justify-center gap-3 bg-[var(--carbon-primary)] px-6 py-3.5 text-sm font-semibold text-[var(--carbon-text-on-primary)] shadow-sm transition-transform active:scale-[0.98] hover:bg-[var(--carbon-primary-hover)] rounded-sm"
           >
             <span className="i-lucide-plus h-4 w-4" />
-            <span>添加今日记录</span>
+            <span>添加记录</span>
           </button>
         </section>
       </main>
@@ -266,6 +337,7 @@ export default function DashboardPage({ profile, records, goal, onNavigate }: Pr
         onClose={() => setIsShareOpen(false)}
         profile={profile}
         records={records}
+        activityRecords={activityRecords}
         goal={goal}
         unit={unit}
       />

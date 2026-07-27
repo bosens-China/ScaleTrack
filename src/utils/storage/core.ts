@@ -1,6 +1,6 @@
 import localforage from 'localforage'
 
-import type { Goal, UserProfile, WeightRecord } from '../../types'
+import type { ActivityRecord, ActivityType, Goal, UserProfile, WeightRecord } from '../../types'
 import { LEGACY_KEYS, STORE_KEYS } from './keys'
 import { migrateLegacyData } from './migration'
 
@@ -18,21 +18,36 @@ import { migrateLegacyData } from './migration'
 export const store = localforage.createInstance({
   name: 'scaletrack',
   storeName: 'data',
-  description: 'ScaleTrack 本地体重数据',
+  description: 'ScaleTrack 本地体重与运动数据',
 })
 
 export interface CacheShape {
   profile: UserProfile | null
   records: WeightRecord[]
   goals: Goal[]
+  activityRecords: ActivityRecord[]
+  customActivityTypes: ActivityType[]
   lastBackupAt: string | null
 }
 
 // 会话期内的同步数据源（始终原地改属性，不重新绑定，便于跨模块共享同一引用）
-export const cache: CacheShape = { profile: null, records: [], goals: [], lastBackupAt: null }
+export const cache: CacheShape = {
+  profile: null,
+  records: [],
+  goals: [],
+  activityRecords: [],
+  customActivityTypes: [],
+  lastBackupAt: null,
+}
 let hydrated = false
 
-export type PersistKey = 'profile' | 'records' | 'goals' | 'lastBackupAt'
+export type PersistKey =
+  | 'profile'
+  | 'records'
+  | 'goals'
+  | 'activityRecords'
+  | 'customActivityTypes'
+  | 'lastBackupAt'
 
 /** 写穿到 IndexedDB；失败仅告警，不阻塞 UI（内存缓存已更新） */
 export function persist(key: PersistKey): void {
@@ -78,16 +93,21 @@ export async function hydrateStore(): Promise<void> {
 
   await migrateLegacy()
 
-  const [profile, records, goals, lastBackupAt] = await Promise.all([
-    store.getItem<UserProfile | null>(STORE_KEYS.profile),
-    store.getItem<WeightRecord[]>(STORE_KEYS.records),
-    store.getItem<Goal[]>(STORE_KEYS.goals),
-    store.getItem<string | null>(STORE_KEYS.lastBackupAt),
-  ])
+  const [profile, records, goals, activityRecords, customActivityTypes, lastBackupAt] =
+    await Promise.all([
+      store.getItem<UserProfile | null>(STORE_KEYS.profile),
+      store.getItem<WeightRecord[]>(STORE_KEYS.records),
+      store.getItem<Goal[]>(STORE_KEYS.goals),
+      store.getItem<ActivityRecord[]>(STORE_KEYS.activityRecords),
+      store.getItem<ActivityType[]>(STORE_KEYS.customActivityTypes),
+      store.getItem<string | null>(STORE_KEYS.lastBackupAt),
+    ])
 
   cache.profile = profile ?? null
   cache.records = records ?? []
   cache.goals = goals ?? []
+  cache.activityRecords = activityRecords ?? []
+  cache.customActivityTypes = customActivityTypes ?? []
   cache.lastBackupAt = lastBackupAt ?? null
   hydrated = true
 }

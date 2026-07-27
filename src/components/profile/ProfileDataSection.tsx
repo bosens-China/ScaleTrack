@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 
 import {
   exportData,
+  getActivityRecords,
   getLastBackupAt,
   getRecords,
   importData,
@@ -22,6 +23,7 @@ const BACKUP_STALE_DAYS = 14
 interface PendingImport {
   data: unknown
   records: number
+  activityRecords: number
   goals: number
   hasProfile: boolean
 }
@@ -32,7 +34,7 @@ export default function ProfileDataSection({ onReload }: Props) {
   const [lastBackup, setLastBackup] = useState<string | null>(() => getLastBackupAt())
   const [pending, setPending] = useState<PendingImport | null>(null)
 
-  const hasData = getRecords().length > 0
+  const hasData = getRecords().length > 0 || getActivityRecords().length > 0
   const daysSinceBackup = lastBackup ? dayjs().diff(dayjs(lastBackup), 'day') : null
   const backupStale =
     hasData && (lastBackup === null || (daysSinceBackup ?? 0) >= BACKUP_STALE_DAYS)
@@ -75,6 +77,7 @@ export default function ProfileDataSection({ onReload }: Props) {
         setPending({
           data,
           records: payload.records.length,
+          activityRecords: payload.activityRecords.length,
           goals: payload.goals.length,
           hasProfile: payload.profile !== null,
         })
@@ -133,7 +136,7 @@ export default function ProfileDataSection({ onReload }: Props) {
             <div>
               <p className="text-sm font-medium text-[var(--carbon-text)]">导出数据</p>
               <p className="text-xs text-[var(--carbon-text-secondary)]">
-                导出基础资料、体重记录和目标数据
+                导出基础资料、体重、运动和目标数据
               </p>
             </div>
           </div>
@@ -173,7 +176,8 @@ export default function ProfileDataSection({ onReload }: Props) {
                 如何导入这份数据？
               </h4>
               <p className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
-                文件包含 {pending.records} 条记录、{pending.goals} 个目标
+                文件包含 {pending.records} 条体重、{pending.activityRecords} 条运动、
+                {pending.goals} 个目标
                 {pending.hasProfile ? '及基础资料' : ''}。
               </p>
             </div>

@@ -16,9 +16,10 @@ interface Props {
   profile: UserProfile
   records: WeightRecord[]
   onSave: (payload: { date: string; weight: number; note?: string }) => void
+  onBack?: () => void
 }
 
-export default function AddRecordPage({ profile, records, onSave }: Props) {
+export default function AddRecordPage({ profile, records, onSave, onBack }: Props) {
   const { unit } = useWeightUnit()
   const [selectedDate, setSelectedDate] = useState(() => dayjs().format('YYYY-MM-DD'))
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
@@ -84,15 +85,26 @@ export default function AddRecordPage({ profile, records, onSave }: Props) {
   return (
     <div className="app-page bg-[var(--carbon-bg)]">
       <main className="app-main flex flex-col gap-8 px-4 pb-8 pt-4">
-        <div className="flex items-start justify-between">
-          <div className="flex flex-col gap-2">
-            <h2 className="text-[28px] font-light tracking-tight text-[var(--carbon-text)]">
-              记录体重
-            </h2>
-            <p className="text-sm text-[var(--carbon-text-secondary)]">记录您的身体变化</p>
-            <p className="text-xs text-[var(--carbon-text-secondary)]">
-              可补录范围：{dayjs(earliestDateStr).format('MM月DD日')} 至今天
-            </p>
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex min-w-0 gap-3">
+            {onBack && (
+              <button
+                onClick={onBack}
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--carbon-border)] bg-[var(--carbon-surface)] text-[var(--carbon-text)]"
+                aria-label="返回添加记录"
+              >
+                <span className="i-lucide-arrow-left h-5 w-5" />
+              </button>
+            )}
+            <div className="flex min-w-0 flex-col gap-2">
+              <h2 className="text-[28px] font-light tracking-tight text-[var(--carbon-text)]">
+                记录体重
+              </h2>
+              <p className="text-sm text-[var(--carbon-text-secondary)]">记录您的身体变化</p>
+              <p className="text-xs text-[var(--carbon-text-secondary)]">
+                可补录范围：{dayjs(earliestDateStr).format('MM月DD日')} 至今天
+              </p>
+            </div>
           </div>
 
           <button

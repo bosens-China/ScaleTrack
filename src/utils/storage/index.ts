@@ -2,15 +2,21 @@
 // 拆分为多个文件后，外部仍统一从 '@/utils/storage' 引用，路径保持不变。
 
 export {
+  deleteActivityRecord,
+  deleteActivityType,
   deleteGoal,
   deleteRecord,
   exportData,
+  getActivityRecords,
+  getActivityTypes,
   getGoals,
   getLastBackupAt,
   getProfile,
   getRecords,
   importData,
   recordBackup,
+  saveActivityRecord,
+  saveActivityType,
   saveGoal,
   saveProfile,
   saveRecord,

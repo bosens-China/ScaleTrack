@@ -10,6 +10,8 @@ export const STORE_KEYS = {
   profile: 'profile',
   records: 'records',
   goals: 'goals',
+  activityRecords: 'activityRecords',
+  customActivityTypes: 'customActivityTypes',
   lastBackupAt: 'lastBackupAt',
   migrated: '__migrated_from_localstorage',
 } as const

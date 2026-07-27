@@ -62,10 +62,12 @@ export default function SharePosterModal({
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-[80] flex flex-col items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[80] flex flex-col items-center justify-start overflow-y-auto bg-black/70 p-4 backdrop-blur-sm sm:justify-center">
       {/* 顶部操作区 */}
       <div className="flex w-full max-w-sm justify-end mb-4">
         <button
+          type="button"
+          aria-label="关闭分享海报"
           onClick={onClose}
           className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white hover:bg-white/30"
         >
@@ -97,7 +99,7 @@ export default function SharePosterModal({
           {/* Footer */}
           <div className="flex items-center justify-center bg-[var(--carbon-surface-subtle)] py-3">
             <span className="text-[10px] uppercase tracking-widest text-[var(--carbon-text-secondary)]">
-              - 记录每一个轻盈的改变 -
+              - 记录身体每一次改变 -
             </span>
           </div>
         </div>

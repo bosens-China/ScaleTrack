@@ -3,12 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)" />
-    <title>ScaleTrack - 体重追踪</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="description" content="本地优先的体重、BMI 与运动节律追踪应用" />
+    <meta name="theme-color" content="#f4f6f0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0d100e" media="(prefers-color-scheme: dark)" />
+    <title>ScaleTrack - 体重与运动追踪</title>
     <script>
-      ;(function() {
+      ;(function () {
         const saved = localStorage.getItem('scaletrack_theme') || 'auto'
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
         if (saved === 'dark' || (saved === 'auto' && prefersDark)) {

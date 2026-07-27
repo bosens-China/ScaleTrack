@@ -1,6 +1,18 @@
 import { defineConfig, presetAttributify, presetIcons, presetMini } from 'unocss'
 
 export default defineConfig({
+  // 运动类型图标会作为数据快照动态渲染，需要显式保留在生产 CSS 中
+  safelist: [
+    'i-lucide-dumbbell',
+    'i-lucide-waves',
+    'i-lucide-target',
+    'i-lucide-person-standing',
+    'i-lucide-bike',
+    'i-lucide-footprints',
+    'i-lucide-sparkles',
+    'i-lucide-circle-dot',
+    'i-lucide-zap',
+  ],
   presets: [
     presetMini({ dark: 'class' }),
     presetAttributify(),

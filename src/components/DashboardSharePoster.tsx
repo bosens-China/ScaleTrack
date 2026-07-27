@@ -1,7 +1,8 @@
 import dayjs from 'dayjs'
 
 import SharePosterModal from '@/components/SharePosterModal'
-import type { Goal, UserProfile, WeightRecord, WeightUnit } from '@/types'
+import type { ActivityRecord, Goal, UserProfile, WeightRecord, WeightUnit } from '@/types'
+import { getActivityWeekStats } from '@/utils/activity'
 import { getBMICategory, getBMIRange } from '@/utils/bmi'
 import {
   getCurrentBMI,
@@ -17,6 +18,7 @@ interface Props {
   onClose: () => void
   profile: UserProfile
   records: WeightRecord[]
+  activityRecords: ActivityRecord[]
   goal: Goal | null
   unit: WeightUnit
 }
@@ -30,6 +32,7 @@ export default function DashboardSharePoster({
   onClose,
   profile,
   records,
+  activityRecords,
   goal,
   unit,
 }: Props) {
@@ -39,6 +42,7 @@ export default function DashboardSharePoster({
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
   const goalLabel = goal ? (isGainGoal ? '增肌目标' : '减脂目标') : '体重目标'
   const progress = getGoalProgress(goal, currentWeight, records)
+  const activityWeek = getActivityWeekStats(activityRecords)
 
   // 当前 BMI 分级（快照）
   const currentBMI = getCurrentBMI(profile, records)
@@ -135,6 +139,59 @@ export default function DashboardSharePoster({
             </span>
           )}
         </div>
+
+        {/* 本周运动：只展示汇总和类型，不带出可能含隐私的备注 */}
+        {activityWeek.sessions > 0 && (
+          <div className="overflow-hidden border border-[#2f392e] bg-[#171c18] px-4 py-4 text-[#f7faef]">
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#c7f36b]">
+                  本周运动节律
+                </p>
+                <div className="mt-2 flex items-baseline gap-2">
+                  <span className="text-[30px] font-black leading-none">
+                    {activityWeek.activeDays}
+                  </span>
+                  <span className="text-xs font-semibold text-[#b9c2b5]">天运动</span>
+                </div>
+              </div>
+              <p className="text-right text-sm font-bold">
+                {activityWeek.sessions} 次
+                <span className="ml-2 text-xs font-medium text-[#b9c2b5]">
+                  {activityWeek.totalMinutes} 分钟
+                </span>
+              </p>
+            </div>
+
+            <div className="mt-4 grid grid-cols-7 gap-1.5">
+              {activityWeek.days.map((day, index) => (
+                <div key={day.date} className="flex flex-col items-center gap-1.5">
+                  <span className="text-[9px] font-semibold text-[#8f9a8c]">
+                    {['一', '二', '三', '四', '五', '六', '日'][index]}
+                  </span>
+                  <span
+                    className={`h-1.5 w-full ${day.active ? 'bg-[#c7f36b]' : 'bg-[#343d34]'}`}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5 border-t border-[#2f392e] pt-3">
+              {activityWeek.typeBreakdown.slice(0, 3).map(type => (
+                <span
+                  key={type.name}
+                  className="inline-flex items-center gap-1.5 text-[11px] text-[#d8ded4]"
+                >
+                  <span
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{ backgroundColor: type.color }}
+                  />
+                  {type.name} {type.sessions} 次
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* 目标进度 */}
         {goal && progress && (

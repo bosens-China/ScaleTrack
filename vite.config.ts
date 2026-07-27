@@ -23,14 +23,14 @@ export default defineConfig({
       registerType: 'prompt',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'ScaleTrack - 体重追踪',
+        name: 'ScaleTrack - 体重与运动追踪',
         short_name: 'ScaleTrack',
-        description: '本地体重与 BMI 追踪应用，支持离线记录和趋势查看。',
+        description: '本地体重、BMI 与运动节律追踪应用，支持离线记录和趋势查看。',
         start_url: '/ScaleTrack/',
         scope: '/ScaleTrack/',
         display: 'standalone',
-        background_color: '#ffffff',
-        theme_color: '#0f62fe',
+        background_color: '#0d100e',
+        theme_color: '#171c18',
         icons: [
           {
             src: 'pwa-192x192.png',

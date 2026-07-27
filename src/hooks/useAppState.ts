@@ -1,16 +1,29 @@
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 
-import type { AppPage, Goal, UserProfile, WeightRecord } from '@/types'
+import type {
+  ActivityRecord,
+  ActivityType,
+  AppPage,
+  Goal,
+  UserProfile,
+  WeightRecord,
+} from '@/types'
 import { calcBMI } from '@/utils/bmi'
 import { reconcileLatestGoalState, shouldCelebrateGoalCompletion } from '@/utils/goal-state'
 import { getCurrentWeight } from '@/utils/stats'
 import {
+  deleteActivityRecord,
+  deleteActivityType,
   deleteGoal,
   deleteRecord,
+  getActivityRecords,
+  getActivityTypes,
   getGoals,
   getProfile,
   getRecords,
+  saveActivityRecord,
+  saveActivityType,
   saveGoal,
   saveProfile,
   saveRecord,
@@ -21,6 +34,8 @@ import { toast } from '@/utils/toast'
 export interface AppState {
   profile: UserProfile | null
   records: WeightRecord[]
+  activityRecords: ActivityRecord[]
+  activityTypes: ActivityType[]
   activeGoal: Goal | null
   milestones: Goal[]
   activePage: AppPage
@@ -37,12 +52,26 @@ export interface AppState {
   handleSaveRecord: (payload: { date: string; weight: number; note?: string }) => void
   handleUpdateRecord: (id: string, patch: { weight?: number; note?: string }) => void
   handleDeleteRecord: (id: string) => void
+  handleSaveActivityRecord: (payload: {
+    id?: string
+    activityTypeId: string
+    date: string
+    durationMinutes: number
+    note?: string
+  }) => void
+  handleDeleteActivityRecord: (id: string) => void
+  handleAddActivityType: (name: string) => ActivityType | null
+  handleDeleteActivityType: (id: string) => void
   refreshAll: () => void
 }
 
 export function useAppState(): AppState {
   const [profile, setProfile] = useState<UserProfile | null>(getProfile)
   const [records, setRecords] = useState<WeightRecord[]>(() => getRecords())
+  const [activityRecords, setActivityRecords] = useState<ActivityRecord[]>(() =>
+    getActivityRecords(),
+  )
+  const [activityTypes, setActivityTypes] = useState<ActivityType[]>(() => getActivityTypes())
   const [goals, setGoals] = useState<Goal[]>(() => getGoals())
   const [activePage, setActivePage] = useState<AppPage>(() => {
     const today = dayjs().format('YYYY-MM-DD')
@@ -66,6 +95,8 @@ export function useAppState(): AppState {
   const refreshAll = () => {
     setProfile(getProfile())
     setRecords(getRecords())
+    setActivityRecords(getActivityRecords())
+    setActivityTypes(getActivityTypes())
     setGoals(getGoals())
   }
 
@@ -225,12 +256,93 @@ export function useAppState(): AppState {
     toast.success('记录已更新')
   }
 
+  const handleSaveActivityRecord = ({
+    id,
+    activityTypeId,
+    date,
+    durationMinutes,
+    note,
+  }: {
+    id?: string
+    activityTypeId: string
+    date: string
+    durationMinutes: number
+    note?: string
+  }) => {
+    const existing = id ? activityRecords.find(record => record.id === id) : undefined
+    const type = activityTypes.find(item => item.id === activityTypeId)
+    if (!type && !existing) {
+      toast.error('请选择有效的运动类型')
+      return
+    }
+
+    const now = new Date().toISOString()
+    const record: ActivityRecord = {
+      id: existing?.id ?? crypto.randomUUID(),
+      activityTypeId: type?.id ?? existing!.activityTypeId,
+      activityName: type?.name ?? existing!.activityName,
+      activityIcon: type?.icon ?? existing!.activityIcon,
+      activityColor: type?.color ?? existing!.activityColor,
+      date,
+      durationMinutes,
+      note: note?.trim() || undefined,
+      createdAt: existing?.createdAt ?? now,
+      updatedAt: now,
+    }
+
+    saveActivityRecord(record)
+    setActivityRecords(getActivityRecords())
+    toast.success(existing ? '运动记录已更新' : `${record.activityName}打卡成功`)
+    setActivePage('activity')
+  }
+
+  const handleDeleteActivityRecord = (id: string) => {
+    deleteActivityRecord(id)
+    setActivityRecords(getActivityRecords())
+    toast.success('运动记录已删除')
+  }
+
+  const handleAddActivityType = (name: string) => {
+    const trimmedName = name.trim()
+    if (!trimmedName) return null
+    const existing = activityTypes.find(
+      type => type.name.toLocaleLowerCase() === trimmedName.toLocaleLowerCase(),
+    )
+    if (existing) {
+      toast.info('该运动类型已存在')
+      return existing
+    }
+
+    const type: ActivityType = {
+      id: crypto.randomUUID(),
+      name: trimmedName,
+      icon: 'i-lucide-zap',
+      color: '#c7f36b',
+      isBuiltIn: false,
+      createdAt: new Date().toISOString(),
+    }
+    saveActivityType(type)
+    setActivityTypes(getActivityTypes())
+    toast.success('运动类型已添加')
+    return type
+  }
+
+  const handleDeleteActivityType = (id: string) => {
+    const type = activityTypes.find(item => item.id === id)
+    if (!type || type.isBuiltIn) return
+    deleteActivityType(id)
+    setActivityTypes(getActivityTypes())
+    toast.success('已从运动列表移除，历史记录不受影响')
+  }
+
   const activeGoal = goals.find(g => !g.isCompleted) ?? null
   const milestones = goals.filter(g => g.isCompleted)
 
   return {
     profile,
     records,
+    activityRecords,
+    activityTypes,
     activeGoal,
     milestones,
     activePage,
@@ -247,6 +359,10 @@ export function useAppState(): AppState {
     handleSaveRecord,
     handleUpdateRecord,
     handleDeleteRecord,
+    handleSaveActivityRecord,
+    handleDeleteActivityRecord,
+    handleAddActivityType,
+    handleDeleteActivityType,
     refreshAll,
   }
 }
