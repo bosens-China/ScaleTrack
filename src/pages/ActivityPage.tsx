@@ -279,7 +279,7 @@ export default function ActivityPage({
               </button>
             </div>
           ) : (
-            <div className="flex flex-col gap-2">
+            <div className="activity-record-list carbon-scrollbar flex flex-col gap-2">
               {recentRecords.map(record => (
                 <article key={record.id} className="sport-panel flex items-center gap-3 p-3.5">
                   <span

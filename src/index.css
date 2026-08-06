@@ -360,6 +360,19 @@ body {
   display: none;
 }
 
+/* 记录数量增长后维持趋势页主体信息的可见性，列表内部可继续滚动查看全部历史。 */
+.trends-record-list {
+  max-height: min(56dvh, 32rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.activity-record-list {
+  max-height: min(56dvh, 32rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
 ::selection {
   background: var(--sport-accent);
   color: var(--sport-accent-text);

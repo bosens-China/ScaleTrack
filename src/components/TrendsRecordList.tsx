@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import TextInput from '@/components/TextInput'
 import { useWeightUnit } from '@/hooks/weight-unit-context'
@@ -30,6 +30,7 @@ export default function TrendsRecordList({ records, goal, onUpdateRecord, onDele
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editWeight, setEditWeight] = useState('')
   const [editNote, setEditNote] = useState('')
+  const editPanelRef = useRef<HTMLDivElement>(null)
 
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
   const recentRecords = [...records].reverse()
@@ -52,6 +53,13 @@ export default function TrendsRecordList({ records, goal, onUpdateRecord, onDele
     setEditWeight(formatWeightValue(record.weight, unit))
     setEditNote(record.note ?? '')
   }
+
+  // 内联编辑区可能位于长列表底部，展开后主动滚入固定 Tab 栏上方的可操作区域。
+  useEffect(() => {
+    if (!editingId) return
+
+    editPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  }, [editingId])
 
   const handleConfirmEdit = (id: string) => {
     const parsedDisplay = Number.parseFloat(editWeight)
@@ -76,7 +84,7 @@ export default function TrendsRecordList({ records, goal, onUpdateRecord, onDele
         <p className="text-xs font-medium text-[var(--carbon-text)]">共 {records.length} 条</p>
       </div>
 
-      <div className="flex flex-col">
+      <div className="trends-record-list carbon-scrollbar flex flex-col">
         {recentRecords.map((record, index) => {
           const prevRecord = recentRecords[index + 1]
           const isFirstRecord = record.id === records[0]?.id
@@ -150,7 +158,11 @@ export default function TrendsRecordList({ records, goal, onUpdateRecord, onDele
               </div>
 
               {isEditing && (
-                <div className="flex flex-col gap-3 border-t border-[var(--carbon-primary)] bg-[var(--carbon-surface-subtle)] px-4 py-3">
+                <div
+                  ref={editPanelRef}
+                  className="flex flex-col gap-3 border-t border-[var(--carbon-primary)] bg-[var(--carbon-surface-subtle)] px-4 py-3"
+                  style={{ scrollMarginBottom: 'calc(var(--app-tabbar-height) + 16px)' }}
+                >
                   <div className="flex items-center gap-2">
                     <TextInput
                       type="number"
