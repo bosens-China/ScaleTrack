@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.4.0](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.3.0...scaletrack-v1.4.0) (2026-08-06)
+
+
+### ✨ 新功能
+
+* 全面接入界面国际化 ([374a9cd](https://github.com/bosens-China/ScaleTrack/commit/374a9cdae426f3cbd5c09678d383af717992a5a1))
+
+
+### 🐛 修复
+
+* 优化移动端记录列表与弹层遮挡 ([2e4b525](https://github.com/bosens-China/ScaleTrack/commit/2e4b525aab7851261a5c26e9c623c46cfb92850d))
+* 调整弹层与更新提示的层级 ([7d3b1a0](https://github.com/bosens-China/ScaleTrack/commit/7d3b1a084c09b19bdccfc80049382521e1246bb0))
+
 ## [1.3.0](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.2.1...scaletrack-v1.3.0) (2026-07-27)
 
 
