@@ -80,8 +80,8 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="mx-4 flex w-full max-w-sm flex-col bg-[var(--carbon-surface)] shadow-lg">
+    <div className="fixed inset-0 z-[80] flex items-center justify-center overflow-y-auto bg-black/40 p-4">
+      <div className="my-auto flex w-full max-w-sm flex-col bg-[var(--carbon-surface)] shadow-lg">
         {/* 分享卡片区域（用于截图） */}
         <div ref={cardRef} className="flex flex-col">
           <div className="flex flex-col items-center gap-2 bg-[var(--carbon-primary)] px-6 py-6 text-[var(--carbon-text-on-primary)]">

@@ -6,7 +6,7 @@ export default function PwaUpdateBanner() {
   if (!needRefresh && !offlineReady) return null
 
   return (
-    <div className="fixed inset-x-0 bottom-[calc(var(--app-tabbar-height)+12px)] z-[90] mx-auto w-full max-w-[430px] px-4">
+    <div className="fixed inset-x-0 bottom-[calc(var(--app-tabbar-height)+12px)] z-40 mx-auto w-full max-w-[430px] px-4">
       <div className="flex items-center gap-3 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-3 shadow-lg">
         <span
           className={`h-5 w-5 shrink-0 ${

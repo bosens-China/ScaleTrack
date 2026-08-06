@@ -169,8 +169,8 @@ export default function ProfileDataSection({ onReload }: Props) {
 
       {/* 导入确认：合并 / 覆盖二选一 */}
       {pending && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6">
-          <div className="flex w-full max-w-sm flex-col gap-4 bg-[var(--carbon-surface)] p-5 shadow-lg">
+        <div className="fixed inset-0 z-[80] flex items-center justify-center overflow-y-auto bg-black/40 p-6">
+          <div className="my-auto flex w-full max-w-sm flex-col gap-4 bg-[var(--carbon-surface)] p-5 shadow-lg">
             <div className="flex flex-col gap-1">
               <h4 className="text-base font-semibold text-[var(--carbon-text)]">
                 如何导入这份数据？
