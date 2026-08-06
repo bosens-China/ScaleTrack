@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.4.0...scaletrack-v1.4.1) (2026-08-06)
+
+
+### 🐛 修复
+
+* 修复移动端弹窗遮挡与语言切换提示 ([1895f9d](https://github.com/bosens-China/ScaleTrack/commit/1895f9dd522bd1e8dc5ee529d1bd09265e0a6bcb))
+
 ## [1.4.0](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.3.0...scaletrack-v1.4.0) (2026-08-06)
 
 
