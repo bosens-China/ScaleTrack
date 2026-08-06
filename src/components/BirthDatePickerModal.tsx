@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useI18n } from 'virtual:ai-i18n'
 
+import ModalPortal from '@/components/ModalPortal'
+
 import BirthDatePicker from './BirthDatePicker'
 
 interface Props {
@@ -34,12 +36,12 @@ export default function BirthDatePickerModal({ isOpen, onClose, value, onChange 
   }
 
   return (
-    <>
+    <ModalPortal>
       <div
-        className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-[2px] transition-opacity"
+        className="app-modal-layer fixed inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity"
         onClick={onClose}
       />
-      <div className="fixed bottom-0 left-0 right-0 z-[70] flex flex-col rounded-t-2xl border-t border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4 shadow-xl animate-in slide-in-from-bottom-4 fade-in duration-200 sm:mx-auto sm:max-w-[430px]">
+      <div className="app-modal-layer fixed bottom-0 left-0 right-0 flex flex-col rounded-t-2xl border-t border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4 pb-[max(1rem,calc(var(--safe-bottom)+1rem))] shadow-xl animate-in slide-in-from-bottom-4 fade-in duration-200 sm:mx-auto sm:max-w-[430px]">
         <div className="mb-4 flex items-center justify-between">
           <button
             onClick={onClose}
@@ -59,6 +61,6 @@ export default function BirthDatePickerModal({ isOpen, onClose, value, onChange 
           <BirthDatePicker value={tempValue} onChange={setTempValue} />
         </div>
       </div>
-    </>
+    </ModalPortal>
   )
 }

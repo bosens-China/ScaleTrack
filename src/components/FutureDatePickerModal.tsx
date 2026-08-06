@@ -2,6 +2,8 @@ import dayjs from 'dayjs'
 import { useState } from 'react'
 import { useI18n } from 'virtual:ai-i18n'
 
+import ModalPortal from '@/components/ModalPortal'
+
 interface Props {
   isOpen: boolean
   onClose: () => void
@@ -57,12 +59,12 @@ export default function FutureDatePickerModal({
   }
 
   return (
-    <>
+    <ModalPortal>
       <div
-        className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-[2px] transition-opacity"
+        className="app-modal-layer fixed inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity"
         onClick={onClose}
       />
-      <div className="fixed left-0 right-0 top-0 z-[70] flex flex-col rounded-b-2xl border-b border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4 shadow-xl animate-in slide-in-from-top-4 fade-in duration-200 sm:mx-auto sm:max-w-[430px]">
+      <div className="app-modal-layer fixed left-0 right-0 top-0 flex flex-col rounded-b-2xl border-b border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4 pt-[calc(var(--safe-top)+1rem)] shadow-xl animate-in slide-in-from-top-4 fade-in duration-200 sm:mx-auto sm:max-w-[430px]">
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={handlePrevMonth}
@@ -130,6 +132,6 @@ export default function FutureDatePickerModal({
           {t('选择一个未来日期作为期望达成时间，可随时调整或清除。')}
         </p>
       </div>
-    </>
+    </ModalPortal>
   )
 }

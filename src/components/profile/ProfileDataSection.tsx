@@ -3,6 +3,7 @@ import type { ChangeEvent } from 'react'
 import { useRef, useState } from 'react'
 import { useI18n } from 'virtual:ai-i18n'
 
+import ModalPortal from '@/components/ModalPortal'
 import {
   exportData,
   getActivityRecords,
@@ -175,51 +176,53 @@ export default function ProfileDataSection({ onReload }: Props) {
 
       {/* 导入确认：合并 / 覆盖二选一 */}
       {pending && (
-        <div className="fixed inset-0 z-[80] flex items-center justify-center overflow-y-auto bg-black/40 p-6">
-          <div className="my-auto flex w-full max-w-sm flex-col gap-4 bg-[var(--carbon-surface)] p-5 shadow-lg">
-            <div className="flex flex-col gap-1">
-              <h4 className="text-base font-semibold text-[var(--carbon-text)]">
-                {t('如何导入这份数据？')}
-              </h4>
-              <p className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
-                {t`文件包含 ${pending.records} 条体重、${pending.activityRecords} 条运动、${pending.goals} 个目标${pending.hasProfile ? t('及基础资料') : ''}。`}
-              </p>
+        <ModalPortal>
+          <div className="app-modal-layer fixed inset-0 flex items-center justify-center overflow-y-auto bg-black/40 p-6">
+            <div className="my-auto flex w-full max-w-sm flex-col gap-4 bg-[var(--carbon-surface)] p-5 shadow-lg">
+              <div className="flex flex-col gap-1">
+                <h4 className="text-base font-semibold text-[var(--carbon-text)]">
+                  {t('如何导入这份数据？')}
+                </h4>
+                <p className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
+                  {t`文件包含 ${pending.records} 条体重、${pending.activityRecords} 条运动、${pending.goals} 个目标${pending.hasProfile ? t('及基础资料') : ''}。`}
+                </p>
+              </div>
+
+              <button
+                onClick={() => handleConfirmImport('merge')}
+                className="flex flex-col gap-1 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-3 text-left transition-colors hover:border-[var(--carbon-primary)] hover:bg-[var(--carbon-surface-subtle)]"
+              >
+                <span className="flex items-center gap-2 text-sm font-medium text-[var(--carbon-text)]">
+                  <span className="i-lucide-git-merge h-4 w-4 text-[var(--carbon-primary)]" />
+                  {t('合并导入（推荐）')}
+                </span>
+                <span className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
+                  {t('与现有数据合并，按日期去重，保留更新的记录。适合多设备同步。')}
+                </span>
+              </button>
+
+              <button
+                onClick={() => handleConfirmImport('replace')}
+                className="flex flex-col gap-1 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-3 text-left transition-colors hover:border-[var(--color-danger)] hover:bg-[var(--carbon-surface-subtle)]"
+              >
+                <span className="flex items-center gap-2 text-sm font-medium text-[var(--carbon-text)]">
+                  <span className="i-lucide-replace h-4 w-4 text-[var(--color-danger)]" />
+                  {t('覆盖导入')}
+                </span>
+                <span className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
+                  {t('清空当前所有本地数据，完全替换为文件内容。')}
+                </span>
+              </button>
+
+              <button
+                onClick={() => setPending(null)}
+                className="h-10 text-sm text-[var(--carbon-text-secondary)] transition-colors hover:text-[var(--carbon-text)]"
+              >
+                {t('取消')}
+              </button>
             </div>
-
-            <button
-              onClick={() => handleConfirmImport('merge')}
-              className="flex flex-col gap-1 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-3 text-left transition-colors hover:border-[var(--carbon-primary)] hover:bg-[var(--carbon-surface-subtle)]"
-            >
-              <span className="flex items-center gap-2 text-sm font-medium text-[var(--carbon-text)]">
-                <span className="i-lucide-git-merge h-4 w-4 text-[var(--carbon-primary)]" />
-                {t('合并导入（推荐）')}
-              </span>
-              <span className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
-                {t('与现有数据合并，按日期去重，保留更新的记录。适合多设备同步。')}
-              </span>
-            </button>
-
-            <button
-              onClick={() => handleConfirmImport('replace')}
-              className="flex flex-col gap-1 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-3 text-left transition-colors hover:border-[var(--color-danger)] hover:bg-[var(--carbon-surface-subtle)]"
-            >
-              <span className="flex items-center gap-2 text-sm font-medium text-[var(--carbon-text)]">
-                <span className="i-lucide-replace h-4 w-4 text-[var(--color-danger)]" />
-                {t('覆盖导入')}
-              </span>
-              <span className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
-                {t('清空当前所有本地数据，完全替换为文件内容。')}
-              </span>
-            </button>
-
-            <button
-              onClick={() => setPending(null)}
-              className="h-10 text-sm text-[var(--carbon-text-secondary)] transition-colors hover:text-[var(--carbon-text)]"
-            >
-              {t('取消')}
-            </button>
           </div>
-        </div>
+        </ModalPortal>
       )}
     </section>
   )

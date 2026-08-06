@@ -1239,6 +1239,13 @@
         "en-US": "Image saved. If it does not take effect, long-press the poster to save it."
       }
     },
+    "已切换为 {{0}}": {
+      "source": "已切换为 {{0}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Switched to {{0}}"
+      }
+    },
     "已合并导入数据": {
       "source": "已合并导入数据",
       "sourceLang": "zh-CN",
@@ -2499,6 +2506,13 @@
         "en-US": "Detailed records ({{0}})"
       }
     },
+    "语言切换失败，请重试": {
+      "source": "语言切换失败，请重试",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Couldn't switch language. Please try again."
+      }
+    },
     "请输入有效的体重": {
       "source": "请输入有效的体重",
       "sourceLang": "zh-CN",
@@ -3018,6 +3032,6 @@
       }
     }
   },
-  "revision": 9,
+  "revision": 11,
   "version": 1
 }

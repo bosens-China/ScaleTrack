@@ -59,6 +59,8 @@ input {
   --safe-left: env(safe-area-inset-left, 0px);
   --app-header-height: calc(44px + var(--safe-top));
   --app-tabbar-height: calc(68px + max(var(--safe-bottom), 6px));
+  /* 让长页面的最后一个控件始终高于固定底栏，保留可点击的呼吸空间。 */
+  --app-content-bottom-gap: calc(var(--app-tabbar-height) + 24px);
   --color-success: #3f7b0b;
   --color-warning: #a76500;
   --color-danger: #c62f3d;
@@ -166,7 +168,7 @@ body {
 
 .app-page {
   min-height: 100dvh;
-  padding-bottom: calc(var(--app-tabbar-height) + 8px);
+  padding-bottom: var(--app-content-bottom-gap);
 }
 
 .app-main {
@@ -183,6 +185,11 @@ body {
 .app-tabbar {
   height: var(--app-tabbar-height);
   padding-bottom: max(var(--safe-bottom), 6px);
+}
+
+/* 顶层弹窗脱离页面与底栏的层叠上下文，避免移动端被固定导航遮挡。 */
+.app-modal-layer {
+  z-index: 100;
 }
 
 .sport-grid-bg {

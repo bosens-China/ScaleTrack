@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useI18n } from 'virtual:ai-i18n'
 
 import ActivityRecordForm from '@/components/ActivityRecordForm'
+import ModalPortal from '@/components/ModalPortal'
 import type { ActivityRecord, ActivityType, AppPage } from '@/types'
 import {
   getActivityDisplayName,
@@ -348,37 +349,44 @@ export default function ActivityPage({
       </main>
 
       {editingRecord && (
-        <div className="fixed inset-0 z-[80] overflow-y-auto bg-black/70 px-4 py-8 backdrop-blur-sm">
-          <div className="mx-auto w-full max-w-[398px] border border-[var(--carbon-border)] bg-[var(--carbon-bg)] p-4 shadow-2xl animate-scale-in">
-            <div className="mb-5 flex items-start justify-between">
-              <div>
-                <p className="sport-kicker">Edit record</p>
-                <h2 className="mt-1 text-xl font-black text-[var(--carbon-text)]">
-                  {t('修改运动记录')}
-                </h2>
+        <ModalPortal>
+          <div
+            className="app-modal-layer fixed inset-0 overflow-y-auto bg-black/70 px-4 py-8 backdrop-blur-sm"
+            role="dialog"
+            aria-modal="true"
+            aria-label={t('修改运动记录')}
+          >
+            <div className="mx-auto w-full max-w-[398px] border border-[var(--carbon-border)] bg-[var(--carbon-bg)] p-4 shadow-2xl animate-scale-in">
+              <div className="mb-5 flex items-start justify-between">
+                <div>
+                  <p className="sport-kicker">Edit record</p>
+                  <h2 className="mt-1 text-xl font-black text-[var(--carbon-text)]">
+                    {t('修改运动记录')}
+                  </h2>
+                </div>
+                <button
+                  onClick={() => setEditingRecord(null)}
+                  className="flex h-11 w-11 items-center justify-center rounded-full text-[var(--carbon-text-secondary)]"
+                  aria-label={t('关闭编辑')}
+                >
+                  <span className="i-lucide-x h-5 w-5" />
+                </button>
               </div>
-              <button
-                onClick={() => setEditingRecord(null)}
-                className="flex h-11 w-11 items-center justify-center rounded-full text-[var(--carbon-text-secondary)]"
-                aria-label={t('关闭编辑')}
-              >
-                <span className="i-lucide-x h-5 w-5" />
-              </button>
+              <ActivityRecordForm
+                activityTypes={activityTypes}
+                initialRecord={editingRecord}
+                onSave={payload => {
+                  onSaveRecord(payload)
+                  setEditingRecord(null)
+                }}
+                onAddType={onAddType}
+                onDeleteType={onDeleteType}
+                onCancel={() => setEditingRecord(null)}
+                allowTypeManagement={false}
+              />
             </div>
-            <ActivityRecordForm
-              activityTypes={activityTypes}
-              initialRecord={editingRecord}
-              onSave={payload => {
-                onSaveRecord(payload)
-                setEditingRecord(null)
-              }}
-              onAddType={onAddType}
-              onDeleteType={onDeleteType}
-              onCancel={() => setEditingRecord(null)}
-              allowTypeManagement={false}
-            />
           </div>
-        </div>
+        </ModalPortal>
       )}
     </div>
   )
