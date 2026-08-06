@@ -8,16 +8,34 @@
       "computedHash": "23493927179497b37a1c7b48985d3209be23a00c618c49704a6727c732a414cd"
     },
     "file-line-audit": {
-      "source": "bosens-China/file-line-audit",
+      "source": "bosens-China/my-skills",
       "sourceType": "github",
-      "skillPath": ".agents/skills/file-line-audit/SKILL.md",
-      "computedHash": "5d0ac962c44ebd815108aa703ceda63690ba5416eaec627d7c0cf3bd25cc8137"
+      "skillPath": "skills/file-line-audit/SKILL.md",
+      "computedHash": "1b0edffa38d973abe70661d5f41cb44a8657adadd5086502b935d88dabdb53f5"
     },
     "git-step-commit": {
       "source": "bosens-China/my-skills",
       "sourceType": "github",
       "skillPath": "skills/git-step-commit/SKILL.md",
-      "computedHash": "e59b0ee7bcc9b92bd5b37fa2da4c8a5050356392c3afd604dea2c372f51403a9"
+      "computedHash": "185818ea40c06e929cb11e1e530afd736428131759ee0c82bbc1155bf008496b"
+    },
+    "integrate-ai-i18n": {
+      "source": "bosens-China/ai-i18n",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/integrate-ai-i18n/SKILL.md",
+      "computedHash": "d9948a1585b11960d98896657c7ed11a35ee7b567e206360757531ff53d0a353"
+    },
+    "manage-prd-docs": {
+      "source": "bosens-China/my-skills",
+      "sourceType": "github",
+      "skillPath": "skills/manage-prd-docs/SKILL.md",
+      "computedHash": "44f36df488557580b3958fc10cfe1b1859018e9759364033c5da58cc52a6cc85"
+    },
+    "use-ai-i18n-mcp": {
+      "source": "bosens-China/ai-i18n",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/use-ai-i18n-mcp/SKILL.md",
+      "computedHash": "a51ff7e038206ac1908947a0ef08c0e573e2cad7d0d16a4f0a69c9b90556805a"
     }
   }
 }

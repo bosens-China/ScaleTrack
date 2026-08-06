@@ -11,27 +11,27 @@ metadata:
 
 # File Line Audit
 
-Use this skill to audit file line counts in a project and return only files that exceed a configured threshold.
+使用这个技能审计仓库中的超长源码文件，只返回达到或超过指定行数阈值的文件。
 
-When using this skill:
+使用时：
 
-- Run the packaged binary from `scripts/` that matches the current OS and CPU architecture.
-- Always run from the target repository root so `.gitignore` is resolved correctly.
-- Inspect the repository layout and language stack before running the audit.
-- Pass scan parameters explicitly on the command line; there is no default config file.
-- Respect repository `.gitignore` rules first, then apply any extra `exclude` patterns on top.
-- Use one or more `include` glob patterns to limit scan scope.
-- Output only the files whose physical line count is greater than or equal to the configured threshold.
+- 从 `scripts/` 目录选择匹配当前操作系统和 CPU 架构的打包二进制。
+- 始终在目标仓库根目录运行，这样 `.gitignore` 才能正确生效。
+- 先查看仓库结构和语言栈，再决定扫描范围。
+- 通过命令行显式传入扫描参数；没有默认配置文件。
+- 先应用仓库 `.gitignore`，再应用额外的 `exclude` 规则。
+- 使用一个或多个 `include` glob 限定扫描范围。
+- 只输出物理行数大于等于阈值的文件。
 
-## Installation
+## 安装
 
 ```bash
-npx skills add bosens-China/file-line-audit
+npx skills add bosens-China/my-skills/skills/file-line-audit
 ```
 
-## Binary Selection
+## 二进制选择
 
-Choose the packaged executable under `scripts/`:
+从 `scripts/` 下选择对应平台的可执行文件：
 
 - Windows amd64: `scripts/line-audit-windows-amd64.exe`
 - Linux amd64: `scripts/line-audit-linux-amd64`
@@ -39,27 +39,32 @@ Choose the packaged executable under `scripts/`:
 - macOS amd64: `scripts/line-audit-darwin-amd64`
 - macOS arm64: `scripts/line-audit-darwin-arm64`
 
-## Steps
+## 步骤
 
-1. Confirm you are in the repository root.
-2. Inspect the repository to decide what to scan:
-   - Identify source roots such as `src`, `app`, `apps`, `pkg`, `packages`, `lib`, `internal`, `cmd`, `backend`, `frontend`, `client`, `server`, `service`, `services`, `api`, or `web`.
-   - Identify relevant source extensions for the project, such as `js`, `ts`, `tsx`, `vue`, `py`, `go`, `rs`, `java`, `kt`, `rb`, `php`, `cs`, or `swift`.
-   - Add extra `exclude` patterns only when `.gitignore` is not enough, for example `dist/`, `build/`, `coverage/`, or generated folders.
-3. Select the correct binary from `scripts/` for the current platform.
-4. On Linux/macOS, ensure the binary is executable: `chmod +x <binary_path>`.
-5. Run the binary with explicit `--include`, optional `--exclude`, and optional `--threshold`.
-6. Return only the over-threshold file list to the user.
+1. 确认当前位于目标仓库根目录。
+2. 检查仓库结构，决定扫描哪些内容：
+   - 识别源码目录，例如 `src`、`app`、`apps`、`pkg`、`packages`、`lib`、`internal`、`cmd`、`backend`、`frontend`、`client`、`server`、`service`、`services`、`api`、`web`。
+   - 识别相关源码扩展名，例如 `js`、`ts`、`tsx`、`vue`、`py`、`go`、`rs`、`java`、`kt`、`rb`、`php`、`cs`、`swift`。
+   - 仅在 `.gitignore` 不足时添加额外 `exclude`，例如 `dist/`、`build/`、`coverage/` 或生成目录。
+3. 根据当前平台选择正确的 `scripts/line-audit-*` 二进制。
+4. Linux/macOS 下确保二进制可执行：
+   ```bash
+   chmod +x <binary_path>
+   ```
+5. 使用显式 `--include`、可选 `--exclude` 和可选 `--threshold` 运行。
+6. 向用户返回超阈值文件列表。
 
-## Commands
+## 命令
 
-### Run with explicit include patterns
+以下示例中，`<skill_root>` 是当前 skill 目录的绝对路径。
 
-On Unix-like systems:
+### 使用 include 参数运行
+
+Unix-like 系统：
 
 ```bash
-chmod +x .agents/skills/file-line-audit/scripts/line-audit-<target>
-.agents/skills/file-line-audit/scripts/line-audit-<target> \
+chmod +x <skill_root>/scripts/line-audit-<target>
+<skill_root>/scripts/line-audit-<target> \
   --threshold 400 \
   --include "src/**/*.{ts,tsx,js,jsx,vue}" \
   --include "apps/**/*.{ts,tsx,js,jsx,vue}" \
@@ -67,10 +72,10 @@ chmod +x .agents/skills/file-line-audit/scripts/line-audit-<target>
   --exclude "build/"
 ```
 
-On Windows:
+Windows：
 
 ```powershell
-& .\.agents\skills\file-line-audit\scripts\line-audit-windows-amd64.exe `
+& <skill_root>\scripts\line-audit-windows-amd64.exe `
   --threshold 400 `
   --include "src/**/*.{ts,tsx,js,jsx,vue}" `
   --include "apps/**/*.{ts,tsx,js,jsx,vue}" `
@@ -78,12 +83,12 @@ On Windows:
   --exclude "build/"
 ```
 
-### Run with inline JSON
+### 使用 JSON 参数运行
 
-When passing a full parameter object is easier, use `--json`:
+如果完整参数对象更方便，使用 `--json`：
 
 ```bash
-.agents/skills/file-line-audit/scripts/line-audit-<target> --json '{
+<skill_root>/scripts/line-audit-<target> --json '{
   "threshold": 400,
   "include": [
     "src/**/*.{ts,tsx,js,jsx,vue}",
@@ -96,17 +101,17 @@ When passing a full parameter object is easier, use `--json`:
 }'
 ```
 
-## Parameters
+## 参数
 
-- `--include` / `-i`: required glob pattern; repeat for multiple roots or extensions
-- `--exclude` / `-e`: optional extra ignore rule in `.gitignore` syntax; repeat as needed
-- `--threshold` / `-t`: minimum line count to report, default `400`
-- `--json` / `-j`: optional JSON object with `threshold`, `include`, and `exclude`
-- `--help` / `-h`: show CLI help
+- `--include` / `-i`：必填 glob 模式；可以重复传入多个源码根或扩展名范围。
+- `--exclude` / `-e`：可选额外忽略规则，语法与 `.gitignore` 一致；可以重复传入。
+- `--threshold` / `-t`：输出阈值，默认 `400`。
+- `--json` / `-j`：可选 JSON 对象，包含 `threshold`、`include`、`exclude`。
+- `--help` / `-h`：显示 CLI 帮助。
 
-## Output Format
+## 输出格式
 
-Return the tool output directly. The expected format is:
+直接返回工具输出。预期格式：
 
 ```text
 # File Line Audit
@@ -117,15 +122,15 @@ Return the tool output directly. The expected format is:
 - apps/web/pages/home.tsx 438
 ```
 
-## Limitations
+## 限制
 
-- **Physical Lines Only**: The tool counts raw newlines and does not distinguish between code, comments, or blank lines.
-- **Binary Files**: Automatically skipped.
-- **Git Context**: Relies on `git` being available in the environment to resolve `.gitignore` rules effectively.
-- **Performance**: Optimized for source code; avoid running on directories containing large data files or build artifacts not covered by `.gitignore`.
+- 只统计物理行数：不会区分代码、注释或空行。
+- 自动跳过二进制文件。
+- 依赖 Git 环境解析 `.gitignore`。
+- 面向源码扫描优化；避免扫描未被 `.gitignore` 覆盖的大型数据目录或构建产物。
 
-## Notes
+## 说明
 
-- Repository `.gitignore` is always active even if you do not pass extra exclude patterns.
-- Nested `.gitignore` files are respected.
-- At least one `--include` pattern is required for every run.
+- 仓库 `.gitignore` 始终生效，即使没有传入额外 `exclude`。
+- 支持嵌套 `.gitignore`。
+- 每次运行至少需要一个 `--include` 模式。
