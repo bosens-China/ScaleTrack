@@ -1,6 +1,6 @@
 import type { WeightRecord, WeightUnit } from '@/types'
 import { movingAverage } from '@/utils/stats'
-import { toDisplayWeight, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
+import { getWeightUnitLabel, toDisplayWeight } from '@/utils/weight-unit'
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -16,6 +16,7 @@ import {
 import dayjs from 'dayjs'
 import { useSyncExternalStore } from 'react'
 import { Line } from 'react-chartjs-2'
+import { useI18n } from 'virtual:ai-i18n'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Filler)
 
@@ -48,9 +49,10 @@ export default function WeightTrendChart({
   unit = 'kg',
   showMovingAverage = false,
 }: Props) {
+  const { t } = useI18n()
   const isDark = useSyncExternalStore(subscribeDarkMode, getIsDark)
   // 体重指标下的单位后缀（BMI 无单位）
-  const weightUnitLabel = WEIGHT_UNIT_LABEL[unit]
+  const weightUnitLabel = getWeightUnitLabel(unit)
 
   const primaryColor = isDark ? '#a8c7fa' : '#0f62fe'
   const primaryRgb = isDark ? '168, 199, 250' : '15, 98, 254'
@@ -91,7 +93,7 @@ export default function WeightTrendChart({
       ctx.lineTo(chartArea.right, y)
       ctx.stroke()
 
-      const label = `目标 ${toDisplayWeight(goalWeight, unit).toFixed(1)}`
+      const label = t`目标 ${toDisplayWeight(goalWeight, unit).toFixed(1)}`
       ctx.setLineDash([])
       ctx.font = '10px IBM Plex Sans, sans-serif'
       ctx.textBaseline = 'bottom'
@@ -110,7 +112,7 @@ export default function WeightTrendChart({
     labels: records.map(record => dayjs(record.date).format('MM/DD')),
     datasets: [
       {
-        label: '实际',
+        label: t('实际'),
         data: metricValues,
         borderColor: primaryColor,
         backgroundColor: (context: { chart: { ctx: CanvasRenderingContext2D } }) => {
@@ -130,7 +132,7 @@ export default function WeightTrendChart({
       ...(showMA
         ? [
             {
-              label: '7日均线',
+              label: t('7日均线'),
               data: maValues,
               borderColor: maColor,
               backgroundColor: 'transparent',
@@ -165,7 +167,7 @@ export default function WeightTrendChart({
           title: (items: { dataIndex: number }[]) => {
             const index = items[0]?.dataIndex
             if (index === undefined) return ''
-            return dayjs(records[index]?.date).format('MM月DD日')
+            return t`${dayjs(records[index]?.date).format('MM')}月${dayjs(records[index]?.date).format('DD')}日`
           },
           label: (item: TooltipItem<'line'>) => {
             const raw = item.parsed.y ?? 0
@@ -175,7 +177,7 @@ export default function WeightTrendChart({
                 : raw.toFixed(1)
             // 有均线时区分两条线，避免提示里两个数字看不出谁是谁
             const label = item.dataset.label
-            return showMA && label ? `${label}：${value}` : value
+            return showMA && label ? `${label}: ${value}` : value
           },
         },
       },
@@ -218,7 +220,7 @@ export default function WeightTrendChart({
   if (records.length === 0) {
     return (
       <div className="flex h-60 items-center justify-center border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-6 text-center text-sm text-[var(--carbon-text-secondary)]">
-        还没有足够的记录生成趋势图，先去"添加"页保存第一条体重数据吧。
+        {t('还没有足够的记录生成趋势图，先去“添加”页保存第一条体重数据吧。')}
       </div>
     )
   }
@@ -229,11 +231,11 @@ export default function WeightTrendChart({
         <div className="flex items-center gap-4 px-1 text-[10px] text-[var(--carbon-text-secondary)]">
           <span className="flex items-center gap-1.5">
             <span className="h-0.5 w-4 rounded" style={{ backgroundColor: primaryColor }} />
-            实际
+            {t('实际')}
           </span>
           <span className="flex items-center gap-1.5">
             <span className="w-4 border-t-2 border-dashed" style={{ borderColor: maColor }} />
-            7日均线
+            {t('7日均线')}
           </span>
         </div>
       )}

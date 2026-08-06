@@ -1,3 +1,5 @@
+import { t } from 'virtual:ai-i18n'
+
 // 称重场景标签：与添加页 tag 列表共用同一词表，
 // 保证“自动带入的备注”一定是下方能点亮/点掉的标签，而不是孤立的自由文本。
 export const WEIGH_IN_TAGS = [
@@ -12,6 +14,30 @@ export const WEIGH_IN_TAGS = [
 
 // 仅女性展示的场景标签
 export const FEMALE_WEIGH_IN_TAGS = ['生理期'] as const
+
+/** 预置称重标签以中文存储，展示时按界面语言转换，避免影响已有备注。 */
+export function getWeighInTagLabel(tag: string): string {
+  switch (tag) {
+    case '晨起空腹':
+      return t('晨起空腹')
+    case '便后':
+      return t('便后')
+    case '饭前':
+      return t('饭前')
+    case '饭后':
+      return t('饭后')
+    case '运动后':
+      return t('运动后')
+    case '大餐后':
+      return t('大餐后')
+    case '睡前':
+      return t('睡前')
+    case '生理期':
+      return t('生理期')
+    default:
+      return tag
+  }
+}
 
 export function getTimeOfDay(hour: number): string {
   if (hour >= 0 && hour < 5) return '凌晨'

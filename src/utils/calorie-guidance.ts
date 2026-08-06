@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { t } from 'virtual:ai-i18n'
 
 import type { Goal } from '../types'
 
@@ -74,16 +75,16 @@ const EMPTY: CalorieGuidance = {
 }
 
 function buildPaceMessage(level: PaceLevel, isGain: boolean, weeklyKg: number): string | null {
-  const rate = `约 ${weeklyKg.toFixed(1)}kg/周`
+  const rate = t`约 ${weeklyKg.toFixed(1)}kg/周`
   if (isGain) {
     if (level === 'unsafe')
-      return `增重速度偏快（${rate}），过快增重容易堆积脂肪，建议放缓并配合力量训练。`
-    if (level === 'aggressive') return `增重速度较快（${rate}），注意控制饮食结构、优先增肌。`
+      return t`增重速度偏快（${rate}），过快增重容易堆积脂肪，建议放缓并配合力量训练。`
+    if (level === 'aggressive') return t`增重速度较快（${rate}），注意控制饮食结构、优先增肌。`
     return null
   }
   if (level === 'unsafe')
-    return `减重速度偏快（${rate}），过快减重可能流失肌肉、损害代谢，建议放缓节奏、保证营养。`
-  if (level === 'aggressive') return `减重速度较快（${rate}），记得保证蛋白质与必要营养摄入。`
+    return t`减重速度偏快（${rate}），过快减重可能流失肌肉、损害代谢，建议放缓节奏、保证营养。`
+  if (level === 'aggressive') return t`减重速度较快（${rate}），记得保证蛋白质与必要营养摄入。`
   return null
 }
 

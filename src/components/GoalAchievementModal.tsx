@@ -1,12 +1,13 @@
 import confetti from 'canvas-confetti'
 import dayjs from 'dayjs'
 import { useEffect, useRef, useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { Goal } from '@/types'
 import { generateShareImage, processShareOrDownload } from '@/utils/share'
 import { toast } from '@/utils/toast'
-import { formatWeightValue, toDisplayWeight, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
+import { formatWeightValue, getWeightUnitLabel, toDisplayWeight } from '@/utils/weight-unit'
 
 interface Props {
   goal: Goal
@@ -21,10 +22,11 @@ interface Props {
  * - 支持保存分享卡片为 PNG 图片
  */
 export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props) {
+  const { t } = useI18n()
   const cardRef = useRef<HTMLDivElement>(null)
   const [saving, setSaving] = useState(false)
   const { unit } = useWeightUnit()
-  const unitLabel = WEIGHT_UNIT_LABEL[unit]
+  const unitLabel = getWeightUnitLabel(unit)
 
   // 当日达成时 diff 为 0，兜底为 1 天，避免展示「0 天达成」（与里程碑详情页一致）
   const days = goal.completedDate
@@ -32,22 +34,22 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
     : 0
   const weightDiff = Math.abs(goal.startWeight - goal.targetWeight)
   const avgPerDay = days > 0 ? (toDisplayWeight(weightDiff, unit) / days).toFixed(2) : '0'
-  const direction = goal.startWeight > goal.targetWeight ? '减' : '增'
+  const direction = goal.startWeight > goal.targetWeight ? t('减') : t('增')
 
   // 设了目标日期时，对比实际达成日，给出提前/准时/超期反馈
   let scheduleNote: string | null = null
   if (goal.targetDate && goal.completedDate) {
     const aheadDays = dayjs(goal.targetDate).diff(dayjs(goal.completedDate), 'day')
-    if (aheadDays > 0) scheduleNote = `比计划提前 ${aheadDays} 天达成 🎯`
-    else if (aheadDays === 0) scheduleNote = '正好如期达成 🎯'
-    else scheduleNote = `比计划晚了 ${Math.abs(aheadDays)} 天，但你坚持到了最后`
+    if (aheadDays > 0) scheduleNote = t`比计划提前 ${aheadDays} 天达成 🎯`
+    else if (aheadDays === 0) scheduleNote = t('正好如期达成 🎯')
+    else scheduleNote = t`比计划晚了 ${Math.abs(aheadDays)} 天，但你坚持到了最后`
   }
 
   const getEncouragement = () => {
-    if (days <= 7) return '你的毅力令人钦佩！短短一周就达成了目标。'
-    if (days <= 30) return '坚持就是胜利，你用行动证明了自己！'
-    if (days <= 90) return '三个月的坚持更不容易，为自己骄傲！'
-    return '长期坚持是最难的，你做到了，这就是自律的力量。'
+    if (days <= 7) return t('你的毅力令人钦佩！短短一周就达成了目标。')
+    if (days <= 30) return t('坚持就是胜利，你用行动证明了自己！')
+    if (days <= 90) return t('三个月的坚持更不容易，为自己骄傲！')
+    return t('长期坚持是最难的，你做到了，这就是自律的力量。')
   }
 
   useEffect(() => {
@@ -73,7 +75,7 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
       await processShareOrDownload(url, filename)
     } catch (err) {
       console.error(err)
-      toast.error('图片保存失败，请重试')
+      toast.error(t('图片保存失败，请重试'))
     } finally {
       setSaving(false)
     }
@@ -86,7 +88,7 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
         <div ref={cardRef} className="flex flex-col">
           <div className="flex flex-col items-center gap-2 bg-[var(--carbon-primary)] px-6 py-6 text-[var(--carbon-text-on-primary)]">
             <span className="i-lucide-trophy h-10 w-10" />
-            <h2 className="text-xl font-semibold">目标达成！</h2>
+            <h2 className="text-xl font-semibold">{t('目标达成！')}</h2>
             <p className="text-center text-sm text-white/80">
               {formatWeightValue(goal.startWeight, unit)} →{' '}
               {formatWeightValue(goal.targetWeight, unit)} {unitLabel}
@@ -97,7 +99,7 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
             <div className="flex flex-col items-center gap-1 bg-[var(--carbon-surface)] py-4">
               <span className="text-xl font-semibold text-[var(--carbon-primary)]">{days}</span>
               <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--carbon-text-secondary)]">
-                天
+                {t('天')}
               </span>
             </div>
             <div className="flex flex-col items-center gap-1 bg-[var(--carbon-surface)] py-4">
@@ -105,7 +107,7 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
                 {formatWeightValue(weightDiff, unit)}
               </span>
               <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--carbon-text-secondary)]">
-                {direction}重 ({unitLabel})
+                {t`${direction}重 (${unitLabel})`}
               </span>
             </div>
             <div className="flex flex-col items-center gap-1 bg-[var(--carbon-surface)] py-4">
@@ -113,7 +115,7 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
                 {avgPerDay}
               </span>
               <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--carbon-text-secondary)]">
-                日均 ({unitLabel})
+                {t`日均 (${unitLabel})`}
               </span>
             </div>
           </div>
@@ -144,7 +146,7 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
             ) : (
               <span className="i-lucide-share h-4 w-4" />
             )}
-            {saving ? '正在生成...' : '分享或保存卡片'}
+            {saving ? t('正在生成...') : t('分享或保存卡片')}
           </button>
 
           <button
@@ -152,14 +154,14 @@ export default function GoalAchievementModal({ goal, onClose, onSetNew }: Props)
             className="flex h-12 items-center justify-center gap-2 bg-[var(--carbon-primary)] text-sm font-semibold text-[var(--carbon-text-on-primary)] transition-colors hover:bg-[var(--carbon-primary-hover)]"
           >
             <span className="i-lucide-target h-4 w-4" />
-            设定新目标
+            {t('设定新目标')}
           </button>
 
           <button
             onClick={onClose}
             className="flex h-10 items-center justify-center text-sm text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
           >
-            稍后再说
+            {t('稍后再说')}
           </button>
         </div>
       </div>

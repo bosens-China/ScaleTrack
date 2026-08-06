@@ -28,3 +28,7 @@ __pycache__
 CLAUDE.md
 
 .codegraph
+
+# ai-i18n 可由构建重新生成的提取结果与语言包
+i18n/extracted/
+i18n/locales/

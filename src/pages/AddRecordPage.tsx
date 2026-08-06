@@ -1,16 +1,23 @@
 import dayjs from 'dayjs'
 import { useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import CalendarModal from '@/components/CalendarModal'
 import TextInput from '@/components/TextInput'
 import WeightRulerPicker from '@/components/WeightRulerPicker'
 import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { UserProfile, WeightRecord } from '@/types'
-import { FEMALE_WEIGH_IN_TAGS, getDefaultNote, toggleTagInNote, WEIGH_IN_TAGS } from '@/utils/note'
+import {
+  FEMALE_WEIGH_IN_TAGS,
+  getDefaultNote,
+  getWeighInTagLabel,
+  toggleTagInNote,
+  WEIGH_IN_TAGS,
+} from '@/utils/note'
 import { getEarliestRecordDate, isRecordDateSelectable } from '@/utils/record-date'
 import { toast } from '@/utils/toast'
 import { isWeightOutlier } from '@/utils/validation'
-import { formatWeight, formatWeightValue, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
+import { formatWeight, formatWeightValue, getWeightUnitLabel } from '@/utils/weight-unit'
 
 interface Props {
   profile: UserProfile
@@ -20,6 +27,7 @@ interface Props {
 }
 
 export default function AddRecordPage({ profile, records, onSave, onBack }: Props) {
+  const { t } = useI18n()
   const { unit } = useWeightUnit()
   const [selectedDate, setSelectedDate] = useState(() => dayjs().format('YYYY-MM-DD'))
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
@@ -60,7 +68,7 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
 
   const handleDateChange = (newDate: string) => {
     if (!isRecordDateSelectable(newDate, todayStr)) {
-      toast.error('仅支持补录最近 1 个月内的记录')
+      toast.error(t('仅支持补录最近 1 个月内的记录'))
       return
     }
 
@@ -91,18 +99,18 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
               <button
                 onClick={onBack}
                 className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--carbon-border)] bg-[var(--carbon-surface)] text-[var(--carbon-text)]"
-                aria-label="返回添加记录"
+                aria-label={t('返回添加记录')}
               >
                 <span className="i-lucide-arrow-left h-5 w-5" />
               </button>
             )}
             <div className="flex min-w-0 flex-col gap-2">
               <h2 className="text-[28px] font-light tracking-tight text-[var(--carbon-text)]">
-                记录体重
+                {t('记录体重')}
               </h2>
-              <p className="text-sm text-[var(--carbon-text-secondary)]">记录您的身体变化</p>
+              <p className="text-sm text-[var(--carbon-text-secondary)]">{t('记录您的身体变化')}</p>
               <p className="text-xs text-[var(--carbon-text-secondary)]">
-                可补录范围：{dayjs(earliestDateStr).format('MM月DD日')} 至今天
+                {t`可补录范围：${dayjs(earliestDateStr).format('MM/DD')} 至今天`}
               </p>
             </div>
           </div>
@@ -112,7 +120,7 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
             className="flex items-center gap-1.5 rounded-full border border-[var(--carbon-border)] bg-[var(--carbon-surface-subtle)] px-3 py-1.5 text-xs font-medium text-[var(--carbon-text)] transition-colors hover:bg-[var(--carbon-surface-hover)]"
           >
             <span className="i-lucide-calendar-days h-3.5 w-3.5 text-[var(--carbon-text-secondary)]" />
-            {selectedDate === todayStr ? '今天' : dayjs(selectedDate).format('MM月DD日')}
+            {selectedDate === todayStr ? t('今天') : dayjs(selectedDate).format('MM/DD')}
           </button>
         </div>
 
@@ -122,7 +130,7 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
               {formatWeightValue(weight, unit)}
             </span>
             <span className="ml-1 text-[20px] text-[var(--carbon-text-secondary)]">
-              {WEIGHT_UNIT_LABEL[unit]}
+              {getWeightUnitLabel(unit)}
             </span>
           </div>
 
@@ -135,14 +143,14 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
               <span className="i-lucide-info h-4 w-4 shrink-0 text-[var(--carbon-primary)]" />
               <div className="flex flex-col gap-2">
                 <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--carbon-primary)]">
-                  该日期已有记录
+                  {t('该日期已有记录')}
                 </p>
                 <p className="text-sm leading-6 text-[var(--carbon-text)]">
-                  当前已保存 {formatWeight(existingRecord.weight, unit)}。再次保存会覆盖旧记录。
+                  {t`当前已保存 ${formatWeight(existingRecord.weight, unit)}。再次保存会覆盖旧记录。`}
                 </p>
                 {existingRecord.note ? (
                   <p className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
-                    备注：{existingRecord.note}
+                    {t`备注：${existingRecord.note}`}
                   </p>
                 ) : null}
               </div>
@@ -155,14 +163,14 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
             htmlFor="weight-note"
             className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]"
           >
-            备注（选填）
+            {t('备注（选填）')}
           </label>
           <TextInput
             id="weight-note"
             type="text"
             value={note}
             onChange={event => updateNoteByUser(event.target.value)}
-            placeholder="早晨称重，运动后..."
+            placeholder={t('早晨称重，运动后...')}
             rightElement={<span className="i-lucide-notebook-pen h-5 w-5" />}
           />
           <div className="mt-2 flex flex-wrap gap-2">
@@ -179,7 +187,7 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
                         : 'border-[var(--carbon-border)] bg-[var(--carbon-surface)] text-[var(--carbon-text-secondary)] hover:bg-[var(--carbon-surface-variant)] active:bg-[var(--carbon-surface-active)]'
                     }`}
                   >
-                    {tag}
+                    {getWeighInTagLabel(tag)}
                   </button>
                 )
               },
@@ -187,8 +195,8 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
           </div>
           <p className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
             {hasExistingRecord
-              ? '如果不修改备注，将保留当前输入框里的内容并覆盖旧备注。'
-              : '备注会随这条体重记录一起保存，适合记录晨起、饭后或运动后等上下文。'}
+              ? t('如果不修改备注，将保留当前输入框里的内容并覆盖旧备注。')
+              : t('备注会随这条体重记录一起保存，适合记录晨起、饭后或运动后等上下文。')}
           </p>
         </section>
       </main>
@@ -199,16 +207,14 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
           <div className="flex items-start gap-2 border-l-4 border-[var(--color-warning)] bg-[var(--carbon-surface-subtle)] px-3 py-2.5">
             <span className="i-lucide-triangle-alert mt-0.5 h-4 w-4 shrink-0 text-[var(--color-warning)]" />
             <p className="text-xs leading-5 text-[var(--carbon-text)]">
-              本次 {formatWeight(weight, unit)} 与最近一次记录（
-              {formatWeight(referenceWeight, unit)}
-              ）相差较大，确认没有输错吗？再点一次"确认保存"即可。
+              {t`本次 ${formatWeight(weight, unit)} 与最近一次记录（${formatWeight(referenceWeight, unit)}）相差较大，确认没有输错吗？再点一次“确认保存”即可。`}
             </p>
           </div>
         )}
         <button
           onClick={() => {
             if (!isRecordDateSelectable(selectedDate, todayStr)) {
-              toast.error('仅支持补录最近 1 个月内的记录')
+              toast.error(t('仅支持补录最近 1 个月内的记录'))
               return
             }
 
@@ -230,7 +236,7 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
               : 'bg-[var(--carbon-primary)] hover:bg-[var(--carbon-primary-hover)]'
           }`}
         >
-          <span>{pendingOutlier ? '确认保存' : '保存记录'}</span>
+          <span>{pendingOutlier ? t('确认保存') : t('保存记录')}</span>
           <span className="i-lucide-check h-4 w-4" />
         </button>
       </div>

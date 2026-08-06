@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import type {
   ActivityRecord,
@@ -66,6 +67,7 @@ export interface AppState {
 }
 
 export function useAppState(): AppState {
+  const { t } = useI18n()
   const [profile, setProfile] = useState<UserProfile | null>(getProfile)
   const [records, setRecords] = useState<WeightRecord[]>(() => getRecords())
   const [activityRecords, setActivityRecords] = useState<ActivityRecord[]>(() =>
@@ -113,7 +115,7 @@ export function useAppState(): AppState {
         setAchievedGoal(current => (current?.id === reconcileResult.nextGoal?.id ? null : current))
       }
     }
-    toast.success('记录已删除')
+    toast.success(t('记录已删除'))
   }
 
   const handleSetupComplete = (nextProfile: UserProfile) => {
@@ -146,7 +148,7 @@ export function useAppState(): AppState {
       saveRecords(nextRecords)
       setRecords(nextRecords)
     }
-    toast.success('基础信息已更新')
+    toast.success(t('基础信息已更新'))
   }
 
   const handleSaveGoal = (targetWeight: number, targetDate?: string) => {
@@ -163,7 +165,7 @@ export function useAppState(): AppState {
     }
     saveGoal(goal)
     setGoals(getGoals())
-    toast.success('目标体重已保存')
+    toast.success(t('目标体重已保存'))
   }
 
   const handleAbandonGoal = () => {
@@ -172,7 +174,7 @@ export function useAppState(): AppState {
     deleteGoal(existing.id)
     setGoals(getGoals())
     setAchievedGoal(current => (current?.id === existing.id ? null : current))
-    toast.success('已放弃当前目标')
+    toast.success(t('已放弃当前目标'))
   }
 
   const handleSaveRecord = ({
@@ -221,8 +223,8 @@ export function useAppState(): AppState {
 
     toast.success(
       existingRecord
-        ? `已覆盖今日记录：${weight.toFixed(1)} kg`
-        : `体重记录成功：${weight.toFixed(1)} kg`,
+        ? t`已覆盖今日记录：${weight.toFixed(1)} kg`
+        : t`体重记录成功：${weight.toFixed(1)} kg`,
     )
     setActivePage('dashboard')
   }
@@ -253,7 +255,7 @@ export function useAppState(): AppState {
         setAchievedGoal(current => (current?.id === reconcileResult.nextGoal?.id ? null : current))
       }
     }
-    toast.success('记录已更新')
+    toast.success(t('记录已更新'))
   }
 
   const handleSaveActivityRecord = ({
@@ -272,7 +274,7 @@ export function useAppState(): AppState {
     const existing = id ? activityRecords.find(record => record.id === id) : undefined
     const type = activityTypes.find(item => item.id === activityTypeId)
     if (!type && !existing) {
-      toast.error('请选择有效的运动类型')
+      toast.error(t('请选择有效的运动类型'))
       return
     }
 
@@ -292,14 +294,14 @@ export function useAppState(): AppState {
 
     saveActivityRecord(record)
     setActivityRecords(getActivityRecords())
-    toast.success(existing ? '运动记录已更新' : `${record.activityName}打卡成功`)
+    toast.success(existing ? t('运动记录已更新') : t`${record.activityName}打卡成功`)
     setActivePage('activity')
   }
 
   const handleDeleteActivityRecord = (id: string) => {
     deleteActivityRecord(id)
     setActivityRecords(getActivityRecords())
-    toast.success('运动记录已删除')
+    toast.success(t('运动记录已删除'))
   }
 
   const handleAddActivityType = (name: string) => {
@@ -309,7 +311,7 @@ export function useAppState(): AppState {
       type => type.name.toLocaleLowerCase() === trimmedName.toLocaleLowerCase(),
     )
     if (existing) {
-      toast.info('该运动类型已存在')
+      toast.info(t('该运动类型已存在'))
       return existing
     }
 
@@ -323,7 +325,7 @@ export function useAppState(): AppState {
     }
     saveActivityType(type)
     setActivityTypes(getActivityTypes())
-    toast.success('运动类型已添加')
+    toast.success(t('运动类型已添加'))
     return type
   }
 
@@ -332,7 +334,7 @@ export function useAppState(): AppState {
     if (!type || type.isBuiltIn) return
     deleteActivityType(id)
     setActivityTypes(getActivityTypes())
-    toast.success('已从运动列表移除，历史记录不受影响')
+    toast.success(t('已从运动列表移除，历史记录不受影响'))
   }
 
   const activeGoal = goals.find(g => !g.isCompleted) ?? null

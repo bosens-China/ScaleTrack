@@ -1,3 +1,4 @@
+import { aiI18n } from '@ai-i18n/vite'
 import babel from '@rolldown/plugin-babel'
 import UnoCSS from '@unocss/vite'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
@@ -16,6 +17,13 @@ export default defineConfig({
     __APP_VERSION__: JSON.stringify(packageJson.version),
   },
   plugins: [
+    aiI18n({
+      sourceLang: 'zh-CN',
+      locales: [
+        { value: 'zh-CN', label: '简体中文' },
+        { value: 'en-US', label: 'English' },
+      ],
+    }),
     UnoCSS(),
     react(),
     babel({ presets: [reactCompilerPreset()] }),

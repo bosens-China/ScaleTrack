@@ -1,19 +1,20 @@
 import { useId, useState } from 'react'
-
-import dayjs from 'dayjs'
+import { useI18n } from 'virtual:ai-i18n'
 
 import BirthDatePickerModal from '@/components/BirthDatePickerModal'
 import TextInput from '@/components/TextInput'
 import WeightRulerPicker from '@/components/WeightRulerPicker'
 import type { Gender, UserProfile } from '@/types'
 import { BMI_RANGES, calcBMI, getBMICategory, getBMIColor } from '@/utils/bmi'
-import { validateHeight, validateWeight, VALIDATION_LIMITS } from '@/utils/validation'
+import { formatAppDate } from '@/utils/date-format'
+import { validateHeight, validateWeight } from '@/utils/validation'
 
 interface Props {
   onComplete: (profile: UserProfile) => void
 }
 
 export default function SetupPage({ onComplete }: Props) {
+  const { t } = useI18n()
   const heightId = useId()
   const weightId = useId()
   const [gender, setGender] = useState<Gender>('male')
@@ -29,11 +30,11 @@ export default function SetupPage({ onComplete }: Props) {
 
   const handleSubmit = () => {
     if (!validateHeight(heightNum)) {
-      setError(VALIDATION_LIMITS.height.errorMsg)
+      setError(t('请输入有效的身高（50-250cm）'))
       return
     }
     if (!validateWeight(weightNum)) {
-      setError(VALIDATION_LIMITS.weight.errorMsg)
+      setError(t('请输入有效的体重（20-300kg）'))
       return
     }
 
@@ -53,20 +54,20 @@ export default function SetupPage({ onComplete }: Props) {
         <div className="animate-fade-in-up flex flex-col gap-6 pt-4">
           <div className="flex flex-col gap-3 border-b border-[var(--carbon-border)] pb-5">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-              首次使用
+              {t('首次使用')}
             </p>
             <h2 className="text-[28px] font-light tracking-tight text-[var(--carbon-text)]">
-              完善基础资料
+              {t('完善基础资料')}
             </h2>
             <p className="text-sm leading-6 text-[var(--carbon-text-secondary)]">
-              只需要填写一次。后续记录体重、计算 BMI 和追踪目标都会基于这些资料。
+              {t('只需要填写一次。后续记录体重、计算 BMI 和追踪目标都会基于这些资料。')}
             </p>
           </div>
 
           <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-6">
             <div className="flex flex-col gap-2">
               <label className="block text-xs font-semibold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-                性别
+                {t('性别')}
               </label>
               <div className="grid grid-cols-2 gap-3">
                 {(['male', 'female'] as const).map(g => (
@@ -86,7 +87,7 @@ export default function SetupPage({ onComplete }: Props) {
                           : 'i-lucide-user-round text-[var(--color-danger)]'
                       }
                     />
-                    {g === 'male' ? '男' : '女'}
+                    {g === 'male' ? t('男') : t('女')}
                   </button>
                 ))}
               </div>
@@ -97,13 +98,13 @@ export default function SetupPage({ onComplete }: Props) {
                 htmlFor={heightId}
                 className="block text-xs font-semibold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]"
               >
-                身高 (cm)
+                {t('身高 (cm)')}
               </label>
               <TextInput
                 id={heightId}
                 type="number"
                 inputMode="decimal"
-                placeholder="例如：170"
+                placeholder={t('例如：170')}
                 value={height}
                 onChange={e => {
                   setHeight(e.target.value)
@@ -114,7 +115,7 @@ export default function SetupPage({ onComplete }: Props) {
 
             <div className="mt-6 flex flex-col gap-2">
               <label className="block text-xs font-semibold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-                出生年月日 (选填)
+                {t('出生年月日 (选填)')}
               </label>
               <button
                 type="button"
@@ -126,7 +127,7 @@ export default function SetupPage({ onComplete }: Props) {
                     birthDate ? 'text-[var(--carbon-text)]' : 'text-[var(--carbon-text-secondary)]'
                   }
                 >
-                  {birthDate ? dayjs(birthDate).format('YYYY年 MM月 DD日') : '请选择出生日期'}
+                  {birthDate ? formatAppDate(birthDate) : t('请选择出生日期')}
                 </span>
                 <span className="i-lucide-calendar h-4 w-4 text-[var(--carbon-text-secondary)]" />
               </button>
@@ -146,7 +147,7 @@ export default function SetupPage({ onComplete }: Props) {
                 htmlFor={weightId}
                 className="block text-xs font-semibold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]"
               >
-                当前体重 (kg)
+                {t('当前体重 (kg)')}
               </label>
               <div className="mb-4 mt-2 flex items-baseline justify-center">
                 <span className="text-[64px] font-light leading-none text-[var(--carbon-text)]">
@@ -166,7 +167,7 @@ export default function SetupPage({ onComplete }: Props) {
             {bmi !== null && (
               <div className="mt-6 border-l-4 border-[var(--carbon-primary)] bg-[var(--carbon-primary-soft)] p-4 animate-scale-in">
                 <div className="mb-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-                  当前 BMI
+                  {t('当前 BMI')}
                 </div>
                 <div
                   className="text-[32px] font-light leading-none"
@@ -190,7 +191,7 @@ export default function SetupPage({ onComplete }: Props) {
               onClick={handleSubmit}
               className="mt-8 flex h-14 w-full items-center justify-between bg-[var(--carbon-primary)] px-5 text-sm font-medium text-[var(--carbon-text-on-primary)] transition-colors hover:bg-[var(--carbon-primary-hover)]"
             >
-              <span>开始记录</span>
+              <span>{t('开始记录')}</span>
               <span className="i-lucide-arrow-right h-4 w-4" />
             </button>
           </div>

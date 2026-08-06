@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import ProfileAboutSection from '@/components/profile/ProfileAboutSection'
 import ProfileBasicsSection from '@/components/profile/ProfileBasicsSection'
@@ -36,6 +37,7 @@ export default function ProfilePage({
   onNavigate,
   onSelectMilestone,
 }: Props) {
+  const { t } = useI18n()
   const [isEditingProfile, setIsEditingProfile] = useState(false)
   const [profileEditVersion, setProfileEditVersion] = useState(0)
   const currentBMI = getCurrentBMI(profile, records)
@@ -62,7 +64,7 @@ export default function ProfilePage({
             {profile.avatar ? (
               <img
                 src={profile.avatar}
-                alt={profile.nickname ? `${profile.nickname}的头像` : '用户头像'}
+                alt={profile.nickname ? t`${profile.nickname}的头像` : t('用户头像')}
                 className="h-20 w-20 rounded-full border border-[var(--carbon-border)] object-cover bg-white"
               />
             ) : (
@@ -72,17 +74,17 @@ export default function ProfilePage({
             )}
             <div
               className="absolute bottom-0 right-0 flex h-7 w-7 items-center justify-center rounded-full border border-[var(--carbon-surface)] bg-[var(--carbon-primary)] text-[var(--carbon-text-on-primary)] shadow-sm"
-              aria-label="编辑个人资料"
+              aria-label={t('编辑个人资料')}
             >
               <span className="i-lucide-pencil h-3.5 w-3.5" />
             </div>
           </div>
           <div>
             <h2 className="text-2xl font-medium text-[var(--carbon-text)]">
-              {profile.nickname || '本地用户'}
+              {profile.nickname || t('本地用户')}
             </h2>
             <p className="text-sm text-[var(--carbon-text-secondary)]">
-              稳步记录，持续接近你的健康目标
+              {t('稳步记录，持续接近你的健康目标')}
             </p>
           </div>
         </section>

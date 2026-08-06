@@ -1,16 +1,18 @@
 import dayjs from 'dayjs'
 import { useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import SharePosterModal from '@/components/SharePosterModal'
 
 import WeightTrendChart from '@/components/WeightTrendChart'
 import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { Goal, WeightRecord } from '@/types'
+import { formatAppDate } from '@/utils/date-format'
 import {
   formatWeight,
   formatWeightValue,
+  getWeightUnitLabel,
   toDisplayWeight,
-  WEIGHT_UNIT_LABEL,
 } from '@/utils/weight-unit'
 
 interface Props {
@@ -21,17 +23,18 @@ interface Props {
 }
 
 export default function MilestoneDetailPage({ milestoneId, milestones, records, onBack }: Props) {
+  const { t } = useI18n()
   const [isShareOpen, setIsShareOpen] = useState(false)
   const { unit } = useWeightUnit()
-  const unitLabel = WEIGHT_UNIT_LABEL[unit]
+  const unitLabel = getWeightUnitLabel(unit)
   const milestone = milestones.find(m => m.id === milestoneId)
 
   if (!milestone) {
     return (
       <div className="app-page bg-[var(--carbon-bg)] flex items-center justify-center">
-        <p className="text-sm text-[var(--carbon-text-secondary)]">未找到里程碑</p>
+        <p className="text-sm text-[var(--carbon-text-secondary)]">{t('未找到里程碑')}</p>
         <button onClick={onBack} className="mt-4 text-[var(--carbon-primary)] hover:underline">
-          返回
+          {t('返回')}
         </button>
       </div>
     )
@@ -50,7 +53,8 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
     : 1
   const diff = Math.abs(milestone.startWeight - milestone.targetWeight)
   const averagePerDay = (toDisplayWeight(diff, unit) / days).toFixed(2)
-  const direction = milestone.startWeight > milestone.targetWeight ? '减' : '增'
+  const isLoss = milestone.startWeight > milestone.targetWeight
+  const direction = isLoss ? t('减') : t('增')
 
   return (
     <div className="app-page relative bg-[var(--carbon-bg)] pb-8 overflow-y-auto carbon-scrollbar">
@@ -61,7 +65,7 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
         >
           <span className="i-lucide-chevron-left h-6 w-6" />
         </button>
-        <h1 className="text-base font-medium text-[var(--carbon-text)]">里程碑详情</h1>
+        <h1 className="text-base font-medium text-[var(--carbon-text)]">{t('里程碑详情')}</h1>
         <button
           onClick={() => setIsShareOpen(true)}
           className="flex h-10 w-10 items-center justify-center -mr-2 text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-primary)]"
@@ -82,14 +86,16 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
           </h2>
           <p className="mt-1 text-sm text-[var(--carbon-text-secondary)]">
             {dayjs(milestone.startDate).format('YYYY/MM/DD')} -{' '}
-            {milestone.completedDate ? dayjs(milestone.completedDate).format('YYYY/MM/DD') : '至今'}
+            {milestone.completedDate
+              ? dayjs(milestone.completedDate).format('YYYY/MM/DD')
+              : t('至今')}
           </p>
         </section>
 
         <section className="grid grid-cols-3 gap-4 border-y border-[var(--carbon-border)] py-4">
           <div className="flex flex-col items-center">
             <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--carbon-text-secondary)]">
-              总{direction}重
+              {t`总 ${direction} 重`}
             </span>
             <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
               {formatWeightValue(diff, unit)}{' '}
@@ -98,32 +104,32 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
           </div>
           <div className="flex flex-col items-center border-l border-r border-[var(--carbon-border)]">
             <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--carbon-text-secondary)]">
-              共计用时
+              {t('共计用时')}
             </span>
             <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
-              {days} <span className="text-[10px] font-normal">天</span>
+              {days} <span className="text-[10px] font-normal">{t('天')}</span>
             </span>
           </div>
           <div className="flex flex-col items-center">
             <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--carbon-text-secondary)]">
-              日均变化
+              {t('日均变化')}
             </span>
             <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
-              {averagePerDay} <span className="text-[10px] font-normal">{unitLabel}/天</span>
+              {averagePerDay} <span className="text-[10px] font-normal">{t`${unitLabel}/天`}</span>
             </span>
           </div>
         </section>
 
         {periodRecords.length > 0 && (
           <section className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold text-[var(--carbon-text)]">阶段进度</h3>
+            <h3 className="text-sm font-semibold text-[var(--carbon-text)]">{t('阶段进度')}</h3>
             <WeightTrendChart records={periodRecords} />
           </section>
         )}
 
         <section className="flex flex-col">
           <h3 className="mb-2 text-sm font-semibold text-[var(--carbon-text)]">
-            详细记录 ({periodRecords.length})
+            {t`详细记录 (${periodRecords.length})`}
           </h3>
           <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] flex flex-col">
             {[...periodRecords].reverse().map((record, index, arr) => {
@@ -136,21 +142,15 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
                 const rDiff = record.weight - prevRecord.weight
                 const dispDiff = toDisplayWeight(rDiff, unit)
                 if (rDiff > 0) {
-                  diffTone =
-                    direction === '减'
-                      ? 'text-[var(--color-danger)]'
-                      : 'text-[var(--color-success)]'
+                  diffTone = isLoss ? 'text-[var(--color-danger)]' : 'text-[var(--color-success)]'
                   diffIcon = 'i-lucide-trending-up'
                   diffText = `+${dispDiff.toFixed(1)}`
                 } else if (rDiff < 0) {
-                  diffTone =
-                    direction === '减'
-                      ? 'text-[var(--color-success)]'
-                      : 'text-[var(--color-danger)]'
+                  diffTone = isLoss ? 'text-[var(--color-success)]' : 'text-[var(--color-danger)]'
                   diffIcon = 'i-lucide-trending-down'
                   diffText = `${dispDiff.toFixed(1)}`
                 } else {
-                  diffText = '持平'
+                  diffText = t('持平')
                 }
               }
 
@@ -166,13 +166,13 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
                       </span>
                       {prevRecord && (
                         <span className={`flex items-center gap-0.5 text-[11px] ${diffTone}`}>
-                          {diffText !== '持平' && <span className={`${diffIcon} h-3 w-3`} />}
+                          {diffText !== t('持平') && <span className={`${diffIcon} h-3 w-3`} />}
                           <span>{diffText}</span>
                         </span>
                       )}
                     </div>
                     <p className="mt-0.5 truncate text-xs text-[var(--carbon-text-secondary)]">
-                      {dayjs(record.date).format('MM月DD日')}
+                      {formatAppDate(record.date, 'monthDay')}
                       {record.note ? ` · ${record.note}` : ''}
                     </p>
                   </div>
@@ -193,7 +193,7 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
             <span className="i-lucide-trophy h-8 w-8" />
           </div>
           <p className="text-xs font-medium uppercase tracking-[0.16em] text-[var(--carbon-text-secondary)] mb-1">
-            达成里程碑
+            {t('达成里程碑')}
           </p>
           <h2 className="text-2xl font-bold text-[var(--carbon-text)]">
             {formatWeightValue(milestone.startWeight, unit)}{' '}
@@ -202,13 +202,15 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
           </h2>
           <p className="mt-2 text-xs text-[var(--carbon-text-secondary)]">
             {dayjs(milestone.startDate).format('YYYY/MM/DD')} -{' '}
-            {milestone.completedDate ? dayjs(milestone.completedDate).format('YYYY/MM/DD') : '至今'}
+            {milestone.completedDate
+              ? dayjs(milestone.completedDate).format('YYYY/MM/DD')
+              : t('至今')}
           </p>
 
           <div className="grid grid-cols-3 gap-4 w-full border-t border-[var(--carbon-border)] pt-5 mt-5">
             <div className="flex flex-col items-center">
               <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--carbon-text-secondary)]">
-                总{direction}重
+                {t`总 ${direction} 重`}
               </span>
               <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
                 {formatWeightValue(diff, unit)}{' '}
@@ -217,18 +219,19 @@ export default function MilestoneDetailPage({ milestoneId, milestones, records, 
             </div>
             <div className="flex flex-col items-center border-l border-r border-[var(--carbon-border)]">
               <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--carbon-text-secondary)]">
-                用时
+                {t('用时')}
               </span>
               <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
-                {days} <span className="text-[10px] font-normal">天</span>
+                {days} <span className="text-[10px] font-normal">{t('天')}</span>
               </span>
             </div>
             <div className="flex flex-col items-center">
               <span className="text-[10px] font-medium uppercase tracking-widest text-[var(--carbon-text-secondary)]">
-                日均
+                {t('日均')}
               </span>
               <span className="mt-1 text-lg font-semibold text-[var(--carbon-text)]">
-                {averagePerDay} <span className="text-[10px] font-normal">{unitLabel}/天</span>
+                {averagePerDay}{' '}
+                <span className="text-[10px] font-normal">{t`${unitLabel}/天`}</span>
               </span>
             </div>
           </div>

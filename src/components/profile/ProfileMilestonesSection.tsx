@@ -1,8 +1,9 @@
 import dayjs from 'dayjs'
+import { useI18n } from 'virtual:ai-i18n'
 
 import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { AppPage, Goal } from '@/types'
-import { formatWeightValue, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
+import { formatWeightValue, getWeightUnitLabel } from '@/utils/weight-unit'
 
 interface Props {
   milestones: Goal[]
@@ -11,17 +12,18 @@ interface Props {
 }
 
 export default function ProfileMilestonesSection({ milestones, onSelectMilestone }: Props) {
+  const { t } = useI18n()
   const { unit } = useWeightUnit()
-  const unitLabel = WEIGHT_UNIT_LABEL[unit]
+  const unitLabel = getWeightUnitLabel(unit)
   return (
     <section className="flex flex-col gap-4">
       <h3 className="px-1 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--carbon-text-secondary)]">
-        里程碑
+        {t('里程碑')}
       </h3>
       <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)]">
         {milestones.length === 0 ? (
           <div className="px-4 py-5 text-sm leading-6 text-[var(--carbon-text-secondary)]">
-            达成第一个目标后，这里会保留你的里程碑记录。
+            {t('达成第一个目标后，这里会保留你的里程碑记录。')}
           </div>
         ) : (
           <div className="flex flex-col">
@@ -33,7 +35,7 @@ export default function ProfileMilestonesSection({ milestones, onSelectMilestone
                 Math.abs(milestone.startWeight - milestone.targetWeight),
                 unit,
               )
-              const direction = milestone.startWeight > milestone.targetWeight ? '减' : '增'
+              const direction = milestone.startWeight > milestone.targetWeight ? t('减') : t('增')
 
               return (
                 <div
@@ -51,11 +53,11 @@ export default function ProfileMilestonesSection({ milestones, onSelectMilestone
                         {formatWeightValue(milestone.targetWeight, unit)} {unitLabel}
                       </p>
                       <p className="mt-1 text-xs leading-5 text-[var(--carbon-text-secondary)]">
-                        {direction}重 {diff} {unitLabel} · 用时 {days} 天
+                        {t`${direction}重 ${diff} ${unitLabel} · 用时 ${days} 天`}
                       </p>
                       {milestone.completedDate ? (
                         <p className="mt-1 text-xs text-[var(--carbon-outline)]">
-                          {dayjs(milestone.completedDate).format('YYYY/MM/DD')} 达成
+                          {t`${dayjs(milestone.completedDate).format('YYYY/MM/DD')} 达成`}
                         </p>
                       ) : null}
                     </div>

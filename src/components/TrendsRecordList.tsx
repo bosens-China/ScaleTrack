@@ -1,17 +1,18 @@
-import dayjs from 'dayjs'
 import { useEffect, useRef, useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import TextInput from '@/components/TextInput'
 import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { Goal, WeightRecord } from '@/types'
+import { formatAppDate } from '@/utils/date-format'
 import { toast } from '@/utils/toast'
 import { validateWeight } from '@/utils/validation'
 import {
   formatWeight,
   formatWeightValue,
   fromDisplayWeight,
+  getWeightUnitLabel,
   toDisplayWeight,
-  WEIGHT_UNIT_LABEL,
 } from '@/utils/weight-unit'
 
 interface Props {
@@ -25,6 +26,7 @@ interface Props {
  * 趋势页「所有记录」流水账：从趋势页拆出，自管编辑/删除的内联交互态。
  */
 export default function TrendsRecordList({ records, goal, onUpdateRecord, onDeleteRecord }: Props) {
+  const { t } = useI18n()
   const { unit } = useWeightUnit()
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -65,7 +67,7 @@ export default function TrendsRecordList({ records, goal, onUpdateRecord, onDele
     const parsedDisplay = Number.parseFloat(editWeight)
     const parsed = fromDisplayWeight(parsedDisplay, unit)
     if (Number.isNaN(parsedDisplay) || !validateWeight(parsed)) {
-      toast.error('请输入有效的体重')
+      toast.error(t('请输入有效的体重'))
       return
     }
     onUpdateRecord(id, { weight: parsed, note: editNote.trim() })
@@ -78,10 +80,10 @@ export default function TrendsRecordList({ records, goal, onUpdateRecord, onDele
         <div className="flex items-center gap-2">
           <span className="i-lucide-list h-4 w-4 text-[var(--carbon-primary)]" />
           <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--carbon-text-secondary)]">
-            所有记录
+            {t('所有记录')}
           </span>
         </div>
-        <p className="text-xs font-medium text-[var(--carbon-text)]">共 {records.length} 条</p>
+        <p className="text-xs font-medium text-[var(--carbon-text)]">{t`共 ${records.length} 条`}</p>
       </div>
 
       <div className="trends-record-list carbon-scrollbar flex flex-col">
@@ -105,7 +107,7 @@ export default function TrendsRecordList({ records, goal, onUpdateRecord, onDele
               diffIcon = 'i-lucide-trending-down'
               diffText = `${dispDiff.toFixed(1)}`
             } else {
-              diffText = '持平'
+              diffText = t('持平')
             }
           }
 
@@ -124,18 +126,18 @@ export default function TrendsRecordList({ records, goal, onUpdateRecord, onDele
                     </span>
                     {prevRecord && (
                       <span className={`flex items-center gap-0.5 text-[11px] ${diffTone}`}>
-                        {diffText !== '持平' && <span className={`${diffIcon} h-3 w-3`} />}
+                        {diffText !== t('持平') && <span className={`${diffIcon} h-3 w-3`} />}
                         <span>{diffText}</span>
                       </span>
                     )}
                     {isFirstRecord && !record.note && (
                       <span className="rounded-sm bg-[var(--carbon-primary-soft)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--carbon-primary)]">
-                        初始体重
+                        {t('初始体重')}
                       </span>
                     )}
                   </div>
                   <p className="mt-0.5 truncate text-xs text-[var(--carbon-text-secondary)]">
-                    {dayjs(record.date).format('YYYY年MM月DD日')}
+                    {formatAppDate(record.date)}
                     {record.note ? ` · ${record.note}` : ''}
                   </p>
                 </div>
@@ -143,14 +145,14 @@ export default function TrendsRecordList({ records, goal, onUpdateRecord, onDele
                   <button
                     onClick={() => (isEditing ? setEditingId(null) : handleEditClick(record))}
                     className={`flex h-8 w-8 items-center justify-center transition-colors hover:text-[var(--carbon-primary)] ${isEditing ? 'text-[var(--carbon-primary)]' : 'text-[var(--carbon-outline)]'}`}
-                    aria-label="编辑记录"
+                    aria-label={t('编辑记录')}
                   >
                     <span className="i-lucide-pencil h-4 w-4" />
                   </button>
                   <button
                     onClick={() => handleDeleteClick(record.id)}
                     className="flex h-8 w-8 items-center justify-center text-[var(--carbon-outline)] transition-colors hover:text-[var(--color-danger)]"
-                    aria-label="删除记录"
+                    aria-label={t('删除记录')}
                   >
                     <span className="i-lucide-trash-2 h-4 w-4" />
                   </button>
@@ -170,45 +172,47 @@ export default function TrendsRecordList({ records, goal, onUpdateRecord, onDele
                       value={editWeight}
                       onChange={event => setEditWeight(event.target.value)}
                       wrapperClassName="flex-1 !h-10"
-                      placeholder={`体重（${WEIGHT_UNIT_LABEL[unit]}）`}
+                      placeholder={t`体重（${getWeightUnitLabel(unit)}）`}
                     />
                     <button
                       onClick={() => handleConfirmEdit(record.id)}
                       className="flex h-10 shrink-0 items-center justify-center bg-[var(--carbon-primary)] px-4 text-xs font-medium text-[var(--carbon-text-on-primary)] hover:bg-[var(--carbon-primary-hover)]"
                     >
-                      保存
+                      {t('保存')}
                     </button>
                     <button
                       onClick={() => setEditingId(null)}
                       className="flex h-10 shrink-0 items-center justify-center px-3 text-xs text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
                     >
-                      取消
+                      {t('取消')}
                     </button>
                   </div>
                   <TextInput
                     type="text"
                     value={editNote}
                     onChange={event => setEditNote(event.target.value)}
-                    placeholder="备注（选填）"
+                    placeholder={t('备注（选填）')}
                     wrapperClassName="!h-10"
                   />
                 </div>
               )}
               {pendingDeleteId === record.id && (
                 <div className="flex items-center justify-between border-t border-[var(--color-danger)] bg-[var(--carbon-surface-subtle)] px-4 py-2.5">
-                  <p className="text-xs text-[var(--carbon-text-secondary)]">确认删除这条记录？</p>
+                  <p className="text-xs text-[var(--carbon-text-secondary)]">
+                    {t('确认删除这条记录？')}
+                  </p>
                   <div className="flex gap-2">
                     <button
                       onClick={() => setPendingDeleteId(null)}
                       className="px-3 py-1 text-xs text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
                     >
-                      取消
+                      {t('取消')}
                     </button>
                     <button
                       onClick={handleConfirmDelete}
                       className="bg-[var(--color-danger)] px-3 py-1 text-xs font-medium text-white"
                     >
-                      删除
+                      {t('删除')}
                     </button>
                   </div>
                 </div>

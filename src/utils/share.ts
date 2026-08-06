@@ -1,4 +1,5 @@
 import { toPng } from 'html-to-image'
+import { t } from 'virtual:ai-i18n'
 import { toast } from './toast'
 
 /**
@@ -68,6 +69,6 @@ export async function processShareOrDownload(dataUrl: string, filename: string) 
   const shared = await shareImageNative(dataUrl, filename)
   if (!shared) {
     downloadImage(dataUrl, filename)
-    toast.success('已保存图片，如未生效请长按海报保存')
+    toast.success(t('已保存图片，如未生效请长按海报保存'))
   }
 }

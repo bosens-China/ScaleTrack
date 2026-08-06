@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import dayjs from 'dayjs'
 
@@ -11,7 +12,7 @@ import { classifyGainPace, classifyLossPace } from '@/utils/calorie-guidance'
 import { isGoalOverdue } from '@/utils/goal-state'
 import { toast } from '@/utils/toast'
 import { validateWeight } from '@/utils/validation'
-import { formatWeightValue, fromDisplayWeight, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
+import { formatWeightValue, fromDisplayWeight, getWeightUnitLabel } from '@/utils/weight-unit'
 
 interface Props {
   goal: Goal | null
@@ -30,6 +31,7 @@ export default function ProfileGoalSection({
   onSaveGoal,
   onAbandonGoal,
 }: Props) {
+  const { t } = useI18n()
   const { unit } = useWeightUnit()
   const [isEditingGoal, setIsEditingGoal] = useState(false)
   const [goalInput, setGoalInput] = useState(goal ? formatWeightValue(goal.targetWeight, unit) : '')
@@ -39,7 +41,7 @@ export default function ProfileGoalSection({
 
   const today = dayjs().format('YYYY-MM-DD')
   const overdue = isGoalOverdue(goal, today)
-  const unitLabel = WEIGHT_UNIT_LABEL[unit]
+  const unitLabel = getWeightUnitLabel(unit)
 
   // 推荐体重的展示字符串（按当前单位换算）
   const recommendedInput = formatWeightValue(recommendedWeight, unit)
@@ -56,14 +58,14 @@ export default function ProfileGoalSection({
     const parsedDisplay = Number.parseFloat(goalInput)
     const parsed = fromDisplayWeight(parsedDisplay, unit)
     if (Number.isNaN(parsedDisplay) || !validateWeight(parsed)) {
-      toast.error('请输入有效的目标体重')
+      toast.error(t('请输入有效的目标体重'))
       return
     }
 
     // 起始体重沿用已有目标，否则取当前体重；目标等于起始会被立即判定达成，需拦截
     const referenceWeight = goal ? goal.startWeight : currentWeight
     if (parsed === referenceWeight) {
-      toast.error('目标体重不能与起始体重相同')
+      toast.error(t('目标体重不能与起始体重相同'))
       return
     }
 
@@ -79,7 +81,7 @@ export default function ProfileGoalSection({
           : classifyLossPace(weeklyKg, currentWeight)
         if (level === 'unsafe') {
           toast.info(
-            `目标节奏偏快（约 ${weeklyKg.toFixed(1)}kg/周），注意健康，循序渐进更稳妥`,
+            t`目标节奏偏快（约 ${weeklyKg.toFixed(1)}kg/周），注意健康，循序渐进更稳妥`,
             3500,
           )
         }
@@ -100,10 +102,10 @@ export default function ProfileGoalSection({
     <section className="flex flex-col gap-2 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] p-4">
       <div className="flex items-center justify-between">
         <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--carbon-text-secondary)]">
-          目标体重
+          {t('目标体重')}
         </h3>
         <button onClick={handleToggleEdit} className="text-sm text-[var(--carbon-primary)]">
-          {isEditingGoal ? '收起' : goal ? '调整' : '设置'}
+          {isEditingGoal ? t('收起') : goal ? t('调整') : t('设置')}
         </button>
       </div>
 
@@ -118,8 +120,8 @@ export default function ProfileGoalSection({
               className={`flex items-center gap-1 text-xs ${overdue ? 'text-[var(--color-warning)]' : 'text-[var(--carbon-text-secondary)]'}`}
             >
               <span className="i-lucide-calendar-clock h-3.5 w-3.5" />
-              期望达成：{dayjs(goal.targetDate).format('YYYY年MM月DD日')}
-              {overdue && ' · 已过期'}
+              {t`期望达成：${dayjs(goal.targetDate).format('YYYY/MM/DD')}`}
+              {overdue && t(' · 已过期')}
             </p>
           )}
         </div>
@@ -129,20 +131,20 @@ export default function ProfileGoalSection({
       {!isEditingGoal && overdue && !isConfirmingAbandon && (
         <div className="mt-2 flex flex-col gap-2 border-l-2 border-[var(--color-warning)] bg-[var(--carbon-surface-subtle)] px-3 py-2.5">
           <p className="text-xs leading-5 text-[var(--carbon-text)]">
-            目标日期已过但尚未达成，可以延长日期、重设目标，或放弃这个目标。
+            {t('目标日期已过但尚未达成，可以延长日期、重设目标，或放弃这个目标。')}
           </p>
           <div className="flex gap-2">
             <button
               onClick={handleToggleEdit}
               className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-3 py-1 text-xs font-medium text-[var(--carbon-text)] transition-colors hover:bg-[var(--carbon-surface-variant)]"
             >
-              延期 / 调整
+              {t('延期 / 调整')}
             </button>
             <button
               onClick={() => setIsConfirmingAbandon(true)}
               className="px-3 py-1 text-xs text-[var(--carbon-text-secondary)] transition-colors hover:text-[var(--color-danger)]"
             >
-              放弃目标
+              {t('放弃目标')}
             </button>
           </div>
         </div>
@@ -163,13 +165,13 @@ export default function ProfileGoalSection({
                 )
               }
               wrapperClassName="flex-1 !h-10"
-              placeholder={`目标体重（${unitLabel}）`}
+              placeholder={t`目标体重（${unitLabel}）`}
             />
             <button
               onClick={handleSave}
               className="flex h-10 items-center justify-center bg-[var(--carbon-primary)] px-5 text-sm font-medium text-[var(--carbon-text-on-primary)] transition-colors hover:bg-[var(--carbon-primary-hover)]"
             >
-              保存
+              {t('保存')}
             </button>
           </div>
 
@@ -185,8 +187,8 @@ export default function ProfileGoalSection({
                 }
               >
                 {targetDate
-                  ? `期望达成 ${dayjs(targetDate).format('YYYY/MM/DD')}`
-                  : '设置期望达成日期（选填）'}
+                  ? t`期望达成 ${dayjs(targetDate).format('YYYY/MM/DD')}`
+                  : t('设置期望达成日期（选填）')}
               </span>
               <span className="i-lucide-calendar-clock h-4 w-4 text-[var(--carbon-text-secondary)]" />
             </button>
@@ -195,7 +197,7 @@ export default function ProfileGoalSection({
                 type="button"
                 onClick={() => setTargetDate(undefined)}
                 className="flex h-10 w-10 shrink-0 items-center justify-center text-[var(--carbon-text-secondary)] transition-colors hover:text-[var(--color-danger)]"
-                aria-label="清除目标日期"
+                aria-label={t('清除目标日期')}
               >
                 <span className="i-lucide-x h-4 w-4" />
               </button>
@@ -209,11 +211,11 @@ export default function ProfileGoalSection({
             className="flex items-center gap-1.5 self-start rounded-full border border-[var(--carbon-border)] bg-[var(--carbon-surface-subtle)] px-3 py-1.5 text-xs text-[var(--carbon-text-secondary)] transition-colors hover:border-[var(--carbon-primary)] hover:text-[var(--carbon-primary)]"
           >
             <span className="i-lucide-sparkles h-3.5 w-3.5 text-[var(--carbon-primary)]" />
-            推荐 {recommendedInput} {unitLabel}（BMI 正常中值）
+            {t`推荐 ${recommendedInput} ${unitLabel}（BMI 正常中值）`}
           </button>
 
           <p className="text-xs text-[var(--carbon-text-secondary)]">
-            更新目标后，主页的进度追踪器会自动重置进度。
+            {t('更新目标后，主页的进度追踪器会自动重置进度。')}
           </p>
 
           {/* 放弃当前目标入口 */}
@@ -221,20 +223,20 @@ export default function ProfileGoalSection({
             (isConfirmingAbandon ? (
               <div className="flex items-center justify-between border-t border-[var(--color-danger)] pt-3">
                 <p className="text-xs text-[var(--carbon-text-secondary)]">
-                  放弃后该目标不会归档到里程碑，确认放弃？
+                  {t('放弃后该目标不会归档到里程碑，确认放弃？')}
                 </p>
                 <div className="flex gap-2">
                   <button
                     onClick={() => setIsConfirmingAbandon(false)}
                     className="px-3 py-1 text-xs text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
                   >
-                    取消
+                    {t('取消')}
                   </button>
                   <button
                     onClick={handleAbandon}
                     className="bg-[var(--color-danger)] px-3 py-1 text-xs font-medium text-white"
                   >
-                    放弃
+                    {t('放弃')}
                   </button>
                 </div>
               </div>
@@ -244,7 +246,7 @@ export default function ProfileGoalSection({
                 className="flex items-center gap-1.5 self-start text-xs text-[var(--carbon-text-secondary)] transition-colors hover:text-[var(--color-danger)]"
               >
                 <span className="i-lucide-trash-2 h-3.5 w-3.5" />
-                放弃当前目标
+                {t('放弃当前目标')}
               </button>
             ))}
         </div>
@@ -253,19 +255,19 @@ export default function ProfileGoalSection({
       {/* 非编辑态下的放弃确认（来自概览态或过期横幅触发） */}
       {!isEditingGoal && goal && isConfirmingAbandon && (
         <div className="mt-2 flex items-center justify-between border-t border-[var(--color-danger)] pt-3">
-          <p className="text-xs text-[var(--carbon-text-secondary)]">确认放弃当前目标？</p>
+          <p className="text-xs text-[var(--carbon-text-secondary)]">{t('确认放弃当前目标？')}</p>
           <div className="flex gap-2">
             <button
               onClick={() => setIsConfirmingAbandon(false)}
               className="px-3 py-1 text-xs text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-text)]"
             >
-              取消
+              {t('取消')}
             </button>
             <button
               onClick={handleAbandon}
               className="bg-[var(--color-danger)] px-3 py-1 text-xs font-medium text-white"
             >
-              放弃
+              {t('放弃')}
             </button>
           </div>
         </div>

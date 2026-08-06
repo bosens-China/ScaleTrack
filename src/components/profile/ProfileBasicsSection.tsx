@@ -1,6 +1,5 @@
 import { useState } from 'react'
-
-import dayjs from 'dayjs'
+import { useI18n } from 'virtual:ai-i18n'
 
 import BirthDatePickerModal from '@/components/BirthDatePickerModal'
 import TextInput from '@/components/TextInput'
@@ -8,6 +7,7 @@ import TextInput from '@/components/TextInput'
 import { useWeightUnit } from '@/hooks/weight-unit-context'
 import type { UserProfile } from '@/types'
 import { getProfileAge } from '@/utils/age'
+import { formatAppDate } from '@/utils/date-format'
 import { toast } from '@/utils/toast'
 import { validateHeight } from '@/utils/validation'
 import { formatWeight } from '@/utils/weight-unit'
@@ -26,6 +26,7 @@ export default function ProfileBasicsSection({
   onEditingChange,
   onProfileUpdate,
 }: Props) {
+  const { t } = useI18n()
   const { unit } = useWeightUnit()
   const [heightInput, setHeightInput] = useState(String(profile.height))
   const [birthDateInput, setBirthDateInput] = useState<string | undefined>(profile.birthDate)
@@ -43,7 +44,7 @@ export default function ProfileBasicsSection({
   const handleSave = () => {
     const parsedHeight = Number.parseFloat(heightInput)
     if (!validateHeight(parsedHeight)) {
-      toast.error('请输入有效的身高')
+      toast.error(t('请输入有效的身高'))
       return
     }
     onProfileUpdate({ gender: genderInput, height: parsedHeight, birthDate: birthDateInput })
@@ -53,7 +54,7 @@ export default function ProfileBasicsSection({
   return (
     <section className="flex flex-col gap-4">
       <h3 className="px-1 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--carbon-text-secondary)]">
-        基础信息
+        {t('基础信息')}
       </h3>
       <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)]">
         {isEditing ? (
@@ -69,7 +70,7 @@ export default function ProfileBasicsSection({
                       : 'border-[var(--carbon-border)] text-[var(--carbon-text-secondary)]'
                   }`}
                 >
-                  {value === 'male' ? '男' : '女'}
+                  {value === 'male' ? t('男') : t('女')}
                 </button>
               ))}
             </div>
@@ -84,11 +85,11 @@ export default function ProfileBasicsSection({
                   300,
                 )
               }
-              placeholder="身高（cm）"
+              placeholder={t('身高（cm）')}
             />
             <div className="flex flex-col gap-2">
               <span className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-                出生年月日
+                {t('出生年月日')}
               </span>
               <button
                 type="button"
@@ -102,9 +103,7 @@ export default function ProfileBasicsSection({
                       : 'text-[var(--carbon-text-secondary)]'
                   }
                 >
-                  {birthDateInput
-                    ? dayjs(birthDateInput).format('YYYY年 MM月 DD日')
-                    : '请选择出生日期'}
+                  {birthDateInput ? formatAppDate(birthDateInput) : t('请选择出生日期')}
                 </span>
                 <span className="i-lucide-calendar h-4 w-4 text-[var(--carbon-text-secondary)]" />
               </button>
@@ -119,7 +118,7 @@ export default function ProfileBasicsSection({
               onClick={handleSave}
               className="h-12 w-full bg-[var(--carbon-primary)] text-sm font-medium text-[var(--carbon-text-on-primary)] hover:bg-[var(--carbon-primary-hover)]"
             >
-              保存基础信息
+              {t('保存基础信息')}
             </button>
           </div>
         ) : (
@@ -128,7 +127,7 @@ export default function ProfileBasicsSection({
               <div className="flex items-center gap-4">
                 <span className="i-lucide-stretch-horizontal h-5 w-5 text-[var(--carbon-text-secondary)]" />
                 <div>
-                  <p className="text-sm font-medium text-[var(--carbon-text)]">身高</p>
+                  <p className="text-sm font-medium text-[var(--carbon-text)]">{t('身高')}</p>
                   <p className="text-xs text-[var(--carbon-text-secondary)]">{profile.height} cm</p>
                 </div>
               </div>
@@ -136,16 +135,16 @@ export default function ProfileBasicsSection({
                 onClick={handleToggleProfileEdit}
                 className="text-sm font-medium text-[var(--carbon-primary)]"
               >
-                更改
+                {t('更改')}
               </button>
             </div>
             <div className="flex items-center justify-between border-b border-[var(--carbon-border)] p-4">
               <div className="flex items-center gap-4">
                 <span className="i-lucide-users h-5 w-5 text-[var(--carbon-text-secondary)]" />
                 <div>
-                  <p className="text-sm font-medium text-[var(--carbon-text)]">性别</p>
+                  <p className="text-sm font-medium text-[var(--carbon-text)]">{t('性别')}</p>
                   <p className="text-xs text-[var(--carbon-text-secondary)]">
-                    {profile.gender === 'male' ? '男' : '女'}
+                    {profile.gender === 'male' ? t('男') : t('女')}
                   </p>
                 </div>
               </div>
@@ -154,11 +153,11 @@ export default function ProfileBasicsSection({
               <div className="flex items-center gap-4">
                 <span className="i-lucide-calendar h-5 w-5 text-[var(--carbon-text-secondary)]" />
                 <div>
-                  <p className="text-sm font-medium text-[var(--carbon-text)]">年龄</p>
+                  <p className="text-sm font-medium text-[var(--carbon-text)]">{t('年龄')}</p>
                   <p className="text-xs text-[var(--carbon-text-secondary)]">
                     {getProfileAge(profile) !== undefined
-                      ? `${getProfileAge(profile)} 岁`
-                      : '未设置'}
+                      ? t`${getProfileAge(profile)} 岁`
+                      : t('未设置')}
                   </p>
                 </div>
               </div>
@@ -167,7 +166,7 @@ export default function ProfileBasicsSection({
               <div className="flex items-center gap-4">
                 <span className="i-lucide-scale h-5 w-5 text-[var(--carbon-text-secondary)]" />
                 <div>
-                  <p className="text-sm font-medium text-[var(--carbon-text)]">初始体重</p>
+                  <p className="text-sm font-medium text-[var(--carbon-text)]">{t('初始体重')}</p>
                   <p className="text-xs text-[var(--carbon-text-secondary)]">
                     {formatWeight(profile.initialWeight, unit)}
                   </p>

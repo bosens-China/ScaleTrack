@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import ActivityRecordForm from '@/components/ActivityRecordForm'
 import type { ActivityType, UserProfile, WeightRecord } from '@/types'
@@ -32,6 +33,7 @@ export default function AddPage({
   onDeleteActivityType,
 }: Props) {
   const [mode, setMode] = useState<AddMode>('hub')
+  const { t } = useI18n()
 
   if (mode === 'weight') {
     return (
@@ -52,14 +54,14 @@ export default function AddPage({
             <button
               onClick={() => setMode('hub')}
               className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--carbon-border)] bg-[var(--carbon-surface)] text-[var(--carbon-text)]"
-              aria-label="返回添加记录"
+              aria-label={t('返回添加记录')}
             >
               <span className="i-lucide-arrow-left h-5 w-5" />
             </button>
             <div>
               <p className="sport-kicker">Activity log</p>
               <h1 className="text-2xl font-black tracking-tight text-[var(--carbon-text)]">
-                运动打卡
+                {t('运动打卡')}
               </h1>
             </div>
           </header>
@@ -79,14 +81,14 @@ export default function AddPage({
     <div className="app-page sport-grid-bg bg-[var(--carbon-bg)]">
       <main className="app-main flex min-h-[calc(100dvh-var(--app-tabbar-height))] flex-col px-4 pb-8 pt-5">
         <header>
-          <p className="sport-kicker">New log / 选择记录</p>
+          <p className="sport-kicker">{t('新建记录 / 选择记录')}</p>
           <h1 className="mt-2 max-w-[300px] text-[36px] font-black leading-[1.04] tracking-[-0.04em] text-[var(--carbon-text)]">
-            今天，身体
+            {t('今天，身体')}
             <br />
-            发生了什么？
+            {t('发生了什么？')}
           </h1>
           <p className="mt-3 text-sm leading-6 text-[var(--carbon-text-secondary)]">
-            记录一个数字，或一次让身体动起来的时刻。
+            {t('记录一个数字，或一次让身体动起来的时刻。')}
           </p>
         </header>
 
@@ -103,9 +105,9 @@ export default function AddPage({
                 <span className="i-lucide-scale h-6 w-6" />
               </span>
               <div>
-                <p className="sport-kicker">Weight / 0.1 kg</p>
+                <p className="sport-kicker">{t('体重 / 0.1 kg')}</p>
                 <div className="mt-1 flex items-end justify-between">
-                  <h2 className="text-2xl font-black text-[var(--carbon-text)]">记录体重</h2>
+                  <h2 className="text-2xl font-black text-[var(--carbon-text)]">{t('记录体重')}</h2>
                   <span className="i-lucide-arrow-up-right h-6 w-6 text-[var(--carbon-text-secondary)]" />
                 </div>
               </div>
@@ -125,10 +127,10 @@ export default function AddPage({
               </span>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-65">
-                  Activity / Move
+                  {t('运动 / 活动')}
                 </p>
                 <div className="mt-1 flex items-end justify-between">
-                  <h2 className="text-2xl font-black">运动打卡</h2>
+                  <h2 className="text-2xl font-black">{t('运动打卡')}</h2>
                   <span className="i-lucide-arrow-up-right h-6 w-6 opacity-70" />
                 </div>
               </div>

@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { t } from 'virtual:ai-i18n'
 import type { Goal, TimeRange, UserProfile, WeightRecord, WeightUnit } from '../types'
 import { calcBMI } from './bmi'
 import { formatWeightValue } from './weight-unit'
@@ -143,26 +144,26 @@ export function buildTrendInsight(
   unit: WeightUnit = 'kg',
 ): string {
   if (records.length < 2) {
-    return '样本还不够，再记录几次后，这里会给出更有参考价值的趋势洞察。'
+    return t('样本还不够，再记录几次后，这里会给出更有参考价值的趋势洞察。')
   }
 
   const delta = getMetricStats(records, metric).delta ?? 0
   if (metric === 'bmi') {
     if (delta < 0) {
-      return `这段时间 BMI 下降了 ${Math.abs(delta).toFixed(1)}，整体趋势在向更轻盈的方向变化。`
+      return t`这段时间 BMI 下降了 ${Math.abs(delta).toFixed(1)}，整体趋势在向更轻盈的方向变化。`
     }
     if (delta > 0) {
-      return `这段时间 BMI 上升了 ${delta.toFixed(1)}，建议结合饮食与作息一起观察变化原因。`
+      return t`这段时间 BMI 上升了 ${delta.toFixed(1)}，建议结合饮食与作息一起观察变化原因。`
     }
-    return '最近 BMI 整体较为稳定，说明这段时间身体指标波动不大。'
+    return t('最近 BMI 整体较为稳定，说明这段时间身体指标波动不大。')
   }
 
-  const unitLabel = unit === 'jin' ? '斤' : 'kg'
+  const unitLabel = unit === 'jin' ? t('斤') : 'kg'
   if (delta < 0) {
-    return `这段时间体重下降了 ${formatWeightValue(Math.abs(delta), unit)}${unitLabel}，当前节奏保持得不错。`
+    return t`这段时间体重下降了 ${formatWeightValue(Math.abs(delta), unit)}${unitLabel}，当前节奏保持得不错。`
   }
   if (delta > 0) {
-    return `这段时间体重上升了 ${formatWeightValue(delta, unit)}${unitLabel}，建议留意饮食与作息变化。`
+    return t`这段时间体重上升了 ${formatWeightValue(delta, unit)}${unitLabel}，建议留意饮食与作息变化。`
   }
-  return '最近体重整体较为稳定，说明你的记录波动控制得比较平稳。'
+  return t('最近体重整体较为稳定，说明你的记录波动控制得比较平稳。')
 }

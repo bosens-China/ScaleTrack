@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import { useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 interface Props {
   isOpen: boolean
@@ -25,6 +26,7 @@ export default function FutureDatePickerModal({
   minDate,
   maxDate,
 }: Props) {
+  const { t } = useI18n()
   const todayStr = dayjs().format('YYYY-MM-DD')
   const minStr = minDate ?? todayStr
   const maxStr = maxDate ?? dayjs().add(2, 'year').format('YYYY-MM-DD')
@@ -70,7 +72,7 @@ export default function FutureDatePickerModal({
             <span className="i-lucide-chevron-left h-5 w-5" />
           </button>
           <span className="text-sm font-medium text-[var(--carbon-text)]">
-            {currentMonth.format('YYYY年 MM月')}
+            {t`${currentMonth.format('YYYY')}年 ${currentMonth.format('MM')}月`}
           </span>
           <button
             onClick={handleNextMonth}
@@ -82,7 +84,7 @@ export default function FutureDatePickerModal({
         </div>
 
         <div className="grid grid-cols-7 gap-1 mb-2">
-          {['一', '二', '三', '四', '五', '六', '日'].map(day => (
+          {[t('一'), t('二'), t('三'), t('四'), t('五'), t('六'), t('日')].map(day => (
             <div
               key={day}
               className="text-center text-xs font-medium text-[var(--carbon-text-secondary)] py-1"
@@ -116,7 +118,7 @@ export default function FutureDatePickerModal({
                   ${isSelected ? 'border-[var(--carbon-primary)] bg-[var(--carbon-primary-soft)] text-[var(--carbon-primary)] font-semibold' : 'border-transparent text-[var(--carbon-text)]'}
                   ${isToday && !isSelected ? 'border-[var(--carbon-border)]' : ''}
                 `}
-                aria-label={isSelectable ? dateStr : `${dateStr}，超出可选范围`}
+                aria-label={isSelectable ? dateStr : t`${dateStr}，超出可选范围`}
               >
                 <span>{dateObj.date()}</span>
               </button>
@@ -125,7 +127,7 @@ export default function FutureDatePickerModal({
         </div>
 
         <p className="mt-4 text-center text-[11px] leading-5 text-[var(--carbon-text-secondary)]">
-          选择一个未来日期作为期望达成时间，可随时调整或清除。
+          {t('选择一个未来日期作为期望达成时间，可随时调整或清除。')}
         </p>
       </div>
     </>

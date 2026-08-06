@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import TextInput from '@/components/TextInput'
 import type { UserProfile } from '@/types'
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function EditUserInfoPage({ profile, onSave, onCancel }: Props) {
+  const { t } = useI18n()
   const [nickname, setNickname] = useState(profile.nickname ?? '')
   const [avatar, setAvatar] = useState(profile.avatar ?? '')
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -40,7 +42,7 @@ export default function EditUserInfoPage({ profile, onSave, onCancel }: Props) {
         >
           <span className="i-lucide-chevron-left h-6 w-6" />
         </button>
-        <h1 className="text-base font-medium text-[var(--carbon-text)]">编辑资料</h1>
+        <h1 className="text-base font-medium text-[var(--carbon-text)]">{t('编辑资料')}</h1>
         <div className="w-14" />
       </header>
 
@@ -53,7 +55,7 @@ export default function EditUserInfoPage({ profile, onSave, onCancel }: Props) {
             {avatar ? (
               <img
                 src={avatar}
-                alt={nickname.trim() ? `${nickname.trim()}的头像` : '用户头像'}
+                alt={nickname.trim() ? t`${nickname.trim()}的头像` : t('用户头像')}
                 className="h-24 w-24 rounded-full border border-[var(--carbon-border)] object-cover"
               />
             ) : (
@@ -72,7 +74,7 @@ export default function EditUserInfoPage({ profile, onSave, onCancel }: Props) {
               onChange={handleFileChange}
             />
           </div>
-          <p className="text-xs text-[var(--carbon-text-secondary)]">点击更换头像</p>
+          <p className="text-xs text-[var(--carbon-text-secondary)]">{t('点击更换头像')}</p>
         </div>
 
         <section className="mt-4 flex flex-col gap-3">
@@ -80,14 +82,14 @@ export default function EditUserInfoPage({ profile, onSave, onCancel }: Props) {
             htmlFor="nickname"
             className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]"
           >
-            昵称
+            {t('昵称')}
           </label>
           <TextInput
             id="nickname"
             type="text"
             value={nickname}
             onChange={e => setNickname(e.target.value)}
-            placeholder="本地用户"
+            placeholder={t('本地用户')}
           />
         </section>
 
@@ -96,7 +98,7 @@ export default function EditUserInfoPage({ profile, onSave, onCancel }: Props) {
             onClick={handleSave}
             className="flex h-12 w-full items-center justify-center bg-[var(--carbon-primary)] px-6 text-sm font-medium text-[var(--carbon-text-on-primary)] shadow-sm transition-colors hover:bg-[var(--carbon-primary-hover)]"
           >
-            保存修改
+            {t('保存修改')}
           </button>
         </div>
       </main>

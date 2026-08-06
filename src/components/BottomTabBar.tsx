@@ -1,4 +1,5 @@
 import type { AppTab } from '@/types'
+import { useI18n } from 'virtual:ai-i18n'
 
 interface TabDefinition {
   key: AppTab
@@ -6,23 +7,24 @@ interface TabDefinition {
   icon: string
 }
 
-const TABS: TabDefinition[] = [
-  { key: 'dashboard', label: '总览', icon: 'i-lucide-layout-dashboard' },
-  { key: 'trends', label: '趋势', icon: 'i-lucide-chart-line' },
-  { key: 'add', label: '添加', icon: 'i-lucide-plus-circle' },
-  { key: 'activity', label: '运动', icon: 'i-lucide-activity' },
-  { key: 'profile', label: '我的', icon: 'i-lucide-user-round' },
-]
-
 interface Props {
   activeTab: AppTab
   onChange: (tab: AppTab) => void
 }
 
 export default function BottomTabBar({ activeTab, onChange }: Props) {
+  const { t } = useI18n()
+  const tabs: TabDefinition[] = [
+    { key: 'dashboard', label: t('总览'), icon: 'i-lucide-layout-dashboard' },
+    { key: 'trends', label: t('趋势'), icon: 'i-lucide-chart-line' },
+    { key: 'add', label: t('添加'), icon: 'i-lucide-plus-circle' },
+    { key: 'activity', label: t('运动'), icon: 'i-lucide-activity' },
+    { key: 'profile', label: t('我的'), icon: 'i-lucide-user-round' },
+  ]
+
   return (
     <nav className="app-tabbar fixed bottom-0 left-1/2 z-50 flex w-full max-w-[430px] -translate-x-1/2 border-t border-[var(--carbon-border)] bg-[var(--tabbar-bg)] backdrop-blur-xl">
-      {TABS.map(tab => {
+      {tabs.map(tab => {
         const isActive = tab.key === activeTab
         const isAdd = tab.key === 'add'
 

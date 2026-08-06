@@ -1,9 +1,15 @@
 import dayjs from 'dayjs'
 import { useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import ActivityRecordForm from '@/components/ActivityRecordForm'
 import type { ActivityRecord, ActivityType, AppPage } from '@/types'
-import { getActivityWeekFrequencies, getActivityWeekStats } from '@/utils/activity'
+import {
+  getActivityDisplayName,
+  getActivityWeekFrequencies,
+  getActivityWeekStats,
+} from '@/utils/activity'
+import { formatAppDate } from '@/utils/date-format'
 
 interface ActivitySavePayload {
   id?: string
@@ -23,15 +29,6 @@ interface Props {
   onDeleteType: (id: string) => void
 }
 
-const WEEKDAY_LABELS = ['一', '二', '三', '四', '五', '六', '日']
-
-function formatDuration(minutes: number) {
-  if (minutes < 60) return `${minutes} 分钟`
-  const hours = Math.floor(minutes / 60)
-  const rest = minutes % 60
-  return rest === 0 ? `${hours} 小时` : `${hours} 小时 ${rest} 分`
-}
-
 export default function ActivityPage({
   activityRecords,
   activityTypes,
@@ -41,6 +38,7 @@ export default function ActivityPage({
   onAddType,
   onDeleteType,
 }: Props) {
+  const { t } = useI18n()
   const [currentMonth, setCurrentMonth] = useState(() => dayjs().startOf('month'))
   const [editingRecord, setEditingRecord] = useState<ActivityRecord | null>(null)
 
@@ -55,8 +53,17 @@ export default function ActivityPage({
   for (const record of activityRecords) {
     activityCount.set(record.activityName, (activityCount.get(record.activityName) ?? 0) + 1)
   }
-  const favoriteActivity =
-    [...activityCount.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? '暂无'
+  const favoriteActivity = [...activityCount.entries()].sort((a, b) => b[1] - a[1])[0]?.[0]
+  const favoriteActivityLabel = favoriteActivity
+    ? getActivityDisplayName(favoriteActivity)
+    : t('暂无')
+  const weekdayLabels = [t('一'), t('二'), t('三'), t('四'), t('五'), t('六'), t('日')]
+  const formatDuration = (minutes: number) => {
+    if (minutes < 60) return t`${minutes} 分钟`
+    const hours = Math.floor(minutes / 60)
+    const rest = minutes % 60
+    return rest === 0 ? t`${hours} 小时` : t`${hours} 小时 ${rest} 分`
+  }
 
   const firstDayOffset = currentMonth.startOf('month').day()
   const leadingDays = firstDayOffset === 0 ? 6 : firstDayOffset - 1
@@ -78,9 +85,9 @@ export default function ActivityPage({
       <main className="app-main flex flex-col gap-5 px-4 pb-8 pt-4">
         <header className="flex items-start justify-between">
           <div>
-            <p className="sport-kicker">Movement / 运动节律</p>
+            <p className="sport-kicker">{t('运动 / 运动节律')}</p>
             <h1 className="mt-1 text-[32px] font-black tracking-[-0.04em] text-[var(--carbon-text)]">
-              我的运动
+              {t('我的运动')}
             </h1>
           </div>
           <button
@@ -88,7 +95,7 @@ export default function ActivityPage({
             className="sport-primary-button min-h-11 px-4 text-sm font-black"
           >
             <span className="i-lucide-plus h-4 w-4" />
-            打卡
+            {t('打卡')}
           </button>
         </header>
 
@@ -106,11 +113,11 @@ export default function ActivityPage({
                   <span className="text-[54px] font-black leading-none">
                     {weekStats.activeDays}
                   </span>
-                  <span className="pb-1 text-sm font-bold opacity-70">天运动</span>
+                  <span className="pb-1 text-sm font-bold opacity-70">{t('天运动')}</span>
                 </p>
               </div>
               <div className="pb-1 text-right">
-                <p className="text-lg font-black">{weekStats.sessions} 次</p>
+                <p className="text-lg font-black">{t`${weekStats.sessions} 次`}</p>
                 <p className="mt-1 text-xs opacity-60">{formatDuration(weekStats.totalMinutes)}</p>
               </div>
             </div>
@@ -118,7 +125,7 @@ export default function ActivityPage({
             <div className="mt-6 grid grid-cols-7 gap-2">
               {weekStats.days.map((day, index) => (
                 <div key={day.date} className="flex flex-col items-center gap-2">
-                  <span className="text-[10px] font-bold opacity-55">{WEEKDAY_LABELS[index]}</span>
+                  <span className="text-[10px] font-bold opacity-55">{weekdayLabels[index]}</span>
                   <span
                     className={`flex h-8 w-full min-w-0 items-center justify-center border text-[10px] font-black ${
                       day.active
@@ -127,7 +134,9 @@ export default function ActivityPage({
                           ? 'border-[var(--sport-accent)] text-[var(--sport-accent)]'
                           : 'border-[var(--sport-hero-border)] text-transparent'
                     }`}
-                    aria-label={`${day.date}${day.active ? `，${day.sessions} 次运动` : '，未运动'}`}
+                    aria-label={
+                      day.active ? t`${day.date}，${day.sessions} 次运动` : t`${day.date}，未运动`
+                    }
                   >
                     {day.active ? day.sessions : '0'}
                   </span>
@@ -139,16 +148,16 @@ export default function ActivityPage({
 
         <section className="grid grid-cols-3 gap-2">
           {[
-            ['本周次数', `${weekStats.sessions}`, 'i-lucide-repeat-2'],
-            ['本周时长', `${weekStats.totalMinutes}`, 'i-lucide-timer'],
-            ['最常运动', favoriteActivity, 'i-lucide-award'],
+            [t('本周次数'), `${weekStats.sessions}`, 'i-lucide-repeat-2'],
+            [t('本周时长'), `${weekStats.totalMinutes}`, 'i-lucide-timer'],
+            [t('最常运动'), favoriteActivityLabel, 'i-lucide-award'],
           ].map(([label, value, icon]) => (
             <div key={label} className="sport-panel min-w-0 p-3">
               <span className={`${icon} h-4 w-4 text-[var(--carbon-primary)]`} />
               <p className="mt-3 truncate text-xl font-black text-[var(--carbon-text)]">{value}</p>
               <p className="mt-1 truncate text-[10px] font-bold text-[var(--carbon-text-secondary)]">
                 {label}
-                {label === '本周时长' ? '（分）' : ''}
+                {label === t('本周时长') ? t('（分）') : ''}
               </p>
             </div>
           ))}
@@ -158,10 +167,10 @@ export default function ActivityPage({
           <div className="flex items-end justify-between">
             <div>
               <p className="sport-kicker">12-week rhythm</p>
-              <h2 className="mt-1 text-lg font-black text-[var(--carbon-text)]">运动频率</h2>
+              <h2 className="mt-1 text-lg font-black text-[var(--carbon-text)]">{t('运动频率')}</h2>
             </div>
             <span className="text-xs font-semibold text-[var(--carbon-text-secondary)]">
-              每周运动天数
+              {t('每周运动天数')}
             </span>
           </div>
 
@@ -176,7 +185,7 @@ export default function ActivityPage({
                       week.activeDays > 0 ? 'var(--sport-accent)' : 'var(--carbon-surface-strong)',
                     opacity: index === weekFrequencies.length - 1 ? 1 : 0.72,
                   }}
-                  title={`${week.label}：${week.activeDays} 天`}
+                  title={t`${week.label}：${week.activeDays} 天`}
                 />
               </div>
             ))}
@@ -192,28 +201,28 @@ export default function ActivityPage({
             <button
               onClick={() => setCurrentMonth(month => month.subtract(1, 'month'))}
               className="flex h-11 w-11 items-center justify-center rounded-full text-[var(--carbon-text-secondary)] hover:bg-[var(--carbon-surface-subtle)]"
-              aria-label="上个月"
+              aria-label={t('上个月')}
             >
               <span className="i-lucide-chevron-left h-5 w-5" />
             </button>
             <div className="text-center">
               <p className="sport-kicker">Activity calendar</p>
               <h2 className="mt-1 text-base font-black text-[var(--carbon-text)]">
-                {currentMonth.format('YYYY 年 M 月')}
+                {t`${currentMonth.format('YYYY')} 年 ${currentMonth.format('M')} 月`}
               </h2>
             </div>
             <button
               onClick={() => setCurrentMonth(month => month.add(1, 'month'))}
               disabled={currentMonth.isSame(dayjs(), 'month')}
               className="flex h-11 w-11 items-center justify-center rounded-full text-[var(--carbon-text-secondary)] hover:bg-[var(--carbon-surface-subtle)] disabled:opacity-25"
-              aria-label="下个月"
+              aria-label={t('下个月')}
             >
               <span className="i-lucide-chevron-right h-5 w-5" />
             </button>
           </div>
 
           <div className="mt-3 grid grid-cols-7 gap-1">
-            {WEEKDAY_LABELS.map(label => (
+            {weekdayLabels.map(label => (
               <span
                 key={label}
                 className="py-1 text-center text-[10px] font-bold text-[var(--carbon-text-secondary)]"
@@ -231,7 +240,9 @@ export default function ActivityPage({
                   className={`flex aspect-square min-w-0 flex-col items-center justify-center gap-1 border text-xs ${
                     dateString === today ? 'border-[var(--carbon-primary)]' : 'border-transparent'
                   } ${dayRecords.length > 0 ? 'bg-[var(--carbon-surface-subtle)] font-black text-[var(--carbon-text)]' : 'text-[var(--carbon-text-secondary)]'}`}
-                  aria-label={`${dateString}${dayRecords.length ? `，${dayRecords.length} 次运动` : ''}`}
+                  aria-label={
+                    dayRecords.length ? t`${dateString}，${dayRecords.length} 次运动` : dateString
+                  }
                 >
                   <span>{date.date()}</span>
                   <span className="flex h-1.5 max-w-full gap-0.5 overflow-hidden">
@@ -253,10 +264,10 @@ export default function ActivityPage({
           <div className="flex items-end justify-between px-1">
             <div>
               <p className="sport-kicker">History</p>
-              <h2 className="mt-1 text-lg font-black text-[var(--carbon-text)]">最近运动</h2>
+              <h2 className="mt-1 text-lg font-black text-[var(--carbon-text)]">{t('最近运动')}</h2>
             </div>
             <span className="text-xs text-[var(--carbon-text-secondary)]">
-              共 {activityRecords.length} 次
+              {t`共 ${activityRecords.length} 次`}
             </span>
           </div>
 
@@ -266,16 +277,18 @@ export default function ActivityPage({
                 <span className="i-lucide-activity h-7 w-7" />
               </span>
               <div>
-                <h3 className="text-lg font-black text-[var(--carbon-text)]">还没有运动记录</h3>
+                <h3 className="text-lg font-black text-[var(--carbon-text)]">
+                  {t('还没有运动记录')}
+                </h3>
                 <p className="mt-2 text-sm leading-6 text-[var(--carbon-text-secondary)]">
-                  不必等到完美的一次训练，从今天做过的运动开始。
+                  {t('不必等到完美的一次训练，从今天做过的运动开始。')}
                 </p>
               </div>
               <button
                 onClick={() => onNavigate('add')}
                 className="sport-primary-button min-h-11 px-5 text-sm font-black"
               >
-                记录第一次运动
+                {t('记录第一次运动')}
               </button>
             </div>
           ) : (
@@ -294,32 +307,36 @@ export default function ActivityPage({
                   <div className="min-w-0 flex-1">
                     <div className="flex items-baseline gap-2">
                       <h3 className="truncate text-sm font-black text-[var(--carbon-text)]">
-                        {record.activityName}
+                        {getActivityDisplayName(record.activityName)}
                       </h3>
                       <span className="shrink-0 text-xs font-bold text-[var(--carbon-primary)]">
                         {formatDuration(record.durationMinutes)}
                       </span>
                     </div>
                     <p className="mt-1 truncate text-xs text-[var(--carbon-text-secondary)]">
-                      {dayjs(record.date).format('M月D日 ddd')}
+                      {formatAppDate(record.date, 'monthDayWeek')}
                       {record.note ? ` · ${record.note}` : ''}
                     </p>
                   </div>
                   <button
                     onClick={() => setEditingRecord(record)}
                     className="flex h-11 w-11 shrink-0 items-center justify-center text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-primary)]"
-                    aria-label={`编辑${record.activityName}记录`}
+                    aria-label={t`编辑 ${getActivityDisplayName(record.activityName)} 记录`}
                   >
                     <span className="i-lucide-pencil h-4 w-4" />
                   </button>
                   <button
                     onClick={() => {
-                      if (window.confirm(`删除 ${record.activityName} 这条运动记录？`)) {
+                      if (
+                        window.confirm(
+                          t`删除 ${getActivityDisplayName(record.activityName)} 这条运动记录？`,
+                        )
+                      ) {
                         onDeleteRecord(record.id)
                       }
                     }}
                     className="flex h-11 w-11 shrink-0 items-center justify-center text-[var(--carbon-text-secondary)] hover:text-[var(--color-danger)]"
-                    aria-label={`删除${record.activityName}记录`}
+                    aria-label={t`删除 ${getActivityDisplayName(record.activityName)} 记录`}
                   >
                     <span className="i-lucide-trash-2 h-4 w-4" />
                   </button>
@@ -336,12 +353,14 @@ export default function ActivityPage({
             <div className="mb-5 flex items-start justify-between">
               <div>
                 <p className="sport-kicker">Edit record</p>
-                <h2 className="mt-1 text-xl font-black text-[var(--carbon-text)]">修改运动记录</h2>
+                <h2 className="mt-1 text-xl font-black text-[var(--carbon-text)]">
+                  {t('修改运动记录')}
+                </h2>
               </div>
               <button
                 onClick={() => setEditingRecord(null)}
                 className="flex h-11 w-11 items-center justify-center rounded-full text-[var(--carbon-text-secondary)]"
-                aria-label="关闭编辑"
+                aria-label={t('关闭编辑')}
               >
                 <span className="i-lucide-x h-5 w-5" />
               </button>

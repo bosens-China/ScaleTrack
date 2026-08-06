@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import { useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import type { WeightRecord } from '@/types'
 import { getEarliestRecordDate, isRecordDateSelectable } from '@/utils/record-date'
@@ -19,6 +20,7 @@ export default function CalendarModal({
   selectedDate,
   onSelectDate,
 }: Props) {
+  const { t } = useI18n()
   const [currentMonth, setCurrentMonth] = useState(() => dayjs(selectedDate).startOf('month'))
 
   if (!isOpen) return null
@@ -61,7 +63,7 @@ export default function CalendarModal({
             <span className="i-lucide-chevron-left h-5 w-5" />
           </button>
           <span className="text-sm font-medium text-[var(--carbon-text)]">
-            {currentMonth.format('YYYY年 MM月')}
+            {t`${currentMonth.format('YYYY')}年 ${currentMonth.format('MM')}月`}
           </span>
           <button
             onClick={handleNextMonth}
@@ -73,7 +75,7 @@ export default function CalendarModal({
         </div>
 
         <div className="grid grid-cols-7 gap-1 mb-2">
-          {['一', '二', '三', '四', '五', '六', '日'].map(day => (
+          {[t('一'), t('二'), t('三'), t('四'), t('五'), t('六'), t('日')].map(day => (
             <div
               key={day}
               className="text-center text-xs font-medium text-[var(--carbon-text-secondary)] py-1"
@@ -112,9 +114,9 @@ export default function CalendarModal({
                 `}
                 aria-label={
                   isFuture
-                    ? `${dateStr}，未来日期不可选择`
+                    ? t`${dateStr}，未来日期不可选择`
                     : isExpired
-                      ? `${dateStr}，超出可补录范围`
+                      ? t`${dateStr}，超出可补录范围`
                       : dateStr
                 }
               >
@@ -136,15 +138,15 @@ export default function CalendarModal({
         <div className="mt-4 flex items-center justify-center gap-4 text-[10px] text-[var(--carbon-text-secondary)]">
           <div className="flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--carbon-primary)]" />
-            <span>已记录</span>
+            <span>{t('已记录')}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--carbon-border)]" />
-            <span>未记录</span>
+            <span>{t('未记录')}</span>
           </div>
         </div>
         <p className="mt-3 text-center text-[11px] leading-5 text-[var(--carbon-text-secondary)]">
-          仅支持补录最近 1 个月内的数据，今天仍可重复覆盖保存。
+          {t('仅支持补录最近 1 个月内的数据，今天仍可重复覆盖保存。')}
         </p>
       </div>
     </>

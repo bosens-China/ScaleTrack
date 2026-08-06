@@ -1,7 +1,9 @@
 import { usePwaStatus } from '@/hooks/usePwaStatus'
+import { useI18n } from 'virtual:ai-i18n'
 
 export default function PwaUpdateBanner() {
   const { needRefresh, offlineReady, applyUpdate, dismissUpdateNotice } = usePwaStatus()
+  const { t } = useI18n()
 
   if (!needRefresh && !offlineReady) return null
 
@@ -17,10 +19,10 @@ export default function PwaUpdateBanner() {
         />
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-[var(--carbon-text)]">
-            {needRefresh ? '发现新版本' : '已支持离线使用'}
+            {needRefresh ? t('发现新版本') : t('已支持离线使用')}
           </p>
           <p className="text-xs text-[var(--carbon-text-secondary)]">
-            {needRefresh ? '更新后即可使用最新功能。' : '断网时也能打开应用查看本地数据。'}
+            {needRefresh ? t('更新后即可使用最新功能。') : t('断网时也能打开应用查看本地数据。')}
           </p>
         </div>
         {needRefresh && (
@@ -28,12 +30,12 @@ export default function PwaUpdateBanner() {
             className="h-8 shrink-0 bg-[var(--carbon-primary)] px-3 text-xs font-medium text-[var(--carbon-text-on-primary)]"
             onClick={() => applyUpdate(true)}
           >
-            更新
+            {t('更新')}
           </button>
         )}
         <button
           className="flex h-8 w-8 shrink-0 items-center justify-center text-[var(--carbon-text-secondary)]"
-          title="关闭"
+          title={t('关闭')}
           onClick={dismissUpdateNotice}
         >
           <span className="i-lucide-x h-4 w-4" />

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import { useEffect, useRef } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 interface ColumnProps {
   options: { value: number; label: string }[]
@@ -74,6 +75,7 @@ interface Props {
 }
 
 export default function BirthDatePicker({ value, onChange }: Props) {
+  const { t } = useI18n()
   const currentYear = dayjs().year()
   const currentMonth = value ? dayjs(value).month() + 1 : 1
   const currentDay = value ? dayjs(value).date() : 1
@@ -81,18 +83,18 @@ export default function BirthDatePicker({ value, onChange }: Props) {
 
   const years = Array.from({ length: 90 }, (_, i) => {
     const y = currentYear - 100 + i
-    return { value: y, label: `${y}年` }
+    return { value: y, label: t`${y}年` }
   }).reverse()
 
   const months = Array.from({ length: 12 }, (_, i) => ({
     value: i + 1,
-    label: `${i + 1}月`,
+    label: t`${i + 1}月`,
   }))
 
   const daysInMonth = dayjs(`${yearValue}-${currentMonth}-01`).daysInMonth()
   const days = Array.from({ length: daysInMonth }, (_, i) => ({
     value: i + 1,
-    label: `${i + 1}日`,
+    label: t`${i + 1}日`,
   }))
 
   // Trigger onChange with default values if currently undefined

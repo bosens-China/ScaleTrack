@@ -1,7 +1,9 @@
 import dayjs from 'dayjs'
 import { useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import type { ActivityRecord, ActivityType } from '@/types'
+import { getActivityDisplayName } from '@/utils/activity'
 import { toast } from '@/utils/toast'
 
 import ActivityDurationGauge from './ActivityDurationGauge'
@@ -34,11 +36,12 @@ export default function ActivityRecordForm({
   onCancel,
   allowTypeManagement = true,
 }: Props) {
+  const { t } = useI18n()
   const historicalType =
     initialRecord && !activityTypes.some(type => type.id === initialRecord.activityTypeId)
       ? {
           id: initialRecord.activityTypeId,
-          name: `${initialRecord.activityName}（已移除）`,
+          name: t`${initialRecord.activityName}（已移除）`,
           icon: initialRecord.activityIcon,
           color: initialRecord.activityColor,
           isBuiltIn: false,
@@ -61,11 +64,11 @@ export default function ActivityRecordForm({
   const handleAddType = () => {
     const name = newTypeName.trim()
     if (!name) {
-      toast.error('请输入运动名称')
+      toast.error(t('请输入运动名称'))
       return
     }
     if (name.length > 12) {
-      toast.error('运动名称最多 12 个字')
+      toast.error(t('运动名称最多 12 个字'))
       return
     }
     const type = onAddType(name)
@@ -81,11 +84,11 @@ export default function ActivityRecordForm({
       onSubmit={event => {
         event.preventDefault()
         if (!activityTypeId) {
-          toast.error('请选择运动类型')
+          toast.error(t('请选择运动类型'))
           return
         }
         if (date > dayjs().format('YYYY-MM-DD')) {
-          toast.error('不能记录未来的运动')
+          toast.error(t('不能记录未来的运动'))
           return
         }
         onSave({
@@ -103,7 +106,7 @@ export default function ActivityRecordForm({
             htmlFor="activity-type"
             className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]"
           >
-            运动类型
+            {t('运动类型')}
           </label>
           {allowTypeManagement && (
             <button
@@ -112,7 +115,7 @@ export default function ActivityRecordForm({
               className="flex min-h-11 items-center gap-1.5 text-xs font-bold text-[var(--carbon-primary)]"
             >
               <span className="i-lucide-plus h-4 w-4" />
-              新增类型
+              {t('新增类型')}
             </button>
           )}
         </div>
@@ -132,7 +135,7 @@ export default function ActivityRecordForm({
           >
             {selectableTypes.map(type => (
               <option key={type.id} value={type.id}>
-                {type.name}
+                {getActivityDisplayName(type.name)}
               </option>
             ))}
           </select>
@@ -152,16 +155,16 @@ export default function ActivityRecordForm({
                   handleAddType()
                 }
               }}
-              placeholder="例如：攀岩"
+              placeholder={t('例如：攀岩')}
               className="h-11 min-w-0 flex-1 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-3 text-sm text-[var(--carbon-text)]"
-              aria-label="新增运动类型名称"
+              aria-label={t('新增运动类型名称')}
             />
             <button
               type="button"
               onClick={handleAddType}
               className="h-11 bg-[var(--carbon-primary)] px-4 text-sm font-bold text-[var(--carbon-text-on-primary)]"
             >
-              添加
+              {t('添加')}
             </button>
           </div>
         )}
@@ -183,7 +186,7 @@ export default function ActivityRecordForm({
                     }
                   }}
                   className="flex h-9 w-9 items-center justify-center text-[var(--carbon-text-secondary)] hover:text-[var(--color-danger)]"
-                  aria-label={`删除运动类型${type.name}`}
+                  aria-label={t`删除运动类型 ${type.name}`}
                 >
                   <span className="i-lucide-x h-3.5 w-3.5" />
                 </button>
@@ -196,7 +199,7 @@ export default function ActivityRecordForm({
       <section className="grid grid-cols-[1fr_auto] items-end gap-3">
         <label className="flex flex-col gap-2">
           <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-            运动日期
+            {t('运动日期')}
           </span>
           <input
             type="date"
@@ -219,7 +222,7 @@ export default function ActivityRecordForm({
               Duration
             </p>
             <h3 className="mt-1 text-xl font-black tracking-tight text-[var(--carbon-text)]">
-              大概运动了多久？
+              {t('大概运动了多久？')}
             </h3>
           </div>
           <span className="sport-kicker">05—180+</span>
@@ -232,13 +235,13 @@ export default function ActivityRecordForm({
           htmlFor="activity-note"
           className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]"
         >
-          备注（选填）
+          {t('备注（选填）')}
         </label>
         <TextInput
           id="activity-note"
           value={note}
           onChange={event => setNote(event.currentTarget.value)}
-          placeholder="今天的状态、场地或搭档..."
+          placeholder={t('今天的状态、场地或搭档...')}
           rightElement={<span className="i-lucide-notebook-pen h-5 w-5" />}
         />
       </section>
@@ -250,12 +253,12 @@ export default function ActivityRecordForm({
             onClick={onCancel}
             className="h-14 flex-1 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] text-sm font-bold text-[var(--carbon-text-secondary)]"
           >
-            取消
+            {t('取消')}
           </button>
         )}
         <button type="submit" className="sport-primary-button h-14 flex-[2] text-base font-black">
           <span className="i-lucide-check h-5 w-5" />
-          {initialRecord ? '保存修改' : '完成运动打卡'}
+          {initialRecord ? t('保存修改') : t('完成运动打卡')}
         </button>
       </div>
     </form>

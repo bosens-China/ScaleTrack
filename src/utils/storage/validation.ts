@@ -1,3 +1,4 @@
+import { t } from 'virtual:ai-i18n'
 import type { ActivityRecord, ActivityType, Goal, UserProfile, WeightRecord } from '../../types'
 
 // ---- 通用类型守卫 ----
@@ -132,57 +133,57 @@ export interface ImportPayload {
 
 /** 校验导入数据结构并返回规范化后的载荷（按日期排序的记录）；不写入存储 */
 export function validateImportData(data: unknown): ImportPayload {
-  if (!isPlainObject(data)) throw new Error('导入数据必须是对象')
-  if (data.version !== 1 && data.version !== 2) throw new Error('不支持的数据格式')
-  if (!isValidIsoDatetime(data.exportedAt)) throw new Error('导出时间格式错误')
+  if (!isPlainObject(data)) throw new Error(t('导入数据必须是对象'))
+  if (data.version !== 1 && data.version !== 2) throw new Error(t('不支持的数据格式'))
+  if (!isValidIsoDatetime(data.exportedAt)) throw new Error(t('导出时间格式错误'))
 
   // 校验 profile
   if (data.profile !== null && !isValidProfile(data.profile)) {
-    throw new Error('用户信息数据结构不完整或数值不合理')
+    throw new Error(t('用户信息数据结构不完整或数值不合理'))
   }
 
   // 校验 records
-  if (!Array.isArray(data.records)) throw new Error('记录数据格式错误')
+  if (!Array.isArray(data.records)) throw new Error(t('记录数据格式错误'))
   if (!data.records.every(isValidRecord)) {
-    throw new Error('部分体重记录数据结构不完整或数值不合理')
+    throw new Error(t('部分体重记录数据结构不完整或数值不合理'))
   }
   if (new Set(data.records.map(record => record.id)).size !== data.records.length) {
-    throw new Error('体重记录 ID 重复')
+    throw new Error(t('体重记录 ID 重复'))
   }
   if (new Set(data.records.map(record => record.date)).size !== data.records.length) {
-    throw new Error('同一天只能存在一条体重记录')
+    throw new Error(t('同一天只能存在一条体重记录'))
   }
 
   // 校验 goals
-  if (!Array.isArray(data.goals)) throw new Error('目标数据格式错误')
+  if (!Array.isArray(data.goals)) throw new Error(t('目标数据格式错误'))
   if (!data.goals.every(isValidGoal)) {
-    throw new Error('部分目标数据结构不完整或数值不合理')
+    throw new Error(t('部分目标数据结构不完整或数值不合理'))
   }
   if (new Set(data.goals.map(goal => goal.id)).size !== data.goals.length) {
-    throw new Error('目标 ID 重复')
+    throw new Error(t('目标 ID 重复'))
   }
   if (data.goals.filter(goal => !goal.isCompleted).length > 1) {
-    throw new Error('同时只能存在一个进行中的目标')
+    throw new Error(t('同时只能存在一个进行中的目标'))
   }
 
   const activityRecords = data.version === 1 ? [] : data.activityRecords
   const activityTypes = data.version === 1 ? [] : data.activityTypes
 
   if (!Array.isArray(activityRecords) || !activityRecords.every(isValidActivityRecord)) {
-    throw new Error('部分运动记录数据结构不完整或数值不合理')
+    throw new Error(t('部分运动记录数据结构不完整或数值不合理'))
   }
   if (new Set(activityRecords.map(record => record.id)).size !== activityRecords.length) {
-    throw new Error('运动记录 ID 重复')
+    throw new Error(t('运动记录 ID 重复'))
   }
   if (!Array.isArray(activityTypes) || !activityTypes.every(isValidActivityType)) {
-    throw new Error('自定义运动类型数据结构不完整')
+    throw new Error(t('自定义运动类型数据结构不完整'))
   }
   if (new Set(activityTypes.map(type => type.id)).size !== activityTypes.length) {
-    throw new Error('运动类型 ID 重复')
+    throw new Error(t('运动类型 ID 重复'))
   }
   const normalizedTypeNames = activityTypes.map(type => type.name.trim().toLocaleLowerCase())
   if (new Set(normalizedTypeNames).size !== normalizedTypeNames.length) {
-    throw new Error('运动类型名称重复')
+    throw new Error(t('运动类型名称重复'))
   }
 
   const sortedRecords = [...(data.records as WeightRecord[])].sort((a, b) =>

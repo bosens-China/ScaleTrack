@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { t } from 'virtual:ai-i18n'
 
 import type { ActivityRecord, ActivityType } from '@/types'
 
@@ -61,6 +62,30 @@ export const BUILT_IN_ACTIVITY_TYPES: ActivityType[] = [
     isBuiltIn: true,
   },
 ]
+
+/** 内置运动类型使用稳定中文值存储，界面显示随语言切换。 */
+export function getActivityDisplayName(name: string): string {
+  switch (name) {
+    case '健身':
+      return t('健身')
+    case '游泳':
+      return t('游泳')
+    case '羽毛球':
+      return t('羽毛球')
+    case '跑步':
+      return t('跑步')
+    case '骑行':
+      return t('骑行')
+    case '步行':
+      return t('步行')
+    case '瑜伽':
+      return t('瑜伽')
+    case '球类':
+      return t('球类')
+    default:
+      return name
+  }
+}
 
 function getMonday(date: dayjs.Dayjs) {
   const day = date.day()

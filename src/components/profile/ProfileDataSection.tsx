@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import type { ChangeEvent } from 'react'
 import { useRef, useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import {
   exportData,
@@ -30,6 +31,7 @@ interface PendingImport {
 
 /** 导入导出单独收口，避免页面组件同时承担文件读写细节。 */
 export default function ProfileDataSection({ onReload }: Props) {
+  const { t } = useI18n()
   const fileRef = useRef<HTMLInputElement>(null)
   const [lastBackup, setLastBackup] = useState<string | null>(() => getLastBackupAt())
   const [pending, setPending] = useState<PendingImport | null>(null)
@@ -41,10 +43,10 @@ export default function ProfileDataSection({ onReload }: Props) {
 
   const backupText =
     lastBackup === null
-      ? '尚未备份过数据'
+      ? t('尚未备份过数据')
       : daysSinceBackup === 0
-        ? '今天已备份'
-        : `上次备份：${daysSinceBackup} 天前`
+        ? t('今天已备份')
+        : t`上次备份：${daysSinceBackup} 天前`
 
   const handleExport = () => {
     try {
@@ -58,9 +60,9 @@ export default function ProfileDataSection({ onReload }: Props) {
       URL.revokeObjectURL(url)
       recordBackup()
       setLastBackup(getLastBackupAt())
-      toast.success('数据导出成功')
+      toast.success(t('数据导出成功'))
     } catch {
-      toast.error('数据导出失败')
+      toast.error(t('数据导出失败'))
     }
   }
 
@@ -82,7 +84,9 @@ export default function ProfileDataSection({ onReload }: Props) {
           hasProfile: payload.profile !== null,
         })
       } catch (err) {
-        toast.error(err instanceof Error ? `导入失败：${err.message}` : '导入失败，文件格式不正确')
+        toast.error(
+          err instanceof Error ? t`导入失败：${err.message}` : t('导入失败，文件格式不正确'),
+        )
       }
     }
 
@@ -94,10 +98,10 @@ export default function ProfileDataSection({ onReload }: Props) {
     if (!pending) return
     try {
       importData(pending.data, mode)
-      toast.success(mode === 'merge' ? '已合并导入数据' : '已覆盖导入数据')
+      toast.success(mode === 'merge' ? t('已合并导入数据') : t('已覆盖导入数据'))
       onReload()
     } catch (err) {
-      toast.error(err instanceof Error ? `导入失败：${err.message}` : '导入失败')
+      toast.error(err instanceof Error ? t`导入失败：${err.message}` : t('导入失败'))
     } finally {
       setPending(null)
     }
@@ -107,7 +111,7 @@ export default function ProfileDataSection({ onReload }: Props) {
     <section className="flex flex-col gap-4">
       <div className="flex items-center justify-between px-1">
         <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--carbon-text-secondary)]">
-          本地数据
+          {t('本地数据')}
         </h3>
         {hasData && (
           <span
@@ -122,7 +126,9 @@ export default function ProfileDataSection({ onReload }: Props) {
       {backupStale && (
         <div className="flex items-start gap-2 border-l-2 border-[var(--color-warning)] bg-[var(--carbon-surface-subtle)] px-3 py-2.5 text-xs leading-5 text-[var(--carbon-text)]">
           <span className="i-lucide-shield-alert mt-0.5 h-4 w-4 shrink-0 text-[var(--color-warning)]" />
-          <span>数据仅保存在本设备浏览器中，建议定期导出备份，避免清理缓存或更换设备时丢失。</span>
+          <span>
+            {t('数据仅保存在本设备浏览器中，建议定期导出备份，避免清理缓存或更换设备时丢失。')}
+          </span>
         </div>
       )}
 
@@ -134,9 +140,9 @@ export default function ProfileDataSection({ onReload }: Props) {
           <div className="flex items-center gap-4">
             <span className="i-lucide-download h-5 w-5 text-[var(--carbon-text-secondary)]" />
             <div>
-              <p className="text-sm font-medium text-[var(--carbon-text)]">导出数据</p>
+              <p className="text-sm font-medium text-[var(--carbon-text)]">{t('导出数据')}</p>
               <p className="text-xs text-[var(--carbon-text-secondary)]">
-                导出基础资料、体重、运动和目标数据
+                {t('导出基础资料、体重、运动和目标数据')}
               </p>
             </div>
           </div>
@@ -150,9 +156,9 @@ export default function ProfileDataSection({ onReload }: Props) {
           <div className="flex items-center gap-4">
             <span className="i-lucide-upload h-5 w-5 text-[var(--carbon-text-secondary)]" />
             <div>
-              <p className="text-sm font-medium text-[var(--carbon-text)]">导入数据</p>
+              <p className="text-sm font-medium text-[var(--carbon-text)]">{t('导入数据')}</p>
               <p className="text-xs text-[var(--carbon-text-secondary)]">
-                从 JSON 文件恢复本地记录
+                {t('从 JSON 文件恢复本地记录')}
               </p>
             </div>
           </div>
@@ -173,12 +179,10 @@ export default function ProfileDataSection({ onReload }: Props) {
           <div className="my-auto flex w-full max-w-sm flex-col gap-4 bg-[var(--carbon-surface)] p-5 shadow-lg">
             <div className="flex flex-col gap-1">
               <h4 className="text-base font-semibold text-[var(--carbon-text)]">
-                如何导入这份数据？
+                {t('如何导入这份数据？')}
               </h4>
               <p className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
-                文件包含 {pending.records} 条体重、{pending.activityRecords} 条运动、
-                {pending.goals} 个目标
-                {pending.hasProfile ? '及基础资料' : ''}。
+                {t`文件包含 ${pending.records} 条体重、${pending.activityRecords} 条运动、${pending.goals} 个目标${pending.hasProfile ? t('及基础资料') : ''}。`}
               </p>
             </div>
 
@@ -188,10 +192,10 @@ export default function ProfileDataSection({ onReload }: Props) {
             >
               <span className="flex items-center gap-2 text-sm font-medium text-[var(--carbon-text)]">
                 <span className="i-lucide-git-merge h-4 w-4 text-[var(--carbon-primary)]" />
-                合并导入（推荐）
+                {t('合并导入（推荐）')}
               </span>
               <span className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
-                与现有数据合并，按日期去重，保留更新的记录。适合多设备同步。
+                {t('与现有数据合并，按日期去重，保留更新的记录。适合多设备同步。')}
               </span>
             </button>
 
@@ -201,10 +205,10 @@ export default function ProfileDataSection({ onReload }: Props) {
             >
               <span className="flex items-center gap-2 text-sm font-medium text-[var(--carbon-text)]">
                 <span className="i-lucide-replace h-4 w-4 text-[var(--color-danger)]" />
-                覆盖导入
+                {t('覆盖导入')}
               </span>
               <span className="text-xs leading-5 text-[var(--carbon-text-secondary)]">
-                清空当前所有本地数据，完全替换为文件内容。
+                {t('清空当前所有本地数据，完全替换为文件内容。')}
               </span>
             </button>
 
@@ -212,7 +216,7 @@ export default function ProfileDataSection({ onReload }: Props) {
               onClick={() => setPending(null)}
               className="h-10 text-sm text-[var(--carbon-text-secondary)] transition-colors hover:text-[var(--carbon-text)]"
             >
-              取消
+              {t('取消')}
             </button>
           </div>
         </div>

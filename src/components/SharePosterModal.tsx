@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useI18n } from 'virtual:ai-i18n'
 
 import { generateShareImage, processShareOrDownload } from '@/utils/share'
 import { toast } from '@/utils/toast'
@@ -18,6 +19,7 @@ export default function SharePosterModal({
   children,
   filenamePrefix = 'scaletrack',
 }: Props) {
+  const { t } = useI18n()
   const cardRef = useRef<HTMLDivElement>(null)
   const [saving, setSaving] = useState(false)
   const [dataUrl, setDataUrl] = useState<string | null>(null)
@@ -55,7 +57,7 @@ export default function SharePosterModal({
       await processShareOrDownload(url, filename)
     } catch (err) {
       console.error('Failed to generate image', err)
-      toast.error('分享海报生成失败，请重试')
+      toast.error(t('分享海报生成失败，请重试'))
     } finally {
       setSaving(false)
     }
@@ -67,7 +69,7 @@ export default function SharePosterModal({
       <div className="flex w-full max-w-sm justify-end mb-4">
         <button
           type="button"
-          aria-label="关闭分享海报"
+          aria-label={t('关闭分享海报')}
           onClick={onClose}
           className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white hover:bg-white/30"
         >
@@ -99,7 +101,7 @@ export default function SharePosterModal({
           {/* Footer */}
           <div className="flex items-center justify-center bg-[var(--carbon-surface-subtle)] py-3">
             <span className="text-[10px] uppercase tracking-widest text-[var(--carbon-text-secondary)]">
-              - 记录身体每一次改变 -
+              {t('记录身体每一次改变')}
             </span>
           </div>
         </div>
@@ -108,7 +110,7 @@ export default function SharePosterModal({
         {dataUrl && (
           <img
             src={dataUrl}
-            alt="分享海报"
+            alt={t('分享海报')}
             className="absolute inset-0 h-full w-full object-cover opacity-0 pointer-events-auto"
             style={{ zIndex: 10 }}
           />
@@ -127,11 +129,11 @@ export default function SharePosterModal({
           ) : (
             <span className="i-lucide-share h-5 w-5" />
           )}
-          {saving ? '正在生成...' : '分享或保存'}
+          {saving ? t('正在生成...') : t('分享或保存')}
         </button>
         {dataUrl && (
           <p className="text-center text-xs text-white/70">
-            提示：如果没有弹出分享，可以尝试长按上方海报直接保存
+            {t('提示：如果没有弹出分享，可以尝试长按上方海报直接保存')}
           </p>
         )}
       </div>

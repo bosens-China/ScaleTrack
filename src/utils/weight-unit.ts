@@ -1,3 +1,4 @@
+import { t } from 'virtual:ai-i18n'
 import type { WeightUnit } from '../types'
 
 /**
@@ -24,6 +25,11 @@ export const WEIGHT_UNIT_OPTIONS: { value: WeightUnit; label: string }[] = [
   { value: 'kg', label: '公斤 kg' },
   { value: 'jin', label: '斤' },
 ]
+
+/** 按当前界面语言返回体重单位；存储与计算始终使用固定单位标识。 */
+export function getWeightUnitLabel(unit: WeightUnit): string {
+  return unit === 'jin' ? t('斤') : 'kg'
+}
 
 /** kg -> 展示单位的数值 */
 export function toDisplayWeight(kg: number, unit: WeightUnit): number {
@@ -55,5 +61,5 @@ export function formatWeight(
   const display = toDisplayWeight(kg, unit)
   const prefix = opts?.sign && display > 0 ? '+' : ''
   const gap = opts?.withSpace === false ? '' : ' '
-  return `${prefix}${display.toFixed(digits)}${gap}${WEIGHT_UNIT_LABEL[unit]}`
+  return `${prefix}${display.toFixed(digits)}${gap}${getWeightUnitLabel(unit)}`
 }

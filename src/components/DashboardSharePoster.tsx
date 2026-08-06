@@ -1,8 +1,9 @@
 import dayjs from 'dayjs'
+import { useI18n } from 'virtual:ai-i18n'
 
 import SharePosterModal from '@/components/SharePosterModal'
 import type { ActivityRecord, Goal, UserProfile, WeightRecord, WeightUnit } from '@/types'
-import { getActivityWeekStats } from '@/utils/activity'
+import { getActivityDisplayName, getActivityWeekStats } from '@/utils/activity'
 import { getBMICategory, getBMIRange } from '@/utils/bmi'
 import {
   getCurrentBMI,
@@ -11,7 +12,7 @@ import {
   getMetricStats,
   getWeeklyChange,
 } from '@/utils/stats'
-import { formatWeight, formatWeightValue, WEIGHT_UNIT_LABEL } from '@/utils/weight-unit'
+import { formatWeight, formatWeightValue, getWeightUnitLabel } from '@/utils/weight-unit'
 
 interface Props {
   isOpen: boolean
@@ -36,17 +37,26 @@ export default function DashboardSharePoster({
   goal,
   unit,
 }: Props) {
-  const unitLabel = WEIGHT_UNIT_LABEL[unit]
+  const { t } = useI18n()
+  const unitLabel = getWeightUnitLabel(unit)
   const currentWeight = getCurrentWeight(profile, records)
   const weeklyChange = getWeeklyChange(records)
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
-  const goalLabel = goal ? (isGainGoal ? '增肌目标' : '减脂目标') : '体重目标'
+  const goalLabel = goal ? (isGainGoal ? t('增肌目标') : t('减脂目标')) : t('体重目标')
   const progress = getGoalProgress(goal, currentWeight, records)
   const activityWeek = getActivityWeekStats(activityRecords)
 
   // 当前 BMI 分级（快照）
   const currentBMI = getCurrentBMI(profile, records)
   const bmiRange = getBMIRange(getBMICategory(currentBMI))
+  const bmiLabel =
+    bmiRange.label === '偏瘦'
+      ? t('偏瘦')
+      : bmiRange.label === '正常'
+        ? t('正常')
+        : bmiRange.label === '偏胖'
+          ? t('偏胖')
+          : t('肥胖')
 
   // 从首条记录到现在的累计变化（进步/变化，作为海报主角）
   const firstRecord = records[0]
@@ -91,7 +101,7 @@ export default function DashboardSharePoster({
         {hasShareProgress && firstRecord && totalDelta !== null ? (
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-              累计变化
+              {t('累计变化')}
             </p>
             <div className="mt-1 flex items-baseline gap-1">
               <span className={`text-[44px] font-semibold leading-none ${deltaTone}`}>
@@ -101,15 +111,13 @@ export default function DashboardSharePoster({
               <span className="text-base text-[var(--carbon-text-secondary)]">{unitLabel}</span>
             </div>
             <p className="mt-2 text-xs text-[var(--carbon-text-secondary)]">
-              起始 {formatWeightValue(firstRecord.weight, unit)} → 现在{' '}
-              {formatWeightValue(currentWeight, unit)} {unitLabel} · 坚持 {daysTracked} 天 /{' '}
-              {recordCount} 次记录
+              {t`起始 ${formatWeightValue(firstRecord.weight, unit)} → 现在 ${formatWeightValue(currentWeight, unit)} ${unitLabel} · 坚持 ${daysTracked} 天 / ${recordCount} 次记录`}
             </p>
           </div>
         ) : (
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-              当前体重
+              {t('当前体重')}
             </p>
             <div className="mt-1 flex items-baseline gap-1">
               <span className="text-[44px] font-semibold leading-none text-[var(--carbon-text)]">
@@ -130,12 +138,12 @@ export default function DashboardSharePoster({
             )}
             <span className="inline-flex items-center gap-1.5 text-[var(--carbon-text-secondary)]">
               <span className="h-2 w-2 rounded-full" style={{ backgroundColor: bmiRange.color }} />
-              BMI {currentBMI} · {bmiRange.label}
+              BMI {currentBMI} · {bmiLabel}
             </span>
           </div>
           {weeklyChange !== null && (
             <span className={`text-sm font-semibold ${trendTone}`}>
-              近7天 {formatWeight(weeklyChange, unit, { sign: true })}
+              {t`近7天 ${formatWeight(weeklyChange, unit, { sign: true })}`}
             </span>
           )}
         </div>
@@ -146,19 +154,19 @@ export default function DashboardSharePoster({
             <div className="flex items-end justify-between">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#c7f36b]">
-                  本周运动节律
+                  {t('本周运动节律')}
                 </p>
                 <div className="mt-2 flex items-baseline gap-2">
                   <span className="text-[30px] font-black leading-none">
                     {activityWeek.activeDays}
                   </span>
-                  <span className="text-xs font-semibold text-[#b9c2b5]">天运动</span>
+                  <span className="text-xs font-semibold text-[#b9c2b5]">{t('天运动')}</span>
                 </div>
               </div>
               <p className="text-right text-sm font-bold">
-                {activityWeek.sessions} 次
+                {t`${activityWeek.sessions} 次`}
                 <span className="ml-2 text-xs font-medium text-[#b9c2b5]">
-                  {activityWeek.totalMinutes} 分钟
+                  {t`${activityWeek.totalMinutes} 分钟`}
                 </span>
               </p>
             </div>
@@ -167,7 +175,7 @@ export default function DashboardSharePoster({
               {activityWeek.days.map((day, index) => (
                 <div key={day.date} className="flex flex-col items-center gap-1.5">
                   <span className="text-[9px] font-semibold text-[#8f9a8c]">
-                    {['一', '二', '三', '四', '五', '六', '日'][index]}
+                    {[t('一'), t('二'), t('三'), t('四'), t('五'), t('六'), t('日')][index]}
                   </span>
                   <span
                     className={`h-1.5 w-full ${day.active ? 'bg-[#c7f36b]' : 'bg-[#343d34]'}`}
@@ -186,7 +194,7 @@ export default function DashboardSharePoster({
                     className="h-1.5 w-1.5 rounded-full"
                     style={{ backgroundColor: type.color }}
                   />
-                  {type.name} {type.sessions} 次
+                  {t`${getActivityDisplayName(type.name)} ${type.sessions} 次`}
                 </span>
               ))}
             </div>
@@ -200,8 +208,8 @@ export default function DashboardSharePoster({
               <span className="text-[var(--carbon-text-secondary)]">{goalLabel}</span>
               <span className="font-medium text-[var(--carbon-text)]">
                 {progress.remaining === 0
-                  ? '已达成！🎉'
-                  : `还差 ${formatWeight(progress.remaining, unit)}`}
+                  ? t('已达成！🎉')
+                  : t`还差 ${formatWeight(progress.remaining, unit)}`}
               </span>
             </div>
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--carbon-surface-strong)]">
@@ -211,7 +219,7 @@ export default function DashboardSharePoster({
               />
             </div>
             <div className="mt-1.5 flex justify-between text-[11px] text-[var(--carbon-text-secondary)]">
-              <span>目标 {formatWeight(goal.targetWeight, unit)}</span>
+              <span>{t`目标 ${formatWeight(goal.targetWeight, unit)}`}</span>
               <span>{progress.currentProgress}%</span>
             </div>
           </div>

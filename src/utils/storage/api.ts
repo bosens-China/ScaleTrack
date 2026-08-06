@@ -1,3 +1,4 @@
+import { t } from 'virtual:ai-i18n'
 import type {
   ActivityRecord,
   ActivityType,
@@ -23,7 +24,7 @@ export function saveProfile(profile: UserProfile): void {
 
 /** 局部更新用户信息，用户信息不存在时抛出异常 */
 export function updateProfile(patch: Partial<UserProfile>): UserProfile {
-  if (!cache.profile) throw new Error('用户信息不存在')
+  if (!cache.profile) throw new Error(t('用户信息不存在'))
   cache.profile = { ...cache.profile, ...patch }
   persist('profile')
   return cache.profile

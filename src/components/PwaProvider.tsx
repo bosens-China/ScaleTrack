@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState, type ReactNode } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 
 import { PwaStatusContext, type PwaStatus } from '@/hooks/pwa-status-context'
@@ -12,6 +13,7 @@ function getIsStandalone() {
 }
 
 export default function PwaProvider({ children }: { children: ReactNode }) {
+  const { t } = useI18n()
   const [registration, setRegistration] = useState<ServiceWorkerRegistration>()
   const [isChecking, setIsChecking] = useState(false)
   const [isStandalone] = useState(getIsStandalone)
@@ -27,32 +29,32 @@ export default function PwaProvider({ children }: { children: ReactNode }) {
       setRegistration(swRegistration)
     },
     onOfflineReady() {
-      toast.success('ScaleTrack 已可离线使用')
+      toast.success(t('ScaleTrack 已可离线使用'))
     },
     onNeedRefresh() {
-      toast.info('发现新版本，可前往个人页更新')
+      toast.info(t('发现新版本，可前往个人页更新'))
     },
     onRegisterError() {
-      toast.error('离线能力注册失败，请刷新后重试')
+      toast.error(t('离线能力注册失败，请刷新后重试'))
     },
   })
 
   const checkForUpdate = useCallback(async () => {
     if (!isSupported || !registration) {
-      toast.info('当前环境暂不支持检查更新')
+      toast.info(t('当前环境暂不支持检查更新'))
       return
     }
 
     setIsChecking(true)
     try {
       await registration.update()
-      toast.info('已检查更新，若有新版本会自动提示')
+      toast.info(t('已检查更新，若有新版本会自动提示'))
     } catch {
-      toast.error('检查更新失败，请稍后重试')
+      toast.error(t('检查更新失败，请稍后重试'))
     } finally {
       setIsChecking(false)
     }
-  }, [isSupported, registration])
+  }, [isSupported, registration, t])
 
   const dismissUpdateNotice = useCallback(() => {
     setOfflineReady(false)

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import BottomTabBar from '@/components/BottomTabBar'
 import GoalAchievementModal from '@/components/GoalAchievementModal'
@@ -22,6 +23,7 @@ export default function App() {
   // 主题在水合前即应用，避免启动画面闪烁
   useTheme()
   const [ready, setReady] = useState(false)
+  const { t } = useI18n()
 
   // 启动时先把数据从 IndexedDB 水合到内存缓存（含旧 localStorage 迁移）
   useEffect(() => {
@@ -41,7 +43,7 @@ export default function App() {
       <div className="app-page flex items-center justify-center bg-[var(--carbon-bg)]">
         <div className="flex flex-col items-center gap-3 text-[var(--carbon-text-secondary)]">
           <span className="i-lucide-loader-2 h-7 w-7 animate-spin text-[var(--carbon-primary)]" />
-          <span className="text-sm">正在加载本地数据…</span>
+          <span className="text-sm">{t('正在加载本地数据…')}</span>
         </div>
       </div>
     )

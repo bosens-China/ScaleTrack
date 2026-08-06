@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useI18n } from 'virtual:ai-i18n'
 
 import BirthDatePicker from './BirthDatePicker'
 
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function BirthDatePickerModal({ isOpen, onClose, value, onChange }: Props) {
+  const { t } = useI18n()
   const [tempValue, setTempValue] = useState<string | undefined>(value)
 
   // Reset tempValue when modal opens
@@ -43,14 +45,14 @@ export default function BirthDatePickerModal({ isOpen, onClose, value, onChange 
             onClick={onClose}
             className="px-2 py-2 text-sm text-[var(--carbon-text-secondary)]"
           >
-            取消
+            {t('取消')}
           </button>
-          <span className="text-sm font-medium text-[var(--carbon-text)]">选择出生日期</span>
+          <span className="text-sm font-medium text-[var(--carbon-text)]">{t('选择出生日期')}</span>
           <button
             onClick={handleConfirm}
             className="px-2 py-2 text-sm font-medium text-[var(--carbon-primary)]"
           >
-            确定
+            {t('确定')}
           </button>
         </div>
         <div className="px-2 pb-4">

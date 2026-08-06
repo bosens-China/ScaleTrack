@@ -1,6 +1,8 @@
 import { usePwaStatus } from '@/hooks/usePwaStatus'
+import { useI18n } from 'virtual:ai-i18n'
 
 export default function ProfileAboutSection() {
+  const { t } = useI18n()
   const {
     version,
     isSupported,
@@ -14,16 +16,17 @@ export default function ProfileAboutSection() {
   return (
     <section className="flex flex-col gap-4 mt-2">
       <h3 className="px-1 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--carbon-text-secondary)]">
-        关于 ScaleTrack
+        {t('关于 ScaleTrack')}
       </h3>
       <div className="border border-[var(--carbon-border)] bg-[var(--carbon-surface)]">
         <div className="flex w-full items-center justify-between border-b border-[var(--carbon-border)] p-4 text-left">
           <div className="flex items-center gap-4">
             <span className="i-lucide-badge-info h-5 w-5 text-[var(--carbon-text-secondary)]" />
             <div>
-              <p className="text-sm font-medium text-[var(--carbon-text)]">当前版本</p>
+              <p className="text-sm font-medium text-[var(--carbon-text)]">{t('当前版本')}</p>
               <p className="text-xs text-[var(--carbon-text-secondary)]">
-                v{version} · {isStandalone ? '已安装' : isSupported ? '支持安装' : '浏览器模式'}
+                v{version} ·{' '}
+                {isStandalone ? t('已安装') : isSupported ? t('支持安装') : t('浏览器模式')}
               </p>
             </div>
           </div>
@@ -51,10 +54,12 @@ export default function ProfileAboutSection() {
             />
             <div>
               <p className="text-sm font-medium text-[var(--carbon-text)]">
-                {needRefresh ? '立即更新' : '检查更新'}
+                {needRefresh ? t('立即更新') : t('检查更新')}
               </p>
               <p className="text-xs text-[var(--carbon-text-secondary)]">
-                {needRefresh ? '新版本已准备好，点击后刷新应用' : '手动检查是否有可用的新版本'}
+                {needRefresh
+                  ? t('新版本已准备好，点击后刷新应用')
+                  : t('手动检查是否有可用的新版本')}
               </p>
             </div>
           </div>
@@ -70,9 +75,9 @@ export default function ProfileAboutSection() {
           <div className="flex items-center gap-4">
             <span className="i-lucide-message-square h-5 w-5 text-[var(--carbon-text-secondary)]" />
             <div>
-              <p className="text-sm font-medium text-[var(--carbon-text)]">意见反馈</p>
+              <p className="text-sm font-medium text-[var(--carbon-text)]">{t('意见反馈')}</p>
               <p className="text-xs text-[var(--carbon-text-secondary)]">
-                前往 GitHub 提交 Issue 或建议
+                {t('前往 GitHub 提交 Issue 或建议')}
               </p>
             </div>
           </div>

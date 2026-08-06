@@ -13,6 +13,7 @@ function clampDuration(value: number) {
 }
 
 export default function ActivityDurationGauge({ value, onChange }: Props) {
+  const { t } = useI18n()
   const gaugeValue = Math.min(value, GAUGE_MAX)
   const progress = (gaugeValue - MIN_DURATION) / (GAUGE_MAX - MIN_DURATION)
   const needleAngle = -90 + progress * 180
@@ -74,10 +75,10 @@ export default function ActivityDurationGauge({ value, onChange }: Props) {
               if (Number.isFinite(next)) onChange(clampDuration(next))
             }}
             className="sport-number-input w-24 border-0 bg-transparent p-0 text-center text-[46px] font-black leading-none text-[var(--carbon-text)]"
-            aria-label="运动时长（分钟）"
+            aria-label={t('运动时长（分钟）')}
           />
           <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-            分钟
+            {t('分钟')}
           </span>
         </label>
 
@@ -97,7 +98,7 @@ export default function ActivityDurationGauge({ value, onChange }: Props) {
         value={gaugeValue}
         onChange={event => onChange(Number(event.currentTarget.value))}
         className="sport-range w-full"
-        aria-label="拖动调整运动时长"
+        aria-label={t('拖动调整运动时长')}
       />
 
       <div className="grid grid-cols-4 gap-2">
@@ -112,7 +113,7 @@ export default function ActivityDurationGauge({ value, onChange }: Props) {
                 : 'border-[var(--carbon-border)] bg-[var(--carbon-surface-subtle)] text-[var(--carbon-text-secondary)] hover:border-[var(--carbon-primary)]'
             }`}
           >
-            {minutes} 分
+            {t`${minutes} 分`}
           </button>
         ))}
       </div>
@@ -122,18 +123,18 @@ export default function ActivityDurationGauge({ value, onChange }: Props) {
           type="button"
           onClick={() => onChange(clampDuration(value - 5))}
           className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--carbon-border)] bg-[var(--carbon-surface)] text-[var(--carbon-text)] transition-colors hover:border-[var(--carbon-primary)]"
-          aria-label="减少 5 分钟"
+          aria-label={t('减少 5 分钟')}
         >
           <span className="i-lucide-minus h-4 w-4" />
         </button>
         <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
-          每次调整 5 分钟
+          {t('每次调整 5 分钟')}
         </span>
         <button
           type="button"
           onClick={() => onChange(clampDuration(value + 5))}
           className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--carbon-border)] bg-[var(--carbon-surface)] text-[var(--carbon-text)] transition-colors hover:border-[var(--carbon-primary)]"
-          aria-label="增加 5 分钟"
+          aria-label={t('增加 5 分钟')}
         >
           <span className="i-lucide-plus h-4 w-4" />
         </button>
@@ -141,3 +142,4 @@ export default function ActivityDurationGauge({ value, onChange }: Props) {
     </div>
   )
 }
+import { useI18n } from 'virtual:ai-i18n'
