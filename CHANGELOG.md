@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.4.1...scaletrack-v1.5.0) (2026-08-20)
+
+
+### ✨ 新功能
+
+* 优化记录覆盖与周视图 ([b7937c6](https://github.com/bosens-China/ScaleTrack/commit/b7937c66a84bd757dcadbfad7e7964cd5e09317f))
+
 ## [1.4.1](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.4.0...scaletrack-v1.4.1) (2026-08-06)
 
 
