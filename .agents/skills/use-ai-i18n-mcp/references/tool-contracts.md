@@ -15,6 +15,10 @@ discovers source files and returns writable missing entries.
 - List items omit `source_files` by default. Set `include_source_files: true` only when the task needs
   the complete shared occurrence range or per-file impact reporting. The `source_files` input can
   still filter list operations and is not part of write identity.
+- Set `include_occurrences: true` only when a message needs source context. Each returned occurrence
+  pairs one `source_file` with all extracted line and column locations for that shared message. Read
+  nearby source from the target workspace; MCP does not return source snippets. Occurrences are not
+  part of write identity.
 
 One message update affects every source file where that message occurs.
 
@@ -65,23 +69,42 @@ review values separately through the override tools and only with explicit appro
 
 Human decisions belong in `overrides.json`, not the JSON or SQLite Translation Memory.
 
+For interactive human editing during Vite Dev, prefer the default local review console. Use these MCP
+contracts when an Agent lists, batches, or writes approved decisions. The console and MCP share the
+same rule identity, validation, and `overrides.json` destination; serialize their writes rather than
+editing through both interfaces at once.
+
 Use `ai_i18n_list_overrides` to inspect current values, including orphaned values. Use
 `ai_i18n_set_overrides` only when the user explicitly requests or approves human review wording:
 
-- `scope: "default"` affects every occurrence of the same source text.
-- `scope: "message"` affects one listed message and requires a non-empty static comment.
+- Omit `files` for a global review across the current Vite app.
+- Provide one or more exact `source_file` values in `files` for a file-scoped review. Every selected
+  file must currently contain the listed message.
+- `comment` is part of the copied public `message` object and can be combined with either global or
+  file scope. Do not add or remove it to simulate file scope.
+- File paths are normalized POSIX paths relative to the Vite root. Copy them exactly from list
+  results; never use absolute paths, substrings, or globs.
 - Setting an override is an upsert and may replace an existing human value.
+
+Resolution priority is file + comment, global + comment, file default, global default, automatic
+Translation Memory, then source fallback. File-scoped list items always include their identity
+`files`; `source_files` remains optional occurrence evidence and is returned only when requested.
 
 To remove a human value, list it first and pass the returned opaque `override_id` to
 `ai_i18n_delete_overrides`. Never construct an override ID.
 
 ## Write and verification boundaries
 
-- Translation tools modify only the Translation Memory selected by `storage.json`; never edit JSON
-  shards or the user-level SQLite database directly while the tools are available.
+- Translation tools use sharded JSON when `storage.json` is absent and the user-level SQLite database
+  when its SQLite marker exists. Never edit either storage directly while the tools are available.
+- A missing local SQLite database is not a project-path error. Follow the returned full-Build recovery
+  action when the selected cache lacks current message metadata.
 - Human review tools modify only `overrides.json`.
 - MCP does not modify `extracted/` or `locales/`.
 - Preserve every template token before writing.
+- On `TEMPLATE_TOKEN_MISMATCH`, compare `expected_tokens` with `received_tokens`, insert every entry
+  from `missing_tokens`, remove every entry from `unexpected_tokens`, and retry the corrected whole
+  batch. Repeated tokens are significant.
 - After automatic translation changes, repeat `ai_i18n_list_translations` with the same scope.
 - After orphan deletion, repeat `ai_i18n_list_orphan_messages` after the same complete Build.
 - After human review changes, repeat `ai_i18n_list_overrides` with the same scope.

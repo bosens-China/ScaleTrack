@@ -23,7 +23,7 @@
       "source": "bosens-China/ai-i18n",
       "sourceType": "github",
       "skillPath": ".agents/skills/integrate-ai-i18n/SKILL.md",
-      "computedHash": "d9948a1585b11960d98896657c7ed11a35ee7b567e206360757531ff53d0a353"
+      "computedHash": "579964d54722a5bab97d49b94733621f947c2ca9b0f86ec51dd123a6cdd0ab1e"
     },
     "manage-prd-docs": {
       "source": "bosens-China/my-skills",
@@ -35,7 +35,7 @@
       "source": "bosens-China/ai-i18n",
       "sourceType": "github",
       "skillPath": ".agents/skills/use-ai-i18n-mcp/SKILL.md",
-      "computedHash": "a51ff7e038206ac1908947a0ef08c0e573e2cad7d0d16a4f0a69c9b90556805a"
+      "computedHash": "127b6585148f5d8f53a370f0e401721705d3ecb3adb3a01437ec0eab17c26e9f"
     }
   }
 }
