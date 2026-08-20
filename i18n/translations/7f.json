@@ -1,0 +1,40 @@
+{
+  "messages": {
+    " 距目标日期仅剩 {{0}} 天，后续可能需要调整节奏。": {
+      "source": " 距目标日期仅剩 {{0}} 天，后续可能需要调整节奏。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": " Only {{0}} days remain until the target date; you may need to adjust your pace."
+      }
+    },
+    "{{0}} 小时 {{1}} 分": {
+      "source": "{{0}} 小时 {{1}} 分",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} hr {{1}} min"
+      }
+    },
+    "我的": {
+      "source": "我的",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Me"
+      }
+    },
+    "检查更新": {
+      "source": "检查更新",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Check for updates"
+      }
+    },
+    "热量缺口": {
+      "source": "热量缺口",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Calorie deficit"
+      }
+    }
+  },
+  "version": 1
+}

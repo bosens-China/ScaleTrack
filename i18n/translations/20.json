@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "覆盖为": {
+      "source": "覆盖为",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Replace With"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "（分）": {
+      "source": "（分）",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "(min)"
+      }
+    }
+  },
+  "version": 1
+}

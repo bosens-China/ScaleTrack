@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "返回": {
+      "source": "返回",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Back"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,47 @@
+{
+  "messages": {
+    "3天": {
+      "source": "3天",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "3 days"
+      }
+    },
+    "先保存第一条体重记录，再回来查看趋势": {
+      "source": "先保存第一条体重记录，再回来查看趋势",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Save your first weight record, then come back to view trends"
+      }
+    },
+    "切换深浅色模式": {
+      "source": "切换深浅色模式",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Switch between light and dark mode"
+      }
+    },
+    "用户信息不存在": {
+      "source": "用户信息不存在",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "User information not found"
+      }
+    },
+    "请输入有效的身高（50-250cm）": {
+      "source": "请输入有效的身高（50-250cm）",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Enter a valid height (50–250 cm)"
+      }
+    },
+    "运动类型 ID 重复": {
+      "source": "运动类型 ID 重复",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Duplicate exercise type ID"
+      }
+    }
+  },
+  "version": 1
+}

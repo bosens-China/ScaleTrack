@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "{{0}}，超出可选范围": {
+      "source": "{{0}}，超出可选范围",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}; outside the selectable range"
+      }
+    },
+    "共 {{0}} 条": {
+      "source": "共 {{0}} 条",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} total"
+      }
+    },
+    "详细记录 ({{0}})": {
+      "source": "详细记录 ({{0}})",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Detailed records ({{0}})"
+      }
+    }
+  },
+  "version": 1
+}

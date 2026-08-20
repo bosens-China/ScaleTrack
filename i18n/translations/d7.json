@@ -1,0 +1,40 @@
+{
+  "messages": {
+    "{{0}}：{{1}} 天": {
+      "source": "{{0}}：{{1}} 天",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}: {{1}} days"
+      }
+    },
+    "备注：{{0}}": {
+      "source": "备注：{{0}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Notes: {{0}}"
+      }
+    },
+    "最近：{{0}} · {{1}} 分钟": {
+      "source": "最近：{{0}} · {{1}} 分钟",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Latest: {{0}} · {{1}} min"
+      }
+    },
+    "确认覆盖": {
+      "source": "确认覆盖",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Confirm Overwrite"
+      }
+    },
+    "编辑记录": {
+      "source": "编辑记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Edit record"
+      }
+    }
+  },
+  "version": 1
+}

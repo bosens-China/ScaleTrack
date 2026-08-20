@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "手动检查是否有可用的新版本": {
+      "source": "手动检查是否有可用的新版本",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Manually check for a new version"
+      }
+    },
+    "本周运动节律": {
+      "source": "本周运动节律",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "This week's exercise rhythm"
+      }
+    }
+  },
+  "version": 1
+}

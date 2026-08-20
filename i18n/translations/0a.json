@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "女": {
+      "source": "女",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Female"
+      }
+    },
+    "运动 / 运动节律": {
+      "source": "运动 / 运动节律",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Exercise / rhythm"
+      }
+    }
+  },
+  "version": 1
+}

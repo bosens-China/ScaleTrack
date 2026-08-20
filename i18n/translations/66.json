@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "还没有体重数据": {
+      "source": "还没有体重数据",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "No weight data yet"
+      }
+    }
+  },
+  "version": 1
+}

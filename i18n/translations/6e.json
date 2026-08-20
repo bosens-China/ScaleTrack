@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "编辑资料": {
+      "source": "编辑资料",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Edit profile"
+      }
+    }
+  },
+  "version": 1
+}

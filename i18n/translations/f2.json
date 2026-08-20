@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "出生年月日 (选填)": {
+      "source": "出生年月日 (选填)",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Date of birth (optional)"
+      }
+    },
+    "删除记录": {
+      "source": "删除记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Delete record"
+      }
+    }
+  },
+  "version": 1
+}

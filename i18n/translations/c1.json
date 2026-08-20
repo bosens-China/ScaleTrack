@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "{{0}}月{{1}}日": {
+      "source": "{{0}}月{{1}}日",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}/{{1}}"
+      }
+    },
+    "饭后": {
+      "source": "饭后",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "After a meal"
+      }
+    }
+  },
+  "version": 1
+}

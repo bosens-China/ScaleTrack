@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "检查更新失败，请稍后重试": {
+      "source": "检查更新失败，请稍后重试",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Failed to check for updates. Please try again later."
+      }
+    }
+  },
+  "version": 1
+}

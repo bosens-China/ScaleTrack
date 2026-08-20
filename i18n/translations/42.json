@@ -1,0 +1,40 @@
+{
+  "messages": {
+    "保存基础信息": {
+      "source": "保存基础信息",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Save basic information"
+      }
+    },
+    "保留原记录": {
+      "source": "保留原记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Keep Existing"
+      }
+    },
+    "当前区间无数据": {
+      "source": "当前区间无数据",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "No data in the current range"
+      }
+    },
+    "添加记录": {
+      "source": "添加记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Add record"
+      }
+    },
+    "离线能力注册失败，请刷新后重试": {
+      "source": "离线能力注册失败，请刷新后重试",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Failed to register offline capability. Refresh and try again."
+      }
+    }
+  },
+  "version": 1
+}

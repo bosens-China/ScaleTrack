@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "{{0}} {{1}} 次": {
+      "source": "{{0}} {{1}} 次",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} {{1}} sessions"
+      }
+    },
+    "坚持就是胜利，你用行动证明了自己！": {
+      "source": "坚持就是胜利，你用行动证明了自己！",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Consistency is victory—you proved yourself through action!"
+      }
+    },
+    "增重速度偏快（{{0}}），过快增重容易堆积脂肪，建议放缓并配合力量训练。": {
+      "source": "增重速度偏快（{{0}}），过快增重容易堆积脂肪，建议放缓并配合力量训练。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Weight gain is too fast ({{0}}). Gaining too quickly can lead to fat accumulation; slow down and pair it with strength training."
+      }
+    },
+    "记录第一次运动": {
+      "source": "记录第一次运动",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Record your first exercise"
+      }
+    }
+  },
+  "version": 1
+}

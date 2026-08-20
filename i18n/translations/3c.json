@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "正在加载本地数据…": {
+      "source": "正在加载本地数据…",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Loading local data…"
+      }
+    },
+    "用户信息数据结构不完整或数值不合理": {
+      "source": "用户信息数据结构不完整或数值不合理",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "User data structure is incomplete or contains invalid values"
+      }
+    }
+  },
+  "version": 1
+}

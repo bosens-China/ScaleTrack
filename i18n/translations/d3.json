@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "外观主题": {
+      "source": "外观主题",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Appearance"
+      }
+    },
+    "浅色模式": {
+      "source": "浅色模式",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Light"
+      }
+    }
+  },
+  "version": 1
+}

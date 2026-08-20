@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "已支持离线使用": {
+      "source": "已支持离线使用",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Offline access is ready"
+      }
+    }
+  },
+  "version": 1
+}

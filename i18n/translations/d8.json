@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "还差 {{0}}": {
+      "source": "还差 {{0}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} to go"
+      }
+    }
+  },
+  "version": 1
+}

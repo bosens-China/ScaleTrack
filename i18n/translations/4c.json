@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "连续 {{0}} 天": {
+      "source": "连续 {{0}} 天",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}-day streak"
+      }
+    }
+  },
+  "version": 1
+}

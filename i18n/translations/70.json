@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "正在生成...": {
+      "source": "正在生成...",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Generating..."
+      }
+    }
+  },
+  "version": 1
+}

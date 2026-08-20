@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "导出基础资料、体重、运动和目标数据": {
+      "source": "导出基础资料、体重、运动和目标数据",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Export profile, weight, exercise, and goal data"
+      }
+    }
+  },
+  "version": 1
+}

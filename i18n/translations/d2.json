@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "体重偏重，建议适当控制饮食和运动": {
+      "source": "体重偏重，建议适当控制饮食和运动",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Your weight is above the healthy range; consider adjusting your diet and exercise."
+      }
+    },
+    "平均 BMI": {
+      "source": "平均 BMI",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Average BMI"
+      }
+    }
+  },
+  "version": 1
+}

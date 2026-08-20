@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "运动 / 活动": {
+      "source": "运动 / 活动",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Activity / Move"
+      }
+    }
+  },
+  "version": 1
+}

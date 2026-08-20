@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "导入失败": {
+      "source": "导入失败",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Import failed"
+      }
+    },
+    "本周时长": {
+      "source": "本周时长",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "This week's duration"
+      }
+    }
+  },
+  "version": 1
+}

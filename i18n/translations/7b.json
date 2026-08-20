@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "备注（选填）": {
+      "source": "备注（选填）",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Notes (optional)"
+      }
+    },
+    "更多趋势": {
+      "source": "更多趋势",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "More trends"
+      }
+    }
+  },
+  "version": 1
+}

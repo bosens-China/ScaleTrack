@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "二": {
+      "source": "二",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Tue"
+      }
+    },
+    "导出时间格式错误": {
+      "source": "导出时间格式错误",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Invalid export timestamp format"
+      }
+    }
+  },
+  "version": 1
+}

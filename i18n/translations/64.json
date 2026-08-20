@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "关闭编辑": {
+      "source": "关闭编辑",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Close editor"
+      }
+    }
+  },
+  "version": 1
+}

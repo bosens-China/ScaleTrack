@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "热量盈余": {
+      "source": "热量盈余",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Calorie surplus"
+      }
+    }
+  },
+  "version": 1
+}

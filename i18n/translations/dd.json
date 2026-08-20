@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "正好如期达成 🎯": {
+      "source": "正好如期达成 🎯",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Reached right on schedule 🎯"
+      }
+    }
+  },
+  "version": 1
+}

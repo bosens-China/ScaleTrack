@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "点击更换头像": {
+      "source": "点击更换头像",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Click to change avatar"
+      }
+    }
+  },
+  "version": 1
+}

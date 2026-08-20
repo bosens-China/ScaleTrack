@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "发现新版本，可前往个人页更新": {
+      "source": "发现新版本，可前往个人页更新",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "A new version is available. Go to Profile to update."
+      }
+    },
+    "增肌目标": {
+      "source": "增肌目标",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Muscle-gain goal"
+      }
+    }
+  },
+  "version": 1
+}

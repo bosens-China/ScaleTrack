@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "延期 / 调整": {
+      "source": "延期 / 调整",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Postpone / adjust"
+      }
+    },
+    "最高": {
+      "source": "最高",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Highest"
+      }
+    }
+  },
+  "version": 1
+}

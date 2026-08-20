@@ -1,0 +1,26 @@
+{
+  "messages": {
+    " 目标日期已到，继续加油。": {
+      "source": " 目标日期已到，继续加油。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": " The target date has arrived. Keep going."
+      }
+    },
+    "已有记录": {
+      "source": "已有记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Existing Record"
+      }
+    },
+    "调整": {
+      "source": "调整",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Adjust"
+      }
+    }
+  },
+  "version": 1
+}

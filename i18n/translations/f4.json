@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "出生年月日": {
+      "source": "出生年月日",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Date of birth"
+      }
+    }
+  },
+  "version": 1
+}

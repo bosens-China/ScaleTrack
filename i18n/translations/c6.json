@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "新建记录 / 选择记录": {
+      "source": "新建记录 / 选择记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "New log / Choose a record"
+      }
+    }
+  },
+  "version": 1
+}

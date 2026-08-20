@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "还没有运动记录": {
+      "source": "还没有运动记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "No exercise records yet"
+      }
+    }
+  },
+  "version": 1
+}

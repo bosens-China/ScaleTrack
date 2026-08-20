@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "静态基础代谢 (BMR)": {
+      "source": "静态基础代谢 (BMR)",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Basal metabolic rate (BMR)"
+      }
+    }
+  },
+  "version": 1
+}

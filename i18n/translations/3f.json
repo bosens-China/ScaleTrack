@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "关闭": {
+      "source": "关闭",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Close"
+      }
+    },
+    "放弃目标": {
+      "source": "放弃目标",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Abandon goal"
+      }
+    }
+  },
+  "version": 1
+}

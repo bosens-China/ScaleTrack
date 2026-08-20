@@ -1,0 +1,40 @@
+{
+  "messages": {
+    "{{0}}，超出可补录范围": {
+      "source": "{{0}}，超出可补录范围",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}; outside the backfill range"
+      }
+    },
+    "便后": {
+      "source": "便后",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "After using the bathroom"
+      }
+    },
+    "完成运动打卡": {
+      "source": "完成运动打卡",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Complete exercise check-in"
+      }
+    },
+    "意见反馈": {
+      "source": "意见反馈",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Feedback"
+      }
+    },
+    "身高": {
+      "source": "身高",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Height"
+      }
+    }
+  },
+  "version": 1
+}

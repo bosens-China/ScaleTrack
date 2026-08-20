@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "下个月": {
+      "source": "下个月",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Next month"
+      }
+    },
+    "导入失败，文件格式不正确": {
+      "source": "导入失败，文件格式不正确",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Import failed: incorrect file format"
+      }
+    },
+    "当前环境暂不支持检查更新": {
+      "source": "当前环境暂不支持检查更新",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Checking for updates is not supported in the current environment"
+      }
+    }
+  },
+  "version": 1
+}

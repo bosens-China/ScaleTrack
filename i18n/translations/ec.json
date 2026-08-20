@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "减": {
+      "source": "减",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Lose"
+      }
+    },
+    "拖动调整运动时长": {
+      "source": "拖动调整运动时长",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Drag to adjust exercise duration"
+      }
+    },
+    "最近体重整体较为稳定，说明你的记录波动控制得比较平稳。": {
+      "source": "最近体重整体较为稳定，说明你的记录波动控制得比较平稳。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Your weight has been relatively stable recently, indicating that your recorded fluctuations are well controlled."
+      }
+    }
+  },
+  "version": 1
+}

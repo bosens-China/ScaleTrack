@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "{{0}} 小时": {
+      "source": "{{0}} 小时",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} hours"
+      }
+    },
+    "体重过轻，建议适当增加营养": {
+      "source": "体重过轻，建议适当增加营养",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Your weight is below the healthy range; consider improving your nutrition."
+      }
+    }
+  },
+  "version": 1
+}

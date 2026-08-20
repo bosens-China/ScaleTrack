@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "已合并导入数据": {
+      "source": "已合并导入数据",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Data merged and imported"
+      }
+    },
+    "当天已运动 {{0}} 项，共 {{1}}": {
+      "source": "当天已运动 {{0}} 项，共 {{1}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} activities recorded today, {{1}} total"
+      }
+    }
+  },
+  "version": 1
+}

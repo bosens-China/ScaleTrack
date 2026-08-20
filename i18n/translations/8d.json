@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "用时": {
+      "source": "用时",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Duration"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "分享海报生成失败，请重试": {
+      "source": "分享海报生成失败，请重试",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Failed to generate share poster. Please try again."
+      }
+    },
+    "可补录范围：{{0}} 至今天": {
+      "source": "可补录范围：{{0}} 至今天",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Backfill range: {{0}} to today"
+      }
+    },
+    "日均变化": {
+      "source": "日均变化",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Average daily change"
+      }
+    }
+  },
+  "version": 1
+}

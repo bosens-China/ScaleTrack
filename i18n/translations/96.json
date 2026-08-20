@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "本周次数": {
+      "source": "本周次数",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "This week's sessions"
+      }
+    },
+    "近期体重趋势显示可能处于热量赤字。": {
+      "source": "近期体重趋势显示可能处于热量赤字。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Recent weight trend suggests a possible calorie deficit."
+      }
+    }
+  },
+  "version": 1
+}

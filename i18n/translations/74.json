@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "发现同日记录": {
+      "source": "发现同日记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Record Found for This Date"
+      }
+    },
+    "未记录": {
+      "source": "未记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Not recorded"
+      }
+    }
+  },
+  "version": 1
+}

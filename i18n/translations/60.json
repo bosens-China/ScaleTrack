@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "修改运动记录": {
+      "source": "修改运动记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Edit exercise record"
+      }
+    },
+    "设置期望达成日期（选填）": {
+      "source": "设置期望达成日期（选填）",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Set target completion date (optional)"
+      }
+    }
+  },
+  "version": 1
+}

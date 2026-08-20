@@ -1,0 +1,40 @@
+{
+  "messages": {
+    "{{0}}月": {
+      "source": "{{0}}月",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}"
+      }
+    },
+    "洞察": {
+      "source": "洞察",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Insights"
+      }
+    },
+    "目标数据格式错误": {
+      "source": "目标数据格式错误",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Invalid goal data format"
+      }
+    },
+    "记录数据格式错误": {
+      "source": "记录数据格式错误",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Invalid record data format"
+      }
+    },
+    "身高 (cm)": {
+      "source": "身高 (cm)",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Height (cm)"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "当天没有运动记录": {
+      "source": "当天没有运动记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "No activity recorded on this date"
+      }
+    },
+    "提示：如果没有弹出分享，可以尝试长按上方海报直接保存": {
+      "source": "提示：如果没有弹出分享，可以尝试长按上方海报直接保存",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Tip: If sharing does not appear, try long-pressing the poster above to save it directly."
+      }
+    },
+    "确认删除这条记录？": {
+      "source": "确认删除这条记录？",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Delete this record?"
+      }
+    },
+    "部分运动记录数据结构不完整或数值不合理": {
+      "source": "部分运动记录数据结构不完整或数值不合理",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Some exercise record data structures are incomplete or contain invalid values"
+      }
+    }
+  },
+  "version": 1
+}

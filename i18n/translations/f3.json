@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "例如：170": {
+      "source": "例如：170",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "For example: 170"
+      }
+    },
+    "合并导入（推荐）": {
+      "source": "合并导入（推荐）",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Merge import (recommended)"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "增": {
+      "source": "增",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Gain"
+      }
+    },
+    "平均体重": {
+      "source": "平均体重",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Average weight"
+      }
+    }
+  },
+  "version": 1
+}

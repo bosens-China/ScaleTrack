@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "保持健康体重可以降低健康风险。": {
+      "source": "保持健康体重可以降低健康风险。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Maintaining a healthy weight can reduce health risks."
+      }
+    }
+  },
+  "version": 1
+}

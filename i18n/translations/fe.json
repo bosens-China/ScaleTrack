@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "从 JSON 文件恢复本地记录": {
+      "source": "从 JSON 文件恢复本地记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Restore local records from a JSON file"
+      }
+    },
+    "每个日期只保留一条体重记录，确认后将以本次填写内容替换已有记录。": {
+      "source": "每个日期只保留一条体重记录，确认后将以本次填写内容替换已有记录。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Only one weight record is kept per date. Once confirmed, this entry will replace the existing record."
+      }
+    },
+    "至今": {
+      "source": "至今",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "to present"
+      }
+    }
+  },
+  "version": 1
+}

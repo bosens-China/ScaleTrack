@@ -1,0 +1,40 @@
+{
+  "messages": {
+    "体重 / 0.1 kg": {
+      "source": "体重 / 0.1 kg",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Weight / 0.1 kg"
+      }
+    },
+    "基础信息已更新": {
+      "source": "基础信息已更新",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Basic information updated"
+      }
+    },
+    "导出数据": {
+      "source": "导出数据",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Export data"
+      }
+    },
+    "已覆盖今日记录：{{0}} kg": {
+      "source": "已覆盖今日记录：{{0}} kg",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Today's record overwritten: {{0}} kg"
+      }
+    },
+    "骑行": {
+      "source": "骑行",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Cycling"
+      }
+    }
+  },
+  "version": 1
+}

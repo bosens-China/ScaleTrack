@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "与现有数据合并，按日期去重，保留更新的记录。适合多设备同步。": {
+      "source": "与现有数据合并，按日期去重，保留更新的记录。适合多设备同步。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Merge with existing data, deduplicate by date, and keep updated records. Suitable for multi-device sync."
+      }
+    },
+    "运动记录已删除": {
+      "source": "运动记录已删除",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Exercise record deleted"
+      }
+    },
+    "里程碑详情": {
+      "source": "里程碑详情",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Milestone details"
+      }
+    }
+  },
+  "version": 1
+}

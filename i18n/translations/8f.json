@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "大餐后": {
+      "source": "大餐后",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "After a big meal"
+      }
+    }
+  },
+  "version": 1
+}

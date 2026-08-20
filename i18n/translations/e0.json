@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "及基础资料": {
+      "source": "及基础资料",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "and basic profile"
+      }
+    },
+    "实际": {
+      "source": "实际",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Actual"
+      }
+    },
+    "记录一个数字，或一次让身体动起来的时刻。": {
+      "source": "记录一个数字，或一次让身体动起来的时刻。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Log a number, or a moment that got your body moving."
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "放弃后该目标不会归档到里程碑，确认放弃？": {
+      "source": "放弃后该目标不会归档到里程碑，确认放弃？",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "This goal will not be archived as a milestone after abandonment. Confirm?"
+      }
+    },
+    "新增类型": {
+      "source": "新增类型",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Add type"
+      }
+    },
+    "最长连续 {{0}} 天": {
+      "source": "最长连续 {{0}} 天",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Longest streak: {{0}} days"
+      }
+    }
+  },
+  "version": 1
+}

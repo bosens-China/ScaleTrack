@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "取消": {
+      "source": "取消",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Cancel"
+      }
+    },
+    "增加 5 分钟": {
+      "source": "增加 5 分钟",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Increase by 5 minutes"
+      }
+    },
+    "范围。": {
+      "source": "范围。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "range."
+      }
+    }
+  },
+  "version": 1
+}

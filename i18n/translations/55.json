@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "切换体重展示与录入单位": {
+      "source": "切换体重展示与录入单位",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Change the display and input unit for weight"
+      }
+    }
+  },
+  "version": 1
+}

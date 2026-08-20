@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "减重速度偏快（{{0}}），过快减重可能流失肌肉、损害代谢，建议放缓节奏、保证营养。": {
+      "source": "减重速度偏快（{{0}}），过快减重可能流失肌肉、损害代谢，建议放缓节奏、保证营养。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Weight loss is too fast ({{0}}). Losing weight too quickly may cause muscle loss and harm metabolism; slow down and maintain adequate nutrition."
+      }
+    },
+    "晨起空腹": {
+      "source": "晨起空腹",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Morning, fasting"
+      }
+    },
+    "请输入有效的目标体重": {
+      "source": "请输入有效的目标体重",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Enter a valid target weight"
+      }
+    }
+  },
+  "version": 1
+}

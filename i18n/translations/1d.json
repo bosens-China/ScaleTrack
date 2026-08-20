@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "已保存图片，如未生效请长按海报保存": {
+      "source": "已保存图片，如未生效请长按海报保存",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Image saved. If it does not take effect, long-press the poster to save it."
+      }
+    },
+    "比计划提前 {{0}} 天达成 🎯": {
+      "source": "比计划提前 {{0}} 天达成 🎯",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Achieved {{0}} days ahead of schedule 🎯"
+      }
+    }
+  },
+  "version": 1
+}

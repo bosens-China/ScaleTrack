@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "{{0}}，未运动": {
+      "source": "{{0}}，未运动",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}, no exercise"
+      }
+    },
+    "分享海报": {
+      "source": "分享海报",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Share poster"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "已切换为 {{0}}": {
+      "source": "已切换为 {{0}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Switched to {{0}}"
+      }
+    },
+    "已覆盖导入数据": {
+      "source": "已覆盖导入数据",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Imported data overwritten"
+      }
+    }
+  },
+  "version": 1
+}

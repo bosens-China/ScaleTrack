@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "以启用更稳定的代谢趋势估算。": {
+      "source": "以启用更稳定的代谢趋势估算。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "to enable a more reliable metabolism trend estimate."
+      }
+    },
+    "减脂目标": {
+      "source": "减脂目标",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Fat-loss goal"
+      }
+    },
+    "系统设置": {
+      "source": "系统设置",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Settings"
+      }
+    },
+    "这段时间 BMI 下降了 {{0}}，整体趋势在向更轻盈的方向变化。": {
+      "source": "这段时间 BMI 下降了 {{0}}，整体趋势在向更轻盈的方向变化。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Your BMI decreased by {{0}} during this period, showing an overall trend toward a lighter range."
+      }
+    }
+  },
+  "version": 1
+}

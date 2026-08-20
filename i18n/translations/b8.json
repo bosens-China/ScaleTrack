@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "尚未备份过数据": {
+      "source": "尚未备份过数据",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "No data has been backed up yet"
+      }
+    },
+    "当前体重": {
+      "source": "当前体重",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Current weight"
+      }
+    }
+  },
+  "version": 1
+}

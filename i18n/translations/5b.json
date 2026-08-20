@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "仅支持补录最近 1 个月内的记录": {
+      "source": "仅支持补录最近 1 个月内的记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Only records from the last month can be backfilled"
+      }
+    }
+  },
+  "version": 1
+}

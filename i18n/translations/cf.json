@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "可继续添加不同项目；同类运动再次保存时会先询问是否覆盖。": {
+      "source": "可继续添加不同项目；同类运动再次保存时会先询问是否覆盖。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "You can add a different activity. Saving the same type again will ask whether to overwrite it."
+      }
+    },
+    "要按目标日期达成，建议在当前基础上每天再多制造约 {{0}} kcal 的{{1}}，仅作趋势参考。": {
+      "source": "要按目标日期达成，建议在当前基础上每天再多制造约 {{0}} kcal 的{{1}}，仅作趋势参考。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "To reach the goal by the target date, aim for about {{0}} kcal more of a daily {{1}} than your current baseline. For trend reference only."
+      }
+    },
+    "覆盖这项运动吗？": {
+      "source": "覆盖这项运动吗？",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Overwrite this activity?"
+      }
+    }
+  },
+  "version": 1
+}

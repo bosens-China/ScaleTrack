@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "体重正常，请继续保持": {
+      "source": "体重正常，请继续保持",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Your weight is in the healthy range. Keep it up!"
+      }
+    },
+    "约 {{0}}kg/周": {
+      "source": "约 {{0}}kg/周",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "About {{0}} kg/week"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "记录您的身体变化": {
+      "source": "记录您的身体变化",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Track changes in your body"
+      }
+    },
+    "选择一个未来日期作为期望达成时间，可随时调整或清除。": {
+      "source": "选择一个未来日期作为期望达成时间，可随时调整或清除。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Choose a future date as your target completion date. You can adjust or clear it at any time."
+      }
+    }
+  },
+  "version": 1
+}

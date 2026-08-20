@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "{{0}} 分": {
+      "source": "{{0}} 分",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} min"
+      }
+    },
+    "更改": {
+      "source": "更改",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Change"
+      }
+    }
+  },
+  "version": 1
+}

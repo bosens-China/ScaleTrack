@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "里程碑": {
+      "source": "里程碑",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Milestones"
+      }
+    }
+  },
+  "version": 1
+}

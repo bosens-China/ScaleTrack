@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "减少 5 分钟": {
+      "source": "减少 5 分钟",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Decrease by 5 minutes"
+      }
+    },
+    "日均": {
+      "source": "日均",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Daily avg."
+      }
+    },
+    "查看": {
+      "source": "查看",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "View"
+      }
+    },
+    "请选择有效的运动类型": {
+      "source": "请选择有效的运动类型",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Select a valid exercise type"
+      }
+    }
+  },
+  "version": 1
+}

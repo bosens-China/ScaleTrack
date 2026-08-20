@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "部分体重记录数据结构不完整或数值不合理": {
+      "source": "部分体重记录数据结构不完整或数值不合理",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Some weight record data structures are incomplete or contain invalid values"
+      }
+    }
+  },
+  "version": 1
+}

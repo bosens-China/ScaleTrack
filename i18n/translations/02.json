@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "更新后即可使用最新功能。": {
+      "source": "更新后即可使用最新功能。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Update to use the latest features."
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "{{0}} 岁": {
+      "source": "{{0}} 岁",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} years old"
+      }
+    },
+    "{{0}}，{{1}} 次运动": {
+      "source": "{{0}}，{{1}} 次运动",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}, {{1}} workout sessions"
+      }
+    },
+    "已检查更新，若有新版本会自动提示": {
+      "source": "已检查更新，若有新版本会自动提示",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Updates checked. You will be notified automatically when a new version is available."
+      }
+    }
+  },
+  "version": 1
+}

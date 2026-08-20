@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "分享或保存卡片": {
+      "source": "分享或保存卡片",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Share or save card"
+      }
+    },
+    "请选择出生日期": {
+      "source": "请选择出生日期",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Select your date of birth"
+      }
+    }
+  },
+  "version": 1
+}

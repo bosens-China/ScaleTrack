@@ -1,0 +1,40 @@
+{
+  "messages": {
+    "1个月": {
+      "source": "1个月",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "1 month"
+      }
+    },
+    "{{0}} 次": {
+      "source": "{{0}} 次",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} sessions"
+      }
+    },
+    "当前基础资料": {
+      "source": "当前基础资料",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Profile"
+      }
+    },
+    "最常运动": {
+      "source": "最常运动",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Most frequent exercise"
+      }
+    },
+    "确认保存": {
+      "source": "确认保存",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Confirm save"
+      }
+    }
+  },
+  "version": 1
+}

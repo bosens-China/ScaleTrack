@@ -1,0 +1,47 @@
+{
+  "messages": {
+    "{{0}}/天": {
+      "source": "{{0}}/天",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}/day"
+      }
+    },
+    "{{0}}（已移除）": {
+      "source": "{{0}}（已移除）",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} (removed)"
+      }
+    },
+    "今天已备份": {
+      "source": "今天已备份",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Backed up today"
+      }
+    },
+    "发生了什么？": {
+      "source": "发生了什么？",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "what happened?"
+      }
+    },
+    "可以切换到其他时间范围，或者继续添加更多记录。": {
+      "source": "可以切换到其他时间范围，或者继续添加更多记录。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Switch to another time range or add more records."
+      }
+    },
+    "备注会随这条体重记录一起保存，适合记录晨起、饭后或运动后等上下文。": {
+      "source": "备注会随这条体重记录一起保存，适合记录晨起、饭后或运动后等上下文。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Notes are saved with this weight record and are useful for context such as morning, after meals, or after exercise."
+      }
+    }
+  },
+  "version": 1
+}

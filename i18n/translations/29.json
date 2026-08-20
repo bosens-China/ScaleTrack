@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "大概运动了多久？": {
+      "source": "大概运动了多久？",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "About how long did you exercise?"
+      }
+    },
+    "正常": {
+      "source": "正常",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Normal"
+      }
+    },
+    "自然周": {
+      "source": "自然周",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Calendar Week"
+      }
+    }
+  },
+  "version": 1
+}

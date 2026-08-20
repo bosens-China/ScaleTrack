@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "目标日期已过但尚未达成，可以延长日期、重设目标，或放弃这个目标。": {
+      "source": "目标日期已过但尚未达成，可以延长日期、重设目标，或放弃这个目标。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "The target date has passed, but the goal has not been reached. You can extend the date, reset the goal, or abandon it."
+      }
+    }
+  },
+  "version": 1
+}

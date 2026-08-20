@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "本次 {{0}} 与最近一次记录（{{1}}）相差较大，确认没有输错吗？再点一次“确认保存”即可。": {
+      "source": "本次 {{0}} 与最近一次记录（{{1}}）相差较大，确认没有输错吗？再点一次“确认保存”即可。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "This {{0}} differs significantly from the most recent record ({{1}}). Are you sure it was entered correctly? Tap “Confirm save” again to proceed."
+      }
+    }
+  },
+  "version": 1
+}

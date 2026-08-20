@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "当前版本": {
+      "source": "当前版本",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Current version"
+      }
+    }
+  },
+  "version": 1
+}

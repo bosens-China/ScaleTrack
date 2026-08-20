@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "打卡": {
+      "source": "打卡",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Check in"
+      }
+    },
+    "数据仅保存在本设备浏览器中，建议定期导出备份，避免清理缓存或更换设备时丢失。": {
+      "source": "数据仅保存在本设备浏览器中，建议定期导出备份，避免清理缓存或更换设备时丢失。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Data is stored only in this device's browser. Export backups regularly to avoid loss from clearing cache or switching devices."
+      }
+    }
+  },
+  "version": 1
+}

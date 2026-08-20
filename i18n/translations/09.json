@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "当前体重 (kg)": {
+      "source": "当前体重 (kg)",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Current weight (kg)"
+      }
+    }
+  },
+  "version": 1
+}

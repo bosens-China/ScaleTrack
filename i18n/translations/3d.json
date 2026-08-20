@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "ScaleTrack 已可离线使用": {
+      "source": "ScaleTrack 已可离线使用",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "ScaleTrack is now available offline"
+      }
+    },
+    "界面语言": {
+      "source": "界面语言",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Language"
+      }
+    }
+  },
+  "version": 1
+}

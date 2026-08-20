@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "{{0}} 年 {{1}} 月": {
+      "source": "{{0}} 年 {{1}} 月",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} years {{1}} months"
+      }
+    },
+    "半月": {
+      "source": "半月",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "15 days"
+      }
+    },
+    "本地用户": {
+      "source": "本地用户",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Local user"
+      }
+    }
+  },
+  "version": 1
+}

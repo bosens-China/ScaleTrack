@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "累计变化": {
+      "source": "累计变化",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Total change"
+      }
+    },
+    "运动日期": {
+      "source": "运动日期",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Exercise date"
+      }
+    },
+    "首次使用": {
+      "source": "首次使用",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "First time here"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "每次调整 5 分钟": {
+      "source": "每次调整 5 分钟",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Adjust by 5 minutes each time"
+      }
+    }
+  },
+  "version": 1
+}

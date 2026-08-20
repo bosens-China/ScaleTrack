@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "日均热量趋势估算": {
+      "source": "日均热量趋势估算",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Estimated daily calorie trend"
+      }
+    },
+    "清除目标日期": {
+      "source": "清除目标日期",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Clear target date"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "例如：攀岩": {
+      "source": "例如：攀岩",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "For example: rock climbing"
+      }
+    },
+    "天运动": {
+      "source": "天运动",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "active days"
+      }
+    },
+    "运动记录已更新": {
+      "source": "运动记录已更新",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Exercise record updated"
+      }
+    },
+    "这个时间范围内还没有记录": {
+      "source": "这个时间范围内还没有记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "No records in this time range"
+      }
+    }
+  },
+  "version": 1
+}

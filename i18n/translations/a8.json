@@ -1,0 +1,47 @@
+{
+  "messages": {
+    "{{0}}年": {
+      "source": "{{0}}年",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} year"
+      }
+    },
+    "体重（{{0}}）": {
+      "source": "体重（{{0}}）",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Weight ({{0}})"
+      }
+    },
+    "已安装": {
+      "source": "已安装",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Installed"
+      }
+    },
+    "总 {{0}} 重": {
+      "source": "总 {{0}} 重",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Total {{0}} weight"
+      }
+    },
+    "请输入运动名称": {
+      "source": "请输入运动名称",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Enter an exercise name"
+      }
+    },
+    "运动类型已添加": {
+      "source": "运动类型已添加",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Exercise type added"
+      }
+    }
+  },
+  "version": 1
+}

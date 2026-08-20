@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "期望达成 {{0}}": {
+      "source": "期望达成 {{0}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Target date {{0}}"
+      }
+    },
+    "运动记录 ID 重复": {
+      "source": "运动记录 ID 重复",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Duplicate exercise record ID"
+      }
+    }
+  },
+  "version": 1
+}

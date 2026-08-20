@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "您的 BMI 处于": {
+      "source": "您的 BMI 处于",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Your BMI is"
+      }
+    }
+  },
+  "version": 1
+}

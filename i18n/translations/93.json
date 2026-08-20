@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "保存记录": {
+      "source": "保存记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Save record"
+      }
+    }
+  },
+  "version": 1
+}

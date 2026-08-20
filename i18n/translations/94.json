@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "深色模式": {
+      "source": "深色模式",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Dark"
+      }
+    }
+  },
+  "version": 1
+}

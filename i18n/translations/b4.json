@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "删除 {{0}} 记录": {
+      "source": "删除 {{0}} 记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Delete {{0}} record"
+      }
+    },
+    "本周": {
+      "source": "本周",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "This Week"
+      }
+    }
+  },
+  "version": 1
+}

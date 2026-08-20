@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "立即更新": {
+      "source": "立即更新",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Update now"
+      }
+    },
+    "长期坚持是最难的，你做到了，这就是自律的力量。": {
+      "source": "长期坚持是最难的，你做到了，这就是自律的力量。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Long-term consistency is the hardest part. You did it—that is the power of discipline."
+      }
+    }
+  },
+  "version": 1
+}

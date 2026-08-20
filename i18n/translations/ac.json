@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "发现新版本": {
+      "source": "发现新版本",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "New version available"
+      }
+    },
+    "编辑 {{0}} 记录": {
+      "source": "编辑 {{0}} 记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Edit {{0}} record"
+      }
+    }
+  },
+  "version": 1
+}

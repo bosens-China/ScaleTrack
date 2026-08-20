@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "{{0}} 分钟": {
+      "source": "{{0}} 分钟",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} minutes"
+      }
+    },
+    "今天，身体": {
+      "source": "今天，身体",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Today, your body"
+      }
+    },
+    "本周 / 运动节律": {
+      "source": "本周 / 运动节律",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "This week / Activity rhythm"
+      }
+    }
+  },
+  "version": 1
+}

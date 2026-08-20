@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "数据导出失败": {
+      "source": "数据导出失败",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Data export failed"
+      }
+    }
+  },
+  "version": 1
+}

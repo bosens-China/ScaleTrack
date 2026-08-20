@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "早晨称重，运动后...": {
+      "source": "早晨称重，运动后...",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Morning weigh-in, after exercise..."
+      }
+    },
+    "该日期已有记录": {
+      "source": "该日期已有记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "A record already exists for this date"
+      }
+    },
+    "达成里程碑": {
+      "source": "达成里程碑",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Achieve milestone"
+      }
+    },
+    "运动类型": {
+      "source": "运动类型",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Exercise type"
+      }
+    }
+  },
+  "version": 1
+}

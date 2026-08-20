@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "自定义运动类型数据结构不完整": {
+      "source": "自定义运动类型数据结构不完整",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Custom exercise type data structure is incomplete"
+      }
+    }
+  },
+  "version": 1
+}

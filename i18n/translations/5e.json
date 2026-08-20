@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "同一天的同类运动会合并为一条，确认后将以本次填写内容替换已有记录。": {
+      "source": "同一天的同类运动会合并为一条，确认后将以本次填写内容替换已有记录。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Activities of the same type on the same day are merged into one record. Once confirmed, this entry will replace the existing record."
+      }
+    },
+    "已记录": {
+      "source": "已记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Recorded"
+      }
+    },
+    "最近 BMI 整体较为稳定，说明这段时间身体指标波动不大。": {
+      "source": "最近 BMI 整体较为稳定，说明这段时间身体指标波动不大。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Your BMI has been relatively stable recently, indicating little fluctuation in body metrics during this period."
+      }
+    },
+    "记录已更新": {
+      "source": "记录已更新",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Record updated"
+      }
+    }
+  },
+  "version": 1
+}

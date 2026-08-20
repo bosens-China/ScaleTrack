@@ -1,0 +1,26 @@
+{
+  "messages": {
+    " · 剩 {{0}} 天": {
+      "source": " · 剩 {{0}} 天",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": " · {{0}} days left"
+      }
+    },
+    "关闭分享海报": {
+      "source": "关闭分享海报",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Close share poster"
+      }
+    },
+    "图片保存失败，请重试": {
+      "source": "图片保存失败，请重试",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Failed to save image. Please try again."
+      }
+    }
+  },
+  "version": 1
+}

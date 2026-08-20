@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "{{0}}重 {{1}} {{2}} · 用时 {{3}} 天": {
+      "source": "{{0}}重 {{1}} {{2}} · 用时 {{3}} 天",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} weight {{1}} {{2}} · {{3}} days"
+      }
+    },
+    "目标体重": {
+      "source": "目标体重",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Target weight"
+      }
+    }
+  },
+  "version": 1
+}

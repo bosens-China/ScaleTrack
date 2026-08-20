@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "如何导入这份数据？": {
+      "source": "如何导入这份数据？",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "How would you like to import this data?"
+      }
+    },
+    "更新目标后，主页的进度追踪器会自动重置进度。": {
+      "source": "更新目标后，主页的进度追踪器会自动重置进度。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "After updating the goal, the progress tracker on the home page will reset automatically."
+      }
+    }
+  },
+  "version": 1
+}

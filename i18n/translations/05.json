@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "{{0}} · {{1}}": {
+      "source": "{{0}} · {{1}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} · {{1}}"
+      }
+    },
+    "数据不足 (需 {{0}} 天且 {{1}} 条记录)": {
+      "source": "数据不足 (需 {{0}} 天且 {{1}} 条记录)",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Insufficient data (requires {{0}} days and {{1}} records)"
+      }
+    }
+  },
+  "version": 1
+}

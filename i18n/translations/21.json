@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "共计用时": {
+      "source": "共计用时",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Total duration"
+      }
+    },
+    "按近期趋势粗略估计，约 {{0}} 天可能达成目标。": {
+      "source": "按近期趋势粗略估计，约 {{0}} 天可能达成目标。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Based on recent trends, you may reach your goal in about {{0}} days."
+      }
+    },
+    "羽毛球": {
+      "source": "羽毛球",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Badminton"
+      }
+    },
+    "跟随系统": {
+      "source": "跟随系统",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "System"
+      }
+    }
+  },
+  "version": 1
+}

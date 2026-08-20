@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "3个月": {
+      "source": "3个月",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "3 months"
+      }
+    },
+    "放弃当前目标": {
+      "source": "放弃当前目标",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Abandon current goal"
+      }
+    },
+    "起始 {{0}} → 现在 {{1}} {{2}} · 坚持 {{3}} 天 / {{4}} 次记录": {
+      "source": "起始 {{0}} → 现在 {{1}} {{2}} · 坚持 {{3}} 天 / {{4}} 次记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Start {{0}} → Now {{1}} {{2}} · {{3}} days / {{4}} records"
+      }
+    }
+  },
+  "version": 1
+}

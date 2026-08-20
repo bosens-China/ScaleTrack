@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "不必等到完美的一次训练，从今天做过的运动开始。": {
+      "source": "不必等到完美的一次训练，从今天做过的运动开始。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Don't wait for the perfect workout—start with the exercise you did today."
+      }
+    },
+    "公斤 kg": {
+      "source": "公斤 kg",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Kilograms (kg)"
+      }
+    },
+    "近期体重趋势显示可能处于热量盈余。": {
+      "source": "近期体重趋势显示可能处于热量盈余。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Recent weight trend suggests a possible calorie surplus."
+      }
+    }
+  },
+  "version": 1
+}

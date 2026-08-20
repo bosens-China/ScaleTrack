@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "7日均线": {
+      "source": "7日均线",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "7-day average"
+      }
+    },
+    "分享或保存": {
+      "source": "分享或保存",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Share or save"
+      }
+    },
+    "已达成！🎉": {
+      "source": "已达成！🎉",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Achieved! 🎉"
+      }
+    },
+    "当前趋势大致支持如期达成，继续观察即可。": {
+      "source": "当前趋势大致支持如期达成，继续观察即可。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "The current trend broadly supports reaching your goal on time. Keep monitoring it."
+      }
+    }
+  },
+  "version": 1
+}

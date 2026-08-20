@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "{{0}}，没有运动记录": {
+      "source": "{{0}}，没有运动记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}, no activity recorded"
+      }
+    },
+    "趋势": {
+      "source": "趋势",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Trends"
+      }
+    }
+  },
+  "version": 1
+}

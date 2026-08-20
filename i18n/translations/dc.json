@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "分享进展": {
+      "source": "分享进展",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Share progress"
+      }
+    }
+  },
+  "version": 1
+}

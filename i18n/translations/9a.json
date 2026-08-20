@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "国内 BMI 分级适合做初筛；肌肉量较高的运动人群，建议结合体脂率、腰围或围度一起观察。": {
+      "source": "国内 BMI 分级适合做初筛；肌肉量较高的运动人群，建议结合体脂率、腰围或围度一起观察。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Chinese BMI categories are suitable for initial screening. For people with higher muscle mass, also consider body-fat percentage, waist circumference, or other measurements."
+      }
+    },
+    "运动频率": {
+      "source": "运动频率",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Exercise frequency"
+      }
+    }
+  },
+  "version": 1
+}

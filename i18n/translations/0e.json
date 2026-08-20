@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "{{0}}的头像": {
+      "source": "{{0}}的头像",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}'s avatar"
+      }
+    },
+    "增重速度较快（{{0}}），注意控制饮食结构、优先增肌。": {
+      "source": "增重速度较快（{{0}}），注意控制饮食结构、优先增肌。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Weight gain is fairly fast ({{0}}). Keep your diet in check and prioritize muscle gain."
+      }
+    },
+    "目标达成！": {
+      "source": "目标达成！",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Goal achieved!"
+      }
+    }
+  },
+  "version": 1
+}

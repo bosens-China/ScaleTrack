@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "{{0}}年 {{1}}月": {
+      "source": "{{0}}年 {{1}}月",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} years {{1}} months"
+      }
+    },
+    "今天": {
+      "source": "今天",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Today"
+      }
+    }
+  },
+  "version": 1
+}

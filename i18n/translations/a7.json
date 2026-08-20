@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "性别": {
+      "source": "性别",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Gender"
+      }
+    },
+    "文件包含 {{0}} 条体重、{{1}} 条运动、{{2}} 个目标{{3}}。": {
+      "source": "文件包含 {{0}} 条体重、{{1}} 条运动、{{2}} 个目标{{3}}。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "The file contains {{0}} weight records, {{1}} exercise records, {{2}} goals{{3}}."
+      }
+    }
+  },
+  "version": 1
+}

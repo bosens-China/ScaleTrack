@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "你的毅力令人钦佩！短短一周就达成了目标。": {
+      "source": "你的毅力令人钦佩！短短一周就达成了目标。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Your perseverance is admirable! You reached your goal in just one week."
+      }
+    }
+  },
+  "version": 1
+}

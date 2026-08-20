@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "体重趋势": {
+      "source": "体重趋势",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Weight trend"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "近期体重趋势基本稳定。": {
+      "source": "近期体重趋势基本稳定。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Recent weight trend is generally stable."
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "体重过重，建议咨询医生制定减重计划": {
+      "source": "体重过重，建议咨询医生制定减重计划",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Your weight is significantly above the healthy range; consider consulting a doctor about a weight-loss plan."
+      }
+    },
+    "减少": {
+      "source": "减少",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Reduce"
+      }
+    },
+    "导入失败：{{0}}": {
+      "source": "导入失败：{{0}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Import failed: {{0}}"
+      }
+    }
+  },
+  "version": 1
+}

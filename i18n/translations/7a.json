@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "当前 BMI": {
+      "source": "当前 BMI",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Current BMI"
+      }
+    },
+    "昵称": {
+      "source": "昵称",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Nickname"
+      }
+    },
+    "添加": {
+      "source": "添加",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Add"
+      }
+    }
+  },
+  "version": 1
+}

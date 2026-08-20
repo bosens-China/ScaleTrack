@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "三个月的坚持更不容易，为自己骄傲！": {
+      "source": "三个月的坚持更不容易，为自己骄傲！",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Three months of consistency is no small feat. Be proud of yourself!"
+      }
+    },
+    "近7天持平": {
+      "source": "近7天持平",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "No change in the last 7 days"
+      }
+    }
+  },
+  "version": 1
+}

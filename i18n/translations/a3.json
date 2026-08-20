@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "保存": {
+      "source": "保存",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Save"
+      }
+    },
+    "总览": {
+      "source": "总览",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Home"
+      }
+    }
+  },
+  "version": 1
+}

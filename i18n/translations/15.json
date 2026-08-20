@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "{{0}}重 ({{1}})": {
+      "source": "{{0}}重 ({{1}})",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} weight ({{1}})"
+      }
+    },
+    "基础信息": {
+      "source": "基础信息",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Basic information"
+      }
+    },
+    "暂无趋势数据": {
+      "source": "暂无趋势数据",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "No trend data yet"
+      }
+    },
+    "目标体重（{{0}}）": {
+      "source": "目标体重（{{0}}）",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Target weight ({{0}})"
+      }
+    }
+  },
+  "version": 1
+}

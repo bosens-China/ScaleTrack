@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "新增运动类型名称": {
+      "source": "新增运动类型名称",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "New exercise type name"
+      }
+    }
+  },
+  "version": 1
+}

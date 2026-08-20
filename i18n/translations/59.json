@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "跑步": {
+      "source": "跑步",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Running"
+      }
+    }
+  },
+  "version": 1
+}

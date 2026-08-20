@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "如果不修改备注，将保留当前输入框里的内容并覆盖旧备注。": {
+      "source": "如果不修改备注，将保留当前输入框里的内容并覆盖旧备注。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "If you do not change the notes, the current text field content will be kept and overwrite the old note."
+      }
+    }
+  },
+  "version": 1
+}

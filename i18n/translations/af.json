@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "收起": {
+      "source": "收起",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Collapse"
+      }
+    },
+    "这段时间体重下降了 {{0}}{{1}}，当前节奏保持得不错。": {
+      "source": "这段时间体重下降了 {{0}}{{1}}，当前节奏保持得不错。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Your weight decreased by {{0}}{{1}} during this period. Your current pace looks good."
+      }
+    }
+  },
+  "version": 1
+}

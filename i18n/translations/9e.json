@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "年龄": {
+      "source": "年龄",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Age"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "偏胖": {
+      "source": "偏胖",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Overweight"
+      }
+    },
+    "已放弃当前目标": {
+      "source": "已放弃当前目标",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Current goal abandoned"
+      }
+    }
+  },
+  "version": 1
+}

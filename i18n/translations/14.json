@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "达成第一个目标后，这里会保留你的里程碑记录。": {
+      "source": "达成第一个目标后，这里会保留你的里程碑记录。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "After you achieve your first goal, your milestone records will be kept here."
+      }
+    }
+  },
+  "version": 1
+}

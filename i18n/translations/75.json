@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "四": {
+      "source": "四",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Thu"
+      }
+    },
+    "目标体重已保存": {
+      "source": "目标体重已保存",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Target weight saved"
+      }
+    },
+    "立即切换显示语言": {
+      "source": "立即切换显示语言",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Change the display language instantly"
+      }
+    }
+  },
+  "version": 1
+}

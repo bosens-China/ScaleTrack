@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "不能记录未来的运动": {
+      "source": "不能记录未来的运动",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "You cannot record future exercise"
+      }
+    },
+    "需设置年龄": {
+      "source": "需设置年龄",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Set your age first"
+      }
+    }
+  },
+  "version": 1
+}

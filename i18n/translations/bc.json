@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "共 {{0}} 次": {
+      "source": "共 {{0}} 次",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} sessions total"
+      }
+    },
+    "增加": {
+      "source": "增加",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Increase"
+      }
+    },
+    "我的运动": {
+      "source": "我的运动",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "My exercise"
+      }
+    }
+  },
+  "version": 1
+}

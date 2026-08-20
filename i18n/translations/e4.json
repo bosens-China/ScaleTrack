@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "还没有足够的记录生成趋势图，先去“添加”页保存第一条体重数据吧。": {
+      "source": "还没有足够的记录生成趋势图，先去“添加”页保存第一条体重数据吧。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "There are not enough records to generate a trend chart yet. Save your first weight record on the “Add” page."
+      }
+    }
+  },
+  "version": 1
+}

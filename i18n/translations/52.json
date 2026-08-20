@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "去添加记录": {
+      "source": "去添加记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Add a record"
+      }
+    }
+  },
+  "version": 1
+}

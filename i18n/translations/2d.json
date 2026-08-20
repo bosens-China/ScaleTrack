@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "BMI 信息": {
+      "source": "BMI 信息",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "BMI information"
+      }
+    },
+    "去记录": {
+      "source": "去记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Record now"
+      }
+    }
+  },
+  "version": 1
+}

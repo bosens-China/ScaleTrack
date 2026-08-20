@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "本地数据": {
+      "source": "本地数据",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Local data"
+      }
+    }
+  },
+  "version": 1
+}

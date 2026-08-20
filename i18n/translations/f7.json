@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "上次备份：{{0}} 天前": {
+      "source": "上次备份：{{0}} 天前",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Last backup: {{0}} days ago"
+      }
+    },
+    "语言切换失败，请重试": {
+      "source": "语言切换失败，请重试",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Couldn't switch language. Please try again."
+      }
+    }
+  },
+  "version": 1
+}

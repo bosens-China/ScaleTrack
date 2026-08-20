@@ -1,0 +1,33 @@
+{
+  "messages": {
+    " 距目标日期还有 {{0}} 天，目前趋势大致领先于计划。": {
+      "source": " 距目标日期还有 {{0}} 天，目前趋势大致领先于计划。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": " {{0}} days remain until the target date; your current trend is roughly ahead of plan."
+      }
+    },
+    "删除": {
+      "source": "删除",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Delete"
+      }
+    },
+    "支持安装": {
+      "source": "支持安装",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Installable"
+      }
+    },
+    "未设置": {
+      "source": "未设置",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Not set"
+      }
+    }
+  },
+  "version": 1
+}

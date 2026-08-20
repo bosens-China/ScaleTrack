@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "今天的状态、场地或搭档...": {
+      "source": "今天的状态、场地或搭档...",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Today's condition, location, or training partner..."
+      }
+    },
+    "运动时长（分钟）": {
+      "source": "运动时长（分钟）",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Exercise duration (minutes)"
+      }
+    }
+  },
+  "version": 1
+}

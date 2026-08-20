@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "完善基础资料": {
+      "source": "完善基础资料",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Set up your profile"
+      }
+    },
+    "推荐 {{0}} {{1}}（BMI 正常中值）": {
+      "source": "推荐 {{0}} {{1}}（BMI 正常中值）",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Recommended: {{0}} {{1}} (midpoint of the normal BMI range)"
+      }
+    }
+  },
+  "version": 1
+}

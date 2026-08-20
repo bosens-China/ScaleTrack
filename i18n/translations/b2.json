@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "球类": {
+      "source": "球类",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Ball sports"
+      }
+    }
+  },
+  "version": 1
+}

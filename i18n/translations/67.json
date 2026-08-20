@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "清空当前所有本地数据，完全替换为文件内容。": {
+      "source": "清空当前所有本地数据，完全替换为文件内容。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Clear all current local data and completely replace it with the file contents."
+      }
+    }
+  },
+  "version": 1
+}

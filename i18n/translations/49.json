@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "天": {
+      "source": "天",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "days"
+      }
+    },
+    "观察 BMI 变化与身体状态走势": {
+      "source": "观察 BMI 变化与身体状态走势",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Track changes in BMI and body condition"
+      }
+    }
+  },
+  "version": 1
+}

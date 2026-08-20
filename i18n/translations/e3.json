@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "请输入有效的身高": {
+      "source": "请输入有效的身高",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Enter a valid height"
+      }
+    }
+  },
+  "version": 1
+}

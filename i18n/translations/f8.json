@@ -1,0 +1,26 @@
+{
+  "messages": {
+    " · 已到期": {
+      "source": " · 已到期",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": " · Due date reached"
+      }
+    },
+    "BMI 趋势": {
+      "source": "BMI 趋势",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "BMI trend"
+      }
+    },
+    "游泳": {
+      "source": "游泳",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Swimming"
+      }
+    }
+  },
+  "version": 1
+}

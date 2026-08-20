@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "已从运动列表移除，历史记录不受影响": {
+      "source": "已从运动列表移除，历史记录不受影响",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Removed from the exercise list; historical records are unaffected"
+      }
+    }
+  },
+  "version": 1
+}

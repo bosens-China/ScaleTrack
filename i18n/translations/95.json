@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "{{0}}已覆盖并合并": {
+      "source": "{{0}}已覆盖并合并",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} updated and merged"
+      }
+    },
+    "导入数据": {
+      "source": "导入数据",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Import data"
+      }
+    }
+  },
+  "version": 1
+}

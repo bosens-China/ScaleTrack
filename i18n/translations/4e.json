@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "新版本已准备好，点击后刷新应用": {
+      "source": "新版本已准备好，点击后刷新应用",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "A new version is ready. Click to refresh the app."
+      }
+    },
+    "男": {
+      "source": "男",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Male"
+      }
+    },
+    "直观查看您的进度": {
+      "source": "直观查看您的进度",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "View your progress at a glance"
+      }
+    }
+  },
+  "version": 1
+}

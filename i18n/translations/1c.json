@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "断网时也能打开应用查看本地数据。": {
+      "source": "断网时也能打开应用查看本地数据。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "You can still open the app and view local data offline."
+      }
+    }
+  },
+  "version": 1
+}

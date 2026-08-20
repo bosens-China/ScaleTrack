@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "近7天 {{0}}": {
+      "source": "近7天 {{0}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Last 7 days: {{0}}"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "去更新": {
+      "source": "去更新",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Update now"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "稳步记录，持续接近你的健康目标": {
+      "source": "稳步记录，持续接近你的健康目标",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Track steadily and move closer to your health goal"
+      }
+    },
+    "身高（cm）": {
+      "source": "身高（cm）",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Height (cm)"
+      }
+    }
+  },
+  "version": 1
+}

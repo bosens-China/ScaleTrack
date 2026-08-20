@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "半年": {
+      "source": "半年",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "6 months"
+      }
+    }
+  },
+  "version": 1
+}

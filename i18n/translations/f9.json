@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "上个月": {
+      "source": "上个月",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Last month"
+      }
+    },
+    "偏瘦": {
+      "source": "偏瘦",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Underweight"
+      }
+    },
+    "导入数据必须是对象": {
+      "source": "导入数据必须是对象",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Imported data must be an object"
+      }
+    }
+  },
+  "version": 1
+}

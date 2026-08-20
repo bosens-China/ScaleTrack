@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "数据导出成功": {
+      "source": "数据导出成功",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Data exported successfully"
+      }
+    },
+    "目标体重不能与起始体重相同": {
+      "source": "目标体重不能与起始体重相同",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Target weight cannot be the same as starting weight"
+      }
+    }
+  },
+  "version": 1
+}

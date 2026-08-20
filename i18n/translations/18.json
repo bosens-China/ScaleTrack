@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "趋势页会在你开始记录后展示折线、区间统计和洞察信息。": {
+      "source": "趋势页会在你开始记录后展示折线、区间统计和洞察信息。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "The Trends page will show line charts, range statistics, and insights once you start recording."
+      }
+    }
+  },
+  "version": 1
+}

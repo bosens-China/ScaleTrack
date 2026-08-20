@@ -1,0 +1,47 @@
+{
+  "messages": {
+    "今日总览": {
+      "source": "今日总览",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Today"
+      }
+    },
+    "体重单位": {
+      "source": "体重单位",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Weight unit"
+      }
+    },
+    "体重记录成功：{{0}} kg": {
+      "source": "体重记录成功：{{0}} kg",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Weight recorded: {{0}} kg"
+      }
+    },
+    "目标节奏偏快（约 {{0}}kg/周），注意健康，循序渐进更稳妥": {
+      "source": "目标节奏偏快（约 {{0}}kg/周），注意健康，循序渐进更稳妥",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "The target pace is fast (about {{0}} kg/week). Prioritize health; gradual progress is safer."
+      }
+    },
+    "请选择运动类型": {
+      "source": "请选择运动类型",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Select an exercise type"
+      }
+    },
+    "这段时间 BMI 上升了 {{0}}，建议结合饮食与作息一起观察变化原因。": {
+      "source": "这段时间 BMI 上升了 {{0}}，建议结合饮食与作息一起观察变化原因。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Your BMI increased by {{0}} during this period. Consider your diet and routine when assessing possible causes."
+      }
+    }
+  },
+  "version": 1
+}

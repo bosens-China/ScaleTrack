@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "前往 GitHub 提交 Issue 或建议": {
+      "source": "前往 GitHub 提交 Issue 或建议",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Open a GitHub issue or share a suggestion"
+      }
+    },
+    "暂无": {
+      "source": "暂无",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "None yet"
+      }
+    },
+    "阶段进度": {
+      "source": "阶段进度",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Phase progress"
+      }
+    }
+  },
+  "version": 1
+}

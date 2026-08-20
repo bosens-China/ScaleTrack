@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "斤": {
+      "source": "斤",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "jin"
+      }
+    }
+  },
+  "version": 1
+}

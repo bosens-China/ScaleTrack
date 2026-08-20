@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "所有记录": {
+      "source": "所有记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "All records"
+      }
+    },
+    "这段时间体重上升了 {{0}}{{1}}，建议留意饮食与作息变化。": {
+      "source": "这段时间体重上升了 {{0}}{{1}}，建议留意饮食与作息变化。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Your weight increased by {{0}}{{1}} during this period. Consider changes in diet and routine."
+      }
+    }
+  },
+  "version": 1
+}

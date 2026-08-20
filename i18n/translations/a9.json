@@ -1,0 +1,40 @@
+{
+  "messages": {
+    "持平": {
+      "source": "持平",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "No change"
+      }
+    },
+    "样本还不够，再记录几次后，这里会给出更有参考价值的趋势洞察。": {
+      "source": "样本还不够，再记录几次后，这里会给出更有参考价值的趋势洞察。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "There are not enough samples yet. After a few more records, you'll see more useful trend insights here."
+      }
+    },
+    "肥胖": {
+      "source": "肥胖",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Obesity"
+      }
+    },
+    "运动": {
+      "source": "运动",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Activity"
+      }
+    },
+    "运动名称最多 12 个字": {
+      "source": "运动名称最多 12 个字",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Exercise name can be up to 12 characters"
+      }
+    }
+  },
+  "version": 1
+}

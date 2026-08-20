@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "删除运动类型 {{0}}": {
+      "source": "删除运动类型 {{0}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Delete exercise type {{0}}"
+      }
+    },
+    "运动类型名称重复": {
+      "source": "运动类型名称重复",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Duplicate exercise type name"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "该运动类型已存在": {
+      "source": "该运动类型已存在",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "This exercise type already exists"
+      }
+    },
+    "请输入有效的体重": {
+      "source": "请输入有效的体重",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Enter a valid weight"
+      }
+    },
+    "请输入有效的体重（20-300kg）": {
+      "source": "请输入有效的体重（20-300kg）",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Enter a valid weight (20–300 kg)"
+      }
+    },
+    "运动打卡": {
+      "source": "运动打卡",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Log activity"
+      }
+    }
+  },
+  "version": 1
+}

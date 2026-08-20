@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "{{0}}，未来日期不可选择": {
+      "source": "{{0}}，未来日期不可选择",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}; future dates cannot be selected"
+      }
+    },
+    "五": {
+      "source": "五",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Fri"
+      }
+    },
+    "开始记录": {
+      "source": "开始记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Start tracking"
+      }
+    },
+    "部分目标数据结构不完整或数值不合理": {
+      "source": "部分目标数据结构不完整或数值不合理",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Some goal data structures are incomplete or contain invalid values"
+      }
+    }
+  },
+  "version": 1
+}

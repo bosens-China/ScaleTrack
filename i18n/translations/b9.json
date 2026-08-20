@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "覆盖导入": {
+      "source": "覆盖导入",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Overwrite import"
+      }
+    },
+    "饭前": {
+      "source": "饭前",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Before a meal"
+      }
+    }
+  },
+  "version": 1
+}

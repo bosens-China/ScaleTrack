@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "{{0}} 达成": {
+      "source": "{{0}} 达成",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Achieve by {{0}}"
+      }
+    },
+    "覆盖这天的体重吗？": {
+      "source": "覆盖这天的体重吗？",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Overwrite the weight for this date?"
+      }
+    },
+    "还没有运动记录，从一次打卡开始": {
+      "source": "还没有运动记录，从一次打卡开始",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "No activity records yet. Start with one session."
+      }
+    }
+  },
+  "version": 1
+}

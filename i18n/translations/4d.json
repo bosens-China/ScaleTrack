@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "浏览器模式": {
+      "source": "浏览器模式",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Browser mode"
+      }
+    }
+  },
+  "version": 1
+}

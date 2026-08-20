@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "天 · {{0}} 次": {
+      "source": "天 · {{0}} 次",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "days · {{0}} sessions"
+      }
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "当前已保存 {{0}}。再次保存会覆盖旧记录。": {
+      "source": "当前已保存 {{0}}。再次保存会覆盖旧记录。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} is already saved. Saving again will overwrite the previous record."
+      }
+    }
+  },
+  "version": 1
+}

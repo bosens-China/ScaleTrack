@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "我们升级了记录方式，请": {
+      "source": "我们升级了记录方式，请",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "We upgraded how tracking works. Please "
+      }
+    },
+    "设置": {
+      "source": "设置",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Settings"
+      }
+    }
+  },
+  "version": 1
+}

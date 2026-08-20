@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "{{0}}日": {
+      "source": "{{0}}日",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}"
+      }
+    }
+  },
+  "version": 1
+}

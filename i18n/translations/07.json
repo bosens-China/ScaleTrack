@@ -1,0 +1,33 @@
+{
+  "messages": {
+    "{{0}} 项 · {{1}}": {
+      "source": "{{0}} 项 · {{1}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}} activities · {{1}}"
+      }
+    },
+    "先保存第一条体重记录，仪表盘会自动补齐趋势、周变化和最近记录信息。": {
+      "source": "先保存第一条体重记录，仪表盘会自动补齐趋势、周变化和最近记录信息。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Save your first weight record to see trends, weekly changes, and recent activity here."
+      }
+    },
+    "暂无对比": {
+      "source": "暂无对比",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "No comparison yet"
+      }
+    },
+    "生理期": {
+      "source": "生理期",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Menstruation"
+      }
+    }
+  },
+  "version": 1
+}

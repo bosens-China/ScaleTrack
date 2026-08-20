@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "取消覆盖": {
+      "source": "取消覆盖",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Cancel Overwrite"
+      }
+    },
+    "返回添加记录": {
+      "source": "返回添加记录",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Back to add record"
+      }
+    }
+  },
+  "version": 1
+}

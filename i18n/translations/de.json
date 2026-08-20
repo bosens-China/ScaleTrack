@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "六": {
+      "source": "六",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Sat"
+      }
+    }
+  },
+  "version": 1
+}

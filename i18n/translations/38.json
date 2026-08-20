@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "体重": {
+      "source": "体重",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Weight"
+      }
+    }
+  },
+  "version": 1
+}

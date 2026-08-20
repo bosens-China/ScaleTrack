@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "睡前": {
+      "source": "睡前",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Before bed"
+      }
+    }
+  },
+  "version": 1
+}

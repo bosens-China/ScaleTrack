@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "{{0}}，{{1}} 项运动，共 {{2}}": {
+      "source": "{{0}}，{{1}} 项运动，共 {{2}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "{{0}}, {{1}} activities, {{2}} total"
+      }
+    },
+    "最近进度": {
+      "source": "最近进度",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Recent progress"
+      }
+    },
+    "记录已删除": {
+      "source": "记录已删除",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Record deleted"
+      }
+    }
+  },
+  "version": 1
+}

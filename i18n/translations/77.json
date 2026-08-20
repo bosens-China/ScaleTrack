@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "确认放弃当前目标？": {
+      "source": "确认放弃当前目标？",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Abandon the current goal?"
+      }
+    }
+  },
+  "version": 1
+}

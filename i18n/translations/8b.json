@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "最低": {
+      "source": "最低",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Lowest"
+      }
+    }
+  },
+  "version": 1
+}

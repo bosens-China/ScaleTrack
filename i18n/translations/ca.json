@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "只需要填写一次。后续记录体重、计算 BMI 和追踪目标都会基于这些资料。": {
+      "source": "只需要填写一次。后续记录体重、计算 BMI 和追踪目标都会基于这些资料。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "You only need to complete this once. Future weight records, BMI calculations, and goals use this information."
+      }
+    },
+    "暂无变化": {
+      "source": "暂无变化",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "No change yet"
+      }
+    },
+    "目标 {{0}}": {
+      "source": "目标 {{0}}",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Goal {{0}}"
+      }
+    }
+  },
+  "version": 1
+}

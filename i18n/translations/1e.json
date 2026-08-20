@@ -1,0 +1,19 @@
+{
+  "messages": {
+    "保持当前节奏，适度调整饮食结构以{{0}}热量摄入。": {
+      "source": "保持当前节奏，适度调整饮食结构以{{0}}热量摄入。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Maintain your current pace and adjust your diet moderately to {{0}} calorie intake."
+      }
+    },
+    "减重速度较快（{{0}}），记得保证蛋白质与必要营养摄入。": {
+      "source": "减重速度较快（{{0}}），记得保证蛋白质与必要营养摄入。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Weight loss is fairly fast ({{0}}). Remember to get enough protein and essential nutrients."
+      }
+    }
+  },
+  "version": 1
+}

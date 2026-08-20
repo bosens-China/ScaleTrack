@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "关于 ScaleTrack": {
+      "source": "关于 ScaleTrack",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "About ScaleTrack"
+      }
+    },
+    "目标日期已过仍未达成，去延期或重设目标？": {
+      "source": "目标日期已过仍未达成，去延期或重设目标？",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "The target date has passed. Extend or reset your goal?"
+      }
+    },
+    "选择出生日期": {
+      "source": "选择出生日期",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Select date of birth"
+      }
+    }
+  },
+  "version": 1
+}

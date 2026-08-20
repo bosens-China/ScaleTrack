@@ -1,0 +1,26 @@
+{
+  "messages": {
+    "体重目标": {
+      "source": "体重目标",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Weight goal"
+      }
+    },
+    "未找到里程碑": {
+      "source": "未找到里程碑",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Milestone not found"
+      }
+    },
+    "重新设置出生日期": {
+      "source": "重新设置出生日期",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "set your date of birth again"
+      }
+    }
+  },
+  "version": 1
+}
