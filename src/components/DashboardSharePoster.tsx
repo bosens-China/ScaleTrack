@@ -37,14 +37,14 @@ export default function DashboardSharePoster({
   goal,
   unit,
 }: Props) {
-  const { t } = useI18n()
+  const { t, currentLang } = useI18n()
   const unitLabel = getWeightUnitLabel(unit)
   const currentWeight = getCurrentWeight(profile, records)
   const weeklyChange = getWeeklyChange(records)
   const isGainGoal = goal !== null && goal.targetWeight > goal.startWeight
   const goalLabel = goal ? (isGainGoal ? t('增肌目标') : t('减脂目标')) : t('体重目标')
   const progress = getGoalProgress(goal, currentWeight, records)
-  const activityWeek = getActivityWeekStats(activityRecords)
+  const activityWeek = getActivityWeekStats(activityRecords, undefined, currentLang)
 
   // 当前 BMI 分级（快照）
   const currentBMI = getCurrentBMI(profile, records)

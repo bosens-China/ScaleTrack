@@ -70,7 +70,8 @@ ScaleTrack 是一款本地化的体重、BMI 与运动节律追踪应用，帮�
 规则：
 
 - 同一天再次保存会覆盖旧记录
-- 若当日已有记录，页面需明确提示“再次保存会覆盖今天的记录”
+- 切换到已有记录的日期时，页面展示已有体重与备注摘要
+- 若当日已有记录，保存前必须通过弹窗确认覆盖；取消后不修改原记录
 - 覆盖时保留同一条记录的日期语义，不新增重复日记录
 
 ### 3. 仪表盘（总览）
@@ -104,7 +105,9 @@ ScaleTrack 是一款本地化的体重、BMI 与运动节律追踪应用，帮�
 
 规则：
 
-- 同一天允许保存多条运动记录
+- 同一天允许保存多个不同运动项目
+- 同一天、同一运动类型只保留一条记录；再次保存前弹窗确认，确认后覆盖并合并旧的同类记录
+- 切换到已有运动的日期时，展示当天运动项目数、总时长和项目摘要
 - 删除自定义运动类型只影响后续选择，历史记录保留类型名称、图标和颜色快照
 - 支持补录、编辑和删除运动记录
 - 运动频率以“运动天数”为主，“运动次数”为辅
@@ -115,8 +118,8 @@ ScaleTrack 是一款本地化的体重、BMI 与运动节律追踪应用，帮�
 - 本周运动天数、次数和总时长
 - 本周 7 日运动状态
 - 最近 12 周运动天数趋势
-- 当月运动日历
-- 最近运动明细及编辑、删除入口
+- 当月运动日历；点击日期可查看当天运动项目和各项时长
+- 最近运动明细按自然周分组，并提供编辑、删除入口
 
 ### 5. 趋势页（洞察）
 
@@ -128,7 +131,7 @@ ScaleTrack 是一款本地化的体重、BMI 与运动节律追踪应用，帮�
 - 体重 / BMI 指标切换（单轴折线图，二选一展示）
 - 区间统计：最高、最低、平均（随指标联动）
 - 文本洞察
-- 历史记录流水账：图表下方的所有打卡记录明细，支持删除操作
+- 历史记录流水账：图表下方的所有打卡记录按自然周分组，支持编辑和删除操作
 
 规则：
 
@@ -366,99 +369,14 @@ system-ui
 - Header 与 Bottom Tab 使用统一安全区变量
 - 底部操作按钮需避开 iOS Home Indicator
 
----
+### 日期与自然周
 
-## 技术栈
-
-| 类别     | 技术                                | 用途            |
-| -------- | ----------------------------------- | --------------- |
-| 框架     | React 19 + TypeScript               | UI 开发         |
-| 构建     | Vite 8                              | 开发 / 构建工具 |
-| 样式     | UnoCSS (preset-mini)                | 原子化样式      |
-| 图标     | @iconify-json/lucide + UnoCSS Icons | 图标系统        |
-| 图表     | Chart.js + react-chartjs-2          | 趋势图          |
-| 日期     | dayjs                               | 日期处理        |
-| 动画     | canvas-confetti                     | 目标达成庆祝    |
-| 图片导出 | html-to-image                       | 目标卡片导出    |
-| 存储     | localStorage                        | 本地数据持久化  |
-
----
-
-## 数据模型
-
-### UserProfile
-
-```ts
-interface UserProfile {
-  gender: 'male' | 'female'
-  height: number // cm
-  initialWeight: number // kg
-  createdAt: string // ISO string
-}
-```
-
-### WeightRecord
-
-```ts
-interface WeightRecord {
-  id: string
-  date: string // YYYY-MM-DD
-  weight: number // kg
-  bmi: number
-  note?: string
-  createdAt: string // ISO string
-  updatedAt?: string // ISO string
-}
-```
-
-### Goal
-
-```ts
-interface Goal {
-  id: string
-  targetWeight: number
-  startWeight: number
-  startDate: string
-  targetDate?: string // 期望达成日期（选填）
-  completedDate?: string
-  isCompleted: boolean
-}
-```
-
-### ExportData
-
-```ts
-interface ExportData {
-  version: 1
-  exportedAt: string
-  profile: UserProfile | null
-  records: WeightRecord[]
-  goals: Goal[]
-}
-```
-
----
-
-## localStorage Key 规范
-
-| Key                  | 内容                |
-| -------------------- | ------------------- |
-| `scaletrack_profile` | UserProfile JSON    |
-| `scaletrack_records` | WeightRecord[] JSON |
-| `scaletrack_goals`   | Goal[] JSON         |
+- 中文界面的日历与周统计按周一至周日排列
+- 英文美国地区按周日至周六排列；周统计和历史分组使用相同的本地化周边界
+- 星期标题由当前界面语言的地区格式生成，避免后续新增语言时固定沿用中文顺序
 
 ---
 
 ## 当前版本已知边界
 
 - 趋势页支持体重 / BMI 单轴切换，但不提供双轴叠加视图
-
----
-
-## 后续可扩展
-
-- [ ] BMI 与体重双轴趋势切换
-- [ ] 每日饮水量记录
-- [ ] 运动记录关联
-- [ ] 多用户支持
-- [ ] PWA 离线支持

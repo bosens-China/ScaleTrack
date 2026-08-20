@@ -2,23 +2,17 @@ import dayjs from 'dayjs'
 import { useState } from 'react'
 import { useI18n } from 'virtual:ai-i18n'
 
+import ActivityCalendar from '@/components/ActivityCalendar'
 import ActivityRecordForm from '@/components/ActivityRecordForm'
 import ModalPortal from '@/components/ModalPortal'
-import type { ActivityRecord, ActivityType, AppPage } from '@/types'
+import type { ActivityRecord, ActivitySavePayload, ActivityType, AppPage } from '@/types'
 import {
   getActivityDisplayName,
   getActivityWeekFrequencies,
   getActivityWeekStats,
 } from '@/utils/activity'
 import { formatAppDate } from '@/utils/date-format'
-
-interface ActivitySavePayload {
-  id?: string
-  activityTypeId: string
-  date: string
-  durationMinutes: number
-  note?: string
-}
+import { getWeekdayLabels, groupRecordsByWeek } from '@/utils/week'
 
 interface Props {
   activityRecords: ActivityRecord[]
@@ -39,16 +33,16 @@ export default function ActivityPage({
   onAddType,
   onDeleteType,
 }: Props) {
-  const { t } = useI18n()
-  const [currentMonth, setCurrentMonth] = useState(() => dayjs().startOf('month'))
+  const { t, currentLang } = useI18n()
   const [editingRecord, setEditingRecord] = useState<ActivityRecord | null>(null)
 
   const today = dayjs().format('YYYY-MM-DD')
-  const weekStats = getActivityWeekStats(activityRecords, today)
-  const weekFrequencies = getActivityWeekFrequencies(activityRecords, 12, today)
+  const weekStats = getActivityWeekStats(activityRecords, today, currentLang)
+  const weekFrequencies = getActivityWeekFrequencies(activityRecords, 12, today, currentLang)
   const recentRecords = [...activityRecords]
     .sort((a, b) => b.date.localeCompare(a.date) || b.createdAt.localeCompare(a.createdAt))
     .slice(0, 20)
+  const recentRecordGroups = groupRecordsByWeek(recentRecords, record => record.date, currentLang)
 
   const activityCount = new Map<string, number>()
   for (const record of activityRecords) {
@@ -58,27 +52,12 @@ export default function ActivityPage({
   const favoriteActivityLabel = favoriteActivity
     ? getActivityDisplayName(favoriteActivity)
     : t('暂无')
-  const weekdayLabels = [t('一'), t('二'), t('三'), t('四'), t('五'), t('六'), t('日')]
+  const weekdayLabels = getWeekdayLabels(currentLang)
   const formatDuration = (minutes: number) => {
     if (minutes < 60) return t`${minutes} 分钟`
     const hours = Math.floor(minutes / 60)
     const rest = minutes % 60
     return rest === 0 ? t`${hours} 小时` : t`${hours} 小时 ${rest} 分`
-  }
-
-  const firstDayOffset = currentMonth.startOf('month').day()
-  const leadingDays = firstDayOffset === 0 ? 6 : firstDayOffset - 1
-  const calendarCells: (dayjs.Dayjs | null)[] = [
-    ...Array.from({ length: leadingDays }, () => null),
-    ...Array.from({ length: currentMonth.daysInMonth() }, (_, index) =>
-      currentMonth.date(index + 1),
-    ),
-  ]
-  const recordsByDate = new Map<string, ActivityRecord[]>()
-  for (const record of activityRecords) {
-    const list = recordsByDate.get(record.date) ?? []
-    list.push(record)
-    recordsByDate.set(record.date, list)
   }
 
   return (
@@ -197,69 +176,7 @@ export default function ActivityPage({
           </div>
         </section>
 
-        <section className="sport-panel p-4">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => setCurrentMonth(month => month.subtract(1, 'month'))}
-              className="flex h-11 w-11 items-center justify-center rounded-full text-[var(--carbon-text-secondary)] hover:bg-[var(--carbon-surface-subtle)]"
-              aria-label={t('上个月')}
-            >
-              <span className="i-lucide-chevron-left h-5 w-5" />
-            </button>
-            <div className="text-center">
-              <p className="sport-kicker">Activity calendar</p>
-              <h2 className="mt-1 text-base font-black text-[var(--carbon-text)]">
-                {t`${currentMonth.format('YYYY')} 年 ${currentMonth.format('M')} 月`}
-              </h2>
-            </div>
-            <button
-              onClick={() => setCurrentMonth(month => month.add(1, 'month'))}
-              disabled={currentMonth.isSame(dayjs(), 'month')}
-              className="flex h-11 w-11 items-center justify-center rounded-full text-[var(--carbon-text-secondary)] hover:bg-[var(--carbon-surface-subtle)] disabled:opacity-25"
-              aria-label={t('下个月')}
-            >
-              <span className="i-lucide-chevron-right h-5 w-5" />
-            </button>
-          </div>
-
-          <div className="mt-3 grid grid-cols-7 gap-1">
-            {weekdayLabels.map(label => (
-              <span
-                key={label}
-                className="py-1 text-center text-[10px] font-bold text-[var(--carbon-text-secondary)]"
-              >
-                {label}
-              </span>
-            ))}
-            {calendarCells.map((date, index) => {
-              if (!date) return <span key={`empty-${index}`} />
-              const dateString = date.format('YYYY-MM-DD')
-              const dayRecords = recordsByDate.get(dateString) ?? []
-              return (
-                <div
-                  key={dateString}
-                  className={`flex aspect-square min-w-0 flex-col items-center justify-center gap-1 border text-xs ${
-                    dateString === today ? 'border-[var(--carbon-primary)]' : 'border-transparent'
-                  } ${dayRecords.length > 0 ? 'bg-[var(--carbon-surface-subtle)] font-black text-[var(--carbon-text)]' : 'text-[var(--carbon-text-secondary)]'}`}
-                  aria-label={
-                    dayRecords.length ? t`${dateString}，${dayRecords.length} 次运动` : dateString
-                  }
-                >
-                  <span>{date.date()}</span>
-                  <span className="flex h-1.5 max-w-full gap-0.5 overflow-hidden">
-                    {dayRecords.slice(0, 3).map(record => (
-                      <span
-                        key={record.id}
-                        className="h-1.5 w-1.5 rounded-full"
-                        style={{ backgroundColor: record.activityColor }}
-                      />
-                    ))}
-                  </span>
-                </div>
-              )
-            })}
-          </div>
-        </section>
+        <ActivityCalendar activityRecords={activityRecords} />
 
         <section className="flex flex-col gap-3">
           <div className="flex items-end justify-between px-1">
@@ -293,55 +210,69 @@ export default function ActivityPage({
               </button>
             </div>
           ) : (
-            <div className="activity-record-list carbon-scrollbar flex flex-col gap-2">
-              {recentRecords.map(record => (
-                <article key={record.id} className="sport-panel flex items-center gap-3 p-3.5">
-                  <span
-                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
-                    style={{
-                      backgroundColor: `color-mix(in srgb, ${record.activityColor} 18%, transparent)`,
-                      color: record.activityColor,
-                    }}
-                  >
-                    <span className={`${record.activityIcon} h-5 w-5`} />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-baseline gap-2">
-                      <h3 className="truncate text-sm font-black text-[var(--carbon-text)]">
-                        {getActivityDisplayName(record.activityName)}
-                      </h3>
-                      <span className="shrink-0 text-xs font-bold text-[var(--carbon-primary)]">
-                        {formatDuration(record.durationMinutes)}
-                      </span>
-                    </div>
-                    <p className="mt-1 truncate text-xs text-[var(--carbon-text-secondary)]">
-                      {formatAppDate(record.date, 'monthDayWeek')}
-                      {record.note ? ` · ${record.note}` : ''}
-                    </p>
+            <div className="activity-record-list carbon-scrollbar flex flex-col gap-4">
+              {recentRecordGroups.map(group => (
+                <section key={group.key} className="flex flex-col gap-2">
+                  <div className="flex items-center gap-3 px-1">
+                    <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[var(--carbon-text-secondary)]">
+                      {group.startDate === weekStats.startDate ? t('本周') : t('自然周')}
+                    </span>
+                    <span className="h-px flex-1 bg-[var(--carbon-border)]" />
+                    <span className="text-[10px] font-semibold text-[var(--carbon-text-secondary)]">
+                      {formatAppDate(group.startDate, 'monthDay')} —{' '}
+                      {formatAppDate(group.endDate, 'monthDay')}
+                    </span>
                   </div>
-                  <button
-                    onClick={() => setEditingRecord(record)}
-                    className="flex h-11 w-11 shrink-0 items-center justify-center text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-primary)]"
-                    aria-label={t`编辑 ${getActivityDisplayName(record.activityName)} 记录`}
-                  >
-                    <span className="i-lucide-pencil h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          t`删除 ${getActivityDisplayName(record.activityName)} 这条运动记录？`,
-                        )
-                      ) {
-                        onDeleteRecord(record.id)
-                      }
-                    }}
-                    className="flex h-11 w-11 shrink-0 items-center justify-center text-[var(--carbon-text-secondary)] hover:text-[var(--color-danger)]"
-                    aria-label={t`删除 ${getActivityDisplayName(record.activityName)} 记录`}
-                  >
-                    <span className="i-lucide-trash-2 h-4 w-4" />
-                  </button>
-                </article>
+                  {group.items.map(record => (
+                    <article key={record.id} className="sport-panel flex items-center gap-3 p-3.5">
+                      <span
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
+                        style={{
+                          backgroundColor: `color-mix(in srgb, ${record.activityColor} 18%, transparent)`,
+                          color: record.activityColor,
+                        }}
+                      >
+                        <span className={`${record.activityIcon} h-5 w-5`} />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-baseline gap-2">
+                          <h3 className="truncate text-sm font-black text-[var(--carbon-text)]">
+                            {getActivityDisplayName(record.activityName)}
+                          </h3>
+                          <span className="shrink-0 text-xs font-bold text-[var(--carbon-primary)]">
+                            {formatDuration(record.durationMinutes)}
+                          </span>
+                        </div>
+                        <p className="mt-1 truncate text-xs text-[var(--carbon-text-secondary)]">
+                          {formatAppDate(record.date, 'monthDayWeek')}
+                          {record.note ? ` · ${record.note}` : ''}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setEditingRecord(record)}
+                        className="flex h-11 w-11 shrink-0 items-center justify-center text-[var(--carbon-text-secondary)] hover:text-[var(--carbon-primary)]"
+                        aria-label={t`编辑 ${getActivityDisplayName(record.activityName)} 记录`}
+                      >
+                        <span className="i-lucide-pencil h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (
+                            window.confirm(
+                              t`删除 ${getActivityDisplayName(record.activityName)} 这条运动记录？`,
+                            )
+                          ) {
+                            onDeleteRecord(record.id)
+                          }
+                        }}
+                        className="flex h-11 w-11 shrink-0 items-center justify-center text-[var(--carbon-text-secondary)] hover:text-[var(--color-danger)]"
+                        aria-label={t`删除 ${getActivityDisplayName(record.activityName)} 记录`}
+                      >
+                        <span className="i-lucide-trash-2 h-4 w-4" />
+                      </button>
+                    </article>
+                  ))}
+                </section>
               ))}
             </div>
           )}
@@ -373,6 +304,7 @@ export default function ActivityPage({
                 </button>
               </div>
               <ActivityRecordForm
+                activityRecords={activityRecords}
                 activityTypes={activityTypes}
                 initialRecord={editingRecord}
                 onSave={payload => {

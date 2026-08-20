@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useI18n } from 'virtual:ai-i18n'
 
 import CalendarModal from '@/components/CalendarModal'
+import RecordOverwriteModal from '@/components/RecordOverwriteModal'
 import TextInput from '@/components/TextInput'
 import WeightRulerPicker from '@/components/WeightRulerPicker'
 import { useWeightUnit } from '@/hooks/weight-unit-context'
@@ -51,6 +52,7 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
 
   // 异常值二次确认：与“最近一次其它日期记录”相差过大时，先提示再保存
   const [pendingOutlier, setPendingOutlier] = useState(false)
+  const [isOverwriteOpen, setIsOverwriteOpen] = useState(false)
   const referenceWeight = [...records].reverse().find(r => r.date !== selectedDate)?.weight ?? null
   const isOutlier = isWeightOutlier(weight, referenceWeight)
 
@@ -74,6 +76,7 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
 
     setSelectedDate(newDate)
     setPendingOutlier(false)
+    setIsOverwriteOpen(false)
     const newExisting = records.find(r => r.date === newDate)
     if (newExisting) {
       setWeight(newExisting.weight)
@@ -224,6 +227,11 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
               return
             }
 
+            if (existingRecord) {
+              setIsOverwriteOpen(true)
+              return
+            }
+
             onSave({
               date: selectedDate,
               weight,
@@ -248,6 +256,23 @@ export default function AddRecordPage({ profile, records, onSave, onBack }: Prop
         records={records}
         selectedDate={selectedDate}
         onSelectDate={handleDateChange}
+      />
+
+      <RecordOverwriteModal
+        isOpen={isOverwriteOpen}
+        title={t('覆盖这天的体重吗？')}
+        description={t('每个日期只保留一条体重记录，确认后将以本次填写内容替换已有记录。')}
+        existingSummary={existingRecord ? formatWeight(existingRecord.weight, unit) : ''}
+        nextSummary={formatWeight(weight, unit)}
+        onCancel={() => setIsOverwriteOpen(false)}
+        onConfirm={() => {
+          setIsOverwriteOpen(false)
+          onSave({
+            date: selectedDate,
+            weight,
+            note: note.trim() || undefined,
+          })
+        }}
       />
     </div>
   )

@@ -5,6 +5,7 @@ import { useI18n } from 'virtual:ai-i18n'
 import ModalPortal from '@/components/ModalPortal'
 import type { WeightRecord } from '@/types'
 import { getEarliestRecordDate, isRecordDateSelectable } from '@/utils/record-date'
+import { getCalendarLeadingDays, getWeekdayLabels } from '@/utils/week'
 
 interface Props {
   isOpen: boolean
@@ -21,7 +22,7 @@ export default function CalendarModal({
   selectedDate,
   onSelectDate,
 }: Props) {
-  const { t } = useI18n()
+  const { t, currentLang } = useI18n()
   const [currentMonth, setCurrentMonth] = useState(() => dayjs(selectedDate).startOf('month'))
 
   if (!isOpen) return null
@@ -33,10 +34,8 @@ export default function CalendarModal({
   const handlePrevMonth = () => setCurrentMonth(prev => prev.subtract(1, 'month'))
   const handleNextMonth = () => setCurrentMonth(prev => prev.add(1, 'month'))
 
-  // Generate calendar grid (Monday first)
-  const startDay = currentMonth.startOf('month').day() // 0 (Sun) to 6 (Sat)
   const daysInMonth = currentMonth.daysInMonth()
-  const adjustedStartDay = startDay === 0 ? 6 : startDay - 1
+  const adjustedStartDay = getCalendarLeadingDays(currentMonth, currentLang)
 
   const grid: (dayjs.Dayjs | null)[] = []
   for (let i = 0; i < adjustedStartDay; i++) {
@@ -76,7 +75,7 @@ export default function CalendarModal({
         </div>
 
         <div className="grid grid-cols-7 gap-1 mb-2">
-          {[t('一'), t('二'), t('三'), t('四'), t('五'), t('六'), t('日')].map(day => (
+          {getWeekdayLabels(currentLang).map(day => (
             <div
               key={day}
               className="text-center text-xs font-medium text-[var(--carbon-text-secondary)] py-1"

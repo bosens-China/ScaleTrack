@@ -58,6 +58,16 @@ export interface ActivityRecord {
   updatedAt?: string // ISO string
 }
 
+/** 运动新增与编辑共用载荷；overwriteId 表示用户已确认合并同日同类记录。 */
+export interface ActivitySavePayload {
+  id?: string
+  overwriteId?: string
+  activityTypeId: string
+  date: string
+  durationMinutes: number
+  note?: string
+}
+
 export interface Goal {
   id: string
   targetWeight: number

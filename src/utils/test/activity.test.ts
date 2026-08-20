@@ -2,7 +2,13 @@ import { describe, expect, it } from 'vitest'
 
 import type { ActivityRecord } from '@/types'
 
-import { getActivityWeekFrequencies, getActivityWeekStats } from '../activity'
+import {
+  findActivityRecordConflict,
+  getActivityDaySummary,
+  getActivityOverwriteRemovalIds,
+  getActivityWeekFrequencies,
+  getActivityWeekStats,
+} from '../activity'
 
 function activity(
   id: string,
@@ -64,5 +70,50 @@ describe('activity statistics', () => {
       activeDays: 1,
       sessions: 1,
     })
+  })
+
+  it('adapts weekly statistics to the English week boundary', () => {
+    const stats = getActivityWeekStats(
+      [activity('sunday', '2026-08-16', 30)],
+      '2026-08-20',
+      'en-US',
+    )
+
+    expect(stats.startDate).toBe('2026-08-16')
+    expect(stats.endDate).toBe('2026-08-22')
+    expect(stats.activeDays).toBe(1)
+  })
+
+  it('aggregates legacy same-type records and finds overwrite conflicts', () => {
+    const records = [
+      activity('run-1', '2026-08-20', 30),
+      { ...activity('run-2', '2026-08-20', 20), activityTypeId: 'builtin-fitness' },
+      { ...activity('run-3', '2026-08-20', 10), activityTypeId: 'builtin-fitness' },
+    ]
+    const summary = getActivityDaySummary(records, '2026-08-20')
+
+    expect(summary).toMatchObject({ typeCount: 1, recordCount: 3, totalMinutes: 60 })
+    expect(summary.items[0]).toMatchObject({ durationMinutes: 60, recordCount: 3 })
+    expect(
+      findActivityRecordConflict(records, {
+        date: '2026-08-20',
+        activityTypeId: 'builtin-fitness',
+      })?.id,
+    ).toBe('run-3')
+    expect(
+      findActivityRecordConflict(
+        records,
+        { date: '2026-08-20', activityTypeId: 'builtin-fitness' },
+        'run-3',
+      )?.id,
+    ).toBe('run-2')
+    expect(
+      getActivityOverwriteRemovalIds(records, {
+        keepId: 'run-3',
+        editingId: 'editing-other-date',
+        date: '2026-08-20',
+        activityTypeId: 'builtin-fitness',
+      }),
+    ).toEqual(['run-1', 'run-2', 'editing-other-date'])
   })
 })

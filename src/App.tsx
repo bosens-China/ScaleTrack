@@ -124,6 +124,7 @@ function AppInner() {
           <AddPage
             profile={profile}
             records={records}
+            activityRecords={activityRecords}
             activityTypes={activityTypes}
             onSaveWeight={handleSaveRecord}
             onSaveActivity={handleSaveActivityRecord}

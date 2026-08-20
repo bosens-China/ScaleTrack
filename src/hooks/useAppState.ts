@@ -4,12 +4,14 @@ import { useI18n } from 'virtual:ai-i18n'
 
 import type {
   ActivityRecord,
+  ActivitySavePayload,
   ActivityType,
   AppPage,
   Goal,
   UserProfile,
   WeightRecord,
 } from '@/types'
+import { getActivityOverwriteRemovalIds } from '@/utils/activity'
 import { calcBMI } from '@/utils/bmi'
 import { reconcileLatestGoalState, shouldCelebrateGoalCompletion } from '@/utils/goal-state'
 import { getCurrentWeight } from '@/utils/stats'
@@ -53,13 +55,7 @@ export interface AppState {
   handleSaveRecord: (payload: { date: string; weight: number; note?: string }) => void
   handleUpdateRecord: (id: string, patch: { weight?: number; note?: string }) => void
   handleDeleteRecord: (id: string) => void
-  handleSaveActivityRecord: (payload: {
-    id?: string
-    activityTypeId: string
-    date: string
-    durationMinutes: number
-    note?: string
-  }) => void
+  handleSaveActivityRecord: (payload: ActivitySavePayload) => void
   handleDeleteActivityRecord: (id: string) => void
   handleAddActivityType: (name: string) => ActivityType | null
   handleDeleteActivityType: (id: string) => void
@@ -260,18 +256,17 @@ export function useAppState(): AppState {
 
   const handleSaveActivityRecord = ({
     id,
+    overwriteId,
     activityTypeId,
     date,
     durationMinutes,
     note,
-  }: {
-    id?: string
-    activityTypeId: string
-    date: string
-    durationMinutes: number
-    note?: string
-  }) => {
+  }: ActivitySavePayload) => {
     const existing = id ? activityRecords.find(record => record.id === id) : undefined
+    const overwritten = overwriteId
+      ? activityRecords.find(record => record.id === overwriteId)
+      : undefined
+    const baseRecord = overwritten ?? existing
     const type = activityTypes.find(item => item.id === activityTypeId)
     if (!type && !existing) {
       toast.error(t('请选择有效的运动类型'))
@@ -280,7 +275,7 @@ export function useAppState(): AppState {
 
     const now = new Date().toISOString()
     const record: ActivityRecord = {
-      id: existing?.id ?? crypto.randomUUID(),
+      id: baseRecord?.id ?? crypto.randomUUID(),
       activityTypeId: type?.id ?? existing!.activityTypeId,
       activityName: type?.name ?? existing!.activityName,
       activityIcon: type?.icon ?? existing!.activityIcon,
@@ -288,13 +283,30 @@ export function useAppState(): AppState {
       date,
       durationMinutes,
       note: note?.trim() || undefined,
-      createdAt: existing?.createdAt ?? now,
+      createdAt: baseRecord?.createdAt ?? now,
       updatedAt: now,
+    }
+
+    // 用户确认覆盖后，清理编辑源记录和所有同日同类旧重复项，再写入唯一目标记录。
+    if (overwritten) {
+      const redundantIds = getActivityOverwriteRemovalIds(activityRecords, {
+        keepId: record.id,
+        editingId: existing?.id,
+        date,
+        activityTypeId,
+      })
+      for (const redundantId of redundantIds) deleteActivityRecord(redundantId)
     }
 
     saveActivityRecord(record)
     setActivityRecords(getActivityRecords())
-    toast.success(existing ? t('运动记录已更新') : t`${record.activityName}打卡成功`)
+    toast.success(
+      overwritten
+        ? t`${record.activityName}已覆盖并合并`
+        : existing
+          ? t('运动记录已更新')
+          : t`${record.activityName}打卡成功`,
+    )
     setActivePage('activity')
   }
 

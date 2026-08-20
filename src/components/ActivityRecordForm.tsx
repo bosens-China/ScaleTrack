@@ -2,25 +2,23 @@ import dayjs from 'dayjs'
 import { useState } from 'react'
 import { useI18n } from 'virtual:ai-i18n'
 
-import type { ActivityRecord, ActivityType } from '@/types'
-import { getActivityDisplayName } from '@/utils/activity'
+import type { ActivityRecord, ActivitySavePayload, ActivityType } from '@/types'
+import {
+  findActivityRecordConflict,
+  getActivityDaySummary,
+  getActivityDisplayName,
+} from '@/utils/activity'
 import { toast } from '@/utils/toast'
 
 import ActivityDurationGauge from './ActivityDurationGauge'
+import RecordOverwriteModal from './RecordOverwriteModal'
 import TextInput from './TextInput'
 
-interface SavePayload {
-  id?: string
-  activityTypeId: string
-  date: string
-  durationMinutes: number
-  note?: string
-}
-
 interface Props {
+  activityRecords: ActivityRecord[]
   activityTypes: ActivityType[]
   initialRecord?: ActivityRecord
-  onSave: (payload: SavePayload) => void
+  onSave: (payload: ActivitySavePayload) => void
   onAddType: (name: string) => ActivityType | null
   onDeleteType: (id: string) => void
   onCancel?: () => void
@@ -28,6 +26,7 @@ interface Props {
 }
 
 export default function ActivityRecordForm({
+  activityRecords,
   activityTypes,
   initialRecord,
   onSave,
@@ -36,7 +35,7 @@ export default function ActivityRecordForm({
   onCancel,
   allowTypeManagement = true,
 }: Props) {
-  const { t } = useI18n()
+  const { t, currentLang } = useI18n()
   const historicalType =
     initialRecord && !activityTypes.some(type => type.id === initialRecord.activityTypeId)
       ? {
@@ -57,9 +56,31 @@ export default function ActivityRecordForm({
   const [note, setNote] = useState(initialRecord?.note ?? '')
   const [isAddingType, setIsAddingType] = useState(false)
   const [newTypeName, setNewTypeName] = useState('')
+  const [pendingConflict, setPendingConflict] = useState<ActivityRecord | null>(null)
 
   const selectedType = selectableTypes.find(type => type.id === activityTypeId)
   const customTypes = activityTypes.filter(type => !type.isBuiltIn)
+  const daySummary = getActivityDaySummary(activityRecords, date)
+  const conflictingTypeSummary = daySummary.items.find(
+    item => item.activityTypeId === activityTypeId,
+  )
+  const formatDuration = (minutes: number) => {
+    if (minutes < 60) return t`${minutes} 分钟`
+    const hours = Math.floor(minutes / 60)
+    const rest = minutes % 60
+    return rest === 0 ? t`${hours} 小时` : t`${hours} 小时 ${rest} 分`
+  }
+
+  const save = (overwriteId?: string) => {
+    onSave({
+      id: initialRecord?.id,
+      overwriteId,
+      activityTypeId,
+      date,
+      durationMinutes,
+      note: note.trim() || undefined,
+    })
+  }
 
   const handleAddType = () => {
     const name = newTypeName.trim()
@@ -91,13 +112,16 @@ export default function ActivityRecordForm({
           toast.error(t('不能记录未来的运动'))
           return
         }
-        onSave({
-          id: initialRecord?.id,
-          activityTypeId,
-          date,
-          durationMinutes,
-          note: note.trim() || undefined,
-        })
+        const conflict = findActivityRecordConflict(
+          activityRecords,
+          { activityTypeId, date },
+          initialRecord?.id,
+        )
+        if (conflict) {
+          setPendingConflict(conflict)
+          return
+        }
+        save()
       }}
     >
       <section className="sport-panel flex flex-col gap-3 p-4">
@@ -130,7 +154,10 @@ export default function ActivityRecordForm({
           <select
             id="activity-type"
             value={activityTypeId}
-            onChange={event => setActivityTypeId(event.currentTarget.value)}
+            onChange={event => {
+              setActivityTypeId(event.currentTarget.value)
+              setPendingConflict(null)
+            }}
             className="h-13 w-full appearance-none border border-[var(--carbon-border)] bg-[var(--carbon-surface-subtle)] pl-11 pr-10 text-base font-semibold text-[var(--carbon-text)]"
           >
             {selectableTypes.map(type => (
@@ -205,15 +232,53 @@ export default function ActivityRecordForm({
             type="date"
             value={date}
             max={dayjs().format('YYYY-MM-DD')}
-            onChange={event => setDate(event.currentTarget.value)}
+            onChange={event => {
+              setDate(event.currentTarget.value)
+              setPendingConflict(null)
+            }}
             className="h-12 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-3 text-base font-semibold text-[var(--carbon-text)]"
             required
           />
         </label>
         <span className="mb-3 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--carbon-text-secondary)]">
-          {date === dayjs().format('YYYY-MM-DD') ? 'Today' : dayjs(date).format('ddd')}
+          {date === dayjs().format('YYYY-MM-DD')
+            ? t('今天')
+            : new Intl.DateTimeFormat(currentLang, { weekday: 'short' }).format(
+                dayjs(date).toDate(),
+              )}
         </span>
       </section>
+
+      {daySummary.typeCount > 0 && (
+        <section className="border-l-4 border-[var(--sport-accent)] bg-[var(--carbon-surface-subtle)] px-4 py-3">
+          <div className="flex items-start gap-3">
+            <span className="i-lucide-info mt-0.5 h-4 w-4 shrink-0 text-[var(--carbon-primary)]" />
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-black text-[var(--carbon-text)]">
+                {t`当天已运动 ${daySummary.typeCount} 项，共 ${formatDuration(daySummary.totalMinutes)}`}
+              </p>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {daySummary.items.map(item => (
+                  <span
+                    key={item.activityTypeId}
+                    className="inline-flex items-center gap-1.5 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-2 py-1 text-[11px] text-[var(--carbon-text-secondary)]"
+                  >
+                    <span
+                      className={`${item.activityIcon} h-3.5 w-3.5`}
+                      style={{ color: item.activityColor }}
+                    />
+                    {getActivityDisplayName(item.activityName)} ·{' '}
+                    {formatDuration(item.durationMinutes)}
+                  </span>
+                ))}
+              </div>
+              <p className="mt-2 text-[11px] leading-5 text-[var(--carbon-text-secondary)]">
+                {t('可继续添加不同项目；同类运动再次保存时会先询问是否覆盖。')}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="flex flex-col gap-2">
         <div className="flex items-end justify-between px-1">
@@ -261,6 +326,20 @@ export default function ActivityRecordForm({
           {initialRecord ? t('保存修改') : t('完成运动打卡')}
         </button>
       </div>
+
+      <RecordOverwriteModal
+        isOpen={pendingConflict !== null}
+        title={t('覆盖这项运动吗？')}
+        description={t('同一天的同类运动会合并为一条，确认后将以本次填写内容替换已有记录。')}
+        existingSummary={t`${selectedType ? getActivityDisplayName(selectedType.name) : ''} · ${formatDuration(conflictingTypeSummary?.durationMinutes ?? pendingConflict?.durationMinutes ?? 0)}`}
+        nextSummary={t`${selectedType ? getActivityDisplayName(selectedType.name) : ''} · ${formatDuration(durationMinutes)}`}
+        onCancel={() => setPendingConflict(null)}
+        onConfirm={() => {
+          if (!pendingConflict) return
+          save(pendingConflict.id)
+          setPendingConflict(null)
+        }}
+      />
     </form>
   )
 }

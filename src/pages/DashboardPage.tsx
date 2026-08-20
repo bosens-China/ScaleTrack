@@ -17,6 +17,7 @@ import {
   getPreviousDiff,
 } from '@/utils/stats'
 import { calculateStreak } from '@/utils/streak'
+import { getWeekdayLabels } from '@/utils/week'
 import { formatWeight, formatWeightValue, getWeightUnitLabel } from '@/utils/weight-unit'
 
 interface Props {
@@ -37,7 +38,7 @@ export default function DashboardPage({
 }: Props) {
   const [isShareOpen, setIsShareOpen] = useState(false)
   const { unit } = useWeightUnit()
-  const { t } = useI18n()
+  const { t, currentLang } = useI18n()
   const unitLabel = getWeightUnitLabel(unit)
 
   const currentWeight = getCurrentWeight(profile, records)
@@ -60,9 +61,9 @@ export default function DashboardPage({
       : null
   const goalOverdue = isGoalOverdue(goal, todayStr) && (progress?.remaining ?? 0) > 0
   const streak = calculateStreak(records, todayStr)
-  const activityWeek = getActivityWeekStats(activityRecords, todayStr)
+  const activityWeek = getActivityWeekStats(activityRecords, todayStr, currentLang)
   const latestActivity = activityRecords.at(-1)
-  const weekDayLabels = [t('一'), t('二'), t('三'), t('四'), t('五'), t('六'), t('日')]
+  const weekDayLabels = getWeekdayLabels(currentLang)
 
   return (
     <div className="app-page bg-[var(--carbon-bg)] animate-fade-in">

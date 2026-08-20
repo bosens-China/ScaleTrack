@@ -2,7 +2,13 @@ import { useState } from 'react'
 import { useI18n } from 'virtual:ai-i18n'
 
 import ActivityRecordForm from '@/components/ActivityRecordForm'
-import type { ActivityType, UserProfile, WeightRecord } from '@/types'
+import type {
+  ActivityRecord,
+  ActivitySavePayload,
+  ActivityType,
+  UserProfile,
+  WeightRecord,
+} from '@/types'
 
 import AddRecordPage from './AddRecordPage'
 
@@ -11,14 +17,10 @@ type AddMode = 'hub' | 'weight' | 'activity'
 interface Props {
   profile: UserProfile
   records: WeightRecord[]
+  activityRecords: ActivityRecord[]
   activityTypes: ActivityType[]
   onSaveWeight: (payload: { date: string; weight: number; note?: string }) => void
-  onSaveActivity: (payload: {
-    activityTypeId: string
-    date: string
-    durationMinutes: number
-    note?: string
-  }) => void
+  onSaveActivity: (payload: ActivitySavePayload) => void
   onAddActivityType: (name: string) => ActivityType | null
   onDeleteActivityType: (id: string) => void
 }
@@ -26,6 +28,7 @@ interface Props {
 export default function AddPage({
   profile,
   records,
+  activityRecords,
   activityTypes,
   onSaveWeight,
   onSaveActivity,
@@ -67,6 +70,7 @@ export default function AddPage({
           </header>
 
           <ActivityRecordForm
+            activityRecords={activityRecords}
             activityTypes={activityTypes}
             onSave={onSaveActivity}
             onAddType={onAddActivityType}

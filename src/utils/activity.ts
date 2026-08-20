@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import { t } from 'virtual:ai-i18n'
 
 import type { ActivityRecord, ActivityType } from '@/types'
+import { getWeekStart } from '@/utils/week'
 
 /** 首版只内置高频项目；自定义类型负责覆盖个人化长尾需求 */
 export const BUILT_IN_ACTIVITY_TYPES: ActivityType[] = [
@@ -87,11 +88,6 @@ export function getActivityDisplayName(name: string): string {
   }
 }
 
-function getMonday(date: dayjs.Dayjs) {
-  const day = date.day()
-  return date.startOf('day').subtract(day === 0 ? 6 : day - 1, 'day')
-}
-
 export interface ActivityWeekStats {
   startDate: string
   endDate: string
@@ -106,8 +102,9 @@ export interface ActivityWeekStats {
 export function getActivityWeekStats(
   records: ActivityRecord[],
   referenceDate: string = dayjs().format('YYYY-MM-DD'),
+  language = 'zh-CN',
 ): ActivityWeekStats {
-  const start = getMonday(dayjs(referenceDate))
+  const start = getWeekStart(referenceDate, language)
   const end = start.add(6, 'day')
   const current = records.filter(record => {
     const date = dayjs(record.date)
@@ -154,12 +151,13 @@ export function getActivityWeekFrequencies(
   records: ActivityRecord[],
   count = 12,
   referenceDate: string = dayjs().format('YYYY-MM-DD'),
+  language = 'zh-CN',
 ): ActivityWeekFrequency[] {
-  const currentMonday = getMonday(dayjs(referenceDate))
+  const currentWeekStart = getWeekStart(referenceDate, language)
 
   return Array.from({ length: count }, (_, index) => {
-    const start = currentMonday.subtract(count - index - 1, 'week')
-    const stats = getActivityWeekStats(records, start.format('YYYY-MM-DD'))
+    const start = currentWeekStart.subtract(count - index - 1, 'week')
+    const stats = getActivityWeekStats(records, start.format('YYYY-MM-DD'), language)
     return {
       label: start.format('MM/DD'),
       startDate: stats.startDate,
@@ -167,4 +165,91 @@ export function getActivityWeekFrequencies(
       sessions: stats.sessions,
     }
   })
+}
+
+export interface ActivityDaySummaryItem {
+  activityTypeId: string
+  activityName: string
+  activityIcon: string
+  activityColor: string
+  durationMinutes: number
+  recordCount: number
+}
+
+export interface ActivityDaySummary {
+  typeCount: number
+  recordCount: number
+  totalMinutes: number
+  items: ActivityDaySummaryItem[]
+}
+
+/** 同日同类旧数据按类型聚合，提醒和日历展示不会把重复数据误读成多个项目。 */
+export function getActivityDaySummary(
+  records: ActivityRecord[],
+  date: string,
+  excludeId?: string,
+): ActivityDaySummary {
+  const itemsByType = new Map<string, ActivityDaySummaryItem>()
+  let recordCount = 0
+
+  for (const record of records) {
+    if (record.date !== date || record.id === excludeId) continue
+    recordCount += 1
+    const current = itemsByType.get(record.activityTypeId)
+    itemsByType.set(record.activityTypeId, {
+      activityTypeId: record.activityTypeId,
+      activityName: record.activityName,
+      activityIcon: record.activityIcon,
+      activityColor: record.activityColor,
+      durationMinutes: (current?.durationMinutes ?? 0) + record.durationMinutes,
+      recordCount: (current?.recordCount ?? 0) + 1,
+    })
+  }
+
+  const items = [...itemsByType.values()]
+  return {
+    typeCount: items.length,
+    recordCount,
+    totalMinutes: items.reduce((sum, item) => sum + item.durationMinutes, 0),
+    items,
+  }
+}
+
+export function findActivityRecordConflict(
+  records: ActivityRecord[],
+  input: Pick<ActivityRecord, 'date' | 'activityTypeId'>,
+  excludeId?: string,
+): ActivityRecord | null {
+  return (
+    [...records]
+      .reverse()
+      .find(
+        record =>
+          record.id !== excludeId &&
+          record.date === input.date &&
+          record.activityTypeId === input.activityTypeId,
+      ) ?? null
+  )
+}
+
+/** 覆盖时清理所有同日同类重复项；编辑撞车时也移除原编辑记录。 */
+export function getActivityOverwriteRemovalIds(
+  records: ActivityRecord[],
+  input: Pick<ActivityRecord, 'date' | 'activityTypeId'> & {
+    keepId: string
+    editingId?: string
+  },
+): string[] {
+  const ids = new Set(
+    records
+      .filter(
+        record =>
+          record.id !== input.keepId &&
+          record.date === input.date &&
+          record.activityTypeId === input.activityTypeId,
+      )
+      .map(record => record.id),
+  )
+  if (input.editingId && input.editingId !== input.keepId) ids.add(input.editingId)
+  return [...ids]
 }
