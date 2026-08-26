@@ -13,6 +13,13 @@
       "translations": {
         "en-US": "Height (cm)"
       }
+    },
+    "选择目标日期": {
+      "source": "选择目标日期",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Select target date"
+      }
     }
   },
   "version": 1

@@ -1,7 +1,13 @@
 import dayjs from 'dayjs'
 import { describe, expect, it } from 'vitest'
 
-import { getCalendarLeadingDays, getWeekStart, getWeekdayLabels, groupRecordsByWeek } from '../week'
+import {
+  getCalendarDates,
+  getCalendarLeadingDays,
+  getWeekStart,
+  getWeekdayLabels,
+  groupRecordsByWeek,
+} from '../week'
 
 describe('本地化自然周', () => {
   it('中文从周一开始，英文美国地区从周日开始', () => {
@@ -15,6 +21,15 @@ describe('本地化自然周', () => {
     const august = dayjs('2026-08-01')
     expect(getCalendarLeadingDays(august, 'zh-CN')).toBe(5)
     expect(getCalendarLeadingDays(august, 'en-US')).toBe(6)
+  })
+
+  it('生成与地区首日对齐的完整月历网格', () => {
+    const dates = getCalendarDates(dayjs('2026-08-01'), 'zh-CN')
+
+    expect(dates).toHaveLength(36)
+    expect(dates.slice(0, 5)).toEqual([null, null, null, null, null])
+    expect(dates[5]?.format('YYYY-MM-DD')).toBe('2026-08-01')
+    expect(dates.at(-1)?.format('YYYY-MM-DD')).toBe('2026-08-31')
   })
 
   it('保留记录顺序并按自然周分组', () => {

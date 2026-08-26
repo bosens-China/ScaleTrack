@@ -1,0 +1,12 @@
+{
+  "messages": {
+    "选择记录日期": {
+      "source": "选择记录日期",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Select record date"
+      }
+    }
+  },
+  "version": 1
+}

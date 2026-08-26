@@ -25,6 +25,18 @@ export function getCalendarLeadingDays(month: Dayjs, language: string): number {
   return (month.startOf('month').day() - getWeekStartsOn(language) + 7) % 7
 }
 
+/** 根据地区首日补齐月历前置空格，便于各日期选择器复用同一网格。 */
+export function getCalendarDates(month: Dayjs, language: string): (Dayjs | null)[] {
+  const leadingDays = getCalendarLeadingDays(month, language)
+  const dates: (Dayjs | null)[] = Array.from({ length: leadingDays }, () => null)
+
+  for (let day = 1; day <= month.daysInMonth(); day++) {
+    dates.push(month.date(day))
+  }
+
+  return dates
+}
+
 /** 通过 Intl 生成星期短名，便于后续新增语言时继续符合对应地区习惯。 */
 export function getWeekdayLabels(language: string): string[] {
   const formatter = new Intl.DateTimeFormat(language, { weekday: 'short', timeZone: 'UTC' })
