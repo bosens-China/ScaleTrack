@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { Goal, WeightRecord } from '@/types'
 
@@ -8,45 +8,29 @@ import {
   getRecords,
   importData,
   mergeImport,
+  validateImportData,
   type ImportPayload,
 } from '../storage'
+import { cache, store } from '../storage/core'
 
-function createLocalStorageMock(): Storage {
-  const store = new Map<string, string>()
-
-  return {
-    get length() {
-      return store.size
-    },
-    clear() {
-      store.clear()
-    },
-    getItem(key: string) {
-      return store.get(key) ?? null
-    },
-    key(index: number) {
-      return [...store.keys()][index] ?? null
-    },
-    removeItem(key: string) {
-      store.delete(key)
-    },
-    setItem(key: string, value: string) {
-      store.set(key, value)
-    },
-  }
+function resetCache() {
+  cache.profile = null
+  cache.records = []
+  cache.goals = []
+  cache.activityRecords = []
+  cache.customActivityTypes = []
+  cache.lastBackupAt = null
 }
 
 describe('storage importData', () => {
   beforeEach(() => {
-    Object.defineProperty(globalThis, 'localStorage', {
-      value: createLocalStorageMock(),
-      configurable: true,
-      writable: true,
-    })
+    resetCache()
+    vi.spyOn(store, 'setItem').mockResolvedValue(undefined as never)
   })
 
   afterEach(() => {
-    globalThis.localStorage.clear()
+    vi.restoreAllMocks()
+    resetCache()
   })
 
   it('should sort imported records by date before saving', () => {
@@ -90,6 +74,15 @@ describe('storage importData', () => {
     expect(getProfile()?.gender).toBe('male')
     expect(getRecords().map(record => record.id)).toEqual(['r-1', 'r-2'])
     expect(getGoals()).toHaveLength(1)
+    expect(store.setItem).toHaveBeenCalledTimes(5)
+    expect(store.setItem).toHaveBeenCalledWith(
+      'profile',
+      expect.objectContaining({ gender: 'male' }),
+    )
+    expect(store.setItem).toHaveBeenCalledWith(
+      'records',
+      expect.arrayContaining([expect.any(Object)]),
+    )
   })
 
   it('should reject duplicate record dates', () => {
@@ -171,6 +164,27 @@ describe('storage importData', () => {
             startWeight: 80,
             startDate: '2026-06-01',
             targetDate: '2026/09/01',
+            isCompleted: false,
+          },
+        ],
+      }),
+    ).toThrow('部分目标数据结构不完整或数值不合理')
+  })
+
+  it('should reject a non-existent calendar date', () => {
+    expect(() =>
+      validateImportData({
+        version: 1,
+        exportedAt: '2026-06-14T00:00:00.000Z',
+        profile: null,
+        records: [],
+        goals: [
+          {
+            id: 'g-1',
+            targetWeight: 70,
+            startWeight: 80,
+            startDate: '2026-06-01',
+            targetDate: '2026-02-31',
             isCompleted: false,
           },
         ],
@@ -320,6 +334,57 @@ describe('mergeImport', () => {
     expect(mergeImport(payload(), payload({ profile: incomingProfile })).profile).toBe(
       incomingProfile,
     )
+  })
+
+  it('merges activity records by latest update and custom types by normalized name', () => {
+    const current = payload({
+      activityRecords: [
+        {
+          id: 'activity-1',
+          activityTypeId: 'custom-climbing',
+          activityName: '攀岩',
+          activityIcon: 'i-lucide-zap',
+          activityColor: '#c7f36b',
+          date: '2026-06-10',
+          durationMinutes: 60,
+          createdAt: '2026-06-10T08:00:00.000Z',
+        },
+      ],
+      activityTypes: [
+        {
+          id: 'custom-climbing',
+          name: '攀岩',
+          icon: 'i-lucide-zap',
+          color: '#c7f36b',
+          isBuiltIn: false,
+          createdAt: '2026-06-10T08:00:00.000Z',
+        },
+      ],
+    })
+    const incoming = payload({
+      activityRecords: [
+        {
+          ...current.activityRecords[0],
+          durationMinutes: 90,
+          updatedAt: '2026-06-11T08:00:00.000Z',
+        },
+      ],
+      activityTypes: [
+        {
+          id: 'another-climbing',
+          name: ' 攀岩 ',
+          icon: 'i-lucide-zap',
+          color: '#c7f36b',
+          isBuiltIn: false,
+          createdAt: '2026-06-11T08:00:00.000Z',
+        },
+      ],
+    })
+
+    const merged = mergeImport(current, incoming)
+    expect(merged.activityRecords).toMatchObject([{ id: 'activity-1', durationMinutes: 90 }])
+    expect(merged.activityTypes).toHaveLength(1)
+    expect(merged.activityTypes[0]?.id).toBe('custom-climbing')
   })
 })
 
