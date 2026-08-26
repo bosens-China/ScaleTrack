@@ -1,29 +1,32 @@
 import { aiI18n } from '@ai-i18n/vite'
+import { aiI18nVitest } from '@ai-i18n/vite/vitest'
 import babel from '@rolldown/plugin-babel'
 import UnoCSS from '@unocss/vite'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import { defineConfig } from 'vitest/config'
 
 const packageJson = JSON.parse(readFileSync(resolve(__dirname, 'package.json'), 'utf-8')) as {
   version: string
 }
 
-export default defineConfig({
+const i18nOptions = {
+  sourceLang: 'zh-CN',
+  locales: [
+    { value: 'zh-CN', label: '简体中文' },
+    { value: 'en-US', label: 'English' },
+  ],
+} as const
+
+export default defineConfig(() => ({
   base: '/ScaleTrack/',
   define: {
     __APP_VERSION__: JSON.stringify(packageJson.version),
   },
   plugins: [
-    aiI18n({
-      sourceLang: 'zh-CN',
-      locales: [
-        { value: 'zh-CN', label: '简体中文' },
-        { value: 'en-US', label: 'English' },
-      ],
-    }),
+    process.env.VITEST ? aiI18nVitest(i18nOptions) : aiI18n(i18nOptions),
     UnoCSS(),
     react(),
     babel({ presets: [reactCompilerPreset()] }),
@@ -69,4 +72,21 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
-})
+  test: {
+    coverage: {
+      provider: 'v8' as const,
+      include: [
+        'src/utils/**/*.ts',
+        'src/hooks/useAppState.ts',
+        'src/components/DatePickerModal.tsx',
+      ],
+      exclude: ['src/utils/test/**'],
+      thresholds: {
+        branches: 60,
+        functions: 60,
+        lines: 60,
+        statements: 60,
+      },
+    },
+  },
+}))
