@@ -88,6 +88,26 @@ export function getActivityDisplayName(name: string): string {
   }
 }
 
+/**
+ * 以保存时间判断最近使用的运动；编辑或覆盖后会优先采用 updatedAt。
+ * 可传入类型限制，避免已删除的自定义类型成为新记录的默认选项。
+ */
+export function getLatestActivityRecord(
+  records: ActivityRecord[],
+  activityTypeIds?: readonly string[],
+): ActivityRecord | null {
+  const typeIdSet = activityTypeIds ? new Set(activityTypeIds) : null
+
+  return records.reduce<ActivityRecord | null>((latest, record) => {
+    if (typeIdSet && !typeIdSet.has(record.activityTypeId)) return latest
+    if (!latest) return record
+
+    const latestUsedAt = latest.updatedAt ?? latest.createdAt
+    const recordUsedAt = record.updatedAt ?? record.createdAt
+    return recordUsedAt > latestUsedAt ? record : latest
+  }, null)
+}
+
 export interface ActivityWeekStats {
   startDate: string
   endDate: string

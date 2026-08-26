@@ -8,6 +8,7 @@ import {
   getActivityOverwriteRemovalIds,
   getActivityWeekFrequencies,
   getActivityWeekStats,
+  getLatestActivityRecord,
 } from '../activity'
 
 function activity(
@@ -29,6 +30,26 @@ function activity(
 }
 
 describe('activity statistics', () => {
+  it('uses the latest saved record as the per-activity default', () => {
+    const records = [
+      activity('fitness-old', '2026-08-10', 45, '2026-08-10T08:00:00.000Z'),
+      {
+        ...activity('swimming-new', '2026-08-01', 60, '2026-08-01T08:00:00.000Z'),
+        activityTypeId: 'builtin-swimming',
+        updatedAt: '2026-08-20T12:00:00.000Z',
+      },
+      {
+        ...activity('fitness-new', '2026-08-18', 75, '2026-08-18T08:00:00.000Z'),
+        updatedAt: '2026-08-21T12:00:00.000Z',
+      },
+    ]
+
+    expect(getLatestActivityRecord(records)?.id).toBe('fitness-new')
+    expect(getLatestActivityRecord(records, ['builtin-fitness'])?.durationMinutes).toBe(75)
+    expect(getLatestActivityRecord(records, ['builtin-swimming'])?.durationMinutes).toBe(60)
+    expect(getLatestActivityRecord(records, ['builtin-running'])).toBeNull()
+  })
+
   it('uses active days as frequency and keeps multiple sessions on the same day', () => {
     const records = [
       activity('a-1', '2026-07-27', 45),

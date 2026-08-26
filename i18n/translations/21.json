@@ -27,6 +27,13 @@
       "translations": {
         "en-US": "System"
       }
+    },
+    "选择运动日期": {
+      "source": "选择运动日期",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Select activity date"
+      }
     }
   },
   "version": 1

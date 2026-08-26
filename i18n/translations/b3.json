@@ -14,6 +14,13 @@
         "en-US": "None yet"
       }
     },
+    "点击日期即可完成选择；不能记录未来的运动。": {
+      "source": "点击日期即可完成选择；不能记录未来的运动。",
+      "sourceLang": "zh-CN",
+      "translations": {
+        "en-US": "Tap a date to select it. Future dates aren't allowed."
+      }
+    },
     "阶段进度": {
       "source": "阶段进度",
       "sourceLang": "zh-CN",

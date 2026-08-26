@@ -7,9 +7,11 @@ import {
   findActivityRecordConflict,
   getActivityDaySummary,
   getActivityDisplayName,
+  getLatestActivityRecord,
 } from '@/utils/activity'
 import { toast } from '@/utils/toast'
 
+import ActivityDatePickerModal from './ActivityDatePickerModal'
 import ActivityDurationGauge from './ActivityDurationGauge'
 import RecordOverwriteModal from './RecordOverwriteModal'
 import TextInput from './TextInput'
@@ -47,14 +49,23 @@ export default function ActivityRecordForm({
         }
       : null
   const selectableTypes = historicalType ? [historicalType, ...activityTypes] : activityTypes
+  const selectableTypeIds = selectableTypes.map(type => type.id)
+  const latestSelectableRecord = getLatestActivityRecord(activityRecords, selectableTypeIds)
+  const defaultActivityTypeId =
+    latestSelectableRecord?.activityTypeId ?? selectableTypes[0]?.id ?? ''
+  const defaultDurationMinutes =
+    getLatestActivityRecord(activityRecords, [defaultActivityTypeId])?.durationMinutes ?? 45
 
   const [activityTypeId, setActivityTypeId] = useState(
-    initialRecord?.activityTypeId ?? selectableTypes[0]?.id ?? '',
+    initialRecord?.activityTypeId ?? defaultActivityTypeId,
   )
   const [date, setDate] = useState(initialRecord?.date ?? dayjs().format('YYYY-MM-DD'))
-  const [durationMinutes, setDurationMinutes] = useState(initialRecord?.durationMinutes ?? 45)
+  const [durationMinutes, setDurationMinutes] = useState(
+    initialRecord?.durationMinutes ?? defaultDurationMinutes,
+  )
   const [note, setNote] = useState(initialRecord?.note ?? '')
   const [isAddingType, setIsAddingType] = useState(false)
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
   const [newTypeName, setNewTypeName] = useState('')
   const [pendingConflict, setPendingConflict] = useState<ActivityRecord | null>(null)
 
@@ -82,6 +93,19 @@ export default function ActivityRecordForm({
     })
   }
 
+  const selectActivityType = (nextTypeId: string) => {
+    setActivityTypeId(nextTypeId)
+    setDurationMinutes(
+      getLatestActivityRecord(activityRecords, [nextTypeId])?.durationMinutes ?? 45,
+    )
+    setPendingConflict(null)
+  }
+
+  const selectDate = (nextDate: string) => {
+    setDate(nextDate)
+    setPendingConflict(null)
+  }
+
   const handleAddType = () => {
     const name = newTypeName.trim()
     if (!name) {
@@ -94,7 +118,7 @@ export default function ActivityRecordForm({
     }
     const type = onAddType(name)
     if (!type) return
-    setActivityTypeId(type.id)
+    selectActivityType(type.id)
     setNewTypeName('')
     setIsAddingType(false)
   }
@@ -154,10 +178,7 @@ export default function ActivityRecordForm({
           <select
             id="activity-type"
             value={activityTypeId}
-            onChange={event => {
-              setActivityTypeId(event.currentTarget.value)
-              setPendingConflict(null)
-            }}
+            onChange={event => selectActivityType(event.currentTarget.value)}
             className="h-13 w-full appearance-none border border-[var(--carbon-border)] bg-[var(--carbon-surface-subtle)] pl-11 pr-10 text-base font-semibold text-[var(--carbon-text)]"
           >
             {selectableTypes.map(type => (
@@ -209,7 +230,7 @@ export default function ActivityRecordForm({
                   onClick={() => {
                     onDeleteType(type.id)
                     if (activityTypeId === type.id) {
-                      setActivityTypeId(activityTypes.find(item => item.isBuiltIn)?.id ?? '')
+                      selectActivityType(activityTypes.find(item => item.isBuiltIn)?.id ?? '')
                     }
                   }}
                   className="flex h-9 w-9 items-center justify-center text-[var(--carbon-text-secondary)] hover:text-[var(--color-danger)]"
@@ -224,22 +245,20 @@ export default function ActivityRecordForm({
       </section>
 
       <section className="grid grid-cols-[1fr_auto] items-end gap-3">
-        <label className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
           <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--carbon-text-secondary)]">
             {t('运动日期')}
           </span>
-          <input
-            type="date"
-            value={date}
-            max={dayjs().format('YYYY-MM-DD')}
-            onChange={event => {
-              setDate(event.currentTarget.value)
-              setPendingConflict(null)
-            }}
-            className="h-12 border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-3 text-base font-semibold text-[var(--carbon-text)]"
-            required
-          />
-        </label>
+          <button
+            type="button"
+            onClick={() => setIsDatePickerOpen(true)}
+            className="flex h-12 items-center justify-between border border-[var(--carbon-border)] bg-[var(--carbon-surface)] px-3 text-left text-base font-semibold text-[var(--carbon-text)]"
+            aria-haspopup="dialog"
+          >
+            {dayjs(date).format('YYYY/MM/DD')}
+            <span className="i-lucide-calendar-days h-4 w-4 text-[var(--carbon-text-secondary)]" />
+          </button>
+        </div>
         <span className="mb-3 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--carbon-text-secondary)]">
           {date === dayjs().format('YYYY-MM-DD')
             ? t('今天')
@@ -339,6 +358,13 @@ export default function ActivityRecordForm({
           save(pendingConflict.id)
           setPendingConflict(null)
         }}
+      />
+
+      <ActivityDatePickerModal
+        isOpen={isDatePickerOpen}
+        onClose={() => setIsDatePickerOpen(false)}
+        selectedDate={date}
+        onSelectDate={selectDate}
       />
     </form>
   )
