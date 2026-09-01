@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.6.0](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.5.0...scaletrack-v1.6.0) (2026-08-26)
+
+
+### ✨ 新功能
+
+* 优化运动打卡日期选择与默认值记忆 ([9484f05](https://github.com/bosens-China/ScaleTrack/commit/9484f056689034f764c1fcc85169a5a86b1918d9))
+
+
+### 🐛 修复
+
+* 加强导入数据日期校验 ([a0dcd8f](https://github.com/bosens-China/ScaleTrack/commit/a0dcd8fd4959f781f122f2fd68a6966b538f1276))
+
+
+### ♻️ 重构
+
+* 统一日期选择弹窗 ([48a0f09](https://github.com/bosens-China/ScaleTrack/commit/48a0f097d207e9ad6b250028f9b5e7c91bc79bdd))
+
 ## [1.5.0](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.4.1...scaletrack-v1.5.0) (2026-08-20)
 
 
