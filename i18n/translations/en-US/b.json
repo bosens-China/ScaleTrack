@@ -1,0 +1,198 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "b01cd30e5879d68535bd3142e488764fd038e65441ee13885e73fb7f0a0f0aa0": {
+      "id": "请输入有效的体重（20-300kg）",
+      "source": "请输入有效的体重（20-300kg）",
+      "sourceLang": "zh-CN",
+      "value": "Enter a valid weight (20–300 kg)"
+    },
+    "b0f4f9b14fd6d9c144b278451ad874c7d75adfd6e571279a01be2c46880e4ba7": {
+      "id": "增加",
+      "source": "增加",
+      "sourceLang": "zh-CN",
+      "value": "Increase"
+    },
+    "b126f9ddbd23be46af6e66653bf7be848ef2ae6c1620895e179f330e8bb5e5a0": {
+      "id": "减重速度偏快（{{0}}），过快减重可能流失肌肉、损害代谢，建议放缓节奏、保证营养。",
+      "source": "减重速度偏快（{{0}}），过快减重可能流失肌肉、损害代谢，建议放缓节奏、保证营养。",
+      "sourceLang": "zh-CN",
+      "value": "Weight loss is too fast ({{0}}). Losing weight too quickly may cause muscle loss and harm metabolism; slow down and maintain adequate nutrition."
+    },
+    "b12cf296aa891e7d63d3ceec779dbd4c7eac58444aeced6e8979e98ab7f9adb3": {
+      "id": "已支持离线使用",
+      "source": "已支持离线使用",
+      "sourceLang": "zh-CN",
+      "value": "Offline access is ready"
+    },
+    "b1f7b5fa164c0827cd735f158a4568a2a5f33bc72d386f9d19ec759589cc058f": {
+      "id": "重试保存",
+      "source": "重试保存",
+      "sourceLang": "zh-CN",
+      "value": "Retry saving"
+    },
+    "b25f9e2109ee2cb5a5c526f53587bb8793a472571077ca7cce390bd19f2eb1ce": {
+      "id": "近期体重趋势显示可能处于热量盈余。",
+      "source": "近期体重趋势显示可能处于热量盈余。",
+      "sourceLang": "zh-CN",
+      "value": "Recent weight trend suggests a possible calorie surplus."
+    },
+    "b28db57fc7169c2351b6739971b559a4cfc32839e3ec555c031dd90509015b15": {
+      "id": "备注：{{0}}",
+      "source": "备注：{{0}}",
+      "sourceLang": "zh-CN",
+      "value": "Notes: {{0}}"
+    },
+    "b2a5323f9b5e866d31a24d4ff34df04a33f7f953f5fa7bd01a0f20c613683064": {
+      "id": "范围。",
+      "source": "范围。",
+      "sourceLang": "zh-CN",
+      "value": "range."
+    },
+    "b30bcea5b6811e180f6204030392395ad5b2d25f351f62f836211ee96698ff67": {
+      "id": "完成运动打卡",
+      "source": "完成运动打卡",
+      "sourceLang": "zh-CN",
+      "value": "Complete exercise check-in"
+    },
+    "b31ec0e68a10092012de03b7085baae37951fa4a238a712c2c37bf15b9b913d8": {
+      "id": "日均",
+      "source": "日均",
+      "sourceLang": "zh-CN",
+      "value": "Daily avg."
+    },
+    "b33f740a24565e6309ccc3d9ebd2677df822550b0ec95da900e28d9af1873ecd": {
+      "id": "当前体重",
+      "source": "当前体重",
+      "sourceLang": "zh-CN",
+      "value": "Current weight"
+    },
+    "b3b417d90c437af292ebf26e7403cb5b79e24f3f346973cdd26038843fa869d8": {
+      "id": "如何导入这份数据？",
+      "source": "如何导入这份数据？",
+      "sourceLang": "zh-CN",
+      "value": "How would you like to import this data?"
+    },
+    "b4af6b361b061da55435f661a64032e28136a776fc2403a074adfc2816d5180d": {
+      "id": "保存失败，更改暂存于当前页面。关闭或刷新页面会丢失未保存的更改，请重试。",
+      "source": "保存失败，更改暂存于当前页面。关闭或刷新页面会丢失未保存的更改，请重试。",
+      "sourceLang": "zh-CN",
+      "value": "Saving failed. Your changes are temporarily held on this page. Closing or refreshing it will lose unsaved changes. Please retry."
+    },
+    "b6a9f139cf02fb50ab09df7f9ea2b0ec04f8a4f6c90ee44c11d796cddf03b569": {
+      "id": "最近进度",
+      "source": "最近进度",
+      "sourceLang": "zh-CN",
+      "value": "Recent progress"
+    },
+    "b7bcc032d50bb84abd5489ea4d4ec192777608092e420b39a0c41bce89cb7fad": {
+      "id": "最高",
+      "source": "最高",
+      "sourceLang": "zh-CN",
+      "value": "Highest"
+    },
+    "b856b8245115ad867f1fd520ff908d419109ceff0afa1d497662b986bca10a76": {
+      "id": "记录已更新",
+      "source": "记录已更新",
+      "sourceLang": "zh-CN",
+      "value": "Record updated"
+    },
+    "b8b94c9c4ea26ba1df154def47b3bca296608b4ac6647ac8b1713ba858a282d2": {
+      "id": "出生年月日 (选填)",
+      "source": "出生年月日 (选填)",
+      "sourceLang": "zh-CN",
+      "value": "Date of birth (optional)"
+    },
+    "b98e4a4db0d3ffcf2a2ae8c73cd80b8f8ba7d8f446c0686084057e2cd98a9bf8": {
+      "id": "与现有数据合并，按日期去重，保留更新的记录。适合多设备同步。",
+      "source": "与现有数据合并，按日期去重，保留更新的记录。适合多设备同步。",
+      "sourceLang": "zh-CN",
+      "value": "Merge with existing data, deduplicate by date, and keep updated records. Suitable for multi-device sync."
+    },
+    "b9a8b6674ce25577c19caf67c4c3db6ac23f1d6235905b9ae4c10186ac366909": {
+      "id": "目标日期已过仍未达成，去延期或重设目标？",
+      "source": "目标日期已过仍未达成，去延期或重设目标？",
+      "sourceLang": "zh-CN",
+      "value": "The target date has passed. Extend or reset your goal?"
+    },
+    "b9abf8e5a7540f6e73c3de1bd5f3e49b68390d2c3cad2a52982cf0f240d5d11b": {
+      "id": "新建记录 / 选择记录",
+      "source": "新建记录 / 选择记录",
+      "sourceLang": "zh-CN",
+      "value": "New log / Choose a record"
+    },
+    "b9b0c5f345c054a302c29cacdf2232c2281bb0c76abb2e287a88d3ce50b743bb": {
+      "id": "请输入有效的目标体重",
+      "source": "请输入有效的目标体重",
+      "sourceLang": "zh-CN",
+      "value": "Enter a valid target weight"
+    },
+    "bb6b974159eb622f22a5dcd9c24710518378094e467857429d9e00e6b8feaf31": {
+      "id": "稍后再说",
+      "source": "稍后再说",
+      "sourceLang": "zh-CN",
+      "value": "Maybe later"
+    },
+    "bc595d12ce0826c0693137f12db0c618fd4bb6e150309860b430b54e10f87951": {
+      "id": "体重单位",
+      "source": "体重单位",
+      "sourceLang": "zh-CN",
+      "value": "Weight unit"
+    },
+    "bcb317263fa105d984e59c8b4df13f06555bdb0c9dc52440a3a50dac18d8e723": {
+      "id": "运动类型名称重复",
+      "source": "运动类型名称重复",
+      "sourceLang": "zh-CN",
+      "value": "Duplicate exercise type name"
+    },
+    "bcd20d7966b994787ac19dc7e45678b638bef6b91c0a1192f3b5302f2f429d4f": {
+      "id": "更新",
+      "source": "更新",
+      "sourceLang": "zh-CN",
+      "value": "Update"
+    },
+    "bd357d58968b60eaf21cd90bad07e8921aadbbb63f544cf4b44a3f47981bc4b0": {
+      "id": "{{0}}重 {{1}} {{2}} · 用时 {{3}} 天",
+      "source": "{{0}}重 {{1}} {{2}} · 用时 {{3}} 天",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} weight {{1}} {{2}} · {{3}} days"
+    },
+    "bd9cacbaed90a895ecbe125c2f73abe551b709460c85e19edf8d8863a3a02daa": {
+      "id": "选择出生日期",
+      "source": "选择出生日期",
+      "sourceLang": "zh-CN",
+      "value": "Select date of birth"
+    },
+    "bdc88d1aa11bd7c1f0b5c9364bf1191e5be9a3190be721dad69fce4c3d066849": {
+      "id": "外观主题",
+      "source": "外观主题",
+      "sourceLang": "zh-CN",
+      "value": "Appearance"
+    },
+    "be7156b2ea596ab9cdc0659900db12b6fec5cad1bb99cf86bf2a0be088ebb004": {
+      "id": "用户头像",
+      "source": "用户头像",
+      "sourceLang": "zh-CN",
+      "value": "User avatar"
+    },
+    "be979f9fb2bc92765bf4ddf014968cad0b75cbe2c271c5aefb1196ed1322f181": {
+      "id": "导入失败，文件格式不正确",
+      "source": "导入失败，文件格式不正确",
+      "sourceLang": "zh-CN",
+      "value": "Import failed: incorrect file format"
+    },
+    "bef53cdcb4fa726a41d9ef1bb0ad1044cc160b312f7b0f2117035b2afc406faf": {
+      "id": "ScaleTrack 已可离线使用",
+      "source": "ScaleTrack 已可离线使用",
+      "sourceLang": "zh-CN",
+      "value": "ScaleTrack is now available offline"
+    },
+    "bfd64a4451e267840105dfa38d73534fdaa7bde6d9e21a1451393969b4e6b3a2": {
+      "id": "离线能力注册失败，请刷新后重试",
+      "source": "离线能力注册失败，请刷新后重试",
+      "sourceLang": "zh-CN",
+      "value": "Failed to register offline capability. Refresh and try again."
+    }
+  }
+}

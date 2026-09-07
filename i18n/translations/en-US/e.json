@@ -1,0 +1,180 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "e0687ddcdff504f2921524f95e70ec6964abb546ba8c0a3309faa02b4da69bf8": {
+      "id": "系统设置",
+      "source": "系统设置",
+      "sourceLang": "zh-CN",
+      "value": "Settings"
+    },
+    "e0ba1b5f7b0cd757994b6174d887d44057d6f12c4280a27434634af885548371": {
+      "id": "{{0}}，没有运动记录",
+      "source": "{{0}}，没有运动记录",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}, no activity recorded"
+    },
+    "e172cc4a97ca87d8e4267e2a35b5001a7b55d5425ab728db84812a0a66e0e127": {
+      "id": "{{0}} 小时 {{1}} 分",
+      "source": "{{0}} 小时 {{1}} 分",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} hr {{1}} min"
+    },
+    "e17faa7d07da706120636cf7520bcdd9f7efb2f5ac03c821448b952e7c0a3c74": {
+      "id": "本周次数",
+      "source": "本周次数",
+      "sourceLang": "zh-CN",
+      "value": "This week's sessions"
+    },
+    "e214920c30499f7c4b0da3fd1ea8b377efe947d299f76a8aa9772258b4a5f338": {
+      "id": "3天",
+      "source": "3天",
+      "sourceLang": "zh-CN",
+      "value": "3 days"
+    },
+    "e23ab1e122f3dc3d772cac5c41d6600403ec53d87ac97f0d14dcb8387030217e": {
+      "id": "尚未备份过数据",
+      "source": "尚未备份过数据",
+      "sourceLang": "zh-CN",
+      "value": "No data has been backed up yet"
+    },
+    "e29a6bed0b927a712d8a71e7aa3237bc31a21917e14a5e445a3d0f0dd8d3defb": {
+      "id": "年龄",
+      "source": "年龄",
+      "sourceLang": "zh-CN",
+      "value": "Age"
+    },
+    "e2d826c7d9424704b08b3a11393ca7609f94d3854621be640f3935ced918cf47": {
+      "id": "及基础资料",
+      "source": "及基础资料",
+      "sourceLang": "zh-CN",
+      "value": "and basic profile"
+    },
+    "e4ab23c731369b71c6005f03bb3f876eeacda06e740951e7aa6a8d3cf1400dc9": {
+      "id": "男",
+      "source": "男",
+      "sourceLang": "zh-CN",
+      "value": "Male"
+    },
+    "e4e736ee619bbdcfb2f69ab384df76b5169b5ed01e3e4dd0c4e1cd5940602742": {
+      "id": "三个月的坚持更不容易，为自己骄傲！",
+      "source": "三个月的坚持更不容易，为自己骄傲！",
+      "sourceLang": "zh-CN",
+      "value": "Three months of consistency is no small feat. Be proud of yourself!"
+    },
+    "e62fff88699dd04bd09460ff485079dd8ae5ce4453a5d76cb61d152bfe68ef46": {
+      "id": "四",
+      "source": "四",
+      "sourceLang": "zh-CN",
+      "value": "Thu"
+    },
+    "e6549f67cc652c8f139d66e5c168c897eef37abf4ec7fe2512c2daea823a36fb": {
+      "id": " · 剩 {{0}} 天",
+      "source": " · 剩 {{0}} 天",
+      "sourceLang": "zh-CN",
+      "value": " · {{0}} days left"
+    },
+    "e75cadf673c32d2b3d85e0e55f75f67fb62e2464fe119e197ec07d6ae6804eed": {
+      "id": "连续 {{0}} 天",
+      "source": "连续 {{0}} 天",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}-day streak"
+    },
+    "e7761c9baf675921d740408f4dec4534e36fe7e93da9defeb58ddb07465cb88c": {
+      "id": "同一天的同类运动会合并为一条，确认后将以本次填写内容替换已有记录。",
+      "source": "同一天的同类运动会合并为一条，确认后将以本次填写内容替换已有记录。",
+      "sourceLang": "zh-CN",
+      "value": "Activities of the same type on the same day are merged into one record. Once confirmed, this entry will replace the existing record."
+    },
+    "e78581b198b7f3afe6ca7318198066e59bbe541649468e8d2cbd6049380ae3ae": {
+      "id": "清除目标日期",
+      "source": "清除目标日期",
+      "sourceLang": "zh-CN",
+      "value": "Clear target date"
+    },
+    "e90687a6fd568bcbb7825d540b746b12436e59d663ac9c7d5e3284dfda69d23e": {
+      "id": "请选择有效的运动类型",
+      "source": "请选择有效的运动类型",
+      "sourceLang": "zh-CN",
+      "value": "Select a valid exercise type"
+    },
+    "e9a0a2a8f55391ab5937204e92b7f5e67ac2cf28c2bda0871aec260c4b2bac43": {
+      "id": "基础信息",
+      "source": "基础信息",
+      "sourceLang": "zh-CN",
+      "value": "Basic information"
+    },
+    "e9d2f9633bb1cde8b583b8f5eec1459ea493642bb207e080207dc90662cca8b0": {
+      "id": "本周运动节律",
+      "source": "本周运动节律",
+      "sourceLang": "zh-CN",
+      "value": "This week's exercise rhythm"
+    },
+    "eaf8fab3ce4395c3a859f112295706ec0ffbacb60c54e4394673e6ad1451410c": {
+      "id": "详细记录 ({{0}})",
+      "source": "详细记录 ({{0}})",
+      "sourceLang": "zh-CN",
+      "value": "Detailed records ({{0}})"
+    },
+    "ebc42c0d778ad41f47e29f8f4702e109fb4f0ebd656e4cf7b440066b9dad05e2": {
+      "id": "分享海报生成失败，请重试",
+      "source": "分享海报生成失败，请重试",
+      "sourceLang": "zh-CN",
+      "value": "Failed to generate share poster. Please try again."
+    },
+    "ecc547316854678df6ddf8d9111d297515855a10dfae689bc754879b41044916": {
+      "id": "断网时也能打开应用查看本地数据。",
+      "source": "断网时也能打开应用查看本地数据。",
+      "sourceLang": "zh-CN",
+      "value": "You can still open the app and view local data offline."
+    },
+    "eccea995c7721202c000d98c5d3c80ca25a2e5c9fbb8bb738bc58ac98bc75f25": {
+      "id": "{{0}} {{1}} 次",
+      "source": "{{0}} {{1}} 次",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} {{1}} sessions"
+    },
+    "ed9d655ca8ff4e1a91f64f772af32f0771d150c2f51245e39ac2aeef8f19a34d": {
+      "id": "导出时间格式错误",
+      "source": "导出时间格式错误",
+      "sourceLang": "zh-CN",
+      "value": "Invalid export timestamp format"
+    },
+    "edf5877619c420ac84f2904b5856abf79e514c10f429b6e15b4cfc8180884701": {
+      "id": "正在加载本地数据…",
+      "source": "正在加载本地数据…",
+      "sourceLang": "zh-CN",
+      "value": "Loading local data…"
+    },
+    "eea0482db5b0c52ffa5041f27ddf02c0ca267156be1a2cc05094002127c78073": {
+      "id": "数据导出失败",
+      "source": "数据导出失败",
+      "sourceLang": "zh-CN",
+      "value": "Data export failed"
+    },
+    "ef54070e74cc3f6f553d50e43a7b81b11265288a805b339c8d80de0cb48795c0": {
+      "id": "同一天只能存在一条体重记录",
+      "source": "同一天只能存在一条体重记录",
+      "sourceLang": "zh-CN",
+      "value": "Only one weight record can exist per day"
+    },
+    "ef6f4ade329e125183ff76664ac9ffd4a2b2f17ac5bdcf673ae7ed6cf623836f": {
+      "id": "设置",
+      "source": "设置",
+      "sourceLang": "zh-CN",
+      "value": "Settings"
+    },
+    "ef89da99c8e431792bf2395c9868512eac7b64c7aab6109fea6f1f68db3fd313": {
+      "id": "BMI 趋势",
+      "source": "BMI 趋势",
+      "sourceLang": "zh-CN",
+      "value": "BMI trend"
+    },
+    "efd2cab2e8dab7ada8e6f58d4b947dec28d1da22738c674cbf45a31655296bdd": {
+      "id": "暂无变化",
+      "source": "暂无变化",
+      "sourceLang": "zh-CN",
+      "value": "No change yet"
+    }
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "80564a606bff54964b9538910a88c1bef173b7583ac2d9f119e511b972eca2ba": {
+      "id": "{{0}} 次",
+      "source": "{{0}} 次",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} sessions"
+    },
+    "808f31acde65ff08a1d4fca8b549e18eb7ce1f18db7a332d9dba89ad8f37041d": {
+      "id": "里程碑",
+      "source": "里程碑",
+      "sourceLang": "zh-CN",
+      "value": "Milestones"
+    },
+    "81d6b0d06fcfd1c4f1b79e5ca0da7d8d6797e95418cce60275f0b80f0319b2be": {
+      "id": "保存修改",
+      "source": "保存修改",
+      "sourceLang": "zh-CN",
+      "value": "Save changes"
+    },
+    "821955f6e41034d469d44ac0053665ef95c11e5528641e05b77df9830a99fc5d": {
+      "id": "还没有足够的记录生成趋势图，先去“添加”页保存第一条体重数据吧。",
+      "source": "还没有足够的记录生成趋势图，先去“添加”页保存第一条体重数据吧。",
+      "sourceLang": "zh-CN",
+      "value": "There are not enough records to generate a trend chart yet. Save your first weight record on the “Add” page."
+    },
+    "828213f12aea1e3e0f66e35de3980d3f8e62b3e9c83c4b27d798a6aad04cb3b8": {
+      "id": "目标体重不能与起始体重相同",
+      "source": "目标体重不能与起始体重相同",
+      "sourceLang": "zh-CN",
+      "value": "Target weight cannot be the same as starting weight"
+    },
+    "828a8a5a572d62cbda2ee3d1e1953309d2c9b74687dd61095af85c2ce9370cf9": {
+      "id": "坚持就是胜利，你用行动证明了自己！",
+      "source": "坚持就是胜利，你用行动证明了自己！",
+      "sourceLang": "zh-CN",
+      "value": "Consistency is victory—you proved yourself through action!"
+    },
+    "830fb9cb0e50882fb44fd20facd7a2e357a4afbba510b92bc84d90d6e2727fec": {
+      "id": "生理期",
+      "source": "生理期",
+      "sourceLang": "zh-CN",
+      "value": "Menstruation"
+    },
+    "84182a0a1feed3fb0a03616a729114f3eb1b8f95dbf72e9736d1e62b07cdd0e2": {
+      "id": "删除运动类型 {{0}}",
+      "source": "删除运动类型 {{0}}",
+      "sourceLang": "zh-CN",
+      "value": "Delete exercise type {{0}}"
+    },
+    "847245b8c2aa524a8f37cb3a627a9c6c8d86213e8165360a0557d4cb42fe5e15": {
+      "id": "达成里程碑",
+      "source": "达成里程碑",
+      "sourceLang": "zh-CN",
+      "value": "Achieve milestone"
+    },
+    "85a8258dff0aab6f632816159bf6c95b582f093b06a5fa38820ead84fda72afc": {
+      "id": "共 {{0}} 条",
+      "source": "共 {{0}} 条",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} total"
+    },
+    "87bf0a5adb536677761e82086e034fff9017f7ed8e3873e51a9ed775014d0ffe": {
+      "id": "实际",
+      "source": "实际",
+      "sourceLang": "zh-CN",
+      "value": "Actual"
+    },
+    "88b392ab7f648ed19a2fd35f22a88b5b4d7cdc62797cc2112b571f2c0de30869": {
+      "id": "关闭编辑",
+      "source": "关闭编辑",
+      "sourceLang": "zh-CN",
+      "value": "Close editor"
+    },
+    "8976fcf15a144c2278da1978d93510dea5fbb088a0999d1883978c6d755e5775": {
+      "id": "天",
+      "source": "天",
+      "sourceLang": "zh-CN",
+      "value": "days"
+    },
+    "899346f22fc6b4c9542341e53e54f36b2f7bf54e9b400a50b6e50f81a0124778": {
+      "id": "还没有运动记录",
+      "source": "还没有运动记录",
+      "sourceLang": "zh-CN",
+      "value": "No exercise records yet"
+    },
+    "89c0c294f5b7c0f3e437802c7a6e3845bc9d22f6c1d6a9bae2c8dc9be3da887b": {
+      "id": "浏览器模式",
+      "source": "浏览器模式",
+      "sourceLang": "zh-CN",
+      "value": "Browser mode"
+    },
+    "8a961c3d43a1bf09d16d0cf17c85d5c2eb2ba7b68d12a72bebaf79d6f1685a6c": {
+      "id": "删除 {{0}} 这条运动记录？",
+      "source": "删除 {{0}} 这条运动记录？",
+      "sourceLang": "zh-CN",
+      "value": "Delete this {{0}} exercise record?"
+    },
+    "8adfc622521b95bbdf4930e1bce25468a1832d140202fd4bf9aee577295aeadf": {
+      "id": "{{0}}重 ({{1}})",
+      "source": "{{0}}重 ({{1}})",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} weight ({{1}})"
+    },
+    "8b1467d7f172717f8214a6eba48b7b10a4cb9184ba2fd3f90a2c8484f1e3a485": {
+      "id": "运动 / 活动",
+      "source": "运动 / 活动",
+      "sourceLang": "zh-CN",
+      "value": "Activity / Move"
+    },
+    "8b59f2f600ab4a938ba93c346f40856cdc4f6ca806d6ff0f5467ccc383d42a2b": {
+      "id": "编辑 {{0}} 记录",
+      "source": "编辑 {{0}} 记录",
+      "sourceLang": "zh-CN",
+      "value": "Edit {{0}} record"
+    },
+    "8bc0f18af36ee9b7918428d9bada85f31eb0fd3ed4c06025d769e1c208af26ca": {
+      "id": "{{0}} · {{1}}",
+      "source": "{{0}} · {{1}}",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} · {{1}}"
+    },
+    "8bed99003de56a8444351557829f6317bf565e518116bfc879a65cdfce981c72": {
+      "id": "不必等到完美的一次训练，从今天做过的运动开始。",
+      "source": "不必等到完美的一次训练，从今天做过的运动开始。",
+      "sourceLang": "zh-CN",
+      "value": "Don't wait for the perfect workout—start with the exercise you did today."
+    },
+    "8c086d92372e8f7bf0489e832d7ec793c7dde4c63b4d2423de1618a670ca38ed": {
+      "id": "女",
+      "source": "女",
+      "sourceLang": "zh-CN",
+      "value": "Female"
+    },
+    "8c0b07a874a993c4a4564c225a52725080c4ffdb6008dd8592c0bcc3687cc691": {
+      "id": "最近运动",
+      "source": "最近运动",
+      "sourceLang": "zh-CN",
+      "value": "Recent exercise"
+    },
+    "8c10d089b9bc7c0c0c2096b8db1a3d7ce246aa1575c3f2cab5550db0088614ca": {
+      "id": "请选择出生日期",
+      "source": "请选择出生日期",
+      "sourceLang": "zh-CN",
+      "value": "Select your date of birth"
+    },
+    "8d3916cd0ae10072c4b3eb7ee104be6af2f283e12192d251d09db61f389ab738": {
+      "id": "运动",
+      "source": "运动",
+      "sourceLang": "zh-CN",
+      "value": "Activity"
+    },
+    "8dd98d5c6bee62b95d669337b08bfacc85dcef6d0c17f32e01d36cd9c83070e9": {
+      "id": "身高 (cm)",
+      "source": "身高 (cm)",
+      "sourceLang": "zh-CN",
+      "value": "Height (cm)"
+    },
+    "8e06f76af1c9fad7b65b7fdbadec83e92cbff24baeb5234a45ce4a6f6db61679": {
+      "id": "首次使用",
+      "source": "首次使用",
+      "sourceLang": "zh-CN",
+      "value": "First time here"
+    },
+    "8e28bf79b86136646a8334eaf90dd7b14dd562c6d708e64a3b52b93eca5b90d1": {
+      "id": " 距目标日期还有 {{0}} 天，目前趋势大致领先于计划。",
+      "source": " 距目标日期还有 {{0}} 天，目前趋势大致领先于计划。",
+      "sourceLang": "zh-CN",
+      "value": " {{0}} days remain until the target date; your current trend is roughly ahead of plan."
+    },
+    "8e7d262c155f2e5d43e0a3932e6deff6b618fc612e38dea08d5ec5fb0c250dc3": {
+      "id": "减重速度较快（{{0}}），记得保证蛋白质与必要营养摄入。",
+      "source": "减重速度较快（{{0}}），记得保证蛋白质与必要营养摄入。",
+      "sourceLang": "zh-CN",
+      "value": "Weight loss is fairly fast ({{0}}). Remember to get enough protein and essential nutrients."
+    },
+    "8f380f49d72a074d2b21628f331fb7143befea91c00d5d120afb7afb33be68e8": {
+      "id": "本周时长",
+      "source": "本周时长",
+      "sourceLang": "zh-CN",
+      "value": "This week's duration"
+    },
+    "8f726a0dafe636360a1be86b400ab1b4df95658d5afd1b70604204cbe811f99e": {
+      "id": "开始记录",
+      "source": "开始记录",
+      "sourceLang": "zh-CN",
+      "value": "Start tracking"
+    },
+    "8f93cd46d6ef3c1b253cce384eef9e2bad0b43f973dc899b83dfae552d7cdcc9": {
+      "id": "本地数据",
+      "source": "本地数据",
+      "sourceLang": "zh-CN",
+      "value": "Local data"
+    },
+    "8faee5b59a11a1a493cc444db2c8b1126f922b7e19a88e40e06ca732e8c30b65": {
+      "id": "更新后即可使用最新功能。",
+      "source": "更新后即可使用最新功能。",
+      "sourceLang": "zh-CN",
+      "value": "Update to use the latest features."
+    },
+    "8fcb6781326ba3bec830b6353073d577372d6de262f379e4bdaa3cd427b53fff": {
+      "id": "期望达成：{{0}}",
+      "source": "期望达成：{{0}}",
+      "sourceLang": "zh-CN",
+      "value": "Target date: {{0}}"
+    }
+  }
+}

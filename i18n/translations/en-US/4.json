@@ -1,0 +1,174 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "4034d8db1c8dbfbee36c0e3e727a439fa1790263060b98c829fb88ffc2b5f53d": {
+      "id": "分享进展",
+      "source": "分享进展",
+      "sourceLang": "zh-CN",
+      "value": "Share progress"
+    },
+    "409c1a7a7cdd4bd6df9da572f1a1db339732aac7a8b27cc3c1ccca5c21b4ecc9": {
+      "id": "请输入运动名称",
+      "source": "请输入运动名称",
+      "sourceLang": "zh-CN",
+      "value": "Enter an exercise name"
+    },
+    "40c9ca93fbbc6e3baf563fe8d0e0207bf1e3027d723e929e28672e8fcddbd329": {
+      "id": "已放弃当前目标",
+      "source": "已放弃当前目标",
+      "sourceLang": "zh-CN",
+      "value": "Current goal abandoned"
+    },
+    "43279282b8ebad8844b77ec3a55d6dfecea967d5956f3c38fcbd7284eca08faa": {
+      "id": "体重（{{0}}）",
+      "source": "体重（{{0}}）",
+      "sourceLang": "zh-CN",
+      "value": "Weight ({{0}})"
+    },
+    "432d2f6b7291d1d5108e501f61853a75599ed93d8ea8544f4a11453b523132be": {
+      "id": "当前趋势大致支持如期达成，继续观察即可。",
+      "source": "当前趋势大致支持如期达成，继续观察即可。",
+      "sourceLang": "zh-CN",
+      "value": "The current trend broadly supports reaching your goal on time. Keep monitoring it."
+    },
+    "445f33baa71c31982ff0b195cc03f831a89f78686a1c9e51ae67d6d18f4031eb": {
+      "id": "选择目标日期",
+      "source": "选择目标日期",
+      "sourceLang": "zh-CN",
+      "value": "Select target date"
+    },
+    "44f08843f1703d91c7f60f9f66857bb714dcfdf66fa3aa5dd512a503a2ccb4dc": {
+      "id": "体重过轻，建议适当增加营养",
+      "source": "体重过轻，建议适当增加营养",
+      "sourceLang": "zh-CN",
+      "value": "Your weight is below the healthy range; consider improving your nutrition."
+    },
+    "45c65f27a764a407026ab26e3644322ec3eb12cd20e37a3d58cda07bd5fb874f": {
+      "id": "查看",
+      "source": "查看",
+      "sourceLang": "zh-CN",
+      "value": "View"
+    },
+    "47541d943489f88afd7520ea92c4f5e944c6395267d19f69869bcae6d67230cf": {
+      "id": "分享海报",
+      "source": "分享海报",
+      "sourceLang": "zh-CN",
+      "value": "Share poster"
+    },
+    "475d5c29d3441a05277641a15d3e86076768a215c604bea7eb73090ee6ade029": {
+      "id": "本地用户",
+      "source": "本地用户",
+      "sourceLang": "zh-CN",
+      "value": "Local user"
+    },
+    "481fac843f93393cddb89c0646b3dd771606cca659137f89cf02f6cb12791918": {
+      "id": "当前环境暂不支持检查更新",
+      "source": "当前环境暂不支持检查更新",
+      "sourceLang": "zh-CN",
+      "value": "Checking for updates is not supported in the current environment"
+    },
+    "482d75e0b305df01ff93b6d5fcf2e11289af9586f3fc4f4692564f645824c46a": {
+      "id": "放弃当前目标",
+      "source": "放弃当前目标",
+      "sourceLang": "zh-CN",
+      "value": "Abandon current goal"
+    },
+    "492ef0c2e034a6d304ecddecda24062a3f2f5d6164a0811ff51d51c113c32ac1": {
+      "id": "总 {{0}} 重",
+      "source": "总 {{0}} 重",
+      "sourceLang": "zh-CN",
+      "value": "Total {{0}} weight"
+    },
+    "4a11d8e37e11b16ddef21b75ee6c992578a70b604ef90e245d8c8f2610d0b3b9": {
+      "id": "日均变化",
+      "source": "日均变化",
+      "sourceLang": "zh-CN",
+      "value": "Average daily change"
+    },
+    "4a6bf36ce4319f6a08940a3cfaad84c43193fe110c1d0165501ea08e6c310464": {
+      "id": "添加记录",
+      "source": "添加记录",
+      "sourceLang": "zh-CN",
+      "value": "Add record"
+    },
+    "4a7cd9e0fa432ce127992e639697e6a40f800f2c251275e28ba8360dee048a92": {
+      "id": "您的 BMI 处于",
+      "source": "您的 BMI 处于",
+      "sourceLang": "zh-CN",
+      "value": "Your BMI is"
+    },
+    "4acad9417ccce59dfc90ebd05395f65efbbf29032e7a071876f0324d0ee47639": {
+      "id": "{{0}} 项 · {{1}}",
+      "source": "{{0}} 项 · {{1}}",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} activities · {{1}}"
+    },
+    "4aced1a9c8c62f012175e3ea38c964188ca6a13104f228afd7c269fc9703e63f": {
+      "id": "你的毅力令人钦佩！短短一周就达成了目标。",
+      "source": "你的毅力令人钦佩！短短一周就达成了目标。",
+      "sourceLang": "zh-CN",
+      "value": "Your perseverance is admirable! You reached your goal in just one week."
+    },
+    "4b11e42f05b8491ec420e17ce6f576a3f47b97eb618ba2f0b85be42343c309ac": {
+      "id": "里程碑详情",
+      "source": "里程碑详情",
+      "sourceLang": "zh-CN",
+      "value": "Milestone details"
+    },
+    "4b1fcd6df8f14b3805d2d4c75495510bade8cd24411f3fb0889a3152877c4cec": {
+      "id": "体重",
+      "source": "体重",
+      "sourceLang": "zh-CN",
+      "value": "Weight"
+    },
+    "4b5e7e8e674f738270e662d1813f0668469c2b9297a5bc80757af42b505ec298": {
+      "id": "按近期趋势粗略估计，约 {{0}} 天可能达成目标。",
+      "source": "按近期趋势粗略估计，约 {{0}} 天可能达成目标。",
+      "sourceLang": "zh-CN",
+      "value": "Based on recent trends, you may reach your goal in about {{0}} days."
+    },
+    "4be0da95bbee20055187cf3a828884a02fdfcecb9b54a79acf61b0e9d819ff66": {
+      "id": "数据仅保存在本设备浏览器中，建议定期导出备份，避免清理缓存或更换设备时丢失。",
+      "source": "数据仅保存在本设备浏览器中，建议定期导出备份，避免清理缓存或更换设备时丢失。",
+      "sourceLang": "zh-CN",
+      "value": "Data is stored only in this device's browser. Export backups regularly to avoid loss from clearing cache or switching devices."
+    },
+    "4c3b7408596c9b5ffc293f8107ed1660fb01adf5002216811ca4dedebcf8a3f6": {
+      "id": "编辑记录",
+      "source": "编辑记录",
+      "sourceLang": "zh-CN",
+      "value": "Edit record"
+    },
+    "4cc763029c485e64732f1c57974dad628d68414408305c6fab57786d9cf8c7c8": {
+      "id": "最长连续 {{0}} 天",
+      "source": "最长连续 {{0}} 天",
+      "sourceLang": "zh-CN",
+      "value": "Longest streak: {{0}} days"
+    },
+    "4e9161a8074dfc003db2d6ace48b1b5ddaa38fe11adbfbb538eedaed5eafcb67": {
+      "id": "体重目标",
+      "source": "体重目标",
+      "sourceLang": "zh-CN",
+      "value": "Weight goal"
+    },
+    "4ecd4ba8bcd5d43b7d367d66d99245a4ff9e5d4544c1a17e11a9231bdd6cff23": {
+      "id": " · 已过期",
+      "source": " · 已过期",
+      "sourceLang": "zh-CN",
+      "value": " · Expired"
+    },
+    "4f86c0d967525b0a602974eacf57e7b60db3319cb2e16622f834d79d695a8f1c": {
+      "id": "分钟",
+      "source": "分钟",
+      "sourceLang": "zh-CN",
+      "value": "minutes"
+    },
+    "4fbd797255f88384a0096145eb96dcedef204b943dc205d978ff72432c61a8a8": {
+      "id": "确认覆盖",
+      "source": "确认覆盖",
+      "sourceLang": "zh-CN",
+      "value": "Confirm Overwrite"
+    }
+  }
+}

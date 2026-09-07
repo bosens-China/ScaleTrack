@@ -1,2 +1,6 @@
 allowBuilds:
   better-sqlite3: true
+minimumReleaseAgeExclude:
+  - '@ai-i18n/analyzer@1.0.0-alpha.27'
+  - '@ai-i18n/core@1.0.0-alpha.19'
+  - '@ai-i18n/vite@1.0.0-alpha.31'

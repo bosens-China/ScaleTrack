@@ -27,7 +27,7 @@
     "react-dom": "^19.2.6"
   },
   "devDependencies": {
-    "@ai-i18n/vite": "1.0.0-alpha.23",
+    "@ai-i18n/vite": "1.0.0-alpha.31",
     "@babel/core": "^7.29.0",
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",

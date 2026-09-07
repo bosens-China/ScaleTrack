@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "a0913929677f512c4d3d3c735fd68b8d1c0a3fd26599b1c016f5f26bfcdbc787": {
+      "id": "五",
+      "source": "五",
+      "sourceLang": "zh-CN",
+      "value": "Fri"
+    },
+    "a11b10e9ad22472f1af412b9a75015a4dc08168c8f749a25bf7cf72f27e4928e": {
+      "id": "记录身体每一次改变",
+      "source": "记录身体每一次改变",
+      "sourceLang": "zh-CN",
+      "value": "Track every change in your body"
+    },
+    "a1db4beece64cd7b0761061814a45945dc9cc373447a468f0918ef7e50d5a002": {
+      "id": "近期体重趋势显示可能处于热量赤字。",
+      "source": "近期体重趋势显示可能处于热量赤字。",
+      "sourceLang": "zh-CN",
+      "value": "Recent weight trend suggests a possible calorie deficit."
+    },
+    "a2e64cced0a93017f41ccd9d7ac9d3208c7806f7d6a5abbc2946db2d94a07f86": {
+      "id": "性别",
+      "source": "性别",
+      "sourceLang": "zh-CN",
+      "value": "Gender"
+    },
+    "a30dfb0f7428906cfa6c14ea80cd21223ffd42cc2a92ada6cffdaa46def673bc": {
+      "id": "放弃后该目标不会归档到里程碑，确认放弃？",
+      "source": "放弃后该目标不会归档到里程碑，确认放弃？",
+      "sourceLang": "zh-CN",
+      "value": "This goal will not be archived as a milestone after abandonment. Confirm?"
+    },
+    "a3342bf0968c09ee8464396d74c76060b1c047e530c87d7e2c5caff1546f1d81": {
+      "id": "运动名称最多 12 个字",
+      "source": "运动名称最多 12 个字",
+      "sourceLang": "zh-CN",
+      "value": "Exercise name can be up to 12 characters"
+    },
+    "a3afe29397a4b5cc0c01638725fe2df4754fa3b814d5aa8465386645bd56c4b8": {
+      "id": "{{0}}已覆盖并合并",
+      "source": "{{0}}已覆盖并合并",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} updated and merged"
+    },
+    "a3bc3a9be6a56ef4988b8b1193b8eb183ade2dea780d5f3eba2e115a82a88d32": {
+      "id": "已覆盖今日记录：{{0}} kg",
+      "source": "已覆盖今日记录：{{0}} kg",
+      "sourceLang": "zh-CN",
+      "value": "Today's record overwritten: {{0}} kg"
+    },
+    "a3f7262790d09a92abc560ba58515fffbb7fb998e4c78ac5dd5f7b20cfbb96ef": {
+      "id": "这段时间 BMI 下降了 {{0}}，整体趋势在向更轻盈的方向变化。",
+      "source": "这段时间 BMI 下降了 {{0}}，整体趋势在向更轻盈的方向变化。",
+      "sourceLang": "zh-CN",
+      "value": "Your BMI decreased by {{0}} during this period, showing an overall trend toward a lighter range."
+    },
+    "a405374e516172d6fbf6423a326fc2db163b99f45190ff707b74c829dfad3739": {
+      "id": "覆盖导入",
+      "source": "覆盖导入",
+      "sourceLang": "zh-CN",
+      "value": "Overwrite import"
+    },
+    "a463feefc4330ac50a8058d46549fd467f3ca42a2ac2b36409ed8f6a675b7934": {
+      "id": "立即更新",
+      "source": "立即更新",
+      "sourceLang": "zh-CN",
+      "value": "Update now"
+    },
+    "a46711ea90e539e0a89a172b5aad04d7240c8e8508cf15eef9ffd2afd185c5a1": {
+      "id": "共计用时",
+      "source": "共计用时",
+      "sourceLang": "zh-CN",
+      "value": "Total duration"
+    },
+    "a48ac417eed5ce741265dba7f7096ef0580762118d1c13838c476de41a3c40d7": {
+      "id": "去更新",
+      "source": "去更新",
+      "sourceLang": "zh-CN",
+      "value": "Update now"
+    },
+    "a49dad1215b77136964d60d5d85f4d098131dea5ef1f5bce353a5ca5a79c3da4": {
+      "id": "界面语言",
+      "source": "界面语言",
+      "sourceLang": "zh-CN",
+      "value": "Language"
+    },
+    "a69edf43369c21f0e6b03c9d9170e1c926ae40f0ddcb11a916f86708ecd1167a": {
+      "id": "累计变化",
+      "source": "累计变化",
+      "sourceLang": "zh-CN",
+      "value": "Total change"
+    },
+    "a7bd741e2744fea4df93af4c73c5f5a025a8a5a8d44fda53dcf69212035578a7": {
+      "id": "体重趋势",
+      "source": "体重趋势",
+      "sourceLang": "zh-CN",
+      "value": "Weight trend"
+    },
+    "a8215988c7ce8cf91e689e28960ca499c176f4f2aac810fa7e8a37efb10d656e": {
+      "id": "近7天减少",
+      "source": "近7天减少",
+      "sourceLang": "zh-CN",
+      "value": "Decreased in the last 7 days"
+    },
+    "a9e1b390eb7688f7051c607a135be902cbb25d56bb4fadf73c4f37c4da4b1e69": {
+      "id": "关闭",
+      "source": "关闭",
+      "sourceLang": "zh-CN",
+      "value": "Close"
+    },
+    "ab259a631aef3d2477f886d9fed3d5da475e653c275c7e260d6a977a584c8280": {
+      "id": "已保存图片，如未生效请长按海报保存",
+      "source": "已保存图片，如未生效请长按海报保存",
+      "sourceLang": "zh-CN",
+      "value": "Image saved. If it does not take effect, long-press the poster to save it."
+    },
+    "ac28e693906012cc2b9c63ab5ccd4cc2b40bdb9703d2d4c54fd960fc71bd3166": {
+      "id": "{{0}}，未来日期不可选择",
+      "source": "{{0}}，未来日期不可选择",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}; future dates cannot be selected"
+    },
+    "ad43abd958b85831fa82ca7fab94672f2e60538ea1c1e3f258d5a3e868ba22ec": {
+      "id": "正常",
+      "source": "正常",
+      "sourceLang": "zh-CN",
+      "value": "Normal"
+    },
+    "ad7a42bff1c9d9d24abea08476991292d9ee42e5e524d1d65c3703dda8fd8081": {
+      "id": "部分体重记录数据结构不完整或数值不合理",
+      "source": "部分体重记录数据结构不完整或数值不合理",
+      "sourceLang": "zh-CN",
+      "value": "Some weight record data structures are incomplete or contain invalid values"
+    },
+    "adc38834f1b8887ce782779ac077d183d22f6f6c76482138df6a003c3a034c4f": {
+      "id": "每周运动天数",
+      "source": "每周运动天数",
+      "sourceLang": "zh-CN",
+      "value": "Exercise days per week"
+    },
+    "afe1172aa4b0f3bc778d91e4304ee6bdb71c81c1a313104531eaf966da13ded5": {
+      "id": "比计划晚了 {{0}} 天，但你坚持到了最后",
+      "source": "比计划晚了 {{0}} 天，但你坚持到了最后",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} days behind schedule, but you stuck with it to the end"
+    }
+  }
+}

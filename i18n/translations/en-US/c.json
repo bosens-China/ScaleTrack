@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "c10f68e205e5f33140467addfc14557023da8b6b166cb243dfc5c1e81964a661": {
+      "id": "先保存第一条体重记录，仪表盘会自动补齐趋势、周变化和最近记录信息。",
+      "source": "先保存第一条体重记录，仪表盘会自动补齐趋势、周变化和最近记录信息。",
+      "sourceLang": "zh-CN",
+      "value": "Save your first weight record to see trends, weekly changes, and recent activity here."
+    },
+    "c2562db285f38e20cf1a10991186a3f2a25767ecd1668ce86192addf612682e2": {
+      "id": "要按目标日期达成，建议在当前基础上每天再多制造约 {{0}} kcal 的{{1}}，仅作趋势参考。",
+      "source": "要按目标日期达成，建议在当前基础上每天再多制造约 {{0}} kcal 的{{1}}，仅作趋势参考。",
+      "sourceLang": "zh-CN",
+      "value": "To reach the goal by the target date, aim for about {{0}} kcal more of a daily {{1}} than your current baseline. For trend reference only."
+    },
+    "c2880d91d282ac97ef3dba3eb7998c96a11ec3fd99682b00be7e98e388f218fb": {
+      "id": "分享或保存卡片",
+      "source": "分享或保存卡片",
+      "sourceLang": "zh-CN",
+      "value": "Share or save card"
+    },
+    "c33825ecda11e8fa986c5319b02bd9bc5035099bafcf02f659c00eebef0ca45f": {
+      "id": "覆盖这天的体重吗？",
+      "source": "覆盖这天的体重吗？",
+      "sourceLang": "zh-CN",
+      "value": "Overwrite the weight for this date?"
+    },
+    "c45a0d567be9b5bbe115b0e49794c5bdf9723db02aec4ca4490484f355c9240b": {
+      "id": "六",
+      "source": "六",
+      "sourceLang": "zh-CN",
+      "value": "Sat"
+    },
+    "c48b858dc60b2b34f6965588c3f21086fdd254b317a8a062c60b678c03d029ec": {
+      "id": " · 已到期",
+      "source": " · 已到期",
+      "sourceLang": "zh-CN",
+      "value": " · Due date reached"
+    },
+    "c6268a223a6ef1fc4305fde881099727b1eafcd96a59d4dd603a956141ec93a8": {
+      "id": "跑步",
+      "source": "跑步",
+      "sourceLang": "zh-CN",
+      "value": "Running"
+    },
+    "c660f613610067467ad99020f2a11abcbb9ec20b1a7d26945af1c5ef1d1f0b6a": {
+      "id": "添加",
+      "source": "添加",
+      "sourceLang": "zh-CN",
+      "value": "Add"
+    },
+    "c68b619e9ada3789633495fbfefa1e1016fe58cee2393b8126988bb02045c0f1": {
+      "id": "编辑资料",
+      "source": "编辑资料",
+      "sourceLang": "zh-CN",
+      "value": "Edit profile"
+    },
+    "c8494c1380782ceac622c23f9100a5a83c0873f3990533860eee00c306f87ca0": {
+      "id": "饭前",
+      "source": "饭前",
+      "sourceLang": "zh-CN",
+      "value": "Before a meal"
+    },
+    "c8e56f58681a9a7d2f14c1c669eed4c77fa775e735361a8b6d477258609ab357": {
+      "id": "平均体重",
+      "source": "平均体重",
+      "sourceLang": "zh-CN",
+      "value": "Average weight"
+    },
+    "c99645383f53a415110d5aa59d507c032794b243b1240bc1e9b119a337bdfadb": {
+      "id": "拖动调整运动时长",
+      "source": "拖动调整运动时长",
+      "sourceLang": "zh-CN",
+      "value": "Drag to adjust exercise duration"
+    },
+    "ca2fb40cd6c5b0db10148bf33bf32027ad673b20050c54e65fb814cb5e4f6805": {
+      "id": "增",
+      "source": "增",
+      "sourceLang": "zh-CN",
+      "value": "Gain"
+    },
+    "ca31d40b83c87c3f0578c66a6563241b02086d3057c4eb2b441ec567be8169c6": {
+      "id": "运动时长（分钟）",
+      "source": "运动时长（分钟）",
+      "sourceLang": "zh-CN",
+      "value": "Exercise duration (minutes)"
+    },
+    "ca8ac0673f2f013218d596b0dba18334acd4bdba224b52aab0c0aa56a7d3eac2": {
+      "id": "返回添加记录",
+      "source": "返回添加记录",
+      "sourceLang": "zh-CN",
+      "value": "Back to add record"
+    },
+    "cb0b6b7b9615dac58c6d040a84d4d7fee138800f70714fd4de72a151b932c806": {
+      "id": "数据导出成功",
+      "source": "数据导出成功",
+      "sourceLang": "zh-CN",
+      "value": "Data exported successfully"
+    },
+    "cb12d74f4fd36b9503a4747009832cbec7f522c724a70d02371e678801e8f490": {
+      "id": "饭后",
+      "source": "饭后",
+      "sourceLang": "zh-CN",
+      "value": "After a meal"
+    },
+    "cbb3b6686801f15d3dc24b8b8439210aca2d9b0d2afc1f45f1bc2b4644cb97a3": {
+      "id": "前往 GitHub 提交 Issue 或建议",
+      "source": "前往 GitHub 提交 Issue 或建议",
+      "sourceLang": "zh-CN",
+      "value": "Open a GitHub issue or share a suggestion"
+    },
+    "cc3d5dbdb3c756fef836965234d016f32cb9577d23c67e78d26a20f10ac0c600": {
+      "id": "{{0}} 分",
+      "source": "{{0}} 分",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} min"
+    },
+    "cd2711d3bca6bf4fcb64ac4276e7fd843ece810faa5d4375ae2fc0855855d25c": {
+      "id": "该运动类型已存在",
+      "source": "该运动类型已存在",
+      "sourceLang": "zh-CN",
+      "value": "This exercise type already exists"
+    },
+    "ce3c844dedf60c9352fa645dc544a273913d5477bcfff35c9cc142d24d4b8e40": {
+      "id": "部分运动记录数据结构不完整或数值不合理",
+      "source": "部分运动记录数据结构不完整或数值不合理",
+      "sourceLang": "zh-CN",
+      "value": "Some exercise record data structures are incomplete or contain invalid values"
+    },
+    "cefb52eba25a4c2809a8f989362c61b30eac466824003d14c2d7b9022f5c4137": {
+      "id": "选择运动日期",
+      "source": "选择运动日期",
+      "sourceLang": "zh-CN",
+      "value": "Select activity date"
+    },
+    "cf05466d6cac69bafd68e9c7856d4455d37b2d30c88ad88864c00718494cfa8f": {
+      "id": "删除",
+      "source": "删除",
+      "sourceLang": "zh-CN",
+      "value": "Delete"
+    },
+    "cf77a07197e76f70bb1a8fcabbf22aed3bee8c2fb689e12f1a90985fb4f97482": {
+      "id": "目标体重",
+      "source": "目标体重",
+      "sourceLang": "zh-CN",
+      "value": "Target weight"
+    }
+  }
+}

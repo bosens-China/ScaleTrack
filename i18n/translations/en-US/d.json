@@ -1,0 +1,162 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "d04c8b6532f18040e541099619a43585c7ab4367f98a573f936231ce672defa5": {
+      "id": "大概运动了多久？",
+      "source": "大概运动了多久？",
+      "sourceLang": "zh-CN",
+      "value": "About how long did you exercise?"
+    },
+    "d0c039a96aeb8c971e0c6c2bb018df3f2b054e990a3b5cb40fe519db38ba36a0": {
+      "id": "目标 ID 重复",
+      "source": "目标 ID 重复",
+      "sourceLang": "zh-CN",
+      "value": "Duplicate goal ID"
+    },
+    "d11246204765aeb702c19741a5c0f99b6deb0bab19eb028c856777dfd6a33abc": {
+      "id": "还差 {{0}}",
+      "source": "还差 {{0}}",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} to go"
+    },
+    "d126dd87a490338e623698822f03c2c6e7985905ae2a2df3d298967bd1c53f70": {
+      "id": "天运动",
+      "source": "天运动",
+      "sourceLang": "zh-CN",
+      "value": "active days"
+    },
+    "d14bdbdbf22ddcf6abe21fbdf60f9ed992fc57ec70cc8e97b23396c0c1476bd1": {
+      "id": "浅色模式",
+      "source": "浅色模式",
+      "sourceLang": "zh-CN",
+      "value": "Light"
+    },
+    "d2d2985feac21075c82925d9113f8c7ac7519a7cc4fe57e91edd2c555c7f25de": {
+      "id": "稳步记录，持续接近你的健康目标",
+      "source": "稳步记录，持续接近你的健康目标",
+      "sourceLang": "zh-CN",
+      "value": "Track steadily and move closer to your health goal"
+    },
+    "d2f2b75285b2eb1a61f759cce8ed301417da3a79958fefc7eb4f900a97dbf1d8": {
+      "id": "肥胖",
+      "source": "肥胖",
+      "sourceLang": "zh-CN",
+      "value": "Obesity"
+    },
+    "d585f9c3fef754e1ca3362ef2ef92382b89969cc6094b73322661d98cb863a2c": {
+      "id": "放弃",
+      "source": "放弃",
+      "sourceLang": "zh-CN",
+      "value": "Abandon"
+    },
+    "d5e8708c23948036366e4de2106387001f7dddcd76c72854a1c8d261c6275474": {
+      "id": "保存记录",
+      "source": "保存记录",
+      "sourceLang": "zh-CN",
+      "value": "Save record"
+    },
+    "d7c47ea9046cf20b945dd2e3c87c18dc282b6fc6db8e79c54686c2f0b9950284": {
+      "id": "可以切换到其他时间范围，或者继续添加更多记录。",
+      "source": "可以切换到其他时间范围，或者继续添加更多记录。",
+      "sourceLang": "zh-CN",
+      "value": "Switch to another time range or add more records."
+    },
+    "d82e4908d46e12c3eb4ebf8302bda72496bdffd40cfe11e018718673c51eff83": {
+      "id": "早晨称重，运动后...",
+      "source": "早晨称重，运动后...",
+      "sourceLang": "zh-CN",
+      "value": "Morning weigh-in, after exercise..."
+    },
+    "d87079981a1cfb7fc94aa53c65e1d7de02e58a36f618946e3e98904030ed099d": {
+      "id": "每次调整 5 分钟",
+      "source": "每次调整 5 分钟",
+      "sourceLang": "zh-CN",
+      "value": "Adjust by 5 minutes each time"
+    },
+    "d8d9ec6cb170613be757e685bae2fd1ddc9ef756d4b959389d926b4eea5d1a08": {
+      "id": "文件包含 {{0}} 条体重、{{1}} 条运动、{{2}} 个目标{{3}}。",
+      "source": "文件包含 {{0}} 条体重、{{1}} 条运动、{{2}} 个目标{{3}}。",
+      "sourceLang": "zh-CN",
+      "value": "The file contains {{0}} weight records, {{1}} exercise records, {{2}} goals{{3}}."
+    },
+    "d9bfe6ee23bc89a46c924ee1e11210fe1cf9d3c0f2b218f0c726643bf10745d1": {
+      "id": "偏瘦",
+      "source": "偏瘦",
+      "sourceLang": "zh-CN",
+      "value": "Underweight"
+    },
+    "d9db3563c266891d7bbcd1737897cee47b1d4f3af9d03052efd9e3bea6670065": {
+      "id": "1个月",
+      "source": "1个月",
+      "sourceLang": "zh-CN",
+      "value": "1 month"
+    },
+    "da6047c19c302c629e8b2c738bfe62b0cc6000ba28960422d7889e9186240bca": {
+      "id": "保留原记录",
+      "source": "保留原记录",
+      "sourceLang": "zh-CN",
+      "value": "Keep Existing"
+    },
+    "da6f84950cdf90a21863aea889aec8742375097ec393e97f6f3d355f688dda79": {
+      "id": "导入数据必须是对象",
+      "source": "导入数据必须是对象",
+      "sourceLang": "zh-CN",
+      "value": "Imported data must be an object"
+    },
+    "db11dbec38ce1f2b6b279128080d521bbcb84b6756de3ffae193941b0fd71813": {
+      "id": "已覆盖导入数据",
+      "source": "已覆盖导入数据",
+      "sourceLang": "zh-CN",
+      "value": "Imported data overwritten"
+    },
+    "dbc76c4faf19039e339c2bff2eb47f571f7938ef21fd13d20f2916188a0f8470": {
+      "id": "日",
+      "source": "日",
+      "sourceLang": "zh-CN",
+      "value": "Sun"
+    },
+    "dbfded1da00365da4ba7634b4886b24edce7470448584bf55f300cdb3725c3cd": {
+      "id": "用时",
+      "source": "用时",
+      "sourceLang": "zh-CN",
+      "value": "Duration"
+    },
+    "dcc6ada92a9c4f276f7aa368b4292c817dadc4e3ce4b42e1cd36faa7b2f76f92": {
+      "id": "身高（cm）",
+      "source": "身高（cm）",
+      "sourceLang": "zh-CN",
+      "value": "Height (cm)"
+    },
+    "dd2968ccdacc2b74dba2183e2933c9d81b99f6245e09e28f4fc30609e4a6ec93": {
+      "id": "确认删除这条记录？",
+      "source": "确认删除这条记录？",
+      "sourceLang": "zh-CN",
+      "value": "Delete this record?"
+    },
+    "ddf9dc8e2b4f3c12eb434be9a953528bf64eee9a2a6670e9d26e04950a08fee1": {
+      "id": "检查更新失败，请稍后重试",
+      "source": "检查更新失败，请稍后重试",
+      "sourceLang": "zh-CN",
+      "value": "Failed to check for updates. Please try again later."
+    },
+    "ddfa00f52021aa6771ebfeb5ee7766794f9af4215d538fbaf1f3ab9a855b37e6": {
+      "id": "取消",
+      "source": "取消",
+      "sourceLang": "zh-CN",
+      "value": "Cancel"
+    },
+    "de87bb602339fffcda8f80d2e3162f4f84a71a9d6000aab49c8ff5f435211adf": {
+      "id": "导出数据",
+      "source": "导出数据",
+      "sourceLang": "zh-CN",
+      "value": "Export data"
+    },
+    "df91366a8c10cd4c8f4bb6e1087d1dfa83b4d5d169c0d665085f3760b7107ca8": {
+      "id": "更新目标后，主页的进度追踪器会自动重置进度。",
+      "source": "更新目标后，主页的进度追踪器会自动重置进度。",
+      "sourceLang": "zh-CN",
+      "value": "After updating the goal, the progress tracker on the home page will reset automatically."
+    }
+  }
+}

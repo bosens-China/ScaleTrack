@@ -1,0 +1,192 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "900bec74e21ebe45ae270d36928f093e2b74d218904c8d1b12200f4563896677": {
+      "id": "体重偏重，建议适当控制饮食和运动",
+      "source": "体重偏重，建议适当控制饮食和运动",
+      "sourceLang": "zh-CN",
+      "value": "Your weight is above the healthy range; consider adjusting your diet and exercise."
+    },
+    "90fc45a9d92a1c978b80d1d6ebcd2e8f46757e692b2ac31fff7cad3881049240": {
+      "id": "请输入有效的体重",
+      "source": "请输入有效的体重",
+      "sourceLang": "zh-CN",
+      "value": "Enter a valid weight"
+    },
+    "91e979818cffc99707bf11f4ce2459264cdaf323c3709630e41dd81af7a39ccc": {
+      "id": "{{0}} 分钟",
+      "source": "{{0}} 分钟",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} minutes"
+    },
+    "921a745adea0f1e72e640de9cebbe315af93de24f92b299a9162848524cba93e": {
+      "id": "趋势",
+      "source": "趋势",
+      "sourceLang": "zh-CN",
+      "value": "Trends"
+    },
+    "922d9325c14628dbb0af180a3b5499665bb48f76f4668e0ad1ee78ff7011d14d": {
+      "id": "当前已保存 {{0}}。再次保存会覆盖旧记录。",
+      "source": "当前已保存 {{0}}。再次保存会覆盖旧记录。",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} is already saved. Saving again will overwrite the previous record."
+    },
+    "92567fdecd7b348a3661dbfe6367a135816c0841c4a28a321cc9e12d659f5212": {
+      "id": "目标 {{0}}",
+      "source": "目标 {{0}}",
+      "sourceLang": "zh-CN",
+      "value": "Goal {{0}}"
+    },
+    "92bce23f21dd77ddb5e44f7606496095d027fbc357e3a3f67f0e121c5e9e1f07": {
+      "id": "最近 BMI 整体较为稳定，说明这段时间身体指标波动不大。",
+      "source": "最近 BMI 整体较为稳定，说明这段时间身体指标波动不大。",
+      "sourceLang": "zh-CN",
+      "value": "Your BMI has been relatively stable recently, indicating little fluctuation in body metrics during this period."
+    },
+    "92cadf2696100953c9abd3c83b94fdd3121c5e023168dd58ccd496abfa58e839": {
+      "id": "半月",
+      "source": "半月",
+      "sourceLang": "zh-CN",
+      "value": "15 days"
+    },
+    "92f8642416e269d6d3e88327d8c1feed07a9d3389e9bc9644e99ac53ecd7186d": {
+      "id": "{{0}}年 {{1}}月",
+      "source": "{{0}}年 {{1}}月",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} years {{1}} months"
+    },
+    "933809aa1100074ca1e8a3b59bbfc1a4b77a847e88b9e5a52c817e39272c4bc9": {
+      "id": "日均 ({{0}})",
+      "source": "日均 ({{0}})",
+      "sourceLang": "zh-CN",
+      "value": "Daily avg. ({{0}})"
+    },
+    "95cee93754a579c17ba70d6f8347504770fdc292984c0712c0c22a7a3249321d": {
+      "id": "确认放弃当前目标？",
+      "source": "确认放弃当前目标？",
+      "sourceLang": "zh-CN",
+      "value": "Abandon the current goal?"
+    },
+    "960ec69f1050488034ae54b12ee7a7a564ffeaf6d2bdc71013caa5be3a66a2fc": {
+      "id": "天 · {{0}} 次",
+      "source": "天 · {{0}} 次",
+      "sourceLang": "zh-CN",
+      "value": "days · {{0}} sessions"
+    },
+    "965fcb6ad023ebdea3bf7be6503200371c307fa0b1605f2432e74d003d502074": {
+      "id": "意见反馈",
+      "source": "意见反馈",
+      "sourceLang": "zh-CN",
+      "value": "Feedback"
+    },
+    "96c258bf6dd7263c5086170587926caaae5a6874b3fb3a2979d9a2195065effd": {
+      "id": "如果不修改备注，将保留当前输入框里的内容并覆盖旧备注。",
+      "source": "如果不修改备注，将保留当前输入框里的内容并覆盖旧备注。",
+      "sourceLang": "zh-CN",
+      "value": "If you do not change the notes, the current text field content will be kept and overwrite the old note."
+    },
+    "97167ddef1123077d74ddbc72b4b378688ac298b2583cc5da2e41a170bd16c9b": {
+      "id": "正好如期达成 🎯",
+      "source": "正好如期达成 🎯",
+      "sourceLang": "zh-CN",
+      "value": "Reached right on schedule 🎯"
+    },
+    "97761d7f9558c053782bfc259765ff2c8f9f544885f3d5400429f9e9c9de16ab": {
+      "id": "体重记录 ID 重复",
+      "source": "体重记录 ID 重复",
+      "sourceLang": "zh-CN",
+      "value": "Duplicate weight record ID"
+    },
+    "97df49ec86a12378017c3eacdaf6fda1e4302ae5587c14079910d775493e04b0": {
+      "id": "可继续添加不同项目；同类运动再次保存时会先询问是否覆盖。",
+      "source": "可继续添加不同项目；同类运动再次保存时会先询问是否覆盖。",
+      "sourceLang": "zh-CN",
+      "value": "You can add a different activity. Saving the same type again will ask whether to overwrite it."
+    },
+    "9980e414ffb699e593cb56a71eef2945aec6854df2ad5da429a7bf1dde28aeac": {
+      "id": "分享或保存",
+      "source": "分享或保存",
+      "sourceLang": "zh-CN",
+      "value": "Share or save"
+    },
+    "9b82946057017a3821ce6a2c2ef572e9287ac99dd76ac2b1630bb06674cad5bf": {
+      "id": "记录体重",
+      "source": "记录体重",
+      "sourceLang": "zh-CN",
+      "value": "Record weight"
+    },
+    "9bae44576d6012d7c479290efb4f16b707a6d0fddf3aaaccbc37b039b469c0d5": {
+      "id": "提示：如果没有弹出分享，可以尝试长按上方海报直接保存",
+      "source": "提示：如果没有弹出分享，可以尝试长按上方海报直接保存",
+      "sourceLang": "zh-CN",
+      "value": "Tip: If sharing does not appear, try long-pressing the poster above to save it directly."
+    },
+    "9be2d705acb211a75bdc2cb2606cda940767244c5eb764d4bec3fdfeec0e932c": {
+      "id": "备注（选填）",
+      "source": "备注（选填）",
+      "sourceLang": "zh-CN",
+      "value": "Notes (optional)"
+    },
+    "9c26f02cdb705c3805e99c72fff402e99ee4bcafe7b7e7459caea07f1de29479": {
+      "id": "这段时间体重上升了 {{0}}{{1}}，建议留意饮食与作息变化。",
+      "source": "这段时间体重上升了 {{0}}{{1}}，建议留意饮食与作息变化。",
+      "sourceLang": "zh-CN",
+      "value": "Your weight increased by {{0}}{{1}} during this period. Consider changes in diet and routine."
+    },
+    "9c411a7af38ef228f4f08517262666cb55654866f6bfc6a80f3ee30a62d7bd56": {
+      "id": "BMI 信息",
+      "source": "BMI 信息",
+      "sourceLang": "zh-CN",
+      "value": "BMI information"
+    },
+    "9c8d86d441d3588f9580099d340dd06c1efba6cb8170438b18db8addd20bd122": {
+      "id": "语言切换失败，请重试",
+      "source": "语言切换失败，请重试",
+      "sourceLang": "zh-CN",
+      "value": "Couldn't switch language. Please try again."
+    },
+    "9d0a2efafe8b3d331e15ece9cbb82f22bab5ab64e6fc94fa3eb88ddc87416544": {
+      "id": "支持安装",
+      "source": "支持安装",
+      "sourceLang": "zh-CN",
+      "value": "Installable"
+    },
+    "9d82dfd164e3841b70c22d7282b05ede89088a075e78264f5aa9dfd08750f62b": {
+      "id": "本周 / 运动节律",
+      "source": "本周 / 运动节律",
+      "sourceLang": "zh-CN",
+      "value": "This week / Activity rhythm"
+    },
+    "9df4ed94e9e609dad8aa03a5fbb23a9efcf5a4135234217bcb19ffac9eb3da08": {
+      "id": "点击更换头像",
+      "source": "点击更换头像",
+      "sourceLang": "zh-CN",
+      "value": "Click to change avatar"
+    },
+    "9df59d4c8e6f6b8b02e088ef85cf386aefdec7f1ea14f6105dc10d6120cef7e5": {
+      "id": "发现同日记录",
+      "source": "发现同日记录",
+      "sourceLang": "zh-CN",
+      "value": "Record Found for This Date"
+    },
+    "9f254ba907be8c27ea229189ea72755725b5b7cf79e5df9b6f9197872aac89fb": {
+      "id": "偏胖",
+      "source": "偏胖",
+      "sourceLang": "zh-CN",
+      "value": "Overweight"
+    },
+    "9f4db41fb37c828b8be31611b1c7921e9a63d087cb754cdd294437175f72f4bd": {
+      "id": "设置期望达成日期（选填）",
+      "source": "设置期望达成日期（选填）",
+      "sourceLang": "zh-CN",
+      "value": "Set target completion date (optional)"
+    },
+    "9fdbaba2a2bb43a34953f53bf3c8c4269ee712e67e210eccc08cf86b5e51ae24": {
+      "id": "{{0}}（已移除）",
+      "source": "{{0}}（已移除）",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} (removed)"
+    }
+  }
+}

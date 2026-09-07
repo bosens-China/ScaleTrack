@@ -1,0 +1,144 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "108e463d327ef24248f2ef801ff41426c5bd19d472a2f69869d70fad482df17a": {
+      "id": "增重速度较快（{{0}}），注意控制饮食结构、优先增肌。",
+      "source": "增重速度较快（{{0}}），注意控制饮食结构、优先增肌。",
+      "sourceLang": "zh-CN",
+      "value": "Weight gain is fairly fast ({{0}}). Keep your diet in check and prioritize muscle gain."
+    },
+    "10ae6ddd00df4f2fea2025c9a59b28870038334a238bcec092b397416c31ccd6": {
+      "id": "放弃目标",
+      "source": "放弃目标",
+      "sourceLang": "zh-CN",
+      "value": "Abandon goal"
+    },
+    "10f15fa324b9fab16f15dcae16951a4f5d117658a8537d247eef5943a5b2d372": {
+      "id": "覆盖为",
+      "source": "覆盖为",
+      "sourceLang": "zh-CN",
+      "value": "Replace With"
+    },
+    "11530bf9ab8d6400e71c4e573f88a1dfb0a651ebdb7d7ed0eb3ae3c1778d13dc": {
+      "id": "瑜伽",
+      "source": "瑜伽",
+      "sourceLang": "zh-CN",
+      "value": "Yoga"
+    },
+    "11b9db9fe71917b5369c40cdafe709dd86ed011ef9105665f429c572322cc933": {
+      "id": "运动记录 ID 重复",
+      "source": "运动记录 ID 重复",
+      "sourceLang": "zh-CN",
+      "value": "Duplicate exercise record ID"
+    },
+    "11e6657e1e40e6d4a587be35457b026ac9df19de33261cf9122774762cf0cf7c": {
+      "id": "期望达成 {{0}}",
+      "source": "期望达成 {{0}}",
+      "sourceLang": "zh-CN",
+      "value": "Target date {{0}}"
+    },
+    "132bbd2de1f286109d72db249440e59e4780fc4988cbf43f02b35873550474a4": {
+      "id": "已检查更新，若有新版本会自动提示",
+      "source": "已检查更新，若有新版本会自动提示",
+      "sourceLang": "zh-CN",
+      "value": "Updates checked. You will be notified automatically when a new version is available."
+    },
+    "135b4ac035dc26a99d6de09f244ecebbeaa01356c56d3021483e776964bb9259": {
+      "id": "例如：170",
+      "source": "例如：170",
+      "sourceLang": "zh-CN",
+      "value": "For example: 170"
+    },
+    "15ea5decc349a180d6341a8a02f1c79b53500bf9c9e610cc1d4c5d9636c0de7d": {
+      "id": "例如：攀岩",
+      "source": "例如：攀岩",
+      "sourceLang": "zh-CN",
+      "value": "For example: rock climbing"
+    },
+    "16c02f2a46f2255cd32bbe2c963eda08ce08330f98ebd59a8808350f1c13cd78": {
+      "id": "当前体重 (kg)",
+      "source": "当前体重 (kg)",
+      "sourceLang": "zh-CN",
+      "value": "Current weight (kg)"
+    },
+    "18bf89d355d37f8ff1b2cdb1d182caaddd7edfc3f8e80f03c279903005a0bc1d": {
+      "id": "去添加记录",
+      "source": "去添加记录",
+      "sourceLang": "zh-CN",
+      "value": "Add a record"
+    },
+    "1902599dc2867ada571530a5d82947345667cccec7bc9c619e9d607b984c9932": {
+      "id": "推荐 {{0}} {{1}}（BMI 正常中值）",
+      "source": "推荐 {{0}} {{1}}（BMI 正常中值）",
+      "sourceLang": "zh-CN",
+      "value": "Recommended: {{0}} {{1}} (midpoint of the normal BMI range)"
+    },
+    "1939f5757231704f4b55edb161011a1e0cb418af54d994803095739dc3605e69": {
+      "id": "本次 {{0}} 与最近一次记录（{{1}}）相差较大，确认没有输错吗？再点一次“确认保存”即可。",
+      "source": "本次 {{0}} 与最近一次记录（{{1}}）相差较大，确认没有输错吗？再点一次“确认保存”即可。",
+      "sourceLang": "zh-CN",
+      "value": "This {{0}} differs significantly from the most recent record ({{1}}). Are you sure it was entered correctly? Tap “Confirm save” again to proceed."
+    },
+    "19afb7679feb2027b02aaad446192890dc622845877d857929c5d6900817ee52": {
+      "id": "需设置年龄",
+      "source": "需设置年龄",
+      "sourceLang": "zh-CN",
+      "value": "Set your age first"
+    },
+    "19fe569abfce5e95532f7189b5307069e5e239821b066fd14631e623209d6c04": {
+      "id": "运动 / 运动节律",
+      "source": "运动 / 运动节律",
+      "sourceLang": "zh-CN",
+      "value": "Exercise / rhythm"
+    },
+    "1a1f3e7ab3faa59f72c4013b8a8d914c83db275925a8c8148acb54be41a235b0": {
+      "id": "体重正常，请继续保持",
+      "source": "体重正常，请继续保持",
+      "sourceLang": "zh-CN",
+      "value": "Your weight is in the healthy range. Keep it up!"
+    },
+    "1c0c14056c72f0af51366687943b005e9520676fdbbbf2b4ac93fe2dd30a684a": {
+      "id": "{{0}} 小时",
+      "source": "{{0}} 小时",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} hours"
+    },
+    "1cce7cfc6ee0f10368b45204ad3e79da86832986a8068a1eae5263f84b273b70": {
+      "id": "所有记录",
+      "source": "所有记录",
+      "sourceLang": "zh-CN",
+      "value": "All records"
+    },
+    "1d09654fd2140098eb6b88d3544bb9ff8d6f7bd9349cfa9ef113d030ceb1a32b": {
+      "id": "最低",
+      "source": "最低",
+      "sourceLang": "zh-CN",
+      "value": "Lowest"
+    },
+    "1d7dab179f4a0c735624bfe59c4568d0684310688fc600d07848948248c4a299": {
+      "id": "公斤 kg",
+      "source": "公斤 kg",
+      "sourceLang": "zh-CN",
+      "value": "Kilograms (kg)"
+    },
+    "1d95a1767d5618f95b04a9ccd18a79c64d7afd8e94c79ba9ad7a93b7c9f422cb": {
+      "id": "用户信息数据结构不完整或数值不合理",
+      "source": "用户信息数据结构不完整或数值不合理",
+      "sourceLang": "zh-CN",
+      "value": "User data structure is incomplete or contains invalid values"
+    },
+    "1e797492f00db452a583650e7e5b7676c0aa3ced1f740bc0a436cb96214e6a18": {
+      "id": "羽毛球",
+      "source": "羽毛球",
+      "sourceLang": "zh-CN",
+      "value": "Badminton"
+    },
+    "1f1b724d4308a65869f16fe16fa6e1e51ac5feb232dbc4f3b1b70f5fd5213c62": {
+      "id": "暂无对比",
+      "source": "暂无对比",
+      "sourceLang": "zh-CN",
+      "value": "No comparison yet"
+    }
+  }
+}

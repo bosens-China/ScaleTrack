@@ -1,0 +1,216 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "70677c5cdc0a56f8a414302a3b18da8bdde9711a5aaaf35e1d5e39fdf7bb8c26": {
+      "id": "{{0}}，未运动",
+      "source": "{{0}}，未运动",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}, no exercise"
+    },
+    "70706346dc45899d8597574b164ad5bad672a5087488e224443de74b3eac157e": {
+      "id": "增肌目标",
+      "source": "增肌目标",
+      "sourceLang": "zh-CN",
+      "value": "Muscle-gain goal"
+    },
+    "7080644b07f385b8e898119df2b5973946d1ccf74b87ef025c8bb09452e2d574": {
+      "id": "深色模式",
+      "source": "深色模式",
+      "sourceLang": "zh-CN",
+      "value": "Dark"
+    },
+    "70a7f843952bea9748e11407e74d2f5a576e5c6b9c7963612fae8d6a6d408a59": {
+      "id": "7天",
+      "source": "7天",
+      "sourceLang": "zh-CN",
+      "value": "7 days"
+    },
+    "71a6f0a4b18e1e2829c73f7cc9ace4258eb026513dfbe77f39454a8eec40d815": {
+      "id": "只需要填写一次。后续记录体重、计算 BMI 和追踪目标都会基于这些资料。",
+      "source": "只需要填写一次。后续记录体重、计算 BMI 和追踪目标都会基于这些资料。",
+      "sourceLang": "zh-CN",
+      "value": "You only need to complete this once. Future weight records, BMI calculations, and goals use this information."
+    },
+    "729dabf15c63a2e3a6450e2fce39ad505e624e9fd3edb003d7dd798e70b0f164": {
+      "id": "这段时间 BMI 上升了 {{0}}，建议结合饮食与作息一起观察变化原因。",
+      "source": "这段时间 BMI 上升了 {{0}}，建议结合饮食与作息一起观察变化原因。",
+      "sourceLang": "zh-CN",
+      "value": "Your BMI increased by {{0}} during this period. Consider your diet and routine when assessing possible causes."
+    },
+    "7367938b4097bb109afc227726c1ac63eb0251bf037141e5f44dcca757436d1a": {
+      "id": "记录第一次运动",
+      "source": "记录第一次运动",
+      "sourceLang": "zh-CN",
+      "value": "Record your first exercise"
+    },
+    "7447cc09b1db3f179f07a5cd50dbf4b12aa9c5f96721f393d5282b44855058c4": {
+      "id": "体重 / 0.1 kg",
+      "source": "体重 / 0.1 kg",
+      "sourceLang": "zh-CN",
+      "value": "Weight / 0.1 kg"
+    },
+    "74dac81bfaf80ea13626165a8a20335b8b1f85f9b52c897cf49b631d44f37837": {
+      "id": "清空当前所有本地数据，完全替换为文件内容。",
+      "source": "清空当前所有本地数据，完全替换为文件内容。",
+      "sourceLang": "zh-CN",
+      "value": "Clear all current local data and completely replace it with the file contents."
+    },
+    "7577044bd55551a9297b7bca7774b8bc16bd3447fb041b9328a6dd77b6583ff9": {
+      "id": "仅支持补录最近 1 个月内的记录",
+      "source": "仅支持补录最近 1 个月内的记录",
+      "sourceLang": "zh-CN",
+      "value": "Only records from the last month can be backfilled"
+    },
+    "758d4ba82e104847f29ab14f65fecf4b8c3a02f94f6d3c94d2a48b157b75e898": {
+      "id": "{{0}} 岁",
+      "source": "{{0}} 岁",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} years old"
+    },
+    "75ec7bdeae0cdc9fa15dd4590e80533018caa53c32ecdb16cd6a0ceb7181e7e5": {
+      "id": "已达成！🎉",
+      "source": "已达成！🎉",
+      "sourceLang": "zh-CN",
+      "value": "Achieved! 🎉"
+    },
+    "75f0754d6a363b1456d560951cfedec09a6e3e601de4454c8a484acdd5b7d8ad": {
+      "id": "发现新版本",
+      "source": "发现新版本",
+      "sourceLang": "zh-CN",
+      "value": "New version available"
+    },
+    "7660059be4611695b62e92879dabc3e4ca128af48b76781b8202780f50d56a4a": {
+      "id": "{{0}}，超出可补录范围",
+      "source": "{{0}}，超出可补录范围",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}; outside the backfill range"
+    },
+    "76748e866d24f6c3dbf5424c6c7cac7cddd8089df56418d2e5396501f2a6f1e6": {
+      "id": " 目标日期已到，继续加油。",
+      "source": " 目标日期已到，继续加油。",
+      "sourceLang": "zh-CN",
+      "value": " The target date has arrived. Keep going."
+    },
+    "7697fb7f87257fde360c9d4b2a002dd9b291dafce8869ea6bae90645e6bad2e2": {
+      "id": "我的运动",
+      "source": "我的运动",
+      "sourceLang": "zh-CN",
+      "value": "My exercise"
+    },
+    "76d8c6a9ea1df7dcb63caefe5512dd9e182c618ab6514871370fae4ca4652fac": {
+      "id": "身高",
+      "source": "身高",
+      "sourceLang": "zh-CN",
+      "value": "Height"
+    },
+    "77be6ceff22d4e7732f621be8d4e8bc8817890a68a383af797a2bb680864f303": {
+      "id": "保持当前节奏，适度调整饮食结构以{{0}}热量摄入。",
+      "source": "保持当前节奏，适度调整饮食结构以{{0}}热量摄入。",
+      "sourceLang": "zh-CN",
+      "value": "Maintain your current pace and adjust your diet moderately to {{0}} calorie intake."
+    },
+    "77e33fe7a90e68764e3b4780df95c23c26ab0f8c9579c41624d422e1ceb848eb": {
+      "id": "睡前",
+      "source": "睡前",
+      "sourceLang": "zh-CN",
+      "value": "Before bed"
+    },
+    "78ad08961dde043829f619820e057a4a3759bf3933ab6b1e16a50e130dfc02a0": {
+      "id": "去记录",
+      "source": "去记录",
+      "sourceLang": "zh-CN",
+      "value": "Record now"
+    },
+    "79f66aa47448ce5f7ac56f97416bffa8ca38b3027d1fac542c7c80c7eac57d24": {
+      "id": "二",
+      "source": "二",
+      "sourceLang": "zh-CN",
+      "value": "Tue"
+    },
+    "7a3d6916b143662af37e48c1fefc5b741a8861b108da678c054572693657c031": {
+      "id": "大餐后",
+      "source": "大餐后",
+      "sourceLang": "zh-CN",
+      "value": "After a big meal"
+    },
+    "7a912ea2a292bfac4fc8071168d5ac9d5cfaf040c87bc7e80a0d5dd5b802b932": {
+      "id": "运动类型已添加",
+      "source": "运动类型已添加",
+      "sourceLang": "zh-CN",
+      "value": "Exercise type added"
+    },
+    "7ad5b2b7aa0d58e6ed4b88547c7715dec02ff29317ef758e20ec1c0a8399fc59": {
+      "id": "确认保存",
+      "source": "确认保存",
+      "sourceLang": "zh-CN",
+      "value": "Confirm save"
+    },
+    "7b2842c6b63dc71523aad380112f0ce10f09d99d2c65d015307e1a9e9cb0132e": {
+      "id": "我们升级了记录方式，请",
+      "source": "我们升级了记录方式，请",
+      "sourceLang": "zh-CN",
+      "value": "We upgraded how tracking works. Please "
+    },
+    "7b309846daa4f6fd21ee0a4ec6785c3123b932802b9f0825a5357de7796a01e4": {
+      "id": "删除记录",
+      "source": "删除记录",
+      "sourceLang": "zh-CN",
+      "value": "Delete record"
+    },
+    "7c9745e917cc39b5693b22375470fd116a1d997b2d029e25d2be55945d0d438b": {
+      "id": "减少",
+      "source": "减少",
+      "sourceLang": "zh-CN",
+      "value": "Reduce"
+    },
+    "7cfcdb3e192dd2749a645f507ad845209413db1c74f637a0ff9b41061eb2018b": {
+      "id": "国内 BMI 分级适合做初筛；肌肉量较高的运动人群，建议结合体脂率、腰围或围度一起观察。",
+      "source": "国内 BMI 分级适合做初筛；肌肉量较高的运动人群，建议结合体脂率、腰围或围度一起观察。",
+      "sourceLang": "zh-CN",
+      "value": "Chinese BMI categories are suitable for initial screening. For people with higher muscle mass, also consider body-fat percentage, waist circumference, or other measurements."
+    },
+    "7d32cd1f0cdd1d3b3cb5af8e2b0669cff9864f7d375b3cf1ddee7ddd025de8d9": {
+      "id": "运动打卡",
+      "source": "运动打卡",
+      "sourceLang": "zh-CN",
+      "value": "Log activity"
+    },
+    "7d95c9271d4776388eaceea203a9d33a89e98e59bc49331caf71b5bba9c5b18a": {
+      "id": "请选择运动类型",
+      "source": "请选择运动类型",
+      "sourceLang": "zh-CN",
+      "value": "Select an exercise type"
+    },
+    "7d96d58366336ad06627f0b6d1d9f016cfc06ebb6f9c796062fd974750d24f4e": {
+      "id": "当前区间无数据",
+      "source": "当前区间无数据",
+      "sourceLang": "zh-CN",
+      "value": "No data in the current range"
+    },
+    "7e6b9a549cd44e971b6ff729345f3add92f7c9141020f9592d669dc7b88923ca": {
+      "id": "目标日期已过但尚未达成，可以延长日期、重设目标，或放弃这个目标。",
+      "source": "目标日期已过但尚未达成，可以延长日期、重设目标，或放弃这个目标。",
+      "sourceLang": "zh-CN",
+      "value": "The target date has passed, but the goal has not been reached. You can extend the date, reset the goal, or abandon it."
+    },
+    "7f578382c21e6ef68cd0d5eab64ae288907f851bd70c98142e765828a5200845": {
+      "id": "先保存第一条体重记录，再回来查看趋势",
+      "source": "先保存第一条体重记录，再回来查看趋势",
+      "sourceLang": "zh-CN",
+      "value": "Save your first weight record, then come back to view trends"
+    },
+    "7f8bb0ebc65e30ec386c8ca3aede867355250e194ae500b15d0c484f24a78962": {
+      "id": "请输入有效的身高",
+      "source": "请输入有效的身高",
+      "sourceLang": "zh-CN",
+      "value": "Enter a valid height"
+    },
+    "7fa531d041e00b4680b0a8fc46cdbcb26dd4224b2b1627c56884d8cd64e86792": {
+      "id": "{{0}} 年 {{1}} 月",
+      "source": "{{0}} 年 {{1}} 月",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} years {{1}} months"
+    }
+  }
+}

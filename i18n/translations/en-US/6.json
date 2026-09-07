@@ -1,0 +1,198 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "60ec1c3f8e2afb52cdd938c0af4009ded7012a2c1c765f980b651a247e8a7ad0": {
+      "id": "运动记录已更新",
+      "source": "运动记录已更新",
+      "sourceLang": "zh-CN",
+      "value": "Exercise record updated"
+    },
+    "60f7371e6abb7ca6fef588c060187f564cfcd8c315d9c41d3b9fa43cfc74b9fb": {
+      "id": "{{0}}：{{1}} 天",
+      "source": "{{0}}：{{1}} 天",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}: {{1}} days"
+    },
+    "611e9e49e378aec1daaf0157cf13ba1bd777346818166118b44996c642573c61": {
+      "id": "正在生成...",
+      "source": "正在生成...",
+      "sourceLang": "zh-CN",
+      "value": "Generating..."
+    },
+    "614663b60c32ebee8a0df2c30795c7c547db6f5a163c9932936ee8246e6e9f59": {
+      "id": "共 {{0}} 次",
+      "source": "共 {{0}} 次",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} sessions total"
+    },
+    "617112abc01fd988b670f96115d01d56555f4c4c7a7680dcfb5b4085e9cbf148": {
+      "id": "已安装",
+      "source": "已安装",
+      "sourceLang": "zh-CN",
+      "value": "Installed"
+    },
+    "6183309b2cee09cf26670c1ec9bd5b109292d7b39319e1339bdf707d88aa273b": {
+      "id": "未找到里程碑",
+      "source": "未找到里程碑",
+      "sourceLang": "zh-CN",
+      "value": "Milestone not found"
+    },
+    "61c0e82b483cfed6534c9b45e610e8742efeebdbca268bc48bcd7ba2a9873c6d": {
+      "id": "{{0}}打卡成功",
+      "source": "{{0}}打卡成功",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} check-in successful"
+    },
+    "61d032babe3a78c3caa803bf80ad265f077a0f75f843625157762c3cce95f336": {
+      "id": "便后",
+      "source": "便后",
+      "sourceLang": "zh-CN",
+      "value": "After using the bathroom"
+    },
+    "621891e76a872f4e444e25566f32b5ed850f630f834d31e907c70fce25630d3d": {
+      "id": "当前 BMI",
+      "source": "当前 BMI",
+      "sourceLang": "zh-CN",
+      "value": "Current BMI"
+    },
+    "6250ef7beb4058459015a4027113aa47bb7c919592f75f009cae38fb9a22e7b8": {
+      "id": "不能记录未来的运动",
+      "source": "不能记录未来的运动",
+      "sourceLang": "zh-CN",
+      "value": "You cannot record future exercise"
+    },
+    "6302551d78dee45c5935f4ed7eab4cdd703b546fbbcf64fdf83d2a5a22bd766c": {
+      "id": "7日均线",
+      "source": "7日均线",
+      "sourceLang": "zh-CN",
+      "value": "7-day average"
+    },
+    "63e7065ea38e3129bd1449fc3e1d6f7939cb41ac1b694643be57024004034585": {
+      "id": "记录一个数字，或一次让身体动起来的时刻。",
+      "source": "记录一个数字，或一次让身体动起来的时刻。",
+      "sourceLang": "zh-CN",
+      "value": "Log a number, or a moment that got your body moving."
+    },
+    "6440a1d9544205507ad6eff92d5147426cf56fa6d5134735c83b1f5863be44c1": {
+      "id": "比计划提前 {{0}} 天达成 🎯",
+      "source": "比计划提前 {{0}} 天达成 🎯",
+      "sourceLang": "zh-CN",
+      "value": "Achieved {{0}} days ahead of schedule 🎯"
+    },
+    "64d800333d46e59cdfa912afd0fc4757127bac69d6bca7605ad674bdbdebe6e2": {
+      "id": "这个时间范围内还没有记录",
+      "source": "这个时间范围内还没有记录",
+      "sourceLang": "zh-CN",
+      "value": "No records in this time range"
+    },
+    "659bd23221096e33b17bdda93eda1da2b29fb223ac8f9b7971db26a7c1b5198f": {
+      "id": "{{0}}年",
+      "source": "{{0}}年",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} year"
+    },
+    "65b338a86d9daac0fe6327a62ce93e355e31cb40231bb54004322c7dc3ca1e55": {
+      "id": "长期坚持是最难的，你做到了，这就是自律的力量。",
+      "source": "长期坚持是最难的，你做到了，这就是自律的力量。",
+      "sourceLang": "zh-CN",
+      "value": "Long-term consistency is the hardest part. You did it—that is the power of discipline."
+    },
+    "66cc5114fba6996388fb4ccfb5aab43ae3beb3db8233c5ea8c0b8097a5f1f936": {
+      "id": "新版本已准备好，点击后刷新应用",
+      "source": "新版本已准备好，点击后刷新应用",
+      "sourceLang": "zh-CN",
+      "value": "A new version is ready. Click to refresh the app."
+    },
+    "67a08830796826a9694f455f6f0886ff81e99f3c843d68dfcf7f78b7ad1b4f4b": {
+      "id": "运动类型 ID 重复",
+      "source": "运动类型 ID 重复",
+      "sourceLang": "zh-CN",
+      "value": "Duplicate exercise type ID"
+    },
+    "6811cd5060e5e829f054ba2a59e1fb030d4c55839da4a1254d18a645aeed9f43": {
+      "id": "昵称",
+      "source": "昵称",
+      "sourceLang": "zh-CN",
+      "value": "Nickname"
+    },
+    "69a6011bde345b81b92917f9a1b76549cd8363dfebb3a7b6ffb1c5a2a8360612": {
+      "id": "{{0}}月{{1}}日",
+      "source": "{{0}}月{{1}}日",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}/{{1}}"
+    },
+    "6a2d4b1e917542e442f3342020915574a06ee934acec94973899a28066e6be81": {
+      "id": "仅支持补录最近 1 个月内的数据，今天仍可重复覆盖保存。",
+      "source": "仅支持补录最近 1 个月内的数据，今天仍可重复覆盖保存。",
+      "sourceLang": "zh-CN",
+      "value": "Only data from the last month can be backfilled. Today's record can still be saved repeatedly to overwrite it."
+    },
+    "6a8e3f8a8d17df79c7a347682cfe5d42dcc938ac11607f46b915aea47dfea5c8": {
+      "id": "当前版本",
+      "source": "当前版本",
+      "sourceLang": "zh-CN",
+      "value": "Current version"
+    },
+    "6ba8bbc0d8a1e2e1cc59634291d2c835734eed77d13fd6944bbeb20daaf45b80": {
+      "id": "选择记录日期",
+      "source": "选择记录日期",
+      "sourceLang": "zh-CN",
+      "value": "Select record date"
+    },
+    "6bae9e0fb1329b929e74b4c7940bff604c7bdbc1719ae57a63109d5d446cd1c4": {
+      "id": "部分目标数据结构不完整或数值不合理",
+      "source": "部分目标数据结构不完整或数值不合理",
+      "sourceLang": "zh-CN",
+      "value": "Some goal data structures are incomplete or contain invalid values"
+    },
+    "6c1be23c1e5c0fa9a9d832fc236a3e7183e0a1de154ef2ad66c29d2f13a4b071": {
+      "id": "记录数据格式错误",
+      "source": "记录数据格式错误",
+      "sourceLang": "zh-CN",
+      "value": "Invalid record data format"
+    },
+    "6e5583a09720f774540a839208cde5f84680e218a0b17e9511d6f1657923ac28": {
+      "id": "三",
+      "source": "三",
+      "sourceLang": "zh-CN",
+      "value": "Wed"
+    },
+    "6e5d1cf11935b2573a5a4537603cd03aee6def60ad5e730eb790d4311910ac49": {
+      "id": "记录您的身体变化",
+      "source": "记录您的身体变化",
+      "sourceLang": "zh-CN",
+      "value": "Track changes in your body"
+    },
+    "6ec796b2f9b79557bea0f2b193d46c1e161ee6e06110a0414137b78941e3f7d0": {
+      "id": "返回",
+      "source": "返回",
+      "sourceLang": "zh-CN",
+      "value": "Back"
+    },
+    "6f15622fbfd69276b30ac1494d90ad148f32582c133cc3f73b1af3bc98e0fc06": {
+      "id": "3个月",
+      "source": "3个月",
+      "sourceLang": "zh-CN",
+      "value": "3 months"
+    },
+    "6f17abdbf30070a3ff1877f6c60b13d27067ec83c70cc8be8422946894586ad5": {
+      "id": "导入数据",
+      "source": "导入数据",
+      "sourceLang": "zh-CN",
+      "value": "Import data"
+    },
+    "6f6f063da1cb713e912fb052ebf1ee669dd847accf5b1677fbad491ff8c1bbfa": {
+      "id": "约 {{0}}kg/周",
+      "source": "约 {{0}}kg/周",
+      "sourceLang": "zh-CN",
+      "value": "About {{0}} kg/week"
+    },
+    "6f99c51a769ccda90513afa920fbb8485c1837174f2d1549ecbec00d0240aeb8": {
+      "id": "体重过重，建议咨询医生制定减重计划",
+      "source": "体重过重，建议咨询医生制定减重计划",
+      "sourceLang": "zh-CN",
+      "value": "Your weight is significantly above the healthy range; consider consulting a doctor about a weight-loss plan."
+    }
+  }
+}

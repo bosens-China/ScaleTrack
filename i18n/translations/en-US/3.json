@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "3078a56b36d51228478d8c45eff80ad18ec31fde952935cc9464a11df3a7ed8c": {
+      "id": "目标体重（{{0}}）",
+      "source": "目标体重（{{0}}）",
+      "sourceLang": "zh-CN",
+      "value": "Target weight ({{0}})"
+    },
+    "3167968d9c73554b19838e7db5b5e05d9d4ccc3ed73a5e633f93ed6ee6a1b2b1": {
+      "id": "{{0}}/天",
+      "source": "{{0}}/天",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}/day"
+    },
+    "317acb7ccad8b5c2eacb865525126a1e98e552bd83b893bc7addda288e61201a": {
+      "id": "近期身体表现",
+      "source": "近期身体表现",
+      "sourceLang": "zh-CN",
+      "value": "Recent body performance"
+    },
+    "3261578fa1b6dbf141a49a5f79eacbdb5a0da246f07d2e18b1de2248999cfb94": {
+      "id": "我的",
+      "source": "我的",
+      "sourceLang": "zh-CN",
+      "value": "Me"
+    },
+    "32b56b7313d51406a5785d3d3c653a3d18941ddbd3a1f16e58dbfaadbbea0fa7": {
+      "id": "去调整",
+      "source": "去调整",
+      "sourceLang": "zh-CN",
+      "value": "Adjust"
+    },
+    "32f8b39c9b3dfcfbbf9f2f419fce7c9f5f26e17cfb4672c808324b029a897c32": {
+      "id": "导入失败：{{0}}",
+      "source": "导入失败：{{0}}",
+      "sourceLang": "zh-CN",
+      "value": "Import failed: {{0}}"
+    },
+    "349fc2977a2e49ce3bb4f7c6401f03df759d34c402f5fda74a939ad2e6552796": {
+      "id": "本周",
+      "source": "本周",
+      "sourceLang": "zh-CN",
+      "value": "This Week"
+    },
+    "34c6ccb2931d934addc39c0831fbeeb533fed970d9bcc4c74b26e7a24f636779": {
+      "id": "总览",
+      "source": "总览",
+      "sourceLang": "zh-CN",
+      "value": "Home"
+    },
+    "360b136f4df20d2266f2f1c46d3a68ae3fca602fe1ff7afe73604e530a7a7cd1": {
+      "id": "运动频率",
+      "source": "运动频率",
+      "sourceLang": "zh-CN",
+      "value": "Exercise frequency"
+    },
+    "364825e6b0b6320eabef178aa81385593502c88591cc0afa2508ca87f5557f00": {
+      "id": "目标节奏偏快（约 {{0}}kg/周），注意健康，循序渐进更稳妥",
+      "source": "目标节奏偏快（约 {{0}}kg/周），注意健康，循序渐进更稳妥",
+      "sourceLang": "zh-CN",
+      "value": "The target pace is fast (about {{0}} kg/week). Prioritize health; gradual progress is safer."
+    },
+    "375e1aba5e29c4e607b9a67b2366bd3d256c5a799c489b3c114fb99490b92fd8": {
+      "id": "从 JSON 文件恢复本地记录",
+      "source": "从 JSON 文件恢复本地记录",
+      "sourceLang": "zh-CN",
+      "value": "Restore local records from a JSON file"
+    },
+    "38cdb38570cafafb2f62e5d0079fdfe5f4b830de395df8e98dea187be61f169b": {
+      "id": "完善基础资料",
+      "source": "完善基础资料",
+      "sourceLang": "zh-CN",
+      "value": "Set up your profile"
+    },
+    "3b1d08a91abadfe3d67996751b4449c80c059c05c614a15950d3183c927fc09f": {
+      "id": "洞察",
+      "source": "洞察",
+      "sourceLang": "zh-CN",
+      "value": "Insights"
+    },
+    "3cd611f56cd1c1127e6be2013eee86085ee64422a18dfa0e12ef4d53abf912a5": {
+      "id": "记录已删除",
+      "source": "记录已删除",
+      "sourceLang": "zh-CN",
+      "value": "Record deleted"
+    },
+    "3d21ca1b5d60197e98d8de47c467f0d7954fcd724195d39cd50e2b87ee85a34a": {
+      "id": "热量缺口",
+      "source": "热量缺口",
+      "sourceLang": "zh-CN",
+      "value": "Calorie deficit"
+    },
+    "3dc0a6685f2de82c29b1920b773a35cf73a4886e21223c285c4370d65e4c68b7": {
+      "id": "运动记录已删除",
+      "source": "运动记录已删除",
+      "sourceLang": "zh-CN",
+      "value": "Exercise record deleted"
+    },
+    "3de83f83d8bb130792d091a11612877c12a1438350a9c2d260ba0171e2904760": {
+      "id": "今天的状态、场地或搭档...",
+      "source": "今天的状态、场地或搭档...",
+      "sourceLang": "zh-CN",
+      "value": "Today's condition, location, or training partner..."
+    },
+    "3e30fa4ece30ab75a8e00909db65c6050b7d1d15ffec74f7653815b8318f1e5d": {
+      "id": "备注会随这条体重记录一起保存，适合记录晨起、饭后或运动后等上下文。",
+      "source": "备注会随这条体重记录一起保存，适合记录晨起、饭后或运动后等上下文。",
+      "sourceLang": "zh-CN",
+      "value": "Notes are saved with this weight record and are useful for context such as morning, after meals, or after exercise."
+    },
+    "3e5cc02bd961759f114a00138e552d71c55f2c0819f2303030808d72e6ea6bf6": {
+      "id": "初始体重",
+      "source": "初始体重",
+      "sourceLang": "zh-CN",
+      "value": "Starting weight"
+    },
+    "3eb2a6ce8587a0d9616c0827e98efce3c0c52fd6818b4784e3ed320569248643": {
+      "id": "收起",
+      "source": "收起",
+      "sourceLang": "zh-CN",
+      "value": "Collapse"
+    },
+    "3ec0efa9cb4f3d45d13cc769ddb1893369ec94e13027ac8a01651385bce4cf22": {
+      "id": "发生了什么？",
+      "source": "发生了什么？",
+      "sourceLang": "zh-CN",
+      "value": "what happened?"
+    },
+    "3f772ca7f70e40104b08bb1704b43e9c01f989fef07644ed87d21962f1f1f46b": {
+      "id": "立即切换显示语言",
+      "source": "立即切换显示语言",
+      "sourceLang": "zh-CN",
+      "value": "Change the display language instantly"
+    },
+    "3f7b3874c6f1cd7b85095b83d9fd48eca51b69fa0429f4d6a1f7e3a900f57a16": {
+      "id": "至今",
+      "source": "至今",
+      "sourceLang": "zh-CN",
+      "value": "to present"
+    },
+    "3fcd71db505be8a90f33dcc54e4090e1ce377662afd60b83e5ad09d3210e6e95": {
+      "id": "目标达成！",
+      "source": "目标达成！",
+      "sourceLang": "zh-CN",
+      "value": "Goal achieved!"
+    }
+  }
+}

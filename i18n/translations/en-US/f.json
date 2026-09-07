@@ -1,0 +1,180 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "f03ce475f36836085c6d2769d47f83a21b0e5a72ec856d1e7086d16bb91bd5c5": {
+      "id": "近7天持平",
+      "source": "近7天持平",
+      "sourceLang": "zh-CN",
+      "value": "No change in the last 7 days"
+    },
+    "f0d2b4f3b189b269794a40d08904e59a2c58eab37ab5c4df6cfb0a185efe2988": {
+      "id": "这段时间体重下降了 {{0}}{{1}}，当前节奏保持得不错。",
+      "source": "这段时间体重下降了 {{0}}{{1}}，当前节奏保持得不错。",
+      "sourceLang": "zh-CN",
+      "value": "Your weight decreased by {{0}}{{1}} during this period. Your current pace looks good."
+    },
+    "f0eba2346f595990348cab124f7c57550ec9857eb626ab9286bcdd2120a9f4c5": {
+      "id": "已达成目标",
+      "source": "已达成目标",
+      "sourceLang": "zh-CN",
+      "value": "Goal achieved"
+    },
+    "f1369c1bbb5c3a4bf64f03bfd9dc0c1c441edb57f1d2b9bd7954e25d1361b3f2": {
+      "id": "重新设置出生日期",
+      "source": "重新设置出生日期",
+      "sourceLang": "zh-CN",
+      "value": "set your date of birth again"
+    },
+    "f179ea7765a4993d00ca43e2e7c4b19979b48d8ab66b8fb6d80a1df3869691c4": {
+      "id": "导出基础资料、体重、运动和目标数据",
+      "source": "导出基础资料、体重、运动和目标数据",
+      "sourceLang": "zh-CN",
+      "value": "Export profile, weight, exercise, and goal data"
+    },
+    "f17fa253646096a31d4bf1c398b92a3eb9b6cb682cc234efaff0dafe7e086961": {
+      "id": "数据不足 (需 {{0}} 天且 {{1}} 条记录)",
+      "source": "数据不足 (需 {{0}} 天且 {{1}} 条记录)",
+      "sourceLang": "zh-CN",
+      "value": "Insufficient data (requires {{0}} days and {{1}} records)"
+    },
+    "f1a93f638083a39287e10f0d73f3fa73ab9651ab20263910483e4ff5124a40b8": {
+      "id": "持平",
+      "source": "持平",
+      "sourceLang": "zh-CN",
+      "value": "No change"
+    },
+    "f2667961177d79a308e3cc2fa5642ddeb4a34bcdca0e707bb759353dc6c56517": {
+      "id": "选择一个未来日期作为期望达成时间，可随时调整或清除。",
+      "source": "选择一个未来日期作为期望达成时间，可随时调整或清除。",
+      "sourceLang": "zh-CN",
+      "value": "Choose a future date as your target completion date. You can adjust or clear it at any time."
+    },
+    "f2aebc1648500b7aa548a881660320b28dfc0e1b464ec526959cb30afe081afc": {
+      "id": "手动检查是否有可用的新版本",
+      "source": "手动检查是否有可用的新版本",
+      "sourceLang": "zh-CN",
+      "value": "Manually check for a new version"
+    },
+    "f3ce1c893fd922318ced174c26e5741762f96d2a891fbae0cb33c33e6c7f0eff": {
+      "id": "增重速度偏快（{{0}}），过快增重容易堆积脂肪，建议放缓并配合力量训练。",
+      "source": "增重速度偏快（{{0}}），过快增重容易堆积脂肪，建议放缓并配合力量训练。",
+      "sourceLang": "zh-CN",
+      "value": "Weight gain is too fast ({{0}}). Gaining too quickly can lead to fat accumulation; slow down and pair it with strength training."
+    },
+    "f547b79f721c5d9a39876b316f46b77e6c2ae6ea07e264cefb183d90ec2af8f6": {
+      "id": "覆盖这项运动吗？",
+      "source": "覆盖这项运动吗？",
+      "sourceLang": "zh-CN",
+      "value": "Overwrite this activity?"
+    },
+    "f62038f09dce4597b708a9a04867712f4ff81267d39d6f2335e6ae20a0b767db": {
+      "id": "合并导入（推荐）",
+      "source": "合并导入（推荐）",
+      "sourceLang": "zh-CN",
+      "value": "Merge import (recommended)"
+    },
+    "f775982beff47502ea235180debb7d02e3647179aa2a6537a2130fdc877d45cf": {
+      "id": "上个月",
+      "source": "上个月",
+      "sourceLang": "zh-CN",
+      "value": "Last month"
+    },
+    "f7c620bbff8da87f573d54cdb492e015b0015dd980666d52a105bf57ddeb184d": {
+      "id": "近7天增加",
+      "source": "近7天增加",
+      "sourceLang": "zh-CN",
+      "value": "Increased in the last 7 days"
+    },
+    "f88ad97bc8ed436af4c6f79c7a1b08c7d9766baf83e6b6afdcf88dc5b7d1c33b": {
+      "id": "每个日期只保留一条体重记录，确认后将以本次填写内容替换已有记录。",
+      "source": "每个日期只保留一条体重记录，确认后将以本次填写内容替换已有记录。",
+      "sourceLang": "zh-CN",
+      "value": "Only one weight record is kept per date. Once confirmed, this entry will replace the existing record."
+    },
+    "f88b778315d7e7634fb978f4a4c8f9279e95db44d168315b4b335e20ec1f05c2": {
+      "id": "今天还没有记录体重",
+      "source": "今天还没有记录体重",
+      "sourceLang": "zh-CN",
+      "value": "No weight recorded today"
+    },
+    "f9593c7a0707d4e3255f0ea3843caead8165c7a8346d3d16b6ec0979adf40fcf": {
+      "id": "{{0}}，{{1}} 次运动",
+      "source": "{{0}}，{{1}} 次运动",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}, {{1}} workout sessions"
+    },
+    "fab41dbcb9c994a1ba74da78ae57b76d782d0c92f88752de1c16135274b60e74": {
+      "id": "运动日期",
+      "source": "运动日期",
+      "sourceLang": "zh-CN",
+      "value": "Exercise date"
+    },
+    "fad3f8f24a0cf9c5cd3d65678f4f261c8b2db7afbd59b585fa8f2e25e574ac2b": {
+      "id": "已切换为 {{0}}",
+      "source": "已切换为 {{0}}",
+      "sourceLang": "zh-CN",
+      "value": "Switched to {{0}}"
+    },
+    "fae1258163a88d259ee357a7fcbcb1e2a0618a93f7575d7610143c71eda4a666": {
+      "id": "减脂目标",
+      "source": "减脂目标",
+      "sourceLang": "zh-CN",
+      "value": "Fat-loss goal"
+    },
+    "fb0ac9c589433eb665cf53ab3a22cd6ed602c927f81c00fe1232bcddb3cfa496": {
+      "id": "一",
+      "source": "一",
+      "sourceLang": "zh-CN",
+      "value": "Mon"
+    },
+    "fb30fe171478930160340ad9cfce4b0197fd134db92776ffdc538aae24b01d31": {
+      "id": "运动类型",
+      "source": "运动类型",
+      "sourceLang": "zh-CN",
+      "value": "Exercise type"
+    },
+    "fc00b3ea83b9107808f6d079e70e2825d49e3b0c0376c6d67ddb983e812846a3": {
+      "id": "检查更新",
+      "source": "检查更新",
+      "sourceLang": "zh-CN",
+      "value": "Check for updates"
+    },
+    "fc09e2acff6788688268450849827c473f662d5e7cdd13177b6ffcbd50002576": {
+      "id": "出生年月日",
+      "source": "出生年月日",
+      "sourceLang": "zh-CN",
+      "value": "Date of birth"
+    },
+    "fcc52afe8a178cb689b07e9a54cc8cc3b385767d993f3e3449322fc0e5f36585": {
+      "id": "暂无趋势数据",
+      "source": "暂无趋势数据",
+      "sourceLang": "zh-CN",
+      "value": "No trend data yet"
+    },
+    "fcf8f4bdab78ea0a980ae2b0cbfc9834836866bef2edd261b72f1ddd8ce99b46": {
+      "id": "阶段进度",
+      "source": "阶段进度",
+      "sourceLang": "zh-CN",
+      "value": "Phase progress"
+    },
+    "fd574104614b05ae3416c2678aca5b12d626af8b7c3de3796fba7052157a399e": {
+      "id": "还没有体重数据",
+      "source": "还没有体重数据",
+      "sourceLang": "zh-CN",
+      "value": "No weight data yet"
+    },
+    "fe6732b70dd3d76e21d543e32343de52041970eb75de4117874931166ebc7291": {
+      "id": "关于 ScaleTrack",
+      "source": "关于 ScaleTrack",
+      "sourceLang": "zh-CN",
+      "value": "About ScaleTrack"
+    },
+    "fea26e8fd05bf999df722c6c26ff35cf48f79f5f3def93a97d123f6b7550d9b2": {
+      "id": "减",
+      "source": "减",
+      "sourceLang": "zh-CN",
+      "value": "Lose"
+    }
+  }
+}

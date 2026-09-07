@@ -1,0 +1,204 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "2065896d089b1c1c313725330580089d5159dde64ab29137f16a63f7fd5295b8": {
+      "id": "今天",
+      "source": "今天",
+      "sourceLang": "zh-CN",
+      "value": "Today"
+    },
+    "2106960345c6064b125c9ec0dae6e3dcc86c63bf56e1635c65e7d3ec571bbf86": {
+      "id": "调整",
+      "source": "调整",
+      "sourceLang": "zh-CN",
+      "value": "Adjust"
+    },
+    "21bb6ea178bb196667eaacc5752c22a76f9c09cc5cf3837f932f13644ae2a2fc": {
+      "id": "用户信息不存在",
+      "source": "用户信息不存在",
+      "sourceLang": "zh-CN",
+      "value": "User information not found"
+    },
+    "21d24bdbf6dc84408b2eaaf8f4857d12805659eaf4e2f55dbac7849bfd9223c4": {
+      "id": "近期体重趋势基本稳定。",
+      "source": "近期体重趋势基本稳定。",
+      "sourceLang": "zh-CN",
+      "value": "Recent weight trend is generally stable."
+    },
+    "21ebb06a4017ac8fb9bc82dcaeda472507b541adf40ba6d17b1ab0d3ca7c6dde": {
+      "id": "斤",
+      "source": "斤",
+      "sourceLang": "zh-CN",
+      "value": "jin"
+    },
+    "22773bba6c36a0f74506d0f194da6a6dd1d07aa846210380478083dd58e8f4c0": {
+      "id": "晨起空腹",
+      "source": "晨起空腹",
+      "sourceLang": "zh-CN",
+      "value": "Morning, fasting"
+    },
+    "230200b8a371eb7b849fed689e1c73e8084d817fc0559dda7d3a01db00d8c4ed": {
+      "id": "延期 / 调整",
+      "source": "延期 / 调整",
+      "sourceLang": "zh-CN",
+      "value": "Postpone / adjust"
+    },
+    "24878b40221cffe8da068886ec15b3c7a497c2b4d0d2049cda701685eba8df16": {
+      "id": "更多趋势",
+      "source": "更多趋势",
+      "sourceLang": "zh-CN",
+      "value": "More trends"
+    },
+    "25197df92c0048fedad349e3eb35695cb9747531ab90987892c07b12bf4d4a62": {
+      "id": "{{0}}的头像",
+      "source": "{{0}}的头像",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}'s avatar"
+    },
+    "253d8c87a9d804852835abb5a2d4c3a132e93e187d0c85ac3d9f0bcd82ffe2e1": {
+      "id": "确定",
+      "source": "确定",
+      "sourceLang": "zh-CN",
+      "value": "Confirm"
+    },
+    "2638f00473b7df2e423031417976a83bbe303d292c74e381831336a062dad528": {
+      "id": "发现新版本，可前往个人页更新",
+      "source": "发现新版本，可前往个人页更新",
+      "sourceLang": "zh-CN",
+      "value": "A new version is available. Go to Profile to update."
+    },
+    "26494cb1a8b24862e7d73e28a57b580f22db82d9ff1aa3db782d8912e00ff9d6": {
+      "id": "已记录",
+      "source": "已记录",
+      "sourceLang": "zh-CN",
+      "value": "Recorded"
+    },
+    "2657209f0ee4129755ed66659328d6f33c35043a3738ab4e70fa6ea92dda7ea0": {
+      "id": "新增类型",
+      "source": "新增类型",
+      "sourceLang": "zh-CN",
+      "value": "Add type"
+    },
+    "26a01100dd516043ed3645c220ca30e356b9da73e788fbadeec6aa102ef0b5c9": {
+      "id": "未记录",
+      "source": "未记录",
+      "sourceLang": "zh-CN",
+      "value": "Not recorded"
+    },
+    "26d514b13de530d377987e35594fd8d2a66719c5f8a1c689f4279ab352ec9a98": {
+      "id": "今天已备份",
+      "source": "今天已备份",
+      "sourceLang": "zh-CN",
+      "value": "Backed up today"
+    },
+    "27df2510f4b8db338b4dfd982e06cee292c4a3c20c8136ec0d923370008f877b": {
+      "id": "切换深浅色模式",
+      "source": "切换深浅色模式",
+      "sourceLang": "zh-CN",
+      "value": "Switch between light and dark mode"
+    },
+    "282d4a0f9ede202873c7cc2a074fdc804c30bffbaebe07c83eede29afc599adc": {
+      "id": "保存基础信息",
+      "source": "保存基础信息",
+      "sourceLang": "zh-CN",
+      "value": "Save basic information"
+    },
+    "284b0e114352404ec8668eaa28d28a0be135740a3355ef8f5982f5542c2ac063": {
+      "id": "{{0}} 达成",
+      "source": "{{0}} 达成",
+      "sourceLang": "zh-CN",
+      "value": "Achieve by {{0}}"
+    },
+    "290642c8a2467596e54d1740ebea056d21029bf62f3d03385df6714246ba56be": {
+      "id": "未设置",
+      "source": "未设置",
+      "sourceLang": "zh-CN",
+      "value": "Not set"
+    },
+    "290dcb7ada71065b50e7b934dee6d542f6a6248c740e3756fe64cb91c63e5476": {
+      "id": "已从运动列表移除，历史记录不受影响",
+      "source": "已从运动列表移除，历史记录不受影响",
+      "sourceLang": "zh-CN",
+      "value": "Removed from the exercise list; historical records are unaffected"
+    },
+    "298aa87daa939714981b09d1bf8d7a902c67dc4a125ed1c7571045f5e07be6f4": {
+      "id": "{{0}}日",
+      "source": "{{0}}日",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}"
+    },
+    "29f65d9007e7e8eaa4edcab58d6f0e6484b7f8eda4267ffbab512528e46d88f8": {
+      "id": "平均 BMI",
+      "source": "平均 BMI",
+      "sourceLang": "zh-CN",
+      "value": "Average BMI"
+    },
+    "2a20d5cf06781d2568bfa36b348582d98547327e8cc30d7456ffb76a1440f633": {
+      "id": " 距目标日期仅剩 {{0}} 天，后续可能需要调整节奏。",
+      "source": " 距目标日期仅剩 {{0}} 天，后续可能需要调整节奏。",
+      "sourceLang": "zh-CN",
+      "value": " Only {{0}} days remain until the target date; you may need to adjust your pace."
+    },
+    "2ad8be83aa9b19bd39d1e252dd047f227c41264604451771c22f759f486ffc8c": {
+      "id": "导入失败",
+      "source": "导入失败",
+      "sourceLang": "zh-CN",
+      "value": "Import failed"
+    },
+    "2b844e9864ddc16648da67f7a4ffe4eb888ef12b4dea18f92351d3d6859b99a0": {
+      "id": "目标体重已保存",
+      "source": "目标体重已保存",
+      "sourceLang": "zh-CN",
+      "value": "Target weight saved"
+    },
+    "2ba3c97b42e80521afb9e406421ac1eef6fe3a0212d17a86a0ca2ecba63ed90c": {
+      "id": "直观查看您的进度",
+      "source": "直观查看您的进度",
+      "sourceLang": "zh-CN",
+      "value": "View your progress at a glance"
+    },
+    "2bb664a76b797ef211d0ad863ba5adbd9d9ff8947d83f5f66142b776ea31085f": {
+      "id": "删除 {{0}} 记录",
+      "source": "删除 {{0}} 记录",
+      "sourceLang": "zh-CN",
+      "value": "Delete {{0}} record"
+    },
+    "2c7c90cc65abf1b14783f39f34ad7330c217ddd152127a4a7a8d7826766a57e2": {
+      "id": "以启用更稳定的代谢趋势估算。",
+      "source": "以启用更稳定的代谢趋势估算。",
+      "sourceLang": "zh-CN",
+      "value": "to enable a more reliable metabolism trend estimate."
+    },
+    "2d0c6a58793890ae12bc37a84aa1409b462bdc9a8c9c57ea074a06a543aaaadc": {
+      "id": "保持健康体重可以降低健康风险。",
+      "source": "保持健康体重可以降低健康风险。",
+      "sourceLang": "zh-CN",
+      "value": "Maintaining a healthy weight can reduce health risks."
+    },
+    "2d7916ff06630b0c4930303b3ad126fa6509d9f2f6408a856a58313b7dab36db": {
+      "id": "体重记录成功：{{0}} kg",
+      "source": "体重记录成功：{{0}} kg",
+      "sourceLang": "zh-CN",
+      "value": "Weight recorded: {{0}} kg"
+    },
+    "2ea11c1652c930c1634798abebdf34cc7550b8508efdbb67bc9568582e1f292a": {
+      "id": "打卡",
+      "source": "打卡",
+      "sourceLang": "zh-CN",
+      "value": "Check in"
+    },
+    "2ee72d677fd03a2fb7a5345f7bf240154cc334e1ce7123f5732661e7c579524d": {
+      "id": "热量盈余",
+      "source": "热量盈余",
+      "sourceLang": "zh-CN",
+      "value": "Calorie surplus"
+    },
+    "2ff4ea982ebed70647d888a083d825d316b49a3ee9ab3dcf7d3136efc038dd34": {
+      "id": "暂无",
+      "source": "暂无",
+      "sourceLang": "zh-CN",
+      "value": "None yet"
+    }
+  }
+}

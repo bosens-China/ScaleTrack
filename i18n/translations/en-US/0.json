@@ -1,0 +1,174 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "0160ef5e356e7042dcb5bd7e74a3c75ca3773a6871a587d7012645f668bf9f66": {
+      "id": "近7天 {{0}}",
+      "source": "近7天 {{0}}",
+      "sourceLang": "zh-CN",
+      "value": "Last 7 days: {{0}}"
+    },
+    "01aea494721ee90fcfda92bccf1e944c7968e79aa99de741a61bc7e5c55f44a8": {
+      "id": "修改运动记录",
+      "source": "修改运动记录",
+      "sourceLang": "zh-CN",
+      "value": "Edit exercise record"
+    },
+    "02dca2dc677840e2de117ead97e1db9ade58e025ff82873ad7e8c705132c786b": {
+      "id": "今天，身体",
+      "source": "今天，身体",
+      "sourceLang": "zh-CN",
+      "value": "Today, your body"
+    },
+    "040ca346e31fb81fe9e9fa68a36a2a7cfd63fee4644bf16836efd32fb38f80ca": {
+      "id": "运动后",
+      "source": "运动后",
+      "sourceLang": "zh-CN",
+      "value": "After exercise"
+    },
+    "0418f2d42c64abd702513686f3fcbb675cc7a47423b2b6e326560cd09c510f4c": {
+      "id": "关闭分享海报",
+      "source": "关闭分享海报",
+      "sourceLang": "zh-CN",
+      "value": "Close share poster"
+    },
+    "055ce3c5fe8b19dbaa15e2aeabc95fe27da87b66128047f96a83df6fe409ef83": {
+      "id": "观察 BMI 变化与身体状态走势",
+      "source": "观察 BMI 变化与身体状态走势",
+      "sourceLang": "zh-CN",
+      "value": "Track changes in BMI and body condition"
+    },
+    "063fb56b941b7bc6a29fafa746cd8acdd9ff98c23241d3cebeeb8a64c4faf613": {
+      "id": "增加 5 分钟",
+      "source": "增加 5 分钟",
+      "sourceLang": "zh-CN",
+      "value": "Increase by 5 minutes"
+    },
+    "067bb97d7b4dd522fefbfce298176326a94ba3c26fa71f3ace0c56f6cb53eca9": {
+      "id": "今日总览",
+      "source": "今日总览",
+      "sourceLang": "zh-CN",
+      "value": "Today"
+    },
+    "0713e33dca33c30869e27e90b2baef71ce4cd6477015495a123cb85deda10afa": {
+      "id": "骑行",
+      "source": "骑行",
+      "sourceLang": "zh-CN",
+      "value": "Cycling"
+    },
+    "072ca429c687dc44fcee07c118a90cd2d89bed360e716fc875d3aa98f76170aa": {
+      "id": "取消覆盖",
+      "source": "取消覆盖",
+      "sourceLang": "zh-CN",
+      "value": "Cancel Overwrite"
+    },
+    "07a043444571ff3d3af2f78a997afcbf50179435cfdd2288020a9e75f48d933a": {
+      "id": "{{0}}，{{1}} 项运动，共 {{2}}",
+      "source": "{{0}}，{{1}} 项运动，共 {{2}}",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}, {{1}} activities, {{2}} total"
+    },
+    "08872533a4d81894f04e2a661a1f756ab8fcbc2051467244e245e3b3968473ad": {
+      "id": "半年",
+      "source": "半年",
+      "sourceLang": "zh-CN",
+      "value": "6 months"
+    },
+    "0965793fe3dd8a36fb1967124149036cacf58e38a3cbdb99b301db57b5764561": {
+      "id": "更改",
+      "source": "更改",
+      "sourceLang": "zh-CN",
+      "value": "Change"
+    },
+    "09890d08a0b8099a84eddcdee69058b76db94de585e956e8184c40def68b98d8": {
+      "id": "当前基础资料",
+      "source": "当前基础资料",
+      "sourceLang": "zh-CN",
+      "value": "Profile"
+    },
+    "0a38a1b97f97c4769dc316aceaf2e081a4b85b18c0e7b6bc94ab8cdc69daaf05": {
+      "id": "图片保存失败，请重试",
+      "source": "图片保存失败，请重试",
+      "sourceLang": "zh-CN",
+      "value": "Failed to save image. Please try again."
+    },
+    "0aa1417367b59493a80696e6a22d47b01388e736d4ecd9483ee3a7e4114a866a": {
+      "id": "当天没有运动记录",
+      "source": "当天没有运动记录",
+      "sourceLang": "zh-CN",
+      "value": "No activity recorded on this date"
+    },
+    "0b008ed635137d26efb93373dc712257a7be4ab07cb5d83b6f5bfd88e655685c": {
+      "id": "最近：{{0}} · {{1}} 分钟",
+      "source": "最近：{{0}} · {{1}} 分钟",
+      "sourceLang": "zh-CN",
+      "value": "Latest: {{0}} · {{1}} min"
+    },
+    "0bbdf785917993bf16567209da1ce2360e4a5c973a2ee9a70c8ec3e4f5f074a8": {
+      "id": "健身",
+      "source": "健身",
+      "sourceLang": "zh-CN",
+      "value": "Fitness"
+    },
+    "0bc00f9b394445b484fc66e11b145e1a1e3321a8a95dd52b65f79f83044b6f25": {
+      "id": "请输入有效的身高（50-250cm）",
+      "source": "请输入有效的身高（50-250cm）",
+      "sourceLang": "zh-CN",
+      "value": "Enter a valid height (50–250 cm)"
+    },
+    "0c45527f5f3454346acae1bc9c3876613d1dac2d9f026bdc05fed439bf59265c": {
+      "id": "{{0}}月",
+      "source": "{{0}}月",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}"
+    },
+    "0d13516ca27cdd41790df1b81514b7259d0848635b335b6e878ba4ea0de1cc09": {
+      "id": "自定义运动类型数据结构不完整",
+      "source": "自定义运动类型数据结构不完整",
+      "sourceLang": "zh-CN",
+      "value": "Custom exercise type data structure is incomplete"
+    },
+    "0d1c8bd8172a516b04430b92e77a5bc90fb35e4e03c3fc3985b6d56d00415162": {
+      "id": "基础信息已更新",
+      "source": "基础信息已更新",
+      "sourceLang": "zh-CN",
+      "value": "Basic information updated"
+    },
+    "0d29296976b50171feef51032f5c5fc113b81a8b6cc323d07b4882421bf6e084": {
+      "id": "步行",
+      "source": "步行",
+      "sourceLang": "zh-CN",
+      "value": "Walking"
+    },
+    "0e5e663b62312134b0a052cbcd2b4494db7ad8e1c9c808d0cccecb609dd3c86c": {
+      "id": "可补录范围：{{0}} 至今天",
+      "source": "可补录范围：{{0}} 至今天",
+      "sourceLang": "zh-CN",
+      "value": "Backfill range: {{0}} to today"
+    },
+    "0ed333be591f77c64922c2b5fad803954fb9ab7d1f060c164ac83e919f4dbdbf": {
+      "id": "编辑个人资料",
+      "source": "编辑个人资料",
+      "sourceLang": "zh-CN",
+      "value": "Edit profile"
+    },
+    "0ef96bbc747f7aefe500e627d1e0ef9c006f062470e3994f6f192da96c776dd7": {
+      "id": "还没有运动记录，从一次打卡开始",
+      "source": "还没有运动记录，从一次打卡开始",
+      "sourceLang": "zh-CN",
+      "value": "No activity records yet. Start with one session."
+    },
+    "0f177f391c4c4338170daebf976e8e99928f2347ebe2bfb98482a81487f92817": {
+      "id": "（分）",
+      "source": "（分）",
+      "sourceLang": "zh-CN",
+      "value": "(min)"
+    },
+    "0f5e1ff9a4a9d534c8d1a932a88c89ecddf80724f61e6257cf86afc073c8a313": {
+      "id": "样本还不够，再记录几次后，这里会给出更有参考价值的趋势洞察。",
+      "source": "样本还不够，再记录几次后，这里会给出更有参考价值的趋势洞察。",
+      "sourceLang": "zh-CN",
+      "value": "There are not enough samples yet. After a few more records, you'll see more useful trend insights here."
+    }
+  }
+}

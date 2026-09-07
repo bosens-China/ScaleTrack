@@ -1,0 +1,174 @@
+{
+  "version": 1,
+  "locale": "en-US",
+  "entries": {
+    "506503641da41254b67dd78a2e2a381424d783098c98c2ab8fd976eff9c00141": {
+      "id": "上次备份：{{0}} 天前",
+      "source": "上次备份：{{0}} 天前",
+      "sourceLang": "zh-CN",
+      "value": "Last backup: {{0}} days ago"
+    },
+    "506c71bb90192efb357d62449d830ca3b663b95324cb6c8bed65e3d751473e83": {
+      "id": "起始 {{0}} → 现在 {{1}} {{2}} · 坚持 {{3}} 天 / {{4}} 次记录",
+      "source": "起始 {{0}} → 现在 {{1}} {{2}} · 坚持 {{3}} 天 / {{4}} 次记录",
+      "sourceLang": "zh-CN",
+      "value": "Start {{0}} → Now {{1}} {{2}} · {{3}} days / {{4}} records"
+    },
+    "50836431687e2906a2d00bb6b97d1091b307a6fecf5d6e88eda28938b6cd33e9": {
+      "id": "目标数据格式错误",
+      "source": "目标数据格式错误",
+      "sourceLang": "zh-CN",
+      "value": "Invalid goal data format"
+    },
+    "5088d1693b8292d146c59b8bbc64b2cbb5b0457cfe10c374ce26e6ecef3d6852": {
+      "id": "不支持的数据格式",
+      "source": "不支持的数据格式",
+      "sourceLang": "zh-CN",
+      "value": "Unsupported data format"
+    },
+    "51a47bee7a36b72a86b31f1a1d14808dc96c69e9a6a4b1974dd721592ea0e8e2": {
+      "id": "静态基础代谢 (BMR)",
+      "source": "静态基础代谢 (BMR)",
+      "sourceLang": "zh-CN",
+      "value": "Basal metabolic rate (BMR)"
+    },
+    "535e4c2f32e98c5738898242fdedf9e4f36541f372bcebb54e5ba4f667926c0a": {
+      "id": "最常运动",
+      "source": "最常运动",
+      "sourceLang": "zh-CN",
+      "value": "Most frequent exercise"
+    },
+    "538e0cf49b7d9218863259c75230e8885a11af2c7764f5687e81af0718bac935": {
+      "id": "正在保存，请稍候…",
+      "source": "正在保存，请稍候…",
+      "sourceLang": "zh-CN",
+      "value": "Saving, please wait…"
+    },
+    "53aa91aad54980c1f61f106c629db32aed8d0b016b3400c17316abe36ae535a5": {
+      "id": "跟随系统",
+      "source": "跟随系统",
+      "sourceLang": "zh-CN",
+      "value": "System"
+    },
+    "54496daa3b16dc1898b63240038f4169547e5ecb5c6726fbef38d15395ef2f7d": {
+      "id": "同时只能存在一个进行中的目标",
+      "source": "同时只能存在一个进行中的目标",
+      "sourceLang": "zh-CN",
+      "value": "Only one active goal can exist at a time"
+    },
+    "55105cbd1577c708fb6cc3c003e68b95b1c97f8a609f4a3ef71ca4114508d1c0": {
+      "id": "新增运动类型名称",
+      "source": "新增运动类型名称",
+      "sourceLang": "zh-CN",
+      "value": "New exercise type name"
+    },
+    "55cb2ae3aea5134c0aed87eedd8807214e9786cc13fe0d6d192e38b6cbf00130": {
+      "id": "自然周",
+      "source": "自然周",
+      "sourceLang": "zh-CN",
+      "value": "Calendar Week"
+    },
+    "56135850e2fe88251707fcf3d3b4f5959ea1467d95c65fbc84d7af48273b8123": {
+      "id": "切换体重展示与录入单位",
+      "source": "切换体重展示与录入单位",
+      "sourceLang": "zh-CN",
+      "value": "Change the display and input unit for weight"
+    },
+    "56c5fe26d60f48593a0c9ed29b97afa0af2ec493a0918e8fa52e0791d67f16d7": {
+      "id": "球类",
+      "source": "球类",
+      "sourceLang": "zh-CN",
+      "value": "Ball sports"
+    },
+    "56ddf805aef912b327941a8912f2672590261d571744c9c703d3476824b5ff55": {
+      "id": "点击日期即可完成选择；不能记录未来的运动。",
+      "source": "点击日期即可完成选择；不能记录未来的运动。",
+      "sourceLang": "zh-CN",
+      "value": "Tap a date to select it. Future dates aren't allowed."
+    },
+    "56f287cec6e83ed0ab716bb945352394a462b9ac2d5457429f8db58fb128884f": {
+      "id": "已有记录",
+      "source": "已有记录",
+      "sourceLang": "zh-CN",
+      "value": "Existing Record"
+    },
+    "57b95f039e9e7b8cd2b61974ae3e2e94500cf2e0770839472f8716d88a0956c4": {
+      "id": "减少 5 分钟",
+      "source": "减少 5 分钟",
+      "sourceLang": "zh-CN",
+      "value": "Decrease by 5 minutes"
+    },
+    "585ae96f301c2b1ac1efeda0246b1c9fbb07bbafdbd9295a60ccf94626bbecb0": {
+      "id": "游泳",
+      "source": "游泳",
+      "sourceLang": "zh-CN",
+      "value": "Swimming"
+    },
+    "5ab44e6a533e976b084d97db05cd7dc880233f8bad6a7c7978a9486cff340b69": {
+      "id": "已合并导入数据",
+      "source": "已合并导入数据",
+      "sourceLang": "zh-CN",
+      "value": "Data merged and imported"
+    },
+    "5ab4c02fa88e4249b70533b04897798c2352f97fb0964eda6ba725f3383b5cc2": {
+      "id": "设定新目标",
+      "source": "设定新目标",
+      "sourceLang": "zh-CN",
+      "value": "Set a new goal"
+    },
+    "5acc7af2abde31e6d019e67006ab8fe0c507b39a5ed84c0d8b9ed8b842ee90c3": {
+      "id": "{{0}}，超出可选范围",
+      "source": "{{0}}，超出可选范围",
+      "sourceLang": "zh-CN",
+      "value": "{{0}}; outside the selectable range"
+    },
+    "5b0d001860ea9ca4bef9f1f8a603a8bb63ebb3edf3ac4e93f8546a1eefd80f77": {
+      "id": "下个月",
+      "source": "下个月",
+      "sourceLang": "zh-CN",
+      "value": "Next month"
+    },
+    "5b39fb6778454145996ba44b6942a1304da006195bf4e0088db42db09c80d0a4": {
+      "id": "当天已运动 {{0}} 项，共 {{1}}",
+      "source": "当天已运动 {{0}} 项，共 {{1}}",
+      "sourceLang": "zh-CN",
+      "value": "{{0}} activities recorded today, {{1}} total"
+    },
+    "5c0262f2dff86b2f5caf5688f5d258ff3952f4a61e8e17d0cbb31d974be06130": {
+      "id": "该日期已有记录",
+      "source": "该日期已有记录",
+      "sourceLang": "zh-CN",
+      "value": "A record already exists for this date"
+    },
+    "5cc82bb0cef01d772e9e3603a5c66de7bb99d50aeede418dff1ddeafae81398b": {
+      "id": "最近体重整体较为稳定，说明你的记录波动控制得比较平稳。",
+      "source": "最近体重整体较为稳定，说明你的记录波动控制得比较平稳。",
+      "sourceLang": "zh-CN",
+      "value": "Your weight has been relatively stable recently, indicating that your recorded fluctuations are well controlled."
+    },
+    "5e0f2d8c634fe938c5755c027d177484c2012ef320728dc3282d1c3e50bb456e": {
+      "id": "日均热量趋势估算",
+      "source": "日均热量趋势估算",
+      "sourceLang": "zh-CN",
+      "value": "Estimated daily calorie trend"
+    },
+    "5e6b97f2f26b9e08be608c2d06033112dccb7b0a0b086f65136e5e7a1745ea78": {
+      "id": "达成第一个目标后，这里会保留你的里程碑记录。",
+      "source": "达成第一个目标后，这里会保留你的里程碑记录。",
+      "sourceLang": "zh-CN",
+      "value": "After you achieve your first goal, your milestone records will be kept here."
+    },
+    "5e7fa2f63e0b9309cda1b1e22c0825170c1d952b40affd237f0ff929b722a579": {
+      "id": "趋势页会在你开始记录后展示折线、区间统计和洞察信息。",
+      "source": "趋势页会在你开始记录后展示折线、区间统计和洞察信息。",
+      "sourceLang": "zh-CN",
+      "value": "The Trends page will show line charts, range statistics, and insights once you start recording."
+    },
+    "5f76d1cbb458ed9a65ed0791e1880f43632e4134405f8ab79d923848a5f28ecc": {
+      "id": "保存",
+      "source": "保存",
+      "sourceLang": "zh-CN",
+      "value": "Save"
+    }
+  }
+}
