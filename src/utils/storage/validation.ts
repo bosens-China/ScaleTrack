@@ -228,26 +228,39 @@ export function mergeImport(current: ImportPayload, incoming: ImportPayload): Im
     goals = goals.filter(g => g.isCompleted || g.id === keep.id)
   }
 
+  // 类型先按名称合并，再统一两份记录的引用；已删除类型的历史快照保持原样。
+  const activityTypesByName = new Map<string, ActivityType>()
+  const canonicalTypeIds = new Map<string, string>()
+  for (const type of [...current.activityTypes, ...incoming.activityTypes]) {
+    const name = type.name.trim().toLocaleLowerCase()
+    const canonical = activityTypesByName.get(name) ?? type
+    activityTypesByName.set(name, canonical)
+    canonicalTypeIds.set(type.id, canonical.id)
+  }
+
+  // 同 ID 先取更新版本（允许修改日期或项目），再消除同日同类的不同 ID 记录。
   const activityRecordsById = new Map<string, ActivityRecord>()
-  for (const record of current.activityRecords) activityRecordsById.set(record.id, record)
-  for (const record of incoming.activityRecords) {
+  for (const original of [...current.activityRecords, ...incoming.activityRecords]) {
+    const record = {
+      ...original,
+      activityTypeId: canonicalTypeIds.get(original.activityTypeId) ?? original.activityTypeId,
+    }
     const existing = activityRecordsById.get(record.id)
     if (!existing || getActivityRecordModifiedAt(record) > getActivityRecordModifiedAt(existing)) {
       activityRecordsById.set(record.id, record)
     }
   }
-  const activityRecords = [...activityRecordsById.values()].sort(
+  const activityRecordsByDayAndType = new Map<string, ActivityRecord>()
+  for (const record of activityRecordsById.values()) {
+    const key = JSON.stringify([record.date, record.activityTypeId])
+    const existing = activityRecordsByDayAndType.get(key)
+    if (!existing || getActivityRecordModifiedAt(record) > getActivityRecordModifiedAt(existing)) {
+      activityRecordsByDayAndType.set(key, record)
+    }
+  }
+  const activityRecords = [...activityRecordsByDayAndType.values()].sort(
     (a, b) => a.date.localeCompare(b.date) || a.createdAt.localeCompare(b.createdAt),
   )
-
-  const activityTypesByName = new Map<string, ActivityType>()
-  for (const type of current.activityTypes) {
-    activityTypesByName.set(type.name.trim().toLocaleLowerCase(), type)
-  }
-  for (const type of incoming.activityTypes) {
-    const name = type.name.trim().toLocaleLowerCase()
-    if (!activityTypesByName.has(name)) activityTypesByName.set(name, type)
-  }
 
   return {
     profile: current.profile ?? incoming.profile,
