@@ -34,7 +34,19 @@ export default function ProfileGoalSection({
   const { t } = useI18n()
   const { unit } = useWeightUnit()
   const [isEditingGoal, setIsEditingGoal] = useState(false)
-  const [goalInput, setGoalInput] = useState(goal ? formatWeightValue(goal.targetWeight, unit) : '')
+  // 草稿记住输入时的单位，切换展示单位时换算数值，避免实际目标被减半或翻倍。
+  const [goalDraft, setGoalDraft] = useState({
+    value: goal ? formatWeightValue(goal.targetWeight, unit) : '',
+    unit,
+  })
+  const goalInput =
+    goalDraft.unit === unit || !Number.isFinite(Number.parseFloat(goalDraft.value))
+      ? goalDraft.value
+      : formatWeightValue(
+          fromDisplayWeight(Number.parseFloat(goalDraft.value), goalDraft.unit),
+          unit,
+        )
+  const setGoalInput = (value: string) => setGoalDraft({ value, unit })
   const [targetDate, setTargetDate] = useState<string | undefined>(goal?.targetDate)
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
   const [isConfirmingAbandon, setIsConfirmingAbandon] = useState(false)
