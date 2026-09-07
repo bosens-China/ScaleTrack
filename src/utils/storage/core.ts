@@ -49,9 +49,63 @@ export type PersistKey =
   | 'customActivityTypes'
   | 'lastBackupAt'
 
-/** 写穿到 IndexedDB；失败仅告警，不阻塞 UI（内存缓存已更新） */
+export type PersistenceStatus = 'saved' | 'saving' | 'failed'
+let persistenceStatus: PersistenceStatus = 'saved'
+const persistenceListeners = new Set<() => void>()
+const pendingWrites = new Map<PersistKey, CacheShape[PersistKey]>()
+let writeQueue = Promise.resolve()
+
+export function getPersistenceStatus(): PersistenceStatus {
+  return persistenceStatus
+}
+
+export function subscribePersistence(listener: () => void): () => void {
+  persistenceListeners.add(listener)
+  return () => {
+    persistenceListeners.delete(listener)
+  }
+}
+
+function setPersistenceStatus(status: PersistenceStatus) {
+  persistenceStatus = status
+  persistenceListeners.forEach(listener => listener())
+}
+
+/** 串行写入，保留失败数据供重试；旧请求完成时不得清除更新的待写数据。 */
 export function persist(key: PersistKey): void {
-  store.setItem(key, cache[key]).catch(err => console.error(`持久化 ${key} 失败`, err))
+  const value = cache[key]
+  pendingWrites.set(key, value)
+  if (persistenceStatus !== 'failed') setPersistenceStatus('saving')
+  writeQueue = writeQueue.then(async () => {
+    try {
+      await store.setItem(key, value)
+      if (pendingWrites.get(key) === value) pendingWrites.delete(key)
+      if (pendingWrites.size === 0) setPersistenceStatus('saved')
+    } catch (err) {
+      console.error(`持久化 ${key} 失败`, err)
+      setPersistenceStatus('failed')
+    }
+  })
+}
+
+/** 等本次及等待期间新增的写入完成，调用方据此决定能否提示成功。 */
+export async function flushPersistence(): Promise<boolean> {
+  let pending: Promise<void>
+  do {
+    pending = writeQueue
+    await pending
+  } while (pending !== writeQueue)
+  return pendingWrites.size === 0
+}
+
+export async function retryPersistence(): Promise<boolean> {
+  if (pendingWrites.size === 0) {
+    setPersistenceStatus('saved')
+    return true
+  }
+  setPersistenceStatus('saving')
+  for (const key of pendingWrites.keys()) persist(key)
+  return flushPersistence()
 }
 
 function readLegacy<T>(key: string): T | null {

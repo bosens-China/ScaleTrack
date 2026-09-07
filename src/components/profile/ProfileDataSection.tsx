@@ -6,6 +6,7 @@ import { useI18n } from 'virtual:ai-i18n'
 import ModalPortal from '@/components/ModalPortal'
 import {
   exportData,
+  flushPersistence,
   getActivityRecords,
   getLastBackupAt,
   getRecords,
@@ -95,12 +96,15 @@ export default function ProfileDataSection({ onReload }: Props) {
     event.target.value = ''
   }
 
-  const handleConfirmImport = (mode: 'replace' | 'merge') => {
+  const handleConfirmImport = async (mode: 'replace' | 'merge') => {
     if (!pending) return
     try {
       importData(pending.data, mode)
-      toast.success(mode === 'merge' ? t('已合并导入数据') : t('已覆盖导入数据'))
       onReload()
+      setPending(null)
+      if (await flushPersistence()) {
+        toast.success(mode === 'merge' ? t('已合并导入数据') : t('已覆盖导入数据'))
+      }
     } catch (err) {
       toast.error(err instanceof Error ? t`导入失败：${err.message}` : t('导入失败'))
     } finally {

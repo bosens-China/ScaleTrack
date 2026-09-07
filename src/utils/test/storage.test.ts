@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Goal, WeightRecord } from '@/types'
 
 import {
+  flushPersistence,
   getGoals,
   getProfile,
   getRecords,
@@ -22,18 +23,19 @@ function resetCache() {
   cache.lastBackupAt = null
 }
 
+beforeEach(() => {
+  resetCache()
+  vi.spyOn(store, 'setItem').mockResolvedValue(undefined as never)
+})
+
+afterEach(async () => {
+  await flushPersistence()
+  vi.restoreAllMocks()
+  resetCache()
+})
+
 describe('storage importData', () => {
-  beforeEach(() => {
-    resetCache()
-    vi.spyOn(store, 'setItem').mockResolvedValue(undefined as never)
-  })
-
-  afterEach(() => {
-    vi.restoreAllMocks()
-    resetCache()
-  })
-
-  it('should sort imported records by date before saving', () => {
+  it('should sort imported records by date before saving', async () => {
     importData({
       version: 1,
       exportedAt: '2026-06-14T00:00:00.000Z',
@@ -74,6 +76,7 @@ describe('storage importData', () => {
     expect(getProfile()?.gender).toBe('male')
     expect(getRecords().map(record => record.id)).toEqual(['r-1', 'r-2'])
     expect(getGoals()).toHaveLength(1)
+    await flushPersistence()
     expect(store.setItem).toHaveBeenCalledTimes(5)
     expect(store.setItem).toHaveBeenCalledWith(
       'profile',

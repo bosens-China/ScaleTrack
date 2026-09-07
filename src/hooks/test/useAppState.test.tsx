@@ -3,7 +3,7 @@
 import { act, cleanup, renderHook } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { saveProfile, saveRecord } from '@/utils/storage'
+import { flushPersistence, saveProfile, saveRecord } from '@/utils/storage'
 import { cache, store } from '@/utils/storage/core'
 import { useAppState } from '../useAppState'
 
@@ -39,7 +39,10 @@ describe('useAppState 关键记录流程', () => {
     })
   })
 
-  afterEach(() => {
+  afterEach(async () => {
+    await act(async () => {
+      await flushPersistence()
+    })
     cleanup()
     vi.restoreAllMocks()
     vi.useRealTimers()

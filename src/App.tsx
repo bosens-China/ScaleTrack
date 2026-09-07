@@ -4,6 +4,7 @@ import { useI18n } from 'virtual:ai-i18n'
 import BottomTabBar from '@/components/BottomTabBar'
 import GoalAchievementModal from '@/components/GoalAchievementModal'
 import PwaUpdateBanner from '@/components/PwaUpdateBanner'
+import StorageStatusBanner from '@/components/StorageStatusBanner'
 import ToastContainer from '@/components/Toast'
 import { useAppState } from '@/hooks/useAppState'
 import { useTheme } from '@/hooks/useTheme'
@@ -198,6 +199,7 @@ function AppInner() {
         <BottomTabBar activeTab={activeTab} onChange={setActivePage} />
       )}
       <ToastContainer />
+      <StorageStatusBanner />
       <PwaUpdateBanner />
       {achievedGoal && (
         <GoalAchievementModal

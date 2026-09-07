@@ -23,7 +23,15 @@ export {
   saveRecords,
   updateProfile,
 } from './api'
-export { hydrateStore, store, type CacheShape } from './core'
+export {
+  flushPersistence,
+  getPersistenceStatus,
+  hydrateStore,
+  retryPersistence,
+  store,
+  subscribePersistence,
+  type CacheShape,
+} from './core'
 export { LEGACY_KEYS, STORE_KEYS } from './keys'
 export { migrateLegacyData, type LegacySnapshot, type MigrationStore } from './migration'
 export { mergeImport, validateImportData, type ImportPayload } from './validation'
