@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.6.1](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.6.0...scaletrack-v1.6.1) (2026-09-07)
+
+
+### 🐛 修复
+
+* 保持目标编辑时切换单位的实际体重 ([20696cc](https://github.com/bosens-China/ScaleTrack/commit/20696cc922a6a95a8c2a96cf94a0c62228f7bfe7))
+* 修复本地保存失败反馈并支持重试 ([35a0faf](https://github.com/bosens-China/ScaleTrack/commit/35a0faf9ca6ab9cdf85684e97e25f8b6ecab6037))
+* 修复运动合并导入的类型关联与重复记录 ([0e6565f](https://github.com/bosens-China/ScaleTrack/commit/0e6565ff6bfbcada80c4648caf631c9e05007403))
+
 ## [1.6.0](https://github.com/bosens-China/ScaleTrack/compare/scaletrack-v1.5.0...scaletrack-v1.6.0) (2026-08-26)
 
 
